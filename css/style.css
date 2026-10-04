@@ -1,0 +1,1765 @@
+/* =========================================================
+   Семейное древо — лендинг
+   Брейкпоинты: десктоп ≥ 1200 · планшет 768–1199 · мобильный < 768
+
+   ТИПОГРАФИКА — ровно 4 стиля текста на каждом экране,
+   соседние стили отличаются больше чем на 4px:
+                  H1        H2        H3      Текст
+   1920          52        44        26       16
+   1200–1599     36–43     30–37     22       16
+   768–1199      34–44     27–32     21       16
+   < 768         30        24        19       14
+
+   ПОЛЯ ПО КРАЯМ — 5% ширины окна (1920 → 96px, 1440 → 72px),
+   на телефоне 18px. Внутренние отступы — через --pad-card и --col-gap.
+   ========================================================= */
+
+/* ---------- Шрифты (только из папки font) ---------- */
+@font-face { font-family: "Manrope"; src: url("../font/Manrope-ExtraLight.ttf") format("truetype"); font-weight: 200; font-display: swap; }
+@font-face { font-family: "Manrope"; src: url("../font/Manrope-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Manrope"; src: url("../font/Manrope-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Manrope"; src: url("../font/Manrope-SemiBold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Playfair Display"; src: url("../font/PlayfairDisplay-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+
+/* ---------- Токены ---------- */
+:root {
+  --bg: #f1eee9;
+  --red: #a53625;
+  --red-hover: #8f2d1f;
+  --terra: #b05538;
+  --orange: #e7a43c;
+  --gold: #af8c4c;
+  --green: #9ba089;
+  --text: #3c3c3c;
+  --dark: #3c3c3c;
+  --slate: #3c3c3c;            /* цвет шапки */
+  --muted: rgba(0, 0, 0, .7);
+  --placeholder: rgba(0, 0, 0, .5);
+  --white: #fff;
+
+  /* сетка страницы: одно общее поле для всех блоков */
+  --container: 1840px;
+  --gut: max(40px, 5vw);                              /* поле по краям — 5% ширины окна */
+  --edge: max(var(--gut), calc((100% - var(--container)) / 2));
+  --section-gap: 132px;
+  --col-gap: 24px;                                    /* между карточками в ряду */
+  --pad-card: 40px;                                   /* внутренний отступ карточек и шапки */
+  --radius: 16px;
+  --radius-sm: 12px;                                  /* кнопки, поля, чекбокс — всё, что лежит внутри карточек */
+
+  /* одна мягкая тень для всех белых карточек: тёплая, сверху почти нет, внизу рассеянная */
+  --shadow-card: 0 1px 2px rgba(60, 40, 30, .04), 0 12px 32px rgba(60, 40, 30, .07);
+
+  /* высота шапки и отступ до первого блока (для подгонки hero под экран) */
+  --hdr-h: 68px;
+  --hdr-gap: 0px;                                     /* шапка на всю ширину прижата к верху окна (на телефоне — 12px) */
+  /* секция не выше видимой части окна под шапкой (с небольшим «воздухом») */
+  --fit: calc(100svh - var(--hdr-h) - var(--hdr-gap) - 32px);  /* с учётом закреплённой шапки и отступа над ней */
+
+  /* 4 стиля текста */
+  --fs-h1: clamp(36px, min(2.708vw, 11.1vh - 44px), 52px);
+  --fs-h2: min(clamp(32px, 2.292vw, 44px), calc(var(--fs-h1) - 6px));
+  --fs-h3: clamp(22px, 1.354vw, 26px);
+  --fs-body: 16px;
+}
+
+/* ---------- База ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--hdr-h) + var(--hdr-gap) + 16px); -webkit-text-size-adjust: 100%; }
+html.lenis { scroll-behavior: auto; }   /* плавностью управляет Lenis (js/main.js), нативный smooth ему мешает */
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Manrope", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: var(--fs-body);
+  line-height: 1.4;                                   /* было 1.3 — длинные абзацы читались тесно */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.page { overflow-x: clip; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+h1, h2, h3, p, ul { margin: 0; }
+ul { padding: 0; list-style: none; }
+button, input, textarea { font: inherit; }
+:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+::selection { background: rgba(165, 54, 37, .18); }
+
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* зерно поверх всей страницы: анимированный шум (img/noise.gif — 4 кадра, 10 кадров/с), как на sofiasaveleva.com;
+   непрозрачность в 1,5 раза меньше, чем там (8% → 5,3%); клики проходят сквозь слой */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: url("../img/noise.gif") 0 0 / 80px auto repeat;
+  opacity: .053;
+}
+@media (prefers-reduced-motion: reduce) { body::after { display: none; } }   /* мерцание мешает — без шума */
+@media print { body::after { display: none; } }
+
+.container { width: min(var(--container), 100% - 2 * var(--gut)); margin-inline: auto; }
+.section { margin-top: var(--section-gap); }
+section[hidden] { display: none !important; }       /* скрытые блоки (атрибут hidden в разметке) — не показываются, даже если у блока свой display */
+
+/* ---------- 4 стиля текста ---------- */
+.mcard__title, .focus__title {
+  font-weight: 500;
+  font-size: var(--fs-h1);
+  line-height: 1.1;
+  /* letter-spacing: -.02em; */
+}
+.h2 {
+  font-weight: 600;
+  font-size: var(--fs-h2);
+  line-height: 1.12;
+  /* letter-spacing: -.036em; */
+  color: var(--text);
+}
+.h3, .dcard__title, .post__title {
+  font-weight: 400;
+  font-size: var(--fs-h3);
+  line-height: 1.2;
+  /* letter-spacing: -.5px; */
+}
+/* заголовки переносятся ровными строками, без одного слова на последней строке */
+.mcard__title, .focus__title, .h2, .h3, .dcard__title { text-wrap: balance; }
+/* ---------- Появление при прокрутке (классы ставит js/main.js; без JS всё видно сразу) ---------- */
+/* текст появляется с иерархией:
+   — заголовки и подзаголовки (шрифт больше 16px) — построчно: каждая строка выезжает снизу из-под своей
+     нижней границы с лёгким проявлением, строки — одна за другой (строки размечает main.js: .tl > .tl__in);
+   — основной текст (16px и меньше) — целиком: спокойно проявляется и чуть приподнимается */
+.text-lines .tl {
+  display: block;
+  overflow: hidden;                                   /* строка «прячется» под свою нижнюю границу */
+  /* запас сверху и снизу, чтобы не срезать выносные элементы букв (у, р, д, й) — с запасом для
+     заголовков с плотной строкой (Playfair Display, межстрочный .87) */
+  padding: .28em 0;
+  margin: -.28em 0;
+}
+.text-lines .tl__in {
+  display: block;
+  opacity: 0;
+  transform: translateY(105%);
+  transition: transform .9s cubic-bezier(.22, .8, .2, 1), opacity .7s ease;
+  transition-delay: calc(var(--i, 0) * .09s + var(--d, 0s));
+}
+.text-lines.is-in .tl__in { opacity: 1; transform: none; }
+
+.text-fade {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .8s ease, transform .9s cubic-bezier(.22, .8, .2, 1);
+  transition-delay: var(--d, 0s);
+}
+.text-fade.is-in { opacity: 1; transform: none; }
+/* подзаголовок рядом с заголовком секции — чуть позже заголовка */
+.section-head__text.text-fade, .section-head__text.text-lines { --d: .15s; }
+/* карточки и формы мягко поднимаются снизу */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .9s ease .2s, transform .9s cubic-bezier(.2, .7, .2, 1) .2s;
+}
+.reveal.is-in { opacity: 1; transform: none; }
+/* всё остальное — основной текст: font-size: var(--fs-body) наследуется от body */
+
+/* ---------- Кнопки / ссылки ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 15px 40px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--red);
+  color: var(--white);
+  font-size: var(--fs-body);
+  line-height: 24px;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color .2s ease, box-shadow .2s ease, transform .2s ease, filter .2s ease;
+}
+/* при наведении кнопка чуть приподнимается, при нажатии — опускается */
+.btn:hover { background: var(--red-hover); box-shadow: 0 8px 20px rgba(165, 54, 37, .22); transform: translateY(-1px); }
+.btn:active { box-shadow: none; transform: none; transition-duration: .06s; }
+.btn img { width: 20px; height: 20px; }
+
+.link-more {
+  color: var(--text);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color .2s ease;
+}
+.link-more:hover { color: var(--red); }
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+/* заливка шапки — на всю ширину окна; логотип, меню, телефон и соцсети стоят по краям контентной части страницы */
+.header { width: 100%; position: relative; z-index: 20; }
+
+.header__bar {
+  display: flex;
+  align-items: center;                              /* содержимое по центру высоты плашки */
+  justify-content: space-between;
+  height: var(--hdr-h);
+  padding: 0 var(--edge);                           /* содержимое — по краям контентной части, как у всех блоков */
+  background: var(--red);
+  border-radius: 0 0 var(--radius) var(--radius);   /* скругление только снизу, без тени */
+}
+.header--dark .header__bar { background: var(--green); }   /* обычный цвет шапки — зелёный */
+.header__left, .header__right { display: flex; align-items: center; }
+.header__left { gap: 48px; }
+.header__logo img { width: 33px; height: 37px; }
+.nav { display: flex; gap: 36px; }
+.nav a, .header__phone {
+  color: var(--white);
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity .2s ease;
+}
+.nav a:hover, .header__phone:hover { opacity: .75; }
+.header__right { gap: 64px; }
+.header__socials { display: flex; gap: 8px; }
+/* соцсети в шапке: белая иконка в белом круге-обводке, всё векторное (inline SVG, цвет — currentColor) */
+.round-icon {
+  display: block;
+  width: 32px;
+  height: 32px;
+  color: var(--white);
+  transition: transform .2s ease, opacity .2s ease;
+}
+.round-icon svg { display: block; width: 100%; height: 100%; }
+.round-icon:hover { transform: scale(1.08); opacity: .75; }
+
+/* мобильная шапка */
+.header__mobile { display: none; }
+.header__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 50px;
+  padding: 0 18px;
+  border-radius: var(--radius);
+  background: var(--red);
+  color: var(--white);
+  text-decoration: none;
+}
+.header__pill img { width: 25px; height: 28px; }
+.header__pill span { width: 72px; font-weight: 200; line-height: 1; letter-spacing: -.3px; }
+.header__buttons { display: flex; gap: 9px; }
+.icon-btn {
+  display: block;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--red);
+  cursor: pointer;
+}
+.header--dark .header__pill, .header--dark .icon-btn, .header--dark .mobile-menu { background: var(--green); }
+
+/* над первым экраном (пока страница не прокручена) заливки у шапки нет — она появляется при прокрутке (класс is-top ставит main.js) */
+.header--sticky.is-top .header__bar,
+.header--sticky.is-top .header__pill,
+.header--sticky.is-top .icon-btn { background-color: rgba(155, 160, 137, 0); }
+
+/* знак в шапке — векторный (тот же, что рисуется при загрузке) */
+.header__logo { display: block; }
+.logo-mark { display: block; width: 35px; height: 37px; color: var(--white); }
+.header__pill .logo-mark { width: 26px; height: 28px; }
+.mark { display: block; width: 100%; height: 100%; overflow: visible; }
+
+/* шапка закреплена вверху окна; зелёная, а над блоком «Найдём историю» (.focus) — красная: main.js снимает класс header--dark */
+.header--sticky { position: sticky; top: var(--hdr-gap); z-index: 50; margin-top: var(--hdr-gap); }
+.header--sticky .header__bar, .header--sticky .header__pill,
+.header--sticky .icon-btn, .header--sticky .mobile-menu { transition: background-color .45s ease; }
+
+.mobile-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  padding: 24px;
+  border-radius: var(--radius);
+  /* background: var(--red); */
+  color: var(--white);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .18);
+}
+.mobile-menu[hidden] { display: none; }
+.mobile-menu__nav { display: flex; flex-direction: column; gap: 16px; }
+.mobile-menu__nav a, .mobile-menu__phone { color: var(--white); text-decoration: none; }
+.mobile-menu__phone { display: inline-block; margin-top: 24px; font-weight: 600; }
+
+/* =========================================================
+   ПЕРВЫЙ ЭКРАН — по макету Figma (plat-fam, узел 230:178): фото на весь экран
+   (img/hero-album.jpg), снизу слева мягкое тёмное пятно (img/hero-shade.svg из макета),
+   поверх — заголовок (Playfair Display 64px), текст и кнопка. Шапка лежит поверх фото.
+   При прокрутке фото чуть приближается, а текст уходит вверх и гаснет (--hp ставит main.js)
+   ========================================================= */
+.opening {
+  --ease-out: cubic-bezier(.2, .75, .15, 1);
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  min-height: 620px;
+  margin-top: calc(-1 * (var(--hdr-h) + var(--hdr-gap)));   /* блок начинается от верха окна, под шапкой */
+  overflow: hidden;
+  background: #3a3833;
+  color: var(--white);
+}
+.opening__media { position: absolute; inset: 0; overflow: hidden; }
+.opening__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 69%;                           /* кадр как в макете: рука и альбом */
+  transform: scale(calc(1 + var(--hp, 0) * .08));
+}
+/* тёмное пятно под текстом — размеры и положение из макета (кадр 1920 × 831) */
+.opening__shade {
+  position: absolute;
+  left: -13.16%;
+  top: calc(20% + 1.86px);
+  width: 77.83%;
+  height: 115.45%;
+  pointer-events: none;
+}
+.opening__shade img {
+  position: absolute;
+  left: -20.08%;
+  top: -31.27%;
+  width: 140.16%;
+  height: 162.54%;
+  max-width: none;
+}
+.opening__content {
+  position: absolute;
+  left: var(--edge);
+  right: var(--edge);
+  bottom: 72px;
+  z-index: 1;
+  max-width: 792px;
+  opacity: calc(1 - var(--hp, 0) * 1.3);
+  transform: translateY(calc(var(--hp, 0) * -60px));
+}
+.opening__title {
+  max-width: 775px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(40px, 3.333vw, 64px);
+  line-height: 1;
+  letter-spacing: -.016em;
+  color: var(--white);
+}
+.opening__title .line { display: block; overflow: hidden; padding-bottom: .08em; }
+.opening__title .line > span { display: block; }
+.opening__text { max-width: 724px; margin-top: 40px; line-height: 1.5; color: var(--white); }
+.opening__cta { margin-top: 60px; }
+
+@media (max-width: 767px) {
+  .opening__content { bottom: 40px; }
+  .opening__title { font-size: 34px; }
+  .opening__text { margin-top: 24px; }
+  .opening__cta { margin-top: 32px; }
+  .opening__cta .btn { width: 100%; }                /* как остальные кнопки на телефоне */
+}
+
+/* ---------- Вступление: светлый экран, на нём рисуется знак (контур снизу вверх → заливка),
+   потом знак переезжает в шапку, экран растворяется и появляется первый экран.
+   Классы is-intro (ставится в <head>) и is-ready (main.js) ---------- */
+.mark-lines path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;                                /* вместе с pathLength="1" у path */
+  stroke-dashoffset: 1;
+}
+.mark-fill path { fill: currentColor; stroke: currentColor; stroke-width: 1.5; stroke-linejoin: round; }
+.mark-lines { opacity: 0; }                           /* без вступления знак просто залит */
+.is-intro .mark-lines { opacity: 1; }
+.is-intro .mark-fill { opacity: 0; }
+.mark.play .mark-lines path { animation: mark-draw .53s cubic-bezier(.3, .7, .4, 1) forwards; }
+.mark.play .mark-lines { animation: mark-out .47s ease-in-out 1.17s forwards; }
+.mark.play .mark-fill { animation: mark-in .47s ease-in-out 1.17s forwards; }
+/* очерёдность снизу вверх: стебли → нижние листья → верхние лепестки → центральный */
+.mark.play .mark-lines path:nth-child(2),
+.mark.play .mark-lines path:nth-child(4) { animation-delay: .27s; }
+.mark.play .mark-lines path:nth-child(1),
+.mark.play .mark-lines path:nth-child(3) { animation-delay: .47s; }
+.mark.play .mark-lines path:nth-child(5) { animation-delay: .67s; }
+.mark.done .mark-lines { opacity: 0; animation: none; }
+.mark.done .mark-fill { opacity: 1; animation: none; }
+@keyframes mark-draw { to { stroke-dashoffset: 0; } }
+@keyframes mark-in { to { opacity: 1; } }
+@keyframes mark-out { to { opacity: 0; } }
+
+.preloader { display: none; }
+.is-intro .preloader {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 45;                                        /* под шапкой: знак в шапке виден поверх экрана */
+  background: var(--bg);
+  transition: opacity .6s ease .13s, visibility 0s linear .73s;
+  animation: intro-failsafe-hide 0s 8s forwards;      /* если скрипт не запустился — экран уходит сам */
+}
+.is-ready .preloader { opacity: 0; visibility: hidden; }
+
+/* до конца вступления видно только знак */
+.is-intro .nav, .is-intro .header__right,
+.is-intro .header__pill-text, .is-intro .header__buttons { opacity: 0; transition: opacity .53s ease; }
+.is-intro.is-ready .nav, .is-intro.is-ready .header__right,
+.is-intro.is-ready .header__pill-text, .is-intro.is-ready .header__buttons { opacity: 1; transition-delay: .6s; }
+
+.is-intro .opening__title .line > span { transform: translateY(110%); }
+.is-intro .opening__text, .is-intro .opening__cta { opacity: 0; transform: translateY(24px); }
+.is-ready .opening__title .line > span { transform: none; transition: transform .87s var(--ease-out) .5s; }
+.is-ready .opening__title .line + .line > span { transition-delay: .6s; }
+.is-ready .opening__text { opacity: 1; transform: none; transition: opacity .67s ease .77s, transform .8s var(--ease-out) .77s; }
+.is-ready .opening__cta { opacity: 1; transform: none; transition: opacity .67s ease .87s, transform .8s var(--ease-out) .87s; }
+
+/* если скрипт не запустился — через 7 с всё показывается само */
+.is-intro:not(.is-ready) .opening__title .line > span,
+.is-intro:not(.is-ready) .opening__text, .is-intro:not(.is-ready) .opening__cta,
+.is-intro:not(.is-ready) .nav, .is-intro:not(.is-ready) .header__right,
+.is-intro:not(.is-ready) .header__pill-text, .is-intro:not(.is-ready) .header__buttons { animation: intro-failsafe-show 0s 7s forwards; }
+:where(.is-intro:not(.is-ready)) .mark-fill { animation: intro-failsafe-show 0s 7s forwards; }
+@keyframes intro-failsafe-show { to { opacity: 1; transform: none; } }
+@keyframes intro-failsafe-hide { to { opacity: 0; visibility: hidden; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .is-intro .preloader { display: none; }
+  .is-intro .mark-lines { opacity: 0; }
+  .is-intro .mark-fill { opacity: 1; }
+  .is-intro .nav, .is-intro .header__right, .is-intro .header__pill-text, .is-intro .header__buttons,
+  .is-intro .opening__text, .is-intro .opening__cta { opacity: 1; transform: none; }
+  .is-intro .opening__title .line > span { transform: none; }
+  .opening__img, .opening__content { transform: none; }
+}
+
+/* =========================================================
+   HERO — бегущая лента: 6 карточек едут влево по кругу.
+   Лента от края до края экрана, зазор 20px.
+   ========================================================= */
+.hero4 { margin-top: var(--section-gap); }        /* лента теперь идёт после первого экрана */
+.marquee {
+  --gap: 20px;
+  --card-h: min(634px, calc(100svh - var(--hdr-h) - 2 * var(--hdr-gap) - 20px));
+  --card-w: var(--card-h);                            /* квадрат 634 × 634 — целые пиксели, без дрожания на стыке */
+  --period: calc(6 * (var(--card-w) + var(--gap)));   /* длина одного набора из 6 карточек */
+  --duration: 102s;                                   /* один круг; main.js берёт скорость отсюда */
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;                                /* вертикальная прокрутка страницы, горизонталь — перетаскивание */
+  user-select: none;
+  -webkit-user-select: none;
+}
+.marquee.is-dragging { cursor: grabbing; }
+.marquee img { pointer-events: none; -webkit-user-drag: none; }
+.marquee__track {
+  display: flex;
+  gap: var(--gap);
+  width: max-content;
+  animation: marquee-left var(--duration) linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+/* с JS лентой управляет main.js (автопрокрутка + перетаскивание), CSS-анимация — запасной вариант */
+.marquee--js .marquee__track { animation: none; }
+@keyframes marquee-left {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(calc(-1 * var(--period)), 0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: none; transform: none; }
+}
+.mcard {
+  flex: none;
+  width: var(--card-w);
+  height: var(--card-h);
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+.mcard--green  { background: var(--green); }
+.mcard--red    { background: var(--red); }
+.mcard--orange { background: var(--orange); }
+/* карточки с текстом: отступ как у карточек «Направления» (--pad-card, на телефоне 16px), заголовок прижат к верху, текст к низу (как auto-отступ в Figma) */
+.mcard--green, .mcard--red, .mcard--orange {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  padding: var(--pad-card);
+  color: var(--white);
+}
+.mcard__title { color: #fbf7f1; }
+.mcard__text { margin: 0; max-width: 36em; line-height: 1.45; }
+.mcard img { width: 100%; height: 100%; object-fit: cover; }
+
+/* =========================================================
+   НАЙДЁМ ИСТОРИЮ — второй блок: текст поверх затемнённого размытого фото,
+   высота — 95% экрана. Вокруг курсора ореол: в центре фото в самом чётком
+   фокусе, дальше плавно переходит в размытие (координаты курсора ставит js/main.js).
+   Шрифты, кнопка и отступы — те же, что на первом экране
+   ========================================================= */
+.focus.section { margin-top: 6vw; }                    /* от ленты до блока — 8% ширины экрана (6% + 2% отступа карточки) */
+.focus__card {
+  --bleed: 56px;                                      /* фото шире блока — размытые края остаются за границей */
+  --mx: 50%;
+  --my: 50%;
+  --r: clamp(170px, 15vw, 300px);                     /* радиус ореола */
+  position: relative;
+  height: 98vh;
+  height: 98svh;
+  min-height: 360px;
+  overflow: hidden;
+  isolation: isolate;
+  container-type: size;                               /* размеры блока нужны для кадрирования фото (единицы cqw/cqh) */
+  margin: 2vw 0;                                      /* на всю ширину экрана; сверху и снизу — 2% */
+  border-radius: 0 0 16px 16px;                       /* скругление только снизу */
+  background: #2f2d2a;
+  color: var(--white);
+}
+.focus__media { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.focus__img {
+  --ox: calc(-1 * var(--bleed));                      /* где левый верхний угол фото относительно блока */
+  --oy: calc(-1 * var(--bleed));
+  position: absolute;
+  left: var(--ox);
+  top: var(--oy);
+  width: calc(100% + 2 * var(--bleed));
+  height: calc(100% + 2 * var(--bleed));
+  max-width: none;
+  object-fit: cover;
+  /* фото заполняет блок; кадр — от верхнего края, но если блок низкий, фото поднимается ровно настолько,
+     чтобы все лица (верхние 53% снимка hero-2.jpg) оставались в кадре с запасом 40px снизу */
+  object-position: 50% min(0px, calc(100cqh + var(--bleed) - 40px - (100cqw + 2 * var(--bleed)) * .284));
+}
+/* основной слой: без курсора фото целиком чёткое, курсор над блоком — размывается (класс is-focus ставит main.js) */
+.focus__img--blur { filter: blur(0); transition: filter .45s ease; }
+.focus__card.is-focus .focus__img--blur { filter: blur(16px); }
+/* слои для ореола: чуть размытый — пошире, чёткий — в центре; появляются, когда курсор над блоком */
+.focus__img--mid,
+.focus__img--sharp {
+  opacity: 0;
+  transition: opacity .45s ease;
+  will-change: transform;                             /* свой слой — ореол двигается плавно */
+  --at: calc(var(--mx) - var(--ox)) calc(var(--my) - var(--oy));   /* курсор в координатах фото */
+}
+.focus__img--mid {
+  filter: blur(6px);
+  -webkit-mask-image: radial-gradient(circle var(--r) at var(--at), #000 30%, rgba(0, 0, 0, .5) 65%, transparent 100%);
+  mask-image: radial-gradient(circle var(--r) at var(--at), #000 30%, rgba(0, 0, 0, .5) 65%, transparent 100%);
+}
+.focus__img--sharp {
+  -webkit-mask-image: radial-gradient(circle var(--r) at var(--at), #000 0, #000 18%, rgba(0, 0, 0, .45) 38%, transparent 58%);
+  mask-image: radial-gradient(circle var(--r) at var(--at), #000 0, #000 18%, rgba(0, 0, 0, .45) 38%, transparent 58%);
+}
+.focus__card.is-focus .focus__img--mid,
+.focus__card.is-focus .focus__img--sharp { opacity: 1; }
+/* затемнение поверх фото (и поверх ореола): слева, под текстом, чуть темнее */
+.focus__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(20, 18, 16, .62) 0%, rgba(20, 18, 16, .42) 55%, rgba(20, 18, 16, .36) 100%);
+}
+.focus__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;                     /* заголовок и текст — сверху, кнопка — внизу */
+  align-items: flex-start;
+  gap: 32px;
+  height: 100%;
+  --text-edge: var(--edge);                           /* поле страницы: текст на линии остальных блоков */
+  /* сверху — место под закреплённую шапку + 100px: когда блок доезжает до верха окна, текст стоит в 100px под шапкой */
+  padding: calc(var(--hdr-gap) + var(--hdr-h) + 100px) var(--text-edge) clamp(40px, 3vw, 56px);
+}
+.focus__texts { display: flex; flex-direction: column; gap: 24px; }
+.focus__text { max-width: 480px; margin: 0; line-height: 1.45; }
+
+@media (max-width: 1199px) {
+  .focus__content { padding: calc(var(--hdr-gap) + var(--hdr-h) + 100px) var(--text-edge) var(--pad-card); }
+}
+/* телефон вертикально: блок узкий и высокий. Фото увеличено ровно так, чтобы все головы помещались
+   по ширине (люди на hero-2.jpg — правее центра, 39–86% ширины), и прижато к низу блока;
+   сверху, под заголовком, — то же фото, сильно размытое, чтобы блок был заполнен */
+@media (max-width: 767px) and (orientation: portrait) {
+  .focus__img {
+    --w: calc(100cqw / .52);
+    --ox: calc(50cqw - var(--w) * .625);                /* центр группы людей — на 62,5% ширины снимка */
+    --oy: calc(100cqh + var(--bleed) - var(--w) / 1.8685);
+    width: var(--w);
+    height: auto;
+    aspect-ratio: 1734 / 928;
+  }
+  .focus__media::before {
+    content: "";
+    position: absolute;
+    inset: -40px;
+    background: url("../img/hero-2-800.jpg") 50% 30% / cover no-repeat;
+    filter: blur(24px);
+  }
+}
+@media (max-width: 767px) {
+  .focus__card { --bleed: 40px; --r: 150px; }
+  .focus__texts { gap: 16px; }
+  .focus__btn { align-self: stretch; }               /* как остальные кнопки на телефоне */
+}
+
+/* =========================================================
+   НАПРАВЛЕНИЯ И УСЛУГИ — две карточки: красная колонка с текстом + фото
+   ========================================================= */
+.directions { display: flex; flex-direction: column; max-height: var(--fit); }
+.directions .section-head { margin-bottom: 56px; }
+.directions__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--col-gap);
+  min-height: 0;
+}
+.dcard {
+  display: grid;
+  grid-template-columns: 443fr 466fr;                 /* пропорции из макета: 443 + 466 = 909 */
+  min-height: min(500px, calc(var(--fit) - 180px));
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--white);
+  color: var(--text);
+  box-shadow: var(--shadow-card);
+}
+.dcard__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  min-width: 0;
+  padding: var(--pad-card);
+}
+.dcard__title { color: var(--text); }
+.dcard__sub { margin-top: 12px; color: var(--muted); }
+.dcard__tags { margin-top: 24px; }
+.dcard__desc { color: var(--muted); }
+.dcard__btn {
+  min-width: 230px;
+  margin-top: 24px;
+}
+.dcard__media {
+  position: relative;
+  min-height: 0;
+  background: linear-gradient(90deg, #c6bfba, #c1b9b3);
+}
+.dcard__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.dcard__media--archive img { object-position: 30% center; }
+
+/* =========================================================
+   НАПРАВЛЕНИЯ — вариант по макету Figma (plat-fam, узел 228:146).
+   Заголовок секции слева, подзаголовок — над второй карточкой. Две белые карточки
+   в две колонки: фото сверху (907 × 401 на 1920), на нём плашки и стрелка;
+   ниже подпись, заголовок (Playfair Display) и текст. Кнопки нет — вся карточка-ссылка,
+   а курсор над ней превращается в красный круг «Узнать подробнее» (js/main.js).
+   Планшет: те же две колонки, плотнее. Телефон: карточки одна под другой
+   ========================================================= */
+.svc {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 4.167vw, 80px);                    /* заголовок → карточки: 80px на 1920 */
+}
+/* шапка секции стоит на той же сетке, что и карточки: подзаголовок начинается над второй карточкой */
+.svc__head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: 16px var(--col-gap);
+}
+.svc__heading,
+.blog:not(.blog--cards) .section-head .h2 {           /* заголовок блога — тем же шрифтом, что «Направления и услуги» */
+  max-width: 650px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(32px, 2.5vw, 48px);
+  line-height: .87;                                   /* 41.6 / 48 */
+  letter-spacing: -1px;
+}
+.svc__lead { max-width: 632px; margin: 0; line-height: 1.3; color: var(--text); }
+
+.svc__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--col-gap);
+}
+.svc-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;                                   /* круг-курсор не выходит за карточку */
+  border-radius: var(--radius);
+  background: var(--white);
+  color: var(--text);
+  text-decoration: none;
+}
+.svc-card:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+.svc-card__media {
+  position: relative;
+  aspect-ratio: 907 / 401;
+  padding: 16px;
+  overflow: hidden;
+  background: #c9c3bc;
+}
+.svc-card__media > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s cubic-bezier(.2, .7, .2, 1);
+}
+.svc-card:hover .svc-card__media > img { transform: scale(1.03); }
+/* плашки слева, стрелка справа */
+.svc-card__bar {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 5px;
+}
+.svc-card__tags .tag {
+  height: 34px;
+  gap: 9px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: #f5f4f2;
+  font-size: 15px;
+  line-height: 1.2;
+}
+.svc-card__arrow { flex: none; width: 33px; height: 33px; margin: -1.5px -1.5px 0 0; }
+
+.svc-card__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px 32px 40px;
+}
+.svc-card__titles { display: flex; flex-direction: column; gap: 8px; }
+.svc-card__sub { margin: 0; line-height: 1.3; }
+.svc-card__title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(26px, 1.667vw, 32px);
+  line-height: 1.3;                                   /* 41.6 / 32 */
+  letter-spacing: -1px;
+}
+.svc-card__desc { max-width: 631px; margin: 0; line-height: 1.3; }
+
+/* слой «cursor» из макета: красный круг 161px с подписью; центр круга — в точке курсора.
+   Общий для карточек-ссылок (.has-cursor): карточки услуг и карточки первого блога.
+   Виден только у мыши (hover + fine pointer); на телефоне карточка — обычная ссылка */
+.cursor-bubble { display: none; }
+.svc-card__btn-mobile { display: none; }
+.post__btn-mobile { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .has-cursor { cursor: none; }
+  .has-cursor a { cursor: none; }
+  .cursor-bubble {
+    position: absolute;
+    left: var(--cx, 50%);                             /* центр круга — в точке курсора (координаты ставит main.js) */
+    top: var(--cy, 50%);
+    z-index: 2;
+    margin: -80.5px 0 0 -80.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 161px;
+    height: 161px;
+    padding: 10px;
+    border-radius: 50%;
+    background: var(--red);
+    color: var(--white);
+    font-size: 16px;
+    line-height: 1.3;
+    white-space: nowrap;
+    pointer-events: none;
+    transform: scale(0);
+    transition: transform .3s cubic-bezier(.2, .7, .2, 1);   /* плавно только появление; за курсором — без задержки */
+    will-change: transform;
+  }
+  .has-cursor.is-cursor .cursor-bubble { transform: scale(1); }
+}
+
+/* ноутбук и планшет: те же две колонки, отступы карточки — общие для сайта */
+@media (max-width: 1199px) {
+  .svc-card__body { padding: 24px 24px 32px; gap: 16px; }
+  .svc-card__media { aspect-ratio: 2 / 1; }
+}
+/* узкий планшет: подзаголовок секции под заголовком */
+@media (max-width: 899px) {
+  .svc__head { grid-template-columns: 1fr; }
+}
+/* планшет и телефон: показываем кнопку вместо cursor эффекта */
+@media (max-width: 1199px) {
+  .svc-card__body { display: flex !important; flex-direction: column; gap: 16px; }
+  .svc-card__btn-mobile {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 40px;
+    border-radius: var(--radius-sm);
+    background: var(--red);
+    color: var(--white);
+    font-size: var(--fs-body);
+    line-height: 24px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color .2s ease, box-shadow .2s ease, transform .2s ease;
+    align-self: flex-start;
+    margin-top: auto;
+  }
+  .svc-card__btn-mobile:active { box-shadow: none; transform: none; transition-duration: .06s; }
+}
+/* телефон: карточки одна под другой */
+@media (max-width: 767px) {
+  .svc__list { grid-template-columns: 1fr; gap: 16px; }
+  .svc-card__media { aspect-ratio: 16 / 10; padding: 12px; }
+  .svc-card__bar { padding: 0; }
+  .svc-card__tags { gap: 8px; }
+  .svc-card__tags .tag { height: 30px; padding: 0 12px; font-size: 14px; }
+  .svc-card__arrow { width: 26px; height: 26px; margin: 0; }
+  .svc-card__body { padding: 16px 16px 24px; gap: 12px; }
+}
+
+/* =========================================================
+   НАХОДИМ ПРЕДКОВ — красный блок на всю ширину окна. Фон — картинка:
+   img/3-sec.png (1920 × 969: левые ~45% однотонные, справа карта с фото),
+   на телефоне img/3-sec-mob.png (404 × 1216: верхние ~64% однотонные, внизу карта с фото).
+   Картинка прижата к низу блока на всю его ширину, выше неё — тот же красный.
+   Текст всегда на однотонной части:
+   — от 1200px текст слева и не шире 45% блока (дальше начинается рисунок);
+   — 600–1199px текст во всю ширину сверху, картинка целиком под ним;
+   — до 600px мобильная картинка, под текстом оставлено место ровно под рисунок
+   ========================================================= */
+.russia {
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100vw * 969 / 1920);                 /* как картинка: высота = ширина × 969 / 1920 */
+  background: var(--red) url("../img/3-sec.png") right bottom / 100% auto no-repeat;
+  color: var(--white);
+}
+
+.russia__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  /* все отступы блока кратны 8. Правило: отступ под заголовком больше высоты строки самого заголовка
+     (заголовок 48px × 130% = 62px → отступ 64px; «Почему мы?» 32px × 130% = 42px → 48px),
+     а «Почему мы?» отделён от текста над ним сильнее, чем от своего списка (64 > 48) */
+  gap: 64px;                                          /* текст → «Почему мы?» */
+  box-sizing: border-box;
+  /* ширина текста: 754px, но не дальше 45% блока минус 32px — дальше на картинке начинается рисунок */
+  width: min(calc(754px + var(--edge)), calc(45% - 32px));
+  padding: 64px 0 56px var(--edge);                   /* на 1920 блок остаётся 969px — как сцена с картой */
+}
+.russia__intro { display: flex; flex-direction: column; gap: 64px; }  /* заголовок → текст */
+.russia__title {
+  max-width: 643px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(32px, 2.5vw, 48px);
+  line-height: 1.3;
+  letter-spacing: -1px;
+  color: var(--white);
+}
+.russia__text { font-size: 18px; line-height: 1.3; }
+.russia__text p { margin: 0; }
+.russia__text p + p { margin-top: 16px; }
+.russia__why { display: flex; flex-direction: column; gap: 48px; }   /* «Почему мы?» → список */
+.russia__subtitle {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(24px, 1.667vw, 32px);
+  line-height: 1.3;
+  letter-spacing: -1px;
+  color: var(--white);
+}
+.russia__list { display: flex; flex-direction: column; gap: 24px; margin: 0; padding: 0; list-style: none; }
+.russia__list li {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  max-width: 676px;                                   /* маркер 12 + 32 + текст 632 */
+  font-size: 18px;
+  line-height: 1.3;
+}
+.russia__list li::before {
+  content: "";
+  flex: none;
+  width: 12px;
+  height: 12px;
+  background: url("../icons/bullet-white.svg") center / 12px 12px no-repeat;
+}
+
+/* планшет: текст сверху во всю ширину, под ним картинка целиком (место под неё — нижний отступ
+   высотой с картинку: 969 / 1920 = 50.47% ширины блока) */
+@media (max-width: 1199px) {
+  .russia { min-height: 0; }
+  .russia__content {
+    width: auto;
+    max-width: calc(754px + 2 * var(--edge));
+    gap: 48px;
+    padding: 56px var(--edge) calc(50.47% + 24px);
+  }
+  /* заголовки здесь мельче: 32px × 130% = 42px → отступ 48px; «Почему мы?» 24px × 130% = 31px → 40px */
+  .russia__intro { gap: 48px; }
+  .russia__why { gap: 40px; }
+}
+@media (max-width: 767px) {
+  .russia__text, .russia__list li { font-size: 16px; }
+  .russia__list { gap: 16px; }
+  .russia__list li { gap: 16px; }
+}
+/* телефон: мобильная картинка; рисунок на ней — нижние 436 из 1216px, то есть 108% ширины —
+   столько места оставляем под текстом */
+@media (max-width: 599px) {
+  .russia { background-image: url("../img/3-sec-mob.png"); }
+  .russia__content { padding: 40px var(--edge) calc(108% + 16px); }
+}
+
+/* =========================================================
+   НАПРАВЛЕНИЯ — вариант с фото сверху (по образцу «Популярные туры»).
+   Две белые карточки рядом (скругление 16px, лёгкая тень): сверху широкое фото 870 × 325,
+   плашки «срок» и «цена» лежат прямо на фото. Под фото на белом — заголовок, подзаголовок,
+   текст и кнопка с отступом от краёв --pad-card (кнопки обеих карточек стоят на одной линии)
+   ========================================================= */
+.tours .section-head { margin-bottom: 56px; }
+.tours__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--col-gap);
+}
+.tcard {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;                                   /* фото сверху скругляется вместе с карточкой */
+  border-radius: var(--radius);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+}
+.tcard__media {
+  position: relative;
+  aspect-ratio: 870 / 325;
+  overflow: hidden;
+  background: linear-gradient(90deg, #c6bfba, #c1b9b3);
+}
+.tcard__media img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  transform: scale(1.03);                            /* у исходных фото светлая кромка по краю — прячем её за скруглением */
+}
+.tcard__tags { position: absolute; top: 16px; left: 16px; right: 16px; }
+/* полупрозрачные плашки: фото чуть просвечивает, текст читается на любом фоне */
+.tcard__tags .tag {
+  background: rgba(255, 255, 255, .8);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.tcard__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--pad-card);                           /* текст под фото — с отступом от краёв карточки */
+}
+/* заголовок карточки крупнее обычного H3 (как на образце: 34px на 1920), но всегда минимум на 6px меньше H2 */
+.tcard__title {
+  font-weight: 400;
+  font-size: min(clamp(24px, 1.771vw, 34px), calc(var(--fs-h2) - 6px));
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  color: var(--text);
+  text-wrap: balance;
+}
+.tcard__sub { margin-top: 12px; font-weight: 600; color: var(--text); }
+.tcard__desc { max-width: 640px; margin: 16px 0 32px; color: var(--muted); }
+.tcard__btn { min-width: 230px; margin-top: auto; }   /* кнопка не на всю ширину, прижата к низу карточки */
+
+/* невысокие окна десктопа: фото чуть ниже, промежутки плотнее */
+@media (min-width: 1200px) and (max-height: 800px) {
+  .tours .section-head { margin-bottom: 36px; }
+  .tcard__media { max-height: calc(100svh - 460px); }
+  .tcard__body { padding-block: 24px; }
+  .tcard__desc { margin-bottom: 24px; }
+}
+/* планшет: две колонки, фото 2 : 1 */
+@media (max-width: 1199px) {
+  .tours .section-head { margin-bottom: 48px; }
+  .tcard__media { aspect-ratio: 2 / 1; }
+  .tcard__title { font-size: var(--fs-h3); }
+  .tcard__sub { margin-top: 8px; }
+  .tcard__desc { margin-bottom: 24px; }
+  .tcard__btn { min-width: 0; }
+}
+/* телефон: лента карточек, как во втором блоке; кнопка во всю ширину, как у остальных карточек */
+@media (max-width: 767px) {
+  .tours .section-head { margin-bottom: 32px; }
+  .tours__list {
+    display: flex;
+    margin: -12px calc(-1 * var(--gut)) -32px;         /* место под тень карточек — лента её не обрезает */
+    padding: 12px var(--gut) 32px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gut);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tours__list::-webkit-scrollbar { display: none; }
+  .tcard { flex: 0 0 min(340px, 86vw); scroll-snap-align: start; }
+  .tcard__media { aspect-ratio: auto; height: clamp(140px, calc(100svh - 560px), 212px); }
+  .tcard__tags { top: 12px; left: 12px; right: 12px; }
+  .tcard__sub { margin-top: 6px; }
+  .tcard__desc { margin: 12px 0 24px; color: var(--text); }
+  .tcard__btn { align-self: stretch; }
+}
+
+/* =========================================================
+   SECTION HEAD
+   ========================================================= */
+.section-head {
+  flex: none;
+  display: flex;
+  align-items: flex-end;
+  align-items: last baseline;                         /* ссылка «Читать…» стоит на одной линии с заголовком */
+  justify-content: space-between;
+  gap: 24px 40px;
+  margin-bottom: 48px;
+}
+.section-head__text { max-width: 600px; color: var(--muted); }
+
+.tags { display: flex; flex-wrap: wrap; gap: 12px; }
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 25px;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.tag::before {
+  content: "";
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--red);
+}
+
+/* =========================================================
+   О НАС + КАРТА + ПРОЦЕСС (единственная секция выше экрана)
+   ========================================================= */
+.about {
+  position: relative;
+  max-width: 1920px;
+  margin-inline: auto;
+  padding: 15px 0 38px;
+  overflow: hidden;
+}
+.about__intro, .about__why, .about__process { position: relative; z-index: 2; }
+.about__intro { width: min(747px, 46%); margin-left: var(--edge); }
+.about__text { max-width: 660px; margin-top: 48px; }  /* строка ~75 знаков — удобная длина для чтения */
+.about__text p + p { margin-top: 16px; }
+
+.about__why { width: min(681px, 46%); margin-top: 40px; margin-left: var(--edge); }
+.about__why .h3 { margin-bottom: 28px; }
+
+.dots { --dot: 12px; display: flex; flex-direction: column; gap: 24px; }
+/* точка стоит напротив первой строки пункта, а не посередине абзаца */
+.dots li { display: flex; align-items: flex-start; gap: 20px; color: var(--text); }
+.dots li::before {
+  content: "";
+  flex: none;
+  width: var(--dot);
+  height: var(--dot);
+  margin-top: calc((1.5em - var(--dot)) / 2);
+  border-radius: 50%;
+  background: var(--red);
+}
+
+/* карты (img/karta-1.png, img/karta-2.png — «карта1» и «карта2» из папки).
+   Обе картинки — кадр всей секции целиком (1581 × 995): карта 1 стоит справа вверху,
+   карта 2 — слева внизу. Поэтому кладём их на всю ширину секции: первую — от верха, вторую — от низа */
+.about__map {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+}
+.about__map img { width: 100%; height: auto; }
+.about__fade {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  width: 7.5%;
+  height: 70%;
+  background: linear-gradient(90deg, rgba(241, 238, 233, 0), rgba(241, 238, 233, .34));
+  pointer-events: none;
+}
+.about__map2 {
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+}
+.about__map2 img { width: 100%; height: auto; }
+
+/* «Процесс работы» начинается ровно по левому краю второй карточки услуг */
+.about__process {
+  width: min(747px, 45%);
+  margin-top: 114px;
+  margin-left: calc(var(--edge) + (100% - 2 * var(--edge) + var(--col-gap)) / 2);
+}
+.about__process .h2 { margin-bottom: 40px; }
+.about__process .dots { max-width: 681px; }
+
+/* =========================================================
+   ОТЗЫВЫ
+   ========================================================= */
+.reviews__list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--col-gap);
+}
+.review {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 328px;
+  padding: var(--pad-card);
+  border-radius: var(--radius);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+}
+.review__stars { width: 98px; height: 20px; margin-left: -2px; }
+.review__text { margin-top: 20px; color: var(--text); }
+.review__author { display: flex; align-items: center; gap: 12px; color: var(--muted); }
+.review__author img { width: 22px; height: 22px; }
+
+/* =========================================================
+   БЛОГ — как в макете: большая картинка слева ровно той же высоты,
+   что три маленькие справа вместе с промежутками между ними;
+   под большой картинкой — заголовок, текст и ссылка.
+   Справа три строки: фото 5 : 4 и текст рядом
+   ========================================================= */
+.post { min-width: 0; min-height: 0; }
+.post__img { width: 100%; object-fit: cover; border-radius: var(--radius); }
+.post__title { color: var(--text); }
+.post__desc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--muted);
+}
+.post__link { color: var(--red); text-decoration: none; transition: opacity .2s ease; }
+/* посты из ВК: пока грузятся — карточки прозрачные; заголовок не длиннее 2 строк */
+.blog__grid .post { transition: opacity .35s ease; }
+.blog__grid.is-loading .post { opacity: 0; }
+.post[hidden], .post__desc[hidden] { display: none !important; }
+.post__title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.post__link:hover { opacity: .75; }
+
+/* первый блог: вместо ссылки «Читать полностью» — вся карточка-ссылка (адрес поста ставит main.js в .post__link,
+   ссылка растянута на всю карточку, текст ссылки скрыт, но читается экранными дикторами);
+   курсор над карточкой — красный круг «Узнать подробнее» (как у карточек услуг) */
+.blog:not(.blog--cards) .post { position: relative; overflow: hidden; }
+.blog:not(.blog--cards) .post__link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  margin: 0;
+  font-size: 0;
+  color: transparent;
+  border-radius: var(--radius);
+}
+.blog:not(.blog--cards) .post__link:focus-visible { outline: 3px solid var(--red); outline-offset: -3px; }
+/* шрифты — как в карточках «Направления и услуги»: заголовки Playfair Display, текст Manrope 1.3 */
+.blog:not(.blog--cards) .post__title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 500;
+  line-height: 1.3;
+  /* letter-spacing: -1px; */
+}
+.blog:not(.blog--cards) .post__desc { line-height: 1.3; }
+/* от заголовка блога до карточек — как в «Направления и услуги» (80px на 1920) */
+.blog:not(.blog--cards) .section-head { margin-bottom: clamp(40px, 4.167vw, 80px); }
+
+@media (min-width: 1200px) {
+  .blog__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;                    /* 1-я строка — картинки, 2-я — текст под большой */
+    column-gap: var(--col-gap);
+  }
+  .post--main {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    display: grid;
+    grid-template-rows: subgrid;
+  }
+  /* большая картинка не задаёт высоту строки, а растягивается на высоту трёх маленьких */
+  .post--main .post__img { height: 0; min-height: 100%; }
+  .post--main .post__body { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
+  .post--main .post__texts { display: flex; flex-direction: column; gap: 16px; }
+  .post--main .post__desc { max-width: 762px; -webkit-line-clamp: 2; }
+
+  .blog__side {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    container-type: inline-size;                      /* ширина колонки нужна для высоты строк (единицы cqw) */
+  }
+  /* строка справа: фото — около трети ширины, как в макете, по пропорции 5 : 4;
+     на невысоких экранах строки ниже, чтобы весь блог помещался под шапкой.
+     Если текст выше фото, строка растёт по тексту, фото растягивается вместе с ней */
+  .post--side {
+    display: grid;
+    grid-template-columns: 31fr 69fr;
+    column-gap: 20px;
+    min-height: min(calc((100cqw - 20px) * .248), calc((var(--fit) - 340px) / 3));
+  }
+  .post--side .post__img { height: 0; min-height: 100%; }
+  .post--side .post__body { display: flex; flex-direction: column; gap: 20px; }
+  .post--side .post__texts { display: flex; flex-direction: column; gap: 12px; }
+  .post--side .post__title { -webkit-line-clamp: 1; }   /* в макете заголовки маленьких постов — в одну строку */
+  .post--side .post__desc { -webkit-line-clamp: 2; }
+
+  /* первый блог — по сетке из 12 столбцов: большая карточка — 6 столбцов (половина контентной части),
+     колонка справа — 6; в маленькой карточке фото — 2 столбца, текст — 4 (промежутки те же, что между столбцами) */
+  .blog:not(.blog--cards) .blog__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .blog:not(.blog--cards) .post--main { grid-column: 1 / 7; }
+  /* большая карточка (фото + текст) ровно той же высоты, что три маленькие: колонка справа занимает
+     обе строки, текст под большим фото — по содержимому, фото — всё оставшееся место */
+  .blog:not(.blog--cards) .blog__grid { grid-template-rows: minmax(0, 1fr) auto; }
+  /* весь ряд карточек на 20% выше: маленькие карточки и промежутки между ними ×1,2,
+     большая карточка тянется за ними; шрифты и внутренние отступы не меняются */
+  .blog:not(.blog--cards) .blog__side { grid-column: 7 / 13; grid-row: 1 / 3; gap: 24px; }
+  .blog:not(.blog--cards) .post--side {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+    /* высота строки — по фото 5 : 4 шириной 2 столбца, плюс 20%; на невысоких экранах ниже */
+    min-height: calc(1.2 * min(calc(((100cqw - 5 * var(--col-gap)) * 2 / 6 + var(--col-gap)) * .8), calc((var(--fit) - 340px) / 3)));
+  }
+  .blog:not(.blog--cards) .post--side .post__img { grid-column: 1 / 3; }
+  .blog:not(.blog--cards) .post--side .post__body { grid-column: 3 / 7; }
+  /* заголовки всех карточек — плотнее (Medium) и до двух строк */
+  .blog:not(.blog--cards) .post__title { font-weight: 500; -webkit-line-clamp: 2; line-clamp: 2; }
+  /* размеры — как в карточках услуг: большой пост — как заголовок карточки услуги, маленькие — 24px */
+  .blog:not(.blog--cards) .post--main .post__title { font-size: clamp(26px, 1.667vw, 32px); }
+  .blog:not(.blog--cards) .post--side .post__title { font-size: 24px; }
+}
+/* на широких и достаточно высоких экранах заголовок большого поста крупнее, как в макете
+   (тот же размер, что у заголовков карточек в «Направлениях» с фото сверху) */
+@media (min-width: 1600px) and (min-height: 801px) {
+  .post--main .post__title { font-size: min(clamp(24px, 1.771vw, 34px), calc(var(--fs-h2) - 6px)); line-height: 1.15; letter-spacing: -.02em; }
+}
+
+/* =========================================================
+   КОНТАКТЫ / ФОРМА
+   ========================================================= */
+.contact__inner {
+  display: flex;
+  align-items: flex-start;
+  gap: min(103px, 5.6%);
+  padding: clamp(40px, 3vw, 56px);
+  border-radius: var(--radius);
+  background: var(--red);
+}
+.contact__info { flex: 1; min-width: 0; color: var(--white); }
+.contact__title { max-width: 780px; color: var(--white); }
+.contact__text { margin-top: 40px; }
+.socials { display: flex; flex-wrap: wrap; gap: 24px 32px; margin-top: 28px; }
+.socials a { display: block; flex: none; transition: opacity .2s ease; }
+.socials a:hover { opacity: .75; }
+.socials img { width: 72px; height: 72px; }   /* иконки соцсетей в «Свяжитесь с нами» — вдвое крупнее (было 36) */
+
+.form {
+  display: flex;
+  flex: 0 0 min(876px, 49.3%);
+  flex-direction: column;
+  gap: 48px;
+  padding: 56px 48px;
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+.form__fields { display: flex; flex-direction: column; gap: 32px; }
+.input {
+  width: 100%;
+  padding: 24px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);                    /* внутренние углы меньше внешних */
+  background: var(--white);
+  color: var(--text);
+  line-height: 1.3;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.input::placeholder { color: var(--placeholder); opacity: 1; }
+.input:focus { border-color: var(--red); box-shadow: 0 0 0 4px rgba(165, 54, 37, .10); }
+.input.is-invalid { border-color: var(--red); box-shadow: 0 0 0 2px rgba(165, 54, 37, .15); }
+.input--area { height: clamp(120px, calc(100svh - 545px), 252px); resize: none; }
+
+.check { display: flex; align-items: center; gap: 16px; color: var(--text); cursor: pointer; }
+.check a { color: inherit; text-decoration: none; }
+.check a:hover { text-decoration: underline; }
+.check input {
+  flex: none;
+  width: 20.5px;
+  height: 20.5px;
+  margin: 0;
+  border: 1.5px solid var(--text);
+  border-radius: 4px;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+.check input:checked { background: var(--red); border-color: var(--red); box-shadow: inset 0 0 0 3px var(--bg); }
+.check input.is-invalid { border-color: var(--red); box-shadow: 0 0 0 2px rgba(165, 54, 37, .25); }
+
+.form__submit { width: min(446px, 100%); padding: 16px 11px; line-height: 1.3; }
+.form__note { margin-top: -32px; }
+.form__note:empty { display: none; }
+
+/* =========================================================
+   ДРЕВО — последний блок: рисунок голых ветвей; при прокрутке сверху вниз
+   его «заливает» рисунок с листвой, край заливки неровный, как растёкшиеся чернила
+   (эффект как на heronaiapp.com; маску двигает js/main.js)
+   ========================================================= */
+.inkswap__frame {
+  position: relative;
+  aspect-ratio: 1960 / 505;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: #ede5d9;
+}
+.inkswap__base,
+.inkswap__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.inkswap__base { object-fit: cover; }
+.inkswap__svg { display: block; overflow: hidden; pointer-events: none; }
+@media (max-width: 767px) {
+  .inkswap__frame { aspect-ratio: 2 / 1; }          /* на телефоне кадр выше — середина рисунка */
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer { margin-top: var(--section-gap); background: var(--dark); }
+.footer__inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1920px;
+  height: 93px;
+  margin-inline: auto;
+  padding: 0 var(--gut);
+  overflow: hidden;
+}
+.footer__logo {
+  display: grid;
+  place-items: center;
+  width: 51px;
+  height: 51px;
+  border-radius: 50%;
+  background: var(--red);
+}
+.footer__logo img { width: 33px; height: 37px; }
+.footer__watermark, .footer__socials { display: none; }
+.footer__policy { color: var(--white); text-underline-offset: 3px; }
+.footer__policy:hover { opacity: .8; }
+
+/* =========================================================
+   1200–1599 — узкий десктоп
+   ========================================================= */
+@media (max-width: 1599px) {
+  .dcard { grid-template-columns: 58fr 42fr; }
+  .dcard__btn { min-width: 0; }
+  :root { --section-gap: 116px; --fs-body: 16px; }
+  .form { padding: 48px 40px; gap: 40px; }
+  .form__fields { gap: 24px; }
+  .form__note { margin-top: -24px; }
+  .post--side .post__body { gap: 16px; }
+}
+
+/* узкий ноутбук: карточки уже — внутренний отступ поменьше, чтобы текстовой колонке хватало места */
+@media (max-width: 1439px) {
+  :root { --pad-card: 32px; }
+}
+
+@media (max-width: 1365px) {
+  .reviews__list { grid-template-columns: repeat(2, 1fr); }
+  .review { min-height: 0; }
+  .form { flex-basis: 46%; }
+}
+
+/* =========================================================
+   ПЛАНШЕТ 768–1199
+   ========================================================= */
+@media (max-width: 1199px) {
+  :root {
+    --gut: max(36px, 5vw);
+    --section-gap: 96px;
+    --col-gap: 20px;
+    --pad-card: 32px;
+    --fs-h1: clamp(34px, 4.3vw, 44px);
+    --fs-h2: clamp(27px, 2.8vw, 32px);
+    --fs-h3: 21px;
+    --fs-body: 16px;
+  }
+
+  /* лента */
+  .marquee { --gap: 16px; --card-h: min(480px, calc(100svh - var(--hdr-h) - 2 * var(--hdr-gap) - 20px)); }
+
+  /* о нас: одна колонка, карта во всю ширину */
+  .about { padding: 0 var(--gut); }
+  .about__intro, .about__why, .about__process { width: auto; max-width: 760px; margin-left: 0; }
+  .about__map, .about__map2, .about__fade { position: relative; left: auto; top: auto; bottom: auto; }
+  .about__fade { display: none; }
+  /* на планшете и телефоне показываем из каждой картинки только саму карту, во всю ширину экрана */
+  .about__map { width: auto; aspect-ratio: 786 / 732; margin: 56px calc(-1 * var(--gut)) 0; overflow: hidden; }
+  .about__map img { position: absolute; top: -2.32%; left: -101.15%; width: 201.15%; max-width: none; }
+  .about__why { margin-top: 32px; }
+  .about__map2 { width: auto; aspect-ratio: 650 / 302; margin: 48px calc(-1 * var(--gut)) 0; overflow: hidden; }
+  .about__map2 img { position: absolute; top: -229.47%; left: 0; width: 243.23%; max-width: none; }
+  .about__process { margin-top: 48px; }
+
+  /* блог: лента карточек, видно две и край третьей */
+  .blog { max-height: none; }
+  .blog__grid {
+    display: flex;
+    gap: 20px;
+    margin-inline: calc(-1 * var(--gut));
+    padding-inline: var(--gut);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gut);
+    scrollbar-width: none;
+  }
+  .blog__grid::-webkit-scrollbar { display: none; }
+  .blog__side { display: contents; }
+  .post, .post--side { flex: 0 0 44%; display: flex; flex-direction: column; gap: 16px; max-height: none; scroll-snap-align: start; }
+  .post .post__img, .post--main .post__img, .post--side .post__img { flex: none; height: auto; min-height: 0; aspect-ratio: 16 / 10; }
+  .post .post__body, .post--main .post__body, .post--side .post__body { flex: 1; margin-top: 0; gap: 16px; }
+  .post .post__texts, .post--main .post__texts, .post--side .post__texts { gap: 12px; }
+  .post .post__desc { -webkit-line-clamp: 3; }
+  .post .post__link { margin-top: auto; }
+
+  /* контакты */
+  .form { flex-basis: 50%; padding: 40px 32px; gap: 32px; }
+  .socials { gap: 16px 20px; }                       /* крупные иконки соцсетей — в один ряд и на планшете */
+  .form__fields { gap: 20px; }
+  .form__note { margin-top: -20px; }
+  .input { padding: 18px 20px; }
+}
+
+/* планшет в альбомной ориентации: H1 подстраивается под высоту */
+@media (min-width: 768px) and (max-width: 1199px) and (orientation: landscape) {
+  :root { --fs-h1: clamp(34px, 11.1vh - 44px, 44px); }
+}
+
+/* шапка: полноценная от 1024px, ниже — компактная */
+@media (max-width: 1023px) {
+  :root { --hdr-h: 50px; --hdr-gap: 12px; }
+  .contact__inner { flex-direction: column; gap: 40px; }
+  .form { flex: none; width: 100%; }
+  .input--area { height: clamp(120px, calc(100svh - 700px), 200px); }
+  .header { width: auto; margin-inline: var(--gut); }
+  .header__bar { display: none; }
+  .header__mobile { display: flex; align-items: center; justify-content: space-between; }
+}
+
+@media (max-width: 899px) {
+  .section-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+
+  /* горизонтальные ленты: отзывы, блог */
+  .scroller {
+    display: flex;
+    gap: 16px;
+    margin-inline: calc(-1 * var(--gut));
+    padding-inline: var(--gut);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gut);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .scroller::-webkit-scrollbar { display: none; }
+  .scroller > * { scroll-snap-align: start; }
+
+  .review { flex: 0 0 min(400px, 70%); }
+  /* место под тень карточек отзывов — лента её не обрезает */
+  .reviews__list.scroller { margin-block: -8px -32px; padding-block: 8px 32px; }
+}
+
+/* =========================================================
+   МОБИЛЬНЫЙ < 768
+   ========================================================= */
+@media (max-width: 767px) {
+  :root {
+    --gut: 18px;
+    --section-gap: 72px;
+    --pad-card: 16px;
+    --col-gap: 10px;
+    --fs-h1: 30px;
+    --fs-h2: 24px;
+    --fs-h3: 19px;
+    --fs-body: 14px;
+  }
+
+  .section-head { gap: 16px; margin-bottom: 32px; }
+  .section-head__text { color: var(--muted); }
+  .link-more { color: var(--red); }
+
+  .scroller { gap: var(--col-gap); }
+
+  /* лента */
+  .marquee { --gap: 10px; --card-w: 300px; --card-h: 300px; --duration: 68s; }
+  .mcard--green, .mcard--red, .mcard--orange { padding: 16px; gap: 12px; }
+  .mcard__text { line-height: 1.35; }                 /* карточка 300 × 300 — текст плотнее, чтобы поместился */
+  .tags { gap: 8px; }
+  .tag { gap: 6px; padding: 4px 10px; border-radius: 100px; color: var(--text); }
+  .tag::before { width: 6px; height: 6px; }
+
+  /* о нас */
+  .about__text { margin-top: 32px; }
+  .about__text p { color: var(--muted); }
+  .about__text p + p { margin-top: 8px; }
+  .about__map { margin-top: 24px; }
+  .about__why { margin-top: 30px; }
+  .dots { --dot: 8px; gap: 16px; }
+  .dots li { gap: 14px; }
+  .about__map2 { margin-top: 32px; }
+  .about__process { margin-top: 32px; }
+
+  /* отзывы */
+  .review { flex: 0 0 334px; max-width: 84vw; gap: 16px; padding: 24px; min-height: 0; justify-content: flex-start; }
+  .review__author { gap: 8px; }
+  .review__author img { width: 18px; height: 18px; }
+
+  /* блог */
+  .post, .post--side { flex: 0 0 336px; max-width: 84vw; gap: 14px; }
+  .blog__grid { gap: var(--col-gap); }
+  .post .post__img, .post--main .post__img, .post--side .post__img { aspect-ratio: 336 / 201; }
+  .post .post__body, .post--main .post__body, .post--side .post__body { gap: 14px; display: flex; flex-direction: column; }
+  .post .post__desc { color: var(--text); }
+  .post .post__link { color: var(--text); display: none; }
+  .post__btn-mobile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--red);
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: auto;
+  }
+  .post__btn-icon {
+    display: inline-block;
+    flex-shrink: 0;
+  }
+}
+
+/* планшет и телефон: показываем кнопку в блоге вместо cursor эффекта */
+@media (max-width: 1199px) {
+  .post__btn-mobile { display: flex !important; }
+  .post .post__link { display: none !important; }
+}
+
+  /* форма: красный блок во всю ширину */
+  .contact.container { width: 100%; }
+  .contact__inner { gap: 32px; padding: 32px var(--gut); border-radius: 0; }
+  .contact__text, .contact .socials { display: none; }
+  .form { gap: 32px; padding: 0; background: transparent; }
+  .form__fields { gap: 16px; }
+  .input { padding: 12px 14px; }
+  .input:not(.input--area) { height: 52px; }
+  .input--area { height: clamp(100px, calc(100svh - 520px), 252px); }
+  .check { align-items: flex-start; gap: 16px; line-height: 1.5; color: var(--white); }
+  .check input { width: 21px; height: 21px; border-color: var(--white); }
+  .check input:checked { background: var(--white); border-color: var(--white); box-shadow: inset 0 0 0 4px var(--red); }
+  .form__submit { width: 100%; height: 52px; background: var(--white); color: var(--text); }
+  .form__submit:hover { background: var(--bg); }
+  .form__note { margin-top: -16px; color: var(--white); }
+
+  /* подвал */
+  .footer { margin-top: 0; }
+  .footer__inner { flex-direction: column; align-items: stretch; gap: 8px; height: auto; padding: 20px var(--gut); }
+  .footer__logo { display: none; }
+  .footer__watermark {
+    display: block;
+    position: absolute;
+    top: 5px;
+    left: 16px;
+    width: 104px;
+    height: 116px;
+    opacity: .1;
+    pointer-events: none;
+  }
+  .footer__socials { position: relative; display: flex; justify-content: flex-end; gap: 32px; }
+  .footer__socials img { width: 34px; height: 34px; }
+  .footer__policy { position: relative; align-self: flex-end; }
+}
+
+@media (min-width: 420px) and (max-width: 767px) {
+  .marquee { --card-w: 330px; --card-h: 330px; }
+}
+
+/* невысокие окна десктопа: блог компактнее, чтобы влезал под шапку */
+@media (min-width: 1200px) and (max-height: 800px) {
+  .post--side .post__body { gap: 8px; }
+  .post--side .post__texts { gap: 8px; }
+  .post--side .post__desc { -webkit-line-clamp: 2; }
+  .post--main .post__texts { gap: 12px; }
+  .blog .section-head { margin-bottom: 36px; }
+  /* «Направления»: карточки чуть плотнее, чтобы блок помещался под шапкой */
+  .directions .section-head { margin-bottom: 36px; }
+  .dcard__body { gap: 24px; }
+  .dcard__tags { margin-top: 16px; }
+  .dcard__btn { margin-top: 16px; }
+}
+
+/* направления: планшет — лента карточек, телефон — фото сверху */
+@media (max-width: 1199px) {
+  .directions { max-height: none; }
+  .directions .section-head { margin-bottom: 48px; }
+  .directions__list {
+    display: flex;
+    gap: var(--col-gap);
+    margin: -12px calc(-1 * var(--gut)) -32px;         /* место под тень карточек — лента её не обрезает */
+    padding: 12px var(--gut) 32px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gut);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .directions__list::-webkit-scrollbar { display: none; }
+  .dcard { flex: 0 0 min(720px, 86%); grid-template-columns: 56fr 44fr; min-height: 420px; scroll-snap-align: start; }
+}
+/* планшет: плашки «срок» и «цена» помещаются в одну строку */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .tags { gap: 8px; }
+  .tag { padding: 5px 12px; }
+}
+
+/* десктоп: подзаголовок «Направлений» начинается ровно над второй карточкой */
+@media (min-width: 1200px) {
+  .directions .section-head,
+  .tours .section-head { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--col-gap); }
+}
+@media (max-width: 767px) {
+  .directions .section-head { margin-bottom: 32px; }
+  .directions__list { gap: var(--col-gap); }
+  .dcard { flex-basis: min(340px, 86vw); display: flex; flex-direction: column; min-height: 0; }
+  .dcard__media { order: -1; flex: none; height: clamp(110px, calc(100svh - 530px), 180px); }
+  .dcard__body { flex: 1; gap: 24px; padding: 16px; }
+  .dcard__sub { margin-top: 6px; }
+  .dcard__tags { margin-top: 16px; }
+  .dcard__desc { color: var(--text); }
+  .dcard__bottom { display: flex; flex-direction: column; }
+  .dcard__btn { align-self: stretch; margin-top: 24px; }
+}
+
+/* =========================================================
+   БЛОГ — ВАРИАНТ 2 (проба, блок #blog-cards сразу под основным блогом).
+   Каждая статья — белая карточка со скруглением 16px, как в макете:
+   картинка прилегает к краям карточки и скругляется вместе с ней,
+   текст — с отступом внутри карточки. Слева большая карточка ровно той же
+   высоты, что три маленькие справа вместе с промежутками; промежутки между
+   всеми карточками одинаковые (--col-gap) — карточки стоят по сетке.
+   Основной блог выше не меняется
+   ========================================================= */
+.blog--cards { --post-pad: clamp(20px, 1.667vw, 32px); }  /* 32px на 1920, как в макете */
+.blog--cards .post {
+  overflow: hidden;                                   /* картинка обрезается по скруглению карточки */
+  border-radius: var(--radius);
+  background: var(--white);
+}
+.blog--cards .post__img { display: block; border-radius: 0; }
+.blog--cards .post__body { padding: var(--post-pad); }
+
+@media (min-width: 1200px) {
+  .blog--cards .blog__grid { grid-template-rows: auto; gap: var(--col-gap); }
+  /* большая карточка: текст снизу, картинка занимает всё место над ним */
+  .blog--cards .post--main { grid-row: 1; display: flex; flex-direction: column; }
+  .blog--cards .post--main .post__img { flex: 1 1 0; height: 0; min-height: 0; }
+  .blog--cards .post--main .post__body { flex: none; margin-top: 0; }
+  .blog--cards .blog__side { gap: var(--col-gap); }
+  /* маленькая карточка: фото на треть ширины во всю высоту карточки (около 5 : 4), текст справа;
+     на невысоких экранах карточки ниже, чтобы весь блок помещался под шапкой */
+  .blog--cards .post--side {
+    grid-template-columns: 1fr 2fr;
+    column-gap: 0;
+    min-height: min(calc(100cqw * .267), calc((var(--fit) - 150px - 2 * var(--col-gap)) / 3));
+  }
+  /* текст маленькой карточки — с отступом 16px от краёв белого поля; «Читать полностью» прижата к низу */
+  .blog--cards .post--side .post__body { padding: 16px; }
+  .blog--cards .post--side .post__link { margin-top: auto; }
+  /* заголовок маленькой карточки — 24px, до двух строк (дальше многоточие) */
+  .blog--cards .post--side .post__title { font-size: 24px; -webkit-line-clamp: 2; line-clamp: 2; }
+}
+/* планшет и телефон: лента карточек — фото сверху во всю ширину карточки, текст под ним */
+@media (max-width: 1199px) {
+  .blog--cards .post, .blog--cards .post--side { gap: 0; }
+  .blog--cards .post .post__body { display: flex; flex-direction: column; gap: 20px; padding: 24px; }
+  .blog--cards .post .post__texts { display: flex; flex-direction: column; gap: 12px; }
+}
+@media (max-width: 767px) {
+  .blog--cards .post .post__body { gap: 16px; padding: var(--pad-card); }
+  .blog--cards .post .post__texts { gap: 8px; }
+}

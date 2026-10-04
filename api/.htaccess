@@ -1,0 +1,5 @@
+# Настройки и кэш блога ВК не должны открываться из браузера
+<FilesMatch "^(vk-config\.php|README\.md)$">
+  Require all denied
+</FilesMatch>
+RedirectMatch 403 ^/?(.*/)?api/cache/

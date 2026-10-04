@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed -i -e '268,323d' -e '67,177d' -e 's/<a href=\"#services\">Родословная книга<\\\\/a>/<a href=\"#directions\">Родословная книга<\\\\/a>/' -e '14s/class=\"header header--sticky\"/class=\"header header--sticky header--dark\"/' index.html && sed -n '12,16p;62,72p' index.html && grep -n '#services\\\\|#process\\\\|id=\"process\"' index.html)"
+    ],
+    "additionalDirectories": [
+      "C:\\delete_later\\familia_tree"
+    ]
+  }
+}

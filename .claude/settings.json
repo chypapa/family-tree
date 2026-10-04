@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed -i '126s|<h2 class=\"focus__title\" id=\"focus-title\">\\\\\\(.*\\\\\\)</h2>|<h1 class=\"focus__title\" id=\"focus-title\">\\\\1</h1>|' index.html && sed -n '126p' index.html)",
+      "Bash(grep -n -B1 -A3 '^/\\\\* НАПРАВЛЕНИЯ — вариант с фото сверху\\\\|НАПРАВЛЕНИЯ — вариант с фото сверху' css/style.css)",
+      "Bash(sort -t: -k3 -u)",
+      "Bash(sed -i -e '438,493s|<article class=\"post post--\\\\\\(main\\\\|side\\\\\\)\">|<article class=\"post post--\\\\1 has-cursor\">|' -e '438,493s|^\\\\\\( *\\\\\\)</article>|\\\\1  <span class=\"cursor-bubble\" aria-hidden=\"true\">Узнать подробнее</span>\\\\n\\\\1</article>|' index.html)",
+      "Bash(sed -i -e 's|<a class=\"svc-card\" href=\"#contact\">|<a class=\"svc-card has-cursor\" href=\"#contact\">|' -e 's|<span class=\"svc-card__cursor\" aria-hidden=\"true\">|<span class=\"cursor-bubble\" aria-hidden=\"true\">|' index.html)",
+      "mcp__claude_ai_Figma__get_metadata",
+      "Bash(awk '{print $5, $NF}')"
+    ],
+    "additionalDirectories": [
+      "C:\\delete_later\\familia_tree"
+    ]
+  }
+}
