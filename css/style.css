@@ -229,9 +229,8 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
   height: var(--hdr-h);
   padding: 0 var(--edge);                           /* содержимое — по краям контентной части, как у всех блоков */
   background: var(--red);
-  border-radius: 0 0 var(--radius) var(--radius);   /* скругление только снизу, без тени */
+  border-radius: 0;                                  /* без скругления и без тени */
 }
-.header--dark .header__bar { background: var(--green); }   /* обычный цвет шапки — зелёный */
 .header__left, .header__right { display: flex; align-items: center; }
 .header__left { gap: var(--s-48); }
 .header__logo img { width: 33px; height: 37px; }
@@ -283,7 +282,7 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
   background: var(--red);
   cursor: pointer;
 }
-.header--dark .header__pill, .header--dark .icon-btn, .header--dark .mobile-menu { background: var(--green); }
+.mobile-menu { background: var(--red); }          /* меню шапки всегда красное */
 
 /* над первым экраном (пока страница не прокручена) заливки у шапки нет — она появляется при прокрутке (класс is-top ставит main.js) */
 .header--sticky.is-top .header__bar,
@@ -296,7 +295,7 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
 .header__pill .logo-mark { width: 26px; height: 28px; }
 .mark { display: block; width: 100%; height: 100%; overflow: visible; }
 
-/* шапка закреплена вверху окна; зелёная, а над блоком «Найдём историю» (.focus) — красная: main.js снимает класс header--dark */
+/* шапка закреплена вверху окна, всегда красная */
 .header--sticky { position: sticky; top: var(--hdr-gap); z-index: 50; margin-top: var(--hdr-gap); }
 .header--sticky .header__bar, .header--sticky .header__pill,
 .header--sticky .icon-btn, .header--sticky .mobile-menu { transition: background-color .45s ease; }
@@ -307,8 +306,7 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
   left: 0;
   right: 0;
   padding: var(--s-24);
-  border-radius: var(--radius);
-  /* background: var(--red); */
+  border-radius: 0;
   color: var(--white);
   box-shadow: 0 16px 40px rgba(0, 0, 0, .18);
 }
@@ -850,10 +848,16 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
    ========================================================= */
 /* отступы сверху и снизу — у .russia__content (картинка фона прижата к низу блока, под текстом для неё оставлено место) */
 .russia.section { padding-block: 0; }
+/* наплыв: блок «Услуги» замирает внизу окна (top — отрицательный, ставит main.js), красный блок наезжает на него
+   и заполняет экран целиком; дальше уезжает вверх. Доводку прокрутки до краёв блока делает main.js */
+.overlay-stack { position: relative; }
+.overlay-stack > .svc { position: sticky; top: var(--stick, 0px); z-index: 0; }
 .russia {
   position: relative;
+  z-index: 1;
   overflow: hidden;
-  min-height: calc(100vw * 969 / 1920);                 /* как картинка: высота = ширина × 969 / 1920 */
+  min-height: max(calc(100vw * 969 / 1920), 100vh);   /* как картинка (ширина × 969 / 1920), но не ниже окна */
+  min-height: max(calc(100vw * 969 / 1920), 100svh);
   background: var(--red) url("../img/3-sec.png") right bottom / 100% auto no-repeat;
   color: var(--white);
 }
@@ -896,7 +900,7 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
 /* планшет: текст сверху во всю ширину, под ним картинка целиком (место под неё — нижний отступ
    высотой с картинку: 969 / 1920 = 50.47% ширины блока) */
 @media (max-width: 1199px) {
-  .russia { min-height: 0; }
+  .russia { min-height: 100vh; min-height: 100svh; }
   .russia__content {
     width: auto;
     max-width: calc(754px + 2 * var(--edge));
@@ -1256,6 +1260,7 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
    ========================================================= */
 /* по макету Figma (plat-fam, 261:52): красная плашка шириной с контент страницы, скругление 16px;
    слева заголовок, подпись и иконки соцсетей, справа светлая карточка формы */
+.contact.section { padding-bottom: calc(var(--section-pad) / 2); }   /* до подвала — половина обычного отступа */
 .contact__inner {
   display: flex;
   align-items: flex-start;
