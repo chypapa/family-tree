@@ -893,8 +893,8 @@ section[hidden] { display: none !important; }       /* скрытые блоки
   font-family: "Playfair Display", Georgia, serif;
   font-weight: 500;
   font-size: clamp(32px, 2.5vw, 48px);
-  line-height: 1.3;
-  letter-spacing: -1px;
+  line-height: 1;
+  /* letter-spacing: -1px; */
   color: var(--white);
 }
 .russia__text { font-size: 18px; line-height: 1.3; }
@@ -1333,13 +1333,13 @@ section[hidden] { display: none !important; }       /* скрытые блоки
   font-family: "Playfair Display", Georgia, serif;
   font-weight: 600;
   font-size: clamp(32px, 2.5vw, 48px);
-  line-height: 1.3;
+  line-height: .95;
 }
 .contact__text { margin-top: 40px; }
-.socials { display: flex; flex-wrap: wrap; gap: 24px 50px; margin-top: 24px; }
+.socials { display: flex; flex-wrap: wrap; gap: 24px 40px; margin-top: 24px; }
 .socials a { display: block; flex: none; transition: opacity .2s ease; }
 .socials a:hover { opacity: .75; }
-.socials img { width: 67px; height: 67px; }
+.socials img { width: 57px; height: 57px; }
 .reviews__heading {
   font-family: "Playfair Display", Georgia, serif;
   font-weight: 500;
@@ -1789,4 +1789,14 @@ section[hidden] { display: none !important; }       /* скрытые блоки
 @media (max-width: 767px) {
   .blog--cards .post .post__body { gap: 16px; padding: var(--pad-card); }
   .blog--cards .post .post__texts { gap: 8px; }
+}
+
+/* широкий экран: от заголовка H2 до текста — 40px, до блоков (карточки, ленты) — 60px */
+@media (min-width: 1200px) {
+  .russia__intro { gap: 40px; }                                    /* H2 → текст */
+  .contact__text { margin-top: 40px; }                             /* H2 → текст */
+  .svc { gap: 60px; }                                              /* H2 → карточки услуг */
+  .reviews .section-head,
+  .blog .section-head,
+  .blog:not(.blog--cards) .section-head { margin-bottom: 60px; }  /* H2 → карточки отзывов и блога */
 }
