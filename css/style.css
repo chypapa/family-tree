@@ -1800,3 +1800,32 @@ section[hidden] { display: none !important; }       /* скрытые блоки
   .blog .section-head,
   .blog:not(.blog--cards) .section-head { margin-bottom: 60px; }  /* H2 → карточки отзывов и блога */
 }
+
+/* ---------- Единые размеры заголовков на всех ширинах ----------
+   H2: «Направления и услуги», «Находим предков…», «Отзывы…», «Наш блог», «Свяжитесь с нами…»
+   H3: заголовки карточек услуг, «Почему мы?», заголовки постов блога */
+:root { --title-h2: clamp(32px, 2.5vw, 48px); --title-h3: clamp(24px, 1.667vw, 32px); }
+@media (max-width: 1199px) { :root { --title-h2: 32px; --title-h3: 24px; } }
+@media (max-width: 767px)  { :root { --title-h2: 26px; --title-h3: 20px; } }
+
+.svc__heading,
+.russia__title,
+.reviews .section-head .h2.reviews__heading,
+.blog:not(.blog--cards) .section-head .h2,
+.contact .contact__title { font-size: var(--title-h2); line-height: 1.15; }
+
+.svc-card__title,
+.russia__subtitle,
+.blog:not(.blog--cards) .post__title,
+.blog:not(.blog--cards) .post--main .post__title,
+.blog:not(.blog--cards) .post--side .post__title { font-size: var(--title-h3); line-height: 1.3; }
+
+/* ---------- 768–1199: ссылки в «Отзывах» и «Блоге» красные, в карточках прижаты к низу;
+   от заголовка поста до текста — 24px ---------- */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .reviews .link-more, .blog .link-more { color: var(--red); }
+  .blog .post { display: flex; flex-direction: column; }
+  .blog .post .post__body { display: flex; flex-direction: column; flex: 1; }
+  .blog .post .post__texts { display: flex; flex-direction: column; gap: 24px; }
+  .blog .post .post__btn-mobile { margin-top: auto; color: var(--red); }
+}
