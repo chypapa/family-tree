@@ -1628,8 +1628,8 @@ section[hidden] { display: none !important; }       /* скрытые блоки
   .post .post__link { color: var(--text); display: none; }
   .post__btn-mobile {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    align-items: flex-end;
+    gap: 4px;
     color: var(--red);
     text-decoration: none;
     font-weight: 500;
@@ -1678,7 +1678,9 @@ section[hidden] { display: none !important; }       /* скрытые блоки
 
 /* планшет и телефон: в блоге вместо круга-курсора — ссылка «Читать полностью» со стрелкой */
 @media (max-width: 1199px) {
-  .post__btn-mobile { display: flex !important; }
+  .post__btn-mobile { display: flex !important; align-items: flex-end; gap: 4px; }
+  .post__btn-icon { align-self: flex-end; flex-shrink: 0; }
+  .post__btn-icon path { stroke-width: calc(1 / 1.5); }
   .post .post__link { display: none !important; }
 }
 
