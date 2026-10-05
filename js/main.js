@@ -101,6 +101,62 @@
     updateHeader();
   }
 
+  /* ---------- Наплыв красного блока (.russia): «Услуги» замирают внизу окна, красный блок наезжает на них.
+     С мышью/тачпадом прокрутка доводится сама: чуть прокрутили вниз — блок заполняет весь экран,
+     ещё чуть — уезжает вверх целиком (и так же в обратную сторону) ---------- */
+  (function () {
+    var stack = document.querySelector('.overlay-stack');
+    var block = stack && stack.querySelector('.russia');
+    var under = stack && stack.querySelector('.svc');
+    if (!block || !under) return;
+
+    var setStick = function () {
+      stack.style.setProperty('--stick', Math.min(0, window.innerHeight - under.offsetHeight) + 'px');
+    };
+    window.addEventListener('resize', setStick);
+    window.addEventListener('load', setStick);
+    setStick();
+
+    var lenis = window.lenis;
+    if (!lenis || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    var busy = false;       // идёт доводка или пауза после неё
+    var lastInput = 0;      // доводим только прокрутку самого человека, а не переходы по якорям
+    var mark = function () { lastInput = Date.now(); };
+    window.addEventListener('wheel', mark, { passive: true });
+    window.addEventListener('keydown', mark);
+
+    var snap = function (y) {
+      busy = true;
+      lenis.scrollTo(y, {
+        duration: 0.9,
+        easing: function (t) { return 1 - Math.pow(1 - t, 3); },
+        lock: true,
+        force: true,
+        onComplete: function () {
+          lenis.stop();                                   // гасим инерцию тачпада, чтобы блок не проскочил дальше
+          setTimeout(function () { lenis.start(); busy = false; }, 450);
+        }
+      });
+    };
+
+    lenis.on('scroll', function (l) {
+      if (busy || Date.now() - lastInput > 250) return;
+      var vh = window.innerHeight;
+      var r = block.getBoundingClientRect();
+      var top = r.top + window.scrollY;
+      var bottom = r.bottom + window.scrollY;
+      var e = 2;
+      if (l.direction > 0) {
+        if (r.top > e && r.top < vh - e) snap(top);                                  // показался — на весь экран
+        else if (r.bottom > e && r.bottom < vh - e) snap(bottom);                    // дошли до низа — уезжает вверх
+      } else if (l.direction < 0) {
+        if (r.bottom > e && r.bottom < vh - e) snap(Math.max(top, bottom - vh));     // показался сверху — на весь экран
+        else if (r.top > e && r.top < vh - e) snap(top - vh);                        // уезжает вниз целиком
+      }
+    });
+  })();
+
   /* ---------- Мобильное меню (в каждой шапке своё) ---------- */
   var burgers = document.querySelectorAll('.header__burger');
 
