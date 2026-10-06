@@ -101,27 +101,16 @@
     updateHeader();
   }
 
-  /* ---------- Наплыв красного блока (.russia): «Услуги» замирают внизу окна, красный блок наезжает на них.
-     С мышью/тачпадом прокрутка доводится сама: чуть прокрутили вниз — блок заполняет весь экран,
-     ещё чуть — уезжает вверх целиком (и так же в обратную сторону) ---------- */
+  /* ---------- Блог (#blog, пятый блок) «прилипает» к верху окна. С мышью/тачпадом прокрутка доводится сама:
+     чуть прокрутили вниз — блок встаёт верхним краем к верху окна, ещё чуть — уезжает вверх целиком
+     (и так же в обратную сторону). Переходы по якорям и прокрутку пальцем не трогаем ---------- */
   (function () {
-    var stack = document.querySelector('.overlay-stack');
-    var block = stack && stack.querySelector('.russia');
-    var under = stack && stack.querySelector('.svc');
-    if (!block || !under) return;
-
-    var setStick = function () {
-      stack.style.setProperty('--stick', Math.min(0, window.innerHeight - under.offsetHeight) + 'px');
-    };
-    window.addEventListener('resize', setStick);
-    window.addEventListener('load', setStick);
-    setStick();
-
+    var block = document.getElementById('blog');
     var lenis = window.lenis;
-    if (!lenis || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (!block || !lenis || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
     var busy = false;       // идёт доводка или пауза после неё
-    var lastInput = 0;      // доводим только прокрутку самого человека, а не переходы по якорям
+    var lastInput = 0;      // доводим только прокрутку самого человека
     var mark = function () { lastInput = Date.now(); };
     window.addEventListener('wheel', mark, { passive: true });
     window.addEventListener('keydown', mark);
@@ -148,11 +137,11 @@
       var bottom = r.bottom + window.scrollY;
       var e = 2;
       if (l.direction > 0) {
-        if (r.top > e && r.top < vh - e) snap(top);                                  // показался — на весь экран
-        else if (r.bottom > e && r.bottom < vh - e) snap(bottom);                    // дошли до низа — уезжает вверх
+        if (r.top > e && r.top < vh - e) snap(top);                                  // показался — встаёт к верху окна
+        else if (r.top < -e && r.bottom > e && r.bottom <= vh + e) snap(bottom);     // дошли до низа — уезжает вверх
       } else if (l.direction < 0) {
-        if (r.bottom > e && r.bottom < vh - e) snap(Math.max(top, bottom - vh));     // показался сверху — на весь экран
-        else if (r.top > e && r.top < vh - e) snap(top - vh);                        // уезжает вниз целиком
+        if (r.top > e && r.top < vh - e) snap(Math.max(0, top - vh));                // сдвинулся вниз — уезжает вниз целиком
+        else if (r.top < -e && r.bottom > e && r.bottom < vh - e) snap(Math.max(top, bottom - vh));   // показался сверху — снова у верха окна
       }
     });
   })();
