@@ -842,8 +842,7 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
    img/about/region-top.png и region-bottom.png — области-контуры в правых углах.
    Всё, что зависит от макета, считаем в долях ширины окна: 1px макета = 100vw / 1920.
    — от 1200px: карта слева сверху, колонка текста с 971px макета; угловые области не задевают текст;
-   — 768–1199px: заголовок и текст сверху, карта полосой под ними, угловые области остаются;
-   — до 768px: как в макете для телефона — без угловых областей
+   — до 1200px: одна колонка по левому краю контента, под ней карта (своя картинка для планшета и телефона)
    ========================================================= */
 .russia.section { padding-block: var(--section-pad); }
 .russia {
@@ -918,38 +917,25 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
   background: url("../icons/bullet-white.svg") center / 12px 12px no-repeat;
 }
 
-/* до 1200px: заголовок и текст одной колонкой, под ними карта. Фото в полосе — примерно 72% ширины,
-   правый край картинки уходит за край экрана, верх (линия над фото) срезан */
+/* до 1200px: одна колонка — заголовок и текст по левому краю контентной части страницы, под ними карта
+   во всю ширину блока, прижата к низу (img/about/sec-3-tablet.png, на телефоне sec-3-mobile.png).
+   Угловые области убираем */
 @media (max-width: 1199px) {
-  .russia {
-    min-height: 0;
-    padding-inline: 0;
-    padding-bottom: calc(100vw * 107 / 1920 + var(--s-16));   /* место под нижнюю угловую область — ниже карты */
-  }
-  .russia__title, .russia__content { padding-inline: var(--edge); }
-  .russia__title {
-    font-size: var(--fs-h2);
-    white-space: normal;
-    max-width: calc(100% - 100vw * 336 / 1920 - var(--s-16));  /* левее верхней угловой области */
-    box-sizing: border-box;
-  }
+  .russia { min-height: 0; padding-bottom: 0; }
+  .russia__region { display: none; }
+  .russia__title { font-size: var(--fs-h2); white-space: normal; }
   .russia__content { max-width: 754px; margin: var(--gap-text) 0 0; gap: var(--s-48); }
   .russia__why { gap: var(--s-24); }
   .russia__decor {
     order: 1;                                           /* карта — под текстом */
     position: relative;
     width: auto;
-    margin-top: var(--s-48);
-    overflow: hidden;
+    margin: var(--s-48) calc(-1 * var(--edge)) 0;       /* во всю ширину блока, за полями страницы */
     -webkit-mask-image: none;
             mask-image: none;
   }
-  .russia__map { width: 122%; max-width: none; margin: -23.7% 0 0 10%; }   /* срез сверху — 230px картинки */
 }
 @media (max-width: 767px) {
-  .russia { padding-bottom: 0; }
-  .russia__region { display: none; }
-  .russia__title { max-width: none; }
   .russia__title-wide { display: none; }
   .russia__title-phone { display: inline; }
   .russia__intro .russia__subtitle { display: none; }   /* в макете телефона «О нас» нет — текст сразу под заголовком */

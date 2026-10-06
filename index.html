@@ -265,10 +265,14 @@
     <!-- ============ О НАС — красный блок по макету Figma (plat-fam, «Desktop - 3» и «iPhone 17 - 4»):
          слева карта (фото в контуре области + линии границ), справа колонка текста; на телефоне карта под текстом ============ -->
     <section class="russia section" id="about" aria-labelledby="russia-title">
-      <!-- карта: фото в контуре области и линии границ (одна картинка, видна на всех экранах);
-           по углам справа — две области-контура (на телефоне не показываем) -->
+      <!-- карта: фото в контуре области и линии границ — своя картинка для компьютера, планшета и телефона;
+           по углам справа — две области-контура (только в двухколоночной раскладке, от 1200px) -->
       <div class="russia__decor" aria-hidden="true">
-        <img class="russia__map" src="img/about/sec-3.webp" width="1182" height="1119" alt="" loading="lazy" decoding="async">
+        <picture>
+          <source media="(max-width: 767px)" srcset="img/about/sec-3-mobile.png" width="402" height="657">
+          <source media="(max-width: 1199px)" srcset="img/about/sec-3-tablet.png" width="1001" height="763">
+          <img class="russia__map" src="img/about/sec-3.webp" width="1182" height="1119" alt="" loading="lazy" decoding="async">
+        </picture>
       </div>
       <img class="russia__region russia__region--top" src="img/about/region-top.png" width="336" height="172" alt="" aria-hidden="true">
       <img class="russia__region russia__region--bottom" src="img/about/region-bottom.png" width="277" height="107" alt="" aria-hidden="true">
