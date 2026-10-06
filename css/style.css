@@ -837,50 +837,82 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
 }
 
 /* =========================================================
-   НАХОДИМ ПРЕДКОВ — красный блок на всю ширину окна. Фон — картинка:
-   img/3-sec.png (1920 × 969: левые ~45% однотонные, справа карта с фото),
-   на телефоне img/3-sec-mob.png (404 × 1216: верхние ~64% однотонные, внизу карта с фото).
-   Картинка прижата к низу блока на всю его ширину, выше неё — тот же красный.
-   Текст всегда на однотонной части:
-   — от 1200px текст слева и не шире 45% блока (дальше начинается рисунок);
-   — 600–1199px текст во всю ширину сверху, картинка целиком под ним;
-   — до 600px мобильная картинка, под текстом оставлено место ровно под рисунок
+   О НАС — красный блок на всю ширину окна, по макету Figma (plat-fam, узел 374:139, кадр 1920 × 1119).
+   Три объекта, которые не должны наезжать друг на друга:
+   1) группа «карта»: фото в контуре области + линии границ (img/about/line-*.svg) — слева;
+   2) две области-контура по углам справа (img/about/region-*.svg);
+   3) текст: заголовок слева сверху, «О нас» и «Почему мы?» — колонкой справа.
+   Картинки масштабируются вместе с шириной блока: --u — один пиксель макета (100cqw / 1920).
+   — от 1200px: как в макете, колонка текста начинается правее карты (с 971px макета),
+     сверху и снизу у неё отступ не меньше высоты угловых областей;
+   — до 1200px: заголовок и текст сверху, карта отдельной полосой под ними
    ========================================================= */
-/* отступы сверху и снизу — у .russia__content (картинка фона прижата к низу блока, под текстом для неё оставлено место) */
-.russia.section { padding-block: 0; }
-/* наплыв: блок «Услуги» замирает внизу окна (top — отрицательный, ставит main.js), красный блок наезжает на него
-   и заполняет экран целиком; дальше уезжает вверх. Доводку прокрутки до краёв блока делает main.js */
-.overlay-stack { position: relative; }
-.overlay-stack > .svc { position: sticky; top: var(--stick, 0px); z-index: 0; }
+.russia.section { padding-block: var(--section-pad); }
 .russia {
+  --u: calc(100cqw / 1920);
+  container-type: inline-size;
   position: relative;
-  z-index: 1;
   overflow: hidden;
-  min-height: max(calc(100vw * 969 / 1920), 100vh);   /* как картинка (ширина × 969 / 1920), но не ниже окна */
-  min-height: max(calc(100vw * 969 / 1920), 100svh);
-  background: var(--red) url("../img/3-sec.png") right bottom / 100% auto no-repeat;
+  display: grid;
+  grid-template-columns: calc(971 * var(--u) - var(--edge)) minmax(0, 1fr);   /* колонка текста — с 971px макета */
+  grid-template-rows: auto 1fr;
+  padding-inline: var(--edge);
+  min-height: calc(1119 * var(--u));
+  box-sizing: border-box;
+  background: var(--red);
+  color: var(--white);
+}
+
+/* карта: сцена в координатах макета, прижата к верху блока; линии продолжаются вниз за кадр макета,
+   поэтому и в более высоком блоке они доходят до нижнего края */
+.russia__decor { position: absolute; inset: 0; pointer-events: none; }
+.russia__map { position: absolute; left: 0; top: 0; width: calc(1920 * var(--u)); height: calc(1554 * var(--u)); }
+.russia__map > * { position: absolute; display: block; max-width: none; height: auto; }
+.russia__line--1 { left: 0;                          top: calc(685.72 * var(--u)); width: calc(246 * var(--u)); }
+.russia__line--2 { left: calc(565.73 * var(--u));    top: 0;                       width: calc(506 * var(--u)); }
+.russia__line--3 { left: 0;                          top: calc(340.63 * var(--u)); width: calc(293 * var(--u)); }
+.russia__line--4 { left: calc(316.12 * var(--u));    top: calc(613.39 * var(--u)); width: calc(320 * var(--u)); }
+.russia__line--5 { left: calc(633.88 * var(--u));    top: calc(718.77 * var(--u)); width: calc(199 * var(--u)); }
+.russia__photo   { left: calc(157.65 * var(--u));    top: calc(279.17 * var(--u)); width: calc(701.71 * var(--u)); height: auto; }
+.russia__photo-bg { fill: #e6dccb; }                  /* бумага под фото, пока оно грузится */
+
+/* области-контуры по углам */
+.russia__region { position: absolute; right: 0; display: block; height: auto; pointer-events: none; }
+.russia__region--top    { top: 0;    width: calc(336 * var(--u)); }
+.russia__region--bottom { bottom: 0; width: calc(277 * var(--u)); }
+
+.russia__title {
+  position: relative;
+  grid-column: 1;
+  grid-row: 1;
+  /* в одну строку и не крупнее, чем в макете относительно ширины блока: так заголовок всегда левее
+     линии границы, что идёт от фото вверх, и выше самого фото */
+  font-size: min(var(--fs-h2), calc(48 * var(--u)));
+  white-space: nowrap;
   color: var(--white);
 }
 
 .russia__content {
   position: relative;
-  z-index: 1;
+  grid-column: 2;
+  grid-row: 1 / 3;
+  align-self: center;
   display: flex;
   flex-direction: column;
-  /* все отступы блока — из шкалы. «Почему мы?» отделён от текста над ним сильнее, чем от своего списка (64 > 48) */
-  gap: var(--s-64);                                   /* текст → «Почему мы?» */
+  gap: var(--s-64);                                   /* «О нас» → «Почему мы?» */
   box-sizing: border-box;
-  /* ширина текста: 754px, но не дальше 45% блока минус 32px — дальше на картинке начинается рисунок */
-  width: min(calc(754px + var(--edge)), calc(45% - 32px));
-  padding: var(--section-pad) 0 var(--section-pad) var(--edge);   /* на 1920 блок остаётся 969px — как сцена с картой */
+  width: 100%;
+  max-width: 763px;
+  /* не заходим на угловые области: сверху 172px макета, снизу 107px — плюс воздух */
+  margin-block: max(0px, calc(172 * var(--u) + var(--s-48) - var(--section-pad)))
+                max(0px, calc(107 * var(--u) + var(--s-48) - var(--section-pad)));
 }
-.russia__intro { display: flex; flex-direction: column; gap: var(--gap-text); }  /* заголовок → текст */
-.russia__title { max-width: 643px; color: var(--white); }
+.russia__intro { display: flex; flex-direction: column; gap: var(--s-32); }   /* подзаголовок → текст */
+.russia__subtitle { color: var(--white); }
 .russia__text { line-height: 1.3; }
 .russia__text p { margin: 0; }
 .russia__text p + p { margin-top: var(--s-16); }
-.russia__why { display: flex; flex-direction: column; gap: var(--s-48); }   /* «Почему мы?» → список */
-.russia__subtitle { color: var(--white); }
+.russia__why { display: flex; flex-direction: column; gap: var(--s-32); }    /* «Почему мы?» → список */
 .russia__list { display: flex; flex-direction: column; gap: var(--s-24); margin: 0; padding: 0; list-style: none; }
 .russia__list li {
   display: flex;
@@ -897,29 +929,47 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
   background: url("../icons/bullet-white.svg") center / 12px 12px no-repeat;
 }
 
-/* планшет: текст сверху во всю ширину, под ним картинка целиком (место под неё — нижний отступ
-   высотой с картинку: 969 / 1920 = 50.47% ширины блока) */
+/* до 1200px: заголовок и текст одной колонкой сверху, под ними полоса с картой.
+   В полосе видна часть сцены от 220 до 1119px макета по высоте и до 960px по ширине;
+   ниже полосы — место под нижнюю угловую область */
 @media (max-width: 1199px) {
-  .russia { min-height: 100vh; min-height: 100svh; }
-  .russia__content {
-    width: auto;
-    max-width: calc(754px + 2 * var(--edge));
+  .russia {
+    --um: calc(100cqw / 960);                           /* масштаб карты в полосе */
+    display: flex;
+    flex-direction: column;
     gap: var(--s-48);
-    padding: var(--section-pad) var(--edge) calc(50.47% + var(--s-24));
+    min-height: 0;
+    padding-inline: 0;
+    padding-bottom: calc(107 * var(--u) + var(--s-16));
   }
-  .russia__why { gap: var(--s-40); }
+  .russia__title {
+    max-width: calc(100% - 336 * var(--u) - var(--s-16));   /* левее верхней угловой области */
+    padding-left: var(--edge);
+    box-sizing: border-box;
+    font-size: var(--fs-h2);
+    white-space: normal;
+  }
+  .russia__content { max-width: calc(754px + 2 * var(--edge)); padding-inline: var(--edge); margin: 0; gap: var(--s-48); }
+  .russia__why { gap: var(--s-24); }
+  .russia__decor { position: relative; inset: auto; order: 3; height: calc(899 * var(--um)); overflow: hidden; }
+  .russia__map {
+    top: calc(-220 * var(--um));
+    width: calc(1920 * var(--um));
+    height: calc(1554 * var(--um));
+  }
+  .russia__map > * { transform-origin: 0 0; }
+  .russia__line--1 { top: calc(685.72 * var(--um)); width: calc(246 * var(--um)); }
+  .russia__line--2 { left: calc(565.73 * var(--um)); width: calc(506 * var(--um)); }
+  .russia__line--3 { top: calc(340.63 * var(--um)); width: calc(293 * var(--um)); }
+  .russia__line--4 { left: calc(316.12 * var(--um)); top: calc(613.39 * var(--um)); width: calc(320 * var(--um)); }
+  .russia__line--5 { left: calc(633.88 * var(--um)); top: calc(718.77 * var(--um)); width: calc(199 * var(--um)); }
+  .russia__photo   { left: calc(157.65 * var(--um)); top: calc(279.17 * var(--um)); width: calc(701.71 * var(--um)); }
 }
 @media (max-width: 767px) {
+  .russia { gap: var(--s-40); }
   .russia__content { gap: var(--s-40); }
-  .russia__why { gap: var(--s-32); }
   .russia__list { gap: var(--s-16); }
   .russia__list li { gap: var(--s-16); }
-}
-/* телефон: мобильная картинка; рисунок на ней — нижние 436 из 1216px, то есть 108% ширины —
-   столько места оставляем под текстом */
-@media (max-width: 599px) {
-  .russia { background-image: url("../img/3-sec-mob.png"); }
-  .russia__content { padding: var(--section-pad) var(--edge) calc(108% + var(--s-16)); }
 }
 
 /* =========================================================
