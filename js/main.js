@@ -313,6 +313,107 @@
     }
   }
 
+  /* ---------- Заголовки H2: каждая строка выезжает снизу из-под своей нижней границы, когда заголовок
+     появляется на экране (один раз). Строки размечаются по тому, как браузер реально перенёс слова,
+     и заново — при смене ширины окна. На прокрутку не влияет; при «уменьшить движение» всё видно сразу ---------- */
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+    // у заголовка блока «О нас» два варианта текста (для широкого экрана и для телефона) — размечаем каждый
+    var targets = [];
+    document.querySelectorAll('h2').forEach(function (h) {
+      if (h.closest('[hidden], .opening')) return;
+      var parts = h.querySelectorAll(':scope > span');
+      if (parts.length) parts.forEach(function (p) { targets.push({ el: p, root: h }); });
+      else targets.push({ el: h, root: h });
+    });
+    if (!targets.length) return;
+
+    var esc = function (t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+    var split = function (el) {
+      el.innerHTML = el.getAttribute('data-text-src');
+      var words = [];
+      Array.prototype.slice.call(el.childNodes).forEach(function (node) {
+        if (node.nodeType !== 3) return;
+        var frag = document.createDocumentFragment();
+        node.nodeValue.split(/([ \t\n\r]+)/).forEach(function (part) {
+          if (!part) return;
+          if (/^[ \t\n\r]+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+          var w = document.createElement('span');
+          w.textContent = part;
+          frag.appendChild(w);
+          words.push(w);
+        });
+        el.replaceChild(frag, node);
+      });
+      if (!words.length || !words[0].offsetParent) return;          // скрыт (другой вариант заголовка) — разметим при показе
+      var lines = [], top = null;
+      words.forEach(function (w) {
+        var t = w.offsetTop;
+        if (top === null || Math.abs(t - top) > 2) { lines.push([]); top = t; }
+        lines[lines.length - 1].push(w.textContent);
+      });
+      el.innerHTML = lines.map(function (line, i) {
+        return '<span class="tl"><span class="tl__in" style="--i:' + i + '">' + esc(line.join(' ')) + '</span></span>';
+      }).join('');
+    };
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('is-in');
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.2 });
+
+    targets.forEach(function (t) {
+      t.el.setAttribute('data-text-src', t.el.innerHTML);
+      t.el.classList.add('text-lines');
+      split(t.el);
+      io.observe(t.root === t.el ? t.el : t.root);
+    });
+    // у составного заголовка класс is-in ставится на сам h2 — передаём его частям
+    targets.forEach(function (t) {
+      if (t.root === t.el) return;
+      new MutationObserver(function () {
+        if (t.root.classList.contains('is-in')) t.el.classList.add('is-in');
+      }).observe(t.root, { attributes: true, attributeFilter: ['class'] });
+    });
+
+    var lastW = window.innerWidth, timer = 0;
+    var resplit = function () { targets.forEach(function (t) { split(t.el); }); };
+    window.addEventListener('resize', function () {
+      if (window.innerWidth === lastW) return;
+      lastW = window.innerWidth;
+      clearTimeout(timer);
+      timer = setTimeout(resplit, 150);
+    });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(resplit);   // шрифт догрузился — переносы могли сдвинуться
+  })();
+
+  /* ---------- Лента «Этапы работы»: мышью можно тянуть вбок (пальцем и тачпадом — как обычно) ---------- */
+  document.querySelectorAll('.stages__list').forEach(function (strip) {
+    var startX = 0, startScroll = 0, dragging = false, moved = false;
+    strip.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      dragging = true; moved = false;
+      startX = e.clientX; startScroll = strip.scrollLeft;
+    });
+    window.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      var dx = e.clientX - startX;
+      if (!moved && Math.abs(dx) < 4) return;
+      if (!moved) { moved = true; strip.classList.add('is-dragging'); }
+      strip.scrollLeft = startScroll - dx;
+    });
+    window.addEventListener('pointerup', function () {
+      if (!dragging) return;
+      dragging = false;
+      strip.classList.remove('is-dragging');
+    });
+    // после перетаскивания клик по ссылке внутри карточки не срабатывает
+    strip.addEventListener('click', function (e) { if (moved) { e.preventDefault(); moved = false; } }, true);
+  });
+
   /* ---------- Блог: последние посты из группы ВКонтакте ---------- */
   // лент с постами может быть несколько (основной блог и вариант с карточками) — заполняем каждую,
   // а один и тот же адрес запрашиваем один раз
