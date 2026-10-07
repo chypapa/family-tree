@@ -390,48 +390,44 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(resplit);   // шрифт догрузился — переносы могли сдвинуться
   })();
 
-  /* ---------- «Этапы работы»: когда блок доходит до экрана, он останавливается и занимает весь экран под шапкой
-     (position: sticky, лента по центру по высоте) — остальная страница в это время стоит на месте. Прокрутка вниз
-     сдвигает карточки вбок ровно на столько, на сколько прокрутили; после последней карточки страница снова
-     прокручивается как обычно. Не помещается в экран по высоте — обычная лента с прокруткой вбок ---------- */
+  /* ---------- «Этапы работы»: курсор над лентой — круг с подписью. Лента в начале — «Листать вперёд», в конце —
+     «Листать назад», посередине — «вперёд» на правых двух третях экрана и «назад» на левой трети.
+     В правой трети лента сама едет вперёд, в левой — назад; в средней трети ничего не происходит ---------- */
   document.querySelectorAll('.stages').forEach(function (section) {
-    var pin = section.querySelector('.stages__pin');
-    var track = section.querySelector('.stages__track');
-    if (!pin || !track) return;
-    var top = 0, shift = 0, active = false, ticking = false;
+    var strip = section.querySelector('.stages__viewport');
+    var bubble = section.querySelector('.stages__bubble');
+    if (!strip || !bubble || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    var x = 0, y = 0, over = false, dir = 0, raf = 0, last = 0;
+    var SPEED = 0.9;                                    // px за мс (~900 px/с)
 
-    var layout = function () {
-      section.style.height = '';
-      pin.style.height = '';
-      pin.style.top = '';
-      track.style.transform = '';
-      section.classList.remove('is-pinned');
-      var vh = window.innerHeight;
-      var hdr = document.querySelector('.header--sticky');
-      top = hdr ? Math.max(0, hdr.getBoundingClientRect().height + (parseFloat(getComputedStyle(hdr).top) || 0)) : 0;
-      var avail = vh - top;                               // экран под шапкой
-      shift = Math.max(0, track.scrollWidth - section.clientWidth);
-      active = shift > 0 && pin.offsetHeight + 32 <= avail;
-      if (!active) return;
-      section.classList.add('is-pinned');
-      pin.style.top = top + 'px';
-      pin.style.height = avail + 'px';
-      section.style.height = (avail + shift) + 'px';
-      update();
+    var state = function () {
+      var max = strip.scrollWidth - strip.clientWidth;
+      var atStart = strip.scrollLeft <= 1, atEnd = strip.scrollLeft >= max - 1;
+      var third = window.innerWidth / 3;
+      var back = atEnd || (!atStart && x < third);
+      bubble.textContent = back ? 'Листать назад' : 'Листать вперёд';
+      dir = x > 2 * third && !atEnd ? 1 : (x < third && !atStart ? -1 : 0);
+      if (dir && !raf) { last = 0; raf = requestAnimationFrame(step); }
     };
-    var update = function () {
-      ticking = false;
-      if (!active) return;
-      var p = Math.min(1, Math.max(0, (top - section.getBoundingClientRect().top) / shift));
-      track.style.transform = 'translate3d(' + (-p * shift).toFixed(1) + 'px,0,0)';
+    var step = function (t) {
+      raf = 0;
+      if (!over || !dir) return;
+      var dt = last ? Math.min(40, t - last) : 16;
+      last = t;
+      strip.scrollLeft += dir * SPEED * dt;
+      state();
+      if (dir && !raf) raf = requestAnimationFrame(step);
     };
-    window.addEventListener('scroll', function () {
-      if (!ticking) { ticking = true; requestAnimationFrame(update); }
-    }, { passive: true });
-    window.addEventListener('resize', layout);
-    window.addEventListener('load', layout);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
-    layout();
+    var place = function () {
+      var r = section.getBoundingClientRect();
+      section.style.setProperty('--cx', (x - r.left).toFixed(1) + 'px');
+      section.style.setProperty('--cy', (y - r.top).toFixed(1) + 'px');
+    };
+    strip.addEventListener('pointerenter', function (e) { over = true; x = e.clientX; y = e.clientY; place(); section.classList.add('is-cursor'); state(); });
+    strip.addEventListener('pointermove', function (e) { x = e.clientX; y = e.clientY; place(); state(); });
+    strip.addEventListener('pointerleave', function () { over = false; dir = 0; section.classList.remove('is-cursor'); });
+    strip.addEventListener('scroll', function () { if (over) state(); }, { passive: true });
+    window.addEventListener('scroll', function () { if (over) place(); }, { passive: true });
   });
 
   /* ---------- Видео на первом экране: при «уменьшить движение» не крутим, показываем первый кадр ---------- */

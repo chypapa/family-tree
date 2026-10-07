@@ -148,9 +148,8 @@
       <img class="why__img" src="img/kniga-why.jpg" width="902" height="886" alt="Родословная книга «Ваша уникальная история в одной книге» в руках" loading="lazy" decoding="async">
     </section>
 
-    <!-- ============ ЭТАПЫ РАБОТЫ: красные карточки в ленту. Когда лента доходит до середины экрана, блок
-         останавливается, и прокрутка страницы вниз плавно ведёт карточки вбок; после последней — прокрутка
-         снова обычная (js/main.js) ============ -->
+    <!-- ============ ЭТАПЫ РАБОТЫ: красные карточки в ленту. С мышью курсор над лентой — круг «Листать вперёд /
+         Листать назад»; у правого края лента сама едет вперёд, у левого — назад (js/main.js). Пальцем — обычная прокрутка вбок ============ -->
     <section class="stages container section" aria-labelledby="stages-title">
       <div class="stages__pin">
       <div class="section-head">
@@ -205,6 +204,7 @@
         </article>
       </div>
       </div>
+      <span class="cursor-bubble stages__bubble" aria-hidden="true">Листать вперёд</span>
       </div>
     </section>
 
