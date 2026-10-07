@@ -5,7 +5,7 @@
    ТИПОГРАФИКА — 4 стиля текста. Размер каждого стиля задан одним clamp()
    и плавно меняется с шириной окна; все элементы одного уровня (все H1, все H2…)
    всегда одного размера, без отдельных размеров в блоках и медиазапросах.
-   Межбуквенный интервал нигде не уменьшается.
+   У всех заголовков и подзаголовков межбуквенный интервал −1px, межстрочный — 130%.
                   H1        H2        H3      Текст
    1920          64        48        32       16
    1200          50        38        26       16
@@ -14,7 +14,7 @@
 
    ОТСТУПЫ — шкала с шагом 4/8px: 4 · 8 · 12 · 16 · 24 · 32 · 40 · 48 · 64 · 80
    (токены --s-4 … --s-80). Других значений отступов на сайте нет.
-   — между блоками (секциями) — 0: блоки стоят вплотную;
+   — между блоками (секциями) — --section-gap: 152px на больших экранах, 80 на планшете, 64 на телефоне;
    — внутри блока сверху и снизу — --section-pad: 80px на десктопе, 64 на планшете, 48 на телефоне;
    — заголовок секции → карточки — --gap-head (64 / 48 / 32), заголовок → текст — --gap-text (40 / 32 / 24).
    ПОЛЯ ПО КРАЯМ — 5% ширины окна, не меньше 40px (1920 → 96px, 1440 → 72px),
@@ -59,7 +59,7 @@
   --s-64: 64px;
   --s-80: 80px;
 
-  --section-gap: 120px;                               /* между блоками: 120px на больших экранах, 80 на планшете, 64 на телефоне */
+  --section-gap: 152px;                               /* между блоками: 152px на больших экранах, 80 на планшете, 64 на телефоне */
   --section-pad: var(--s-80);                         /* внутренний отступ блока сверху и снизу */
   --gap-head: var(--s-64);                            /* заголовок секции → карточки */
   --gap-text: var(--s-40);                            /* заголовок → текст */
@@ -141,9 +141,10 @@ h1, h2, h3, .h1, .h2, .h3, .mcard__title {
   font-family: "Manrope", system-ui, sans-serif;
   text-wrap: balance;                                 /* ровные строки, без одного слова на последней */
 }
-h1, .h1 { font-size: var(--fs-h1); font-weight: 600; line-height: 1.1; letter-spacing: -.04em; }
-h2, .h2, .mcard__title { font-size: var(--fs-h2); font-weight: 600; line-height: 1.2; letter-spacing: -.05em; }
-h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-spacing: -.03em; }
+/* у всех заголовков и подзаголовков межбуквенный интервал −1px, межстрочный — 130% */
+h1, .h1 { font-size: var(--fs-h1); font-weight: 600; line-height: 1.3; letter-spacing: -1px; }
+h2, .h2, .mcard__title { font-size: var(--fs-h2); font-weight: 600; line-height: 1.3; letter-spacing: -1px; }
+h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-spacing: -1px; }
 /* ---------- Заголовки H2 появляются построчно (классы ставит js/main.js; без JS всё видно сразу):
    каждая строка выезжает снизу из-под своей нижней границы, строки — одна за другой (.tl > .tl__in) */
 .text-lines .tl {
@@ -184,6 +185,9 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-sp
 .btn:hover { background: var(--red-hover); box-shadow: 0 8px 20px rgba(165, 54, 37, .22); transform: translateY(-1px); }
 .btn:active { box-shadow: none; transform: none; transition-duration: .06s; }
 .btn img { width: 20px; height: 20px; }
+/* белая кнопка — на красном фоне */
+.btn--white { background: var(--white); color: var(--text); }
+.btn--white:hover { background: var(--bg); box-shadow: 0 8px 20px rgba(0, 0, 0, .14); }
 
 .link-more {
   color: var(--text);
@@ -212,26 +216,16 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-sp
 .header__left { gap: var(--s-48); }
 .header__logo img { width: 33px; height: 37px; }
 .nav { display: flex; gap: var(--s-32); }
-.nav a, .header__phone {
+.nav a {
   color: var(--white);
   line-height: 1;
   text-decoration: none;
   white-space: nowrap;
   transition: opacity .2s ease;
 }
-.nav a:hover, .header__phone:hover { opacity: .75; }
-.header__right { gap: var(--s-64); }
-.header__socials { display: flex; gap: var(--s-8); }
-/* соцсети в шапке: белая иконка в белом круге-обводке, всё векторное (inline SVG, цвет — currentColor) */
-.round-icon {
-  display: block;
-  width: 32px;
-  height: 32px;
-  color: var(--white);
-  transition: transform .2s ease, opacity .2s ease;
-}
-.round-icon svg { display: block; width: 100%; height: 100%; }
-.round-icon:hover { transform: scale(1.08); opacity: .75; }
+.nav a:hover { opacity: .75; }
+/* справа — белая кнопка «Получить консультацию»: на главной ведёт к форме внизу, на остальных страницах открывает окно с формой */
+.header__cta { padding: var(--s-12) var(--s-24); }
 
 /* мобильная шапка */
 .header__mobile { display: none; }
@@ -265,8 +259,10 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-sp
 .header--sticky.is-top .header__pill,
 .header--sticky.is-top .icon-btn { background-color: rgba(155, 160, 137, 0); }
 
-/* знак в шапке — векторный (тот же, что рисуется при загрузке) */
-.header__logo { display: block; }
+/* знак в шапке — векторный (тот же, что рисуется при загрузке); справа от него название в две строки */
+.header__logo { display: flex; align-items: center; gap: var(--s-12); color: var(--white); text-decoration: none; }
+.header__name { display: block; font-weight: 200; line-height: 1.1; white-space: nowrap; }
+.header__name .tl { display: block; }
 .logo-mark { display: block; width: 35px; height: 37px; color: var(--white); }
 .header__pill .logo-mark { width: 26px; height: 28px; }
 .mark { display: block; width: 100%; height: 100%; overflow: visible; }
@@ -433,15 +429,15 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-sp
 .mark-lines { opacity: 0; }                           /* без вступления знак просто залит */
 .is-intro .mark-lines { opacity: 1; }
 .is-intro .mark-fill { opacity: 0; }
-.mark.play .mark-lines path { animation: mark-draw .53s cubic-bezier(.3, .7, .4, 1) forwards; }
-.mark.play .mark-lines { animation: mark-out .47s ease-in-out 1.17s forwards; }
-.mark.play .mark-fill { animation: mark-in .47s ease-in-out 1.17s forwards; }
+.mark.play .mark-lines path { animation: mark-draw .35s cubic-bezier(.3, .7, .4, 1) forwards; }
+.mark.play .mark-lines { animation: mark-out .31s ease-in-out .78s forwards; }
+.mark.play .mark-fill { animation: mark-in .31s ease-in-out .78s forwards; }
 /* очерёдность снизу вверх: стебли → нижние листья → верхние лепестки → центральный */
 .mark.play .mark-lines path:nth-child(2),
-.mark.play .mark-lines path:nth-child(4) { animation-delay: .27s; }
+.mark.play .mark-lines path:nth-child(4) { animation-delay: .18s; }
 .mark.play .mark-lines path:nth-child(1),
-.mark.play .mark-lines path:nth-child(3) { animation-delay: .47s; }
-.mark.play .mark-lines path:nth-child(5) { animation-delay: .67s; }
+.mark.play .mark-lines path:nth-child(3) { animation-delay: .31s; }
+.mark.play .mark-lines path:nth-child(5) { animation-delay: .45s; }
 .mark.done .mark-lines { opacity: 0; animation: none; }
 .mark.done .mark-fill { opacity: 1; animation: none; }
 @keyframes mark-draw { to { stroke-dashoffset: 0; } }
@@ -455,23 +451,27 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-sp
   inset: 0;
   z-index: 45;                                        /* под шапкой: знак в шапке виден поверх экрана */
   background: var(--bg);
-  transition: opacity .6s ease .13s, visibility 0s linear .73s;
+  transition: opacity .4s ease .09s, visibility 0s linear .49s;
   animation: intro-failsafe-hide 0s 8s forwards;      /* если скрипт не запустился — экран уходит сам */
 }
 .is-ready .preloader { opacity: 0; visibility: hidden; }
 
-/* до конца вступления видно только знак */
+/* до конца вступления видно только знак на светлом экране: заливки у шапки нет (и у кнопок мобильной шапки),
+   она появляется, когда знак встал на место (класс is-intro-done) */
+.is-intro:not(.is-intro-done) .header__bar,
+.is-intro:not(.is-intro-done) .header__pill,
+.is-intro:not(.is-intro-done) .icon-btn { background-color: rgba(165, 54, 37, 0); }
 .is-intro .nav, .is-intro .header__right,
-.is-intro .header__pill-text, .is-intro .header__buttons { opacity: 0; transition: opacity .53s ease; }
+.is-intro .header__pill-text, .is-intro .header__buttons { opacity: 0; transition: opacity .35s ease; }
 .is-intro.is-ready .nav, .is-intro.is-ready .header__right,
-.is-intro.is-ready .header__pill-text, .is-intro.is-ready .header__buttons { opacity: 1; transition-delay: .6s; }
+.is-intro.is-ready .header__pill-text, .is-intro.is-ready .header__buttons { opacity: 1; transition-delay: .4s; }
 
 .is-intro .opening__title .line > span { transform: translateY(110%); }
 .is-intro .opening__text, .is-intro .opening__cta { opacity: 0; transform: translateY(24px); }
-.is-ready .opening__title .line > span { transform: none; transition: transform .87s var(--ease-out) .5s; }
-.is-ready .opening__title .line + .line > span { transition-delay: .6s; }
-.is-ready .opening__text { opacity: 1; transform: none; transition: opacity .67s ease .77s, transform .8s var(--ease-out) .77s; }
-.is-ready .opening__cta { opacity: 1; transform: none; transition: opacity .67s ease .87s, transform .8s var(--ease-out) .87s; }
+.is-ready .opening__title .line > span { transform: none; transition: transform .58s var(--ease-out) .33s; }
+.is-ready .opening__title .line + .line > span { transition-delay: .4s; }
+.is-ready .opening__text { opacity: 1; transform: none; transition: opacity .45s ease .51s, transform .53s var(--ease-out) .51s; }
+.is-ready .opening__cta { opacity: 1; transform: none; transition: opacity .45s ease .58s, transform .53s var(--ease-out) .58s; }
 
 /* если скрипт не запустился — через 7 с всё показывается само */
 .is-intro:not(.is-ready) .opening__title .line > span,
@@ -1461,6 +1461,26 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-sp
 .footer__watermark, .footer__socials { display: none; }
 .footer__policy { color: var(--white); text-underline-offset: 3px; }
 .footer__policy:hover { opacity: .8; }
+/* соцсети в подвале (иконки и ссылки — как в последнем блоке главной): на всех страницах, кроме главной на большом экране —
+   там они в блоке с формой над подвалом. На главной подвал со соцсетями только на телефоне (см. медиазапрос до 767px) */
+.footer__socials a { display: block; transition: opacity .2s ease; }
+.footer__socials a:hover { opacity: .75; }
+@media (min-width: 768px) {
+  .footer--socials .footer__socials { display: flex; gap: var(--s-24); }
+  .footer--socials .footer__socials img { width: 44px; height: 44px; }
+}
+
+/* =========================================================
+   ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ: обычный текст сайта на светлом фоне, слева вверху кнопка «← Назад» на главную
+   ========================================================= */
+.policy__back { margin: var(--s-24) 0 0 var(--edge); padding: var(--s-12) var(--s-24); box-shadow: var(--shadow-card); }
+.policy { margin-top: var(--s-64); }
+.policy__text { max-width: 900px; line-height: 1.5; }
+.policy__text h1 { margin-bottom: var(--s-40); }
+.policy__text h2 { margin: var(--s-48) 0 var(--s-16); }
+.policy__text p + p { margin-top: var(--s-12); }
+.policy__text strong { font-weight: 600; }
+.policy .placeholder { color: var(--red); font-weight: 600; }   /* места, которые нужно заполнить */
 
 /* =========================================================
    1200–1599 — узкий десктоп
@@ -1874,9 +1894,9 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-sp
 .stage__link:hover { text-decoration: underline; }
 
 /* ---------- Отзывы: всегда в один ряд — три карточки по 4 колонки из 12, на планшете и телефоне лента (см. ниже).
-   Карточка — по высоте текста, кавычки справа сверху ---------- */
+   Карточки одной высоты: имя и кавычки сверху, текст — по центру оставшейся высоты ---------- */
 .voices__heading { margin-bottom: var(--gap-head); }
-.voices__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--col-gap); align-items: start; }   /* по 4 колонки из 12 */
+.voices__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--col-gap); }   /* по 4 колонки из 12, все карточки одной высоты */
 .voice {
   position: relative;
   display: flex;
@@ -1896,9 +1916,9 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-sp
   background: url("../icons/quote.svg") center / contain no-repeat;
   pointer-events: none;
 }
-.voice__author { display: flex; align-items: center; gap: var(--s-12); padding-right: 64px; color: var(--muted); }
+.voice__author { display: flex; align-items: center; gap: var(--s-12); margin-bottom: var(--s-16); padding-right: 64px; color: var(--muted); }   /* текст — не ближе 40px */
 .voice__author img { width: 22px; height: 22px; }
-.voice__text { margin-top: var(--s-16); line-height: 1.3; color: var(--text); }   /* текст ниже подписи на 16px */
+.voice__text { margin-block: auto; line-height: 1.3; color: var(--text); }   /* имя и кавычки сверху, текст — по центру оставшейся высоты */
 .voice__video { position: relative; width: min(233px, 100%); aspect-ratio: 233 / 161; overflow: hidden; border-radius: var(--radius-sm); background: #8e98a3; }
 .voice__player { display: block; width: 100%; height: 100%; object-fit: cover; }
 .voice__play {
@@ -1925,25 +1945,7 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-sp
 }
 .voice__play:hover::before { transform: scale(1.08); background-color: rgba(255, 255, 255, .75); }
 
-/* видеоотзыв поверх страницы: страница затемнена на 20% и размыта (как под мобильным меню), видео — почти на весь экран.
-   Прокрутку страницы на это время выключаем; если у браузера видимая полоса прокрутки, место под неё остаётся — страница не дёргается */
-.is-video-open { overflow: hidden; }
-.is-video-open.has-scrollbar { scrollbar-gutter: stable; }
-.video-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: grid;
-  place-items: center;
-  background: rgba(0, 0, 0, .2);
-  -webkit-backdrop-filter: blur(4px);
-          backdrop-filter: blur(4px);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity .35s ease, visibility 0s linear .35s;
-}
-.video-modal[hidden] { display: none; }
-.video-modal.is-open { opacity: 1; visibility: visible; transition-delay: 0s; }
+/* видеоотзыв в окне поверх страницы (.overlay, общие стили — в конце файла): видео — почти на весь экран */
 .video-modal__player,
 .video-modal__missing {
   grid-area: 1 / 1;
@@ -1962,24 +1964,7 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-sp
 .video-modal__missing { display: none; place-items: center; margin: 0; padding: var(--s-24); background: #8e98a3; color: var(--white); text-align: center; }
 .video-modal.is-missing .video-modal__player { visibility: hidden; }
 .video-modal.is-missing .video-modal__missing { display: grid; }
-.video-modal__close {                                  /* крестик в правом верхнем углу экрана */
-  position: absolute;
-  top: var(--s-16);
-  right: var(--s-16);
-  width: 48px;
-  height: 48px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E") center / 22px no-repeat;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
-  cursor: pointer;
-  transition: transform .2s ease;
-}
-.video-modal__close:hover { transform: rotate(90deg); }
-@media (prefers-reduced-motion: reduce) {
-  .video-modal, .video-modal__player, .video-modal__missing, .video-modal__close { transition: none; }
-}
+.video-modal .overlay__close { position: absolute; top: var(--s-16); right: var(--s-16); }   /* крестик — в правом верхнем углу экрана */
 
 /* ---------- Калькулятор: сетка 12 колонок — пояснение занимает 5, анкета и результат — 7 ---------- */
 .calc {
@@ -1992,7 +1977,6 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-sp
 .calc__panel { grid-column: 7 / span 6; }
 /* анкета/результат плавно меняют высоту (main: js/calculator.js) */
 .calc__panel.is-animating { overflow: hidden; transition: height .45s cubic-bezier(.4, 0, .2, 1); }
-.calc__lead { margin-top: calc(var(--s-16) - var(--gap-text)); }
 .calc__text { line-height: 1.3; }
 .calc__card {
   display: flex;
@@ -2036,7 +2020,7 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-sp
   padding: 0;
   font-size: var(--fs-h3);
   font-weight: 400;
-  letter-spacing: -.03em;
+  letter-spacing: -1px;
   line-height: 1.3;
   color: var(--text);
 }
@@ -2133,8 +2117,8 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-sp
   background: var(--white);
   outline: none;
 }
-.calc__result-label { font-size: var(--fs-h3); letter-spacing: -.03em; line-height: 1.3; color: var(--text); }
-.calc__result-sum { margin-top: var(--s-16); font-size: var(--fs-h2); font-weight: 600; letter-spacing: -.03em; line-height: 1.2; color: var(--red); }
+.calc__result-label { font-size: var(--fs-h3); letter-spacing: -1px; line-height: 1.3; color: var(--text); }
+.calc__result-sum { margin-top: var(--s-16); font-size: var(--fs-h2); font-weight: 600; letter-spacing: -1px; line-height: 1.3; color: var(--red); }
 .calc__result-note { max-width: 640px; margin-top: var(--s-32); font-size: 14px; line-height: 1.4; color: var(--muted); }
 .calc__again {
   margin-top: var(--s-24);
@@ -2161,7 +2145,6 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-sp
 @media (max-width: 1023px) {
   .voices__grid {
     display: flex;
-    align-items: flex-start;
     margin-inline: calc(-1 * var(--gut));
     padding-inline: var(--gut);
     overflow-x: auto;
@@ -2194,3 +2177,69 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-sp
 }
 .calc__contact { color: var(--red); font-weight: 600; text-decoration: none; }
 .calc__contact:hover { text-decoration: underline; }
+
+/* =========================================================
+   ОКНА ПОВЕРХ СТРАНИЦЫ: видеоотзыв и «Получить консультацию».
+   Страница под окном затемнена на 20% и размыта, как под мобильным меню. Прокрутку страницы на это время
+   выключаем; если у браузера видимая полоса прокрутки, место под неё остаётся — страница не дёргается
+   ========================================================= */
+.is-overlay-open { overflow: hidden; }
+.is-overlay-open.has-scrollbar { scrollbar-gutter: stable; }
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, .2);
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .35s ease, visibility 0s linear .35s;
+}
+.overlay[hidden] { display: none; }
+.overlay.is-open { opacity: 1; visibility: visible; transition-delay: 0s; }
+.overlay__close {                                      /* белый круг с крестиком */
+  z-index: 1;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E") center / 22px no-repeat;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+  cursor: pointer;
+  transition: transform .2s ease;
+}
+.overlay__close:hover { transform: rotate(90deg); }
+
+/* «Получить консультацию»: окно — как последний блок главной (красная плашка: слева заголовок и соцсети, справа форма).
+   Если окно выше экрана, оно прокручивается внутри затемнения */
+.consult-modal { place-items: stretch; padding: var(--s-24) var(--gut); overflow-y: auto; overscroll-behavior: contain; }
+.consult-modal__box {
+  position: relative;
+  width: min(var(--container), 100%);
+  margin: auto;                                       /* по центру экрана, а если не помещается — от верхнего края */
+  transform: translateY(24px);
+  transition: transform .45s cubic-bezier(.2, .75, .15, 1);
+}
+.consult-modal.is-open .consult-modal__box { transform: none; }
+.consult-modal .contact__inner { border-radius: var(--radius); box-shadow: 0 24px 64px rgba(0, 0, 0, .25); }
+.consult-modal .contact__info { padding-right: 56px; }  /* заголовок не заходит под крестик */
+.consult-modal .overlay__close { position: absolute; top: var(--s-16); right: var(--s-16); }
+/* на большом экране справа вверху плашки — форма, поэтому крестик стоит над плашкой, у её правого края */
+@media (min-width: 1024px) {
+  .consult-modal { padding-top: 88px; }
+  .consult-modal .contact__info { padding-right: 0; }
+  .consult-modal .overlay__close { top: -64px; right: 0; }
+}
+@media (max-width: 767px) {
+  .consult-modal { padding: var(--s-16); }
+  .consult-modal .contact__inner { padding: var(--s-24) var(--s-16); }
+  .consult-modal .socials { gap: var(--s-24); }
+  .consult-modal .socials img { width: 44px; height: 44px; }   /* все четыре иконки в один ряд */
+}
+@media (prefers-reduced-motion: reduce) {
+  .overlay, .overlay__close, .consult-modal__box, .video-modal__player, .video-modal__missing { transition: none; }
+}

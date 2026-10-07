@@ -15,7 +15,7 @@
   <header class="header header--sticky header--dark is-top">
     <div class="header__bar">
       <div class="header__left">
-        <a class="header__logo" href="index.html" aria-label="Семейное древо — на главную">
+        <a class="header__logo" href="index.html" aria-label="Родовое дерево — на главную">
           <!-- знак рисуется при загрузке страницы по центру экрана и переезжает сюда (js/main.js) -->
           <span class="logo-mark">
             <svg class="mark" viewBox="0 0 370 395" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -46,6 +46,8 @@
               </g>
             </svg>
           </span>
+          <!-- название в две строки; после знака строки выезжают снизу, как у заголовков (js/main.js) -->
+          <span class="header__name"><span class="tl"><span class="tl__in">Родовое</span></span><span class="tl"><span class="tl__in" style="--i:1">дерево</span></span></span>
         </a>
         <nav class="nav" aria-label="Основное меню">
           <a href="index.html#about">О нас</a>
@@ -54,22 +56,8 @@
         </nav>
       </div>
       <div class="header__right">
-        <a class="header__phone" href="tel:+7 (915) 892-92-06">+7 (915) 892-92-06</a>
-        <div class="header__socials">
-          <!-- иконки из формы обратной связи (icons/…/brand-telegram.svg, logo-vk.svg) + обводка кружком, всё в одном SVG -->
-          <a class="round-icon" href="https://t.me/drevo_predkov" aria-label="Telegram">
-            <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
-              <circle cx="22" cy="22" r="21.25" stroke="currentColor" stroke-width="1.5"/>
-              <path transform="translate(22 22) scale(.5) translate(-21.5 -21.5)" d="M26.9516 17.9674L19.7647 25.1543L30.545 35.9346L37.7319 7.18701L5.39087 19.7641L12.5778 23.3576L16.1712 34.1379L21.5614 26.951" stroke="currentColor" stroke-width="3.59345" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-          <a class="round-icon" href="https://vk.ru/russiagenealogy" aria-label="ВКонтакте">
-            <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
-              <circle cx="22" cy="22" r="21.25" stroke="currentColor" stroke-width="1.5"/>
-              <path transform="translate(22 22) scale(.55) translate(-21.5 -21.5)" fill-rule="evenodd" clip-rule="evenodd" d="M40.8223 11.1172C41.1221 10.1672 40.8223 9.47655 39.4958 9.47655H35.0851C33.9726 9.47655 33.4588 10.0813 33.159 10.7281C33.159 10.7281 30.8901 16.253 27.7216 19.835C26.6941 20.8709 26.2233 21.2162 25.6666 21.2162C25.3668 21.2162 24.9811 20.8709 24.9811 19.9217V11.0725C24.9811 9.95072 24.6391 9.43275 23.6967 9.43275H16.7602C16.0746 9.43275 15.6468 9.95072 15.6468 10.4687C15.6468 11.5476 17.231 11.807 17.402 14.828V21.3922C17.402 22.8164 17.1493 23.0766 16.5884 23.0766C15.0901 23.0766 11.4509 17.5088 9.26785 11.1643C8.84338 9.90776 8.41216 9.43275 7.29875 9.43275H2.84596C1.56158 9.43275 1.34766 10.0366 1.34766 10.6843C1.34766 11.8499 2.84596 17.7193 8.32626 25.4879C11.9655 30.7939 17.1459 33.6456 21.8127 33.6456C24.6391 33.6456 24.9811 32.9979 24.9811 31.9191V27.9051C24.9811 26.6106 25.2379 26.395 26.1374 26.395C26.7792 26.395 27.9356 26.7394 30.5473 29.2863C33.5439 32.3073 34.0576 33.6886 35.7277 33.6886H40.1376C41.422 33.6886 42.0216 33.0409 41.6788 31.7894C41.2939 30.5378 39.8378 28.7254 37.9537 26.5676C36.9262 25.3599 35.385 24.0216 34.9142 23.3739C34.2724 22.5107 34.4434 22.1654 34.9142 21.3888C34.8712 21.3888 40.2664 13.7062 40.8223 11.1138" fill="currentColor"/>
-            </svg>
-          </a>
-        </div>
+        <!-- на остальных страницах кнопка открывает окно с формой поверх страницы (#consult-modal внизу страницы, js/main.js) -->
+        <a class="btn btn--white header__cta" href="index.html#contact" data-consult>Получить консультацию</a>
       </div>
     </div>
 
@@ -106,7 +94,7 @@
         <a href="index.html#svc">Архивная книга</a>
         <a href="index.html#contact">Контакты</a>
       </nav>
-      <a class="btn mobile-menu__cta" href="index.html#contact">Получить консультацию</a>
+      <a class="btn mobile-menu__cta" href="index.html#contact" data-consult>Получить консультацию</a>
     </div>
   </header>
 
@@ -205,12 +193,12 @@
         </article>
       </div>
       </div>
-      <span class="cursor-bubble stages__bubble" data-back="Листать назад" aria-hidden="true">Дальше →</span>
+      <span class="cursor-bubble stages__bubble" data-back="← Назад" aria-hidden="true">Дальше →</span>
       </div>
     </section>
 
     <!-- ============ ОТЗЫВЫ: всегда в один ряд — на большом экране три карточки по 4 колонки из 12, на планшете и телефоне
-         лента, которую листают пальцем. Карточки по высоте текста; в первой — видеоотзыв: по ▶ он открывается поверх
+         лента, которую листают пальцем. Карточки одной высоты: имя и кавычки сверху, текст по центру; в первой — видеоотзыв: по ▶ он открывается поверх
          страницы почти на весь экран (окно .video-modal внизу страницы, js/main.js).
          Видео: video/review-valentina.mp4 (обложка до запуска — img/review-video-poster.jpg) ============ -->
     <section class="voices container section" aria-labelledby="voices-title">
@@ -241,8 +229,7 @@
     <section class="calc container section" id="calc" aria-labelledby="calc-title">
       <div class="calc__intro">
         <h2 class="h2" id="calc-title">Калькулятор стоимости</h2>
-        <p class="h3 calc__lead">Результат&nbsp;— примерная стоимость исследования</p>
-        <p class="calc__text">Конечная стоимость услуги зависит от&nbsp;нескольких факторов. <a class="calc__contact" href="index.html#contact">Можете связаться с&nbsp;нами</a> для уточнения цены или ответить на&nbsp;несколько вопросов ниже, чтобы узнать сумму.</p>
+        <p class="calc__text">Конечная стоимость услуги зависит от&nbsp;нескольких факторов. <a class="calc__contact" href="index.html#contact" data-consult>Можете связаться с&nbsp;нами</a> для уточнения цены или ответить на&nbsp;несколько вопросов ниже, чтобы узнать сумму.</p>
       </div>
 
       <div class="calc__panel">
@@ -291,7 +278,6 @@
             <div class="calc-q__options">
               <label class="radio"><input type="radio" name="before1917" value="yes"><span>Да</span></label>
               <label class="radio"><input type="radio" name="before1917" value="no"><span>Нет</span></label>
-              <label class="radio"><input type="radio" name="before1917" value="unknown"><span>Не&nbsp;знаю</span></label>
             </div>
             <p class="calc-q__error">Выберите ответ</p>
           </fieldset>
@@ -312,18 +298,18 @@
   </main>
 
 
-  <!-- ============ FOOTER ============ -->
-  <footer class="footer">
+  <!-- ============ FOOTER: со ссылками на соцсети (на всех страницах, кроме главной на большом экране) ============ -->
+  <footer class="footer footer--socials">
     <div class="footer__inner">
       <a class="footer__logo" href="index.html" aria-label="Семейное древо — наверх">
         <img src="img/logo.svg" width="33" height="37" alt="">
       </a>
       <img class="footer__watermark" src="img/logo.svg" alt="" aria-hidden="true">
       <div class="footer__socials">
-        <a href="#" aria-label="WhatsApp"><img src="img/icons/whatsapp.svg" width="44" height="44" alt=""></a>
-        <a href="#" aria-label="Telegram"><img src="img/icons/telegram.svg" width="44" height="44" alt=""></a>
-        <a href="#" aria-label="ВКонтакте"><img src="img/icons/vk.svg" width="44" height="44" alt=""></a>
-        <a href="#" aria-label="MAX"><img src="img/icons/max.svg" width="44" height="44" alt=""></a>
+        <a href="https://api.whatsapp.com/send/?phone=79158929206&text&type=phone_number&app_absent=0" aria-label="WhatsApp"><img src="img/icons/whatsapp.svg" width="44" height="44" alt=""></a>
+        <a href="https://t.me/drevo_predkov" aria-label="Telegram"><img src="img/icons/telegram.svg" width="44" height="44" alt=""></a>
+        <a href="https://vk.ru/im?sel=-228395135" aria-label="ВКонтакте"><img src="img/icons/vk.svg" width="44" height="44" alt=""></a>
+        <a href="https://www.avito.ru/moskva/predlozheniya_uslug/rodoslovnayagenealogiyadizayn_dreva_4729921847" aria-label="Avito"><img src="img/icons/max.svg" width="44" height="44" alt=""></a>
       </div>
       <a class="footer__policy" href="politika_personalnye_dannye_genealogiya.html">Политика конфиденциальности</a>
     </div>
@@ -331,12 +317,48 @@
 
 </div>
 
+<!-- ============ КОНСУЛЬТАЦИЯ: окно поверх страницы, такое же, как последний блок главной (заголовок, соцсети и форма).
+     Открывается кнопкой «Получить консультацию» в шапке и в мобильном меню и ссылкой «Можете связаться с нами» (атрибут data-consult).
+     Страница под окном затемнена на 20% и размыта, как под мобильным меню. Закрывается крестиком, кликом мимо окна и клавишей Esc ============ -->
+<div class="overlay consult-modal" id="consult-modal" role="dialog" aria-modal="true" aria-labelledby="consult-title" hidden>
+  <div class="consult-modal__box">
+    <div class="contact__inner">
+      <div class="contact__info">
+        <h2 class="h2 contact__title" id="consult-title">Обращайтесь к&nbsp;нам за&nbsp;бесплатной консультацией</h2>
+        <p class="contact__text">Оставьте сообщение на&nbsp;сайте или в&nbsp;соц. сетях</p>
+        <div class="socials">
+          <a href="https://api.whatsapp.com/send/?phone=79158929206&text&type=phone_number&app_absent=0" aria-label="WhatsApp"><img src="img/icons/whatsapp.svg" width="44" height="44" alt=""></a>
+          <a href="https://t.me/drevo_predkov" aria-label="Telegram"><img src="img/icons/telegram.svg" width="44" height="44" alt=""></a>
+          <a href="https://vk.ru/im?sel=-228395135" aria-label="ВКонтакте"><img src="img/icons/vk.svg" width="44" height="44" alt=""></a>
+          <a href="https://www.avito.ru/moskva/predlozheniya_uslug/rodoslovnayagenealogiyadizayn_dreva_4729921847" aria-label="Avito"><img src="img/icons/max.svg" width="44" height="44" alt=""></a>
+        </div>
+      </div>
+
+      <form class="form" action="#" method="post" novalidate>
+        <div class="form__fields">
+          <label class="visually-hidden" for="consult-contact">Телефон, почта или мессенджер</label>
+          <input class="input" id="consult-contact" name="contact" type="text" placeholder="Телефон, почта, мессенджер" autocomplete="tel" required>
+          <label class="visually-hidden" for="consult-ancestors">Что известно о предках</label>
+          <textarea class="input input--area" id="consult-ancestors" name="ancestors" placeholder="Что известно о предках (необязательно): имена, фамилии, места проживания"></textarea>
+          <label class="check">
+            <input type="checkbox" name="agree" required>
+            <span>Отправляя форму я&nbsp;принимаю <a href="politika_personalnye_dannye_genealogiya.html" target="_blank" rel="noopener">политику конфиденциальности</a></span>
+          </label>
+        </div>
+        <button class="btn form__submit" type="submit">Отправить</button>
+        <p class="form__note" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+    <button class="overlay__close" type="button" aria-label="Закрыть"></button>
+  </div>
+</div>
+
 <!-- ============ ВИДЕООТЗЫВ: окно поверх страницы. Страница под ним затемнена на 20% и размыта, как под мобильным меню.
      Закрывается крестиком, кликом мимо видео и клавишей Esc ============ -->
-<div class="video-modal" id="video-modal" role="dialog" aria-modal="true" aria-label="Видеоотзыв" hidden>
+<div class="overlay video-modal" id="video-modal" role="dialog" aria-modal="true" aria-label="Видеоотзыв" hidden>
   <video class="video-modal__player" controls playsinline preload="none"></video>
   <p class="video-modal__missing">Видео скоро появится</p>
-  <button class="video-modal__close" type="button" aria-label="Закрыть видео"></button>
+  <button class="overlay__close" type="button" aria-label="Закрыть видео"></button>
 </div>
 
 <script src="js/main.js"></script>

@@ -1,12 +1,23 @@
 (function () {
   'use strict';
 
-  /* ---------- Вступление: знак рисуется по центру экрана → переезжает на своё место в шапке →
-     экран загрузки растворяется, появляются меню и первый экран ---------- */
+  /* ---------- Вступление: знак рисуется по центру светлого экрана (шапки не видно) → переезжает на своё место в шапке →
+     экран загрузки растворяется, появляются меню и первый экран. Когда знак встал на место, появляется заливка шапки
+     (если страница прокручена) и справа от знака выезжает название в две строки ---------- */
   (function () {
     var root = document.documentElement;
     var pre = document.querySelector('.preloader');
     var marks = Array.prototype.slice.call(document.querySelectorAll('.logo-mark'));
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var names = Array.prototype.slice.call(document.querySelectorAll('.header__name'));
+    // строки названия сразу (без анимации) прячутся под свою нижнюю границу
+    if (!reduce) names.forEach(function (n) {
+      var lines = Array.prototype.slice.call(n.querySelectorAll('.tl__in'));
+      lines.forEach(function (l) { l.style.transition = 'none'; });
+      n.classList.add('text-lines');
+      void n.offsetWidth;
+      lines.forEach(function (l) { l.style.transition = ''; });
+    });
     var ready = function () {
       marks.forEach(function (m) {
         var svg = m.querySelector('.mark');
@@ -14,11 +25,16 @@
         svg.classList.add('done');
       });
       root.classList.add('is-ready');
-      setTimeout(function () { if (pre) pre.remove(); }, 1470);
+      setTimeout(function () { if (pre) pre.remove(); }, 980);
     };
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var finish = function () {                                 // знак на месте: заливка шапки и название
+      root.classList.add('is-intro-done');
+      names.forEach(function (n) { n.classList.add('is-in'); });
+    };
     var logo = marks.filter(function (m) { return m.offsetParent !== null; })[0];   // видимый знак: в шапке или в мобильной плашке
-    if (reduce || !pre || !logo || !window.Promise) { ready(); return; }
+    // без вступления: на телефоне (знака в шапке нет) заливка кнопок шапки появляется, когда растворится экран загрузки;
+    // на страницах без экрана загрузки название выезжает сразу после открытия
+    if (reduce || !pre || !logo || !window.Promise) { ready(); setTimeout(finish, reduce ? 0 : (pre ? 500 : 150)); return; }
     try {
       var r = logo.getBoundingClientRect();
       var size = Math.min(window.innerWidth * 0.42, window.innerHeight * 0.34, 260);  // высота знака по центру экрана
@@ -28,22 +44,26 @@
       logo.style.color = '#a53625';
       logo.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + s + ')';
       void logo.offsetWidth;
-      logo.querySelector('.mark').classList.add('play');     // 1. рисуется контур, затем заливка (около 1,7 с)
+      logo.querySelector('.mark').classList.add('play');     // 1. рисуется контур, затем заливка (около 1,1 с)
 
-      var drawn = new Promise(function (res) { setTimeout(res, 1770); });
+      var drawn = new Promise(function (res) { setTimeout(res, 1180); });
       var loaded = new Promise(function (res) {
         if (document.readyState === 'complete') res(); else window.addEventListener('load', res, { once: true });
         setTimeout(res, 5000);                                // медленный интернет — не ждём дольше 5 с
       });
       Promise.all([drawn, loaded]).then(function () {
-        // 2. знак уезжает вверх-в сторону на своё место и становится белым
-        logo.style.transition = 'transform .87s cubic-bezier(.75, 0, .2, 1), color .67s ease .13s';
+        // 2. знак уезжает вверх-в сторону на своё место и становится белым. Если страница прокручена (у шапки будет заливка),
+        //    знак остаётся красным, пока едет, и белеет вместе с появлением заливки — на светлом фоне он не пропадает
+        var header = document.querySelector('.header--sticky');
+        var filled = !header || !header.classList.contains('is-top');
+        logo.style.transition = 'transform .58s cubic-bezier(.75, 0, .2, 1), color ' + (filled ? '.3s ease .58s' : '.45s ease .09s');
         logo.style.transform = '';
         logo.style.color = '';
         ready();                                              // 3. экран растворяется, появляются меню и первый экран
-        setTimeout(function () { logo.style.transition = ''; }, 940);
+        setTimeout(finish, 600);                              // 4. знак на месте
+        setTimeout(function () { logo.style.transition = ''; }, 900);
       });
-    } catch (e) { ready(); }
+    } catch (e) { ready(); finish(); }
   })();
 
   /* ---------- Шапка без заливки над первым экраном; при прокрутке заливка появляется.
@@ -321,7 +341,7 @@
     // у заголовка блока «О нас» два варианта текста (для широкого экрана и для телефона) — размечаем каждый
     var targets = [];
     document.querySelectorAll('h2').forEach(function (h) {
-      if (h.closest('[hidden], .opening')) return;
+      if (h.closest('[hidden], .opening, .overlay')) return;
       var parts = h.querySelectorAll(':scope > span');
       if (parts.length) parts.forEach(function (p) { targets.push({ el: p, root: h }); });
       else targets.push({ el: h, root: h });
@@ -444,57 +464,84 @@
     if (mq.addEventListener) mq.addEventListener('change', apply);
   });
 
-  /* ---------- Видеоотзыв: по кнопке ▶ видео открывается поверх страницы почти на весь экран, страница под ним
-     затемнена и размыта. Закрывается крестиком, кликом мимо видео и клавишей Esc ---------- */
+  /* ---------- Окна поверх страницы (видеоотзыв, «Получить консультацию»): страница под окном затемнена и размыта,
+     прокрутка страницы выключена. Закрываются крестиком, кликом мимо окна и клавишей Esc ---------- */
+  var pageWrap = document.querySelector('.page');
+  var openOverlay = null;
+  var makeOverlay = function (el, onClose) {
+    var closeBtn = el.querySelector('.overlay__close');
+    var opener = null;
+    el.hidden = false;                                  // дальше окно прячут opacity / visibility — так оно плавно появляется
+    if ('inert' in el) el.inert = true;
+    var api = {
+      open: function (from) {
+        if (openOverlay) openOverlay.close();
+        opener = from || null;
+        var root = document.documentElement;
+        root.classList.toggle('has-scrollbar', window.innerWidth > root.clientWidth);
+        root.classList.add('is-overlay-open');
+        el.scrollTop = 0;
+        el.classList.add('is-open');
+        if ('inert' in el) { el.inert = false; if (pageWrap) pageWrap.inert = true; }
+        closeBtn.focus({ preventScroll: true });
+        openOverlay = api;
+      },
+      close: function () {
+        if (!el.classList.contains('is-open')) return;
+        el.classList.remove('is-open');
+        document.documentElement.classList.remove('is-overlay-open', 'has-scrollbar');
+        if ('inert' in el) { el.inert = true; if (pageWrap) pageWrap.inert = false; }
+        if (onClose) onClose();
+        if (opener) opener.focus({ preventScroll: true });
+        openOverlay = null;
+      }
+    };
+    closeBtn.addEventListener('click', api.close);
+    el.addEventListener('click', function (e) { if (e.target === el) api.close(); });   // клик по затемнению
+    return api;
+  };
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && openOverlay) openOverlay.close(); });
+
+  /* видеоотзыв: по кнопке ▶ видео открывается почти на весь экран */
   var videoModal = document.getElementById('video-modal');
   if (videoModal) {
     var modalPlayer = videoModal.querySelector('.video-modal__player');
-    var modalClose = videoModal.querySelector('.video-modal__close');
-    var pageWrap = document.querySelector('.page');
-    var opener = null;
-    videoModal.hidden = false;                          // дальше окно прячут opacity / visibility — так оно плавно появляется
-    if ('inert' in videoModal) videoModal.inert = true;
-    // файла нет или он не открылся — вместо видео подпись «Видео скоро появится»
-    var modalFail = function () { videoModal.classList.add('is-missing'); };
-    modalPlayer.addEventListener('error', modalFail);
-    var openVideo = function (src, poster, from) {
-      opener = from;
-      videoModal.classList.remove('is-missing');
-      modalPlayer.poster = poster || '';
-      modalPlayer.src = src;
-      var root = document.documentElement;
-      root.classList.toggle('has-scrollbar', window.innerWidth > root.clientWidth);
-      root.classList.add('is-video-open');
-      videoModal.classList.add('is-open');
-      if ('inert' in videoModal) { videoModal.inert = false; if (pageWrap) pageWrap.inert = true; }
-      modalClose.focus({ preventScroll: true });
-      var p = modalPlayer.play();
-      if (p && p.catch) p.catch(function (err) { if (err && err.name === 'NotSupportedError') modalFail(); });
-    };
-    var closeVideo = function () {
-      if (!videoModal.classList.contains('is-open')) return;
+    var videoOverlay = makeOverlay(videoModal, function () {
       modalPlayer.pause();
-      videoModal.classList.remove('is-open');
-      document.documentElement.classList.remove('is-video-open', 'has-scrollbar');
-      if ('inert' in videoModal) { videoModal.inert = true; if (pageWrap) pageWrap.inert = false; }
       setTimeout(function () {                          // окно растаяло — выгружаем видео
         if (videoModal.classList.contains('is-open')) return;
         modalPlayer.removeAttribute('src');
         modalPlayer.load();
       }, 400);
-      if (opener) opener.focus({ preventScroll: true });
-    };
-    modalClose.addEventListener('click', closeVideo);
-    videoModal.addEventListener('click', function (e) { if (e.target === videoModal) closeVideo(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeVideo(); });
-
+    });
+    // файла нет или он не открылся — вместо видео подпись «Видео скоро появится»
+    var modalFail = function () { videoModal.classList.add('is-missing'); };
+    modalPlayer.addEventListener('error', modalFail);
     document.querySelectorAll('.voice__video').forEach(function (box) {
       var video = box.querySelector('video');
       var play = box.querySelector('.voice__play');
       if (!video || !play) return;
       var source = video.querySelector('source');
       play.addEventListener('click', function () {
-        openVideo(source ? source.getAttribute('src') : video.getAttribute('src'), video.getAttribute('poster'), play);
+        videoModal.classList.remove('is-missing');
+        modalPlayer.poster = video.getAttribute('poster') || '';
+        modalPlayer.src = source ? source.getAttribute('src') : video.getAttribute('src');
+        videoOverlay.open(play);
+        var p = modalPlayer.play();
+        if (p && p.catch) p.catch(function (err) { if (err && err.name === 'NotSupportedError') modalFail(); });
+      });
+    });
+  }
+
+  /* «Получить консультацию» не на главной: кнопка в шапке и в мобильном меню и ссылка «Можете связаться с нами»
+     (атрибут data-consult) открывают окно с формой, как в последнем блоке главной. Без скрипта ссылки ведут на форму главной */
+  var consultModal = document.getElementById('consult-modal');
+  if (consultModal) {
+    var consultOverlay = makeOverlay(consultModal);
+    document.querySelectorAll('[data-consult]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        consultOverlay.open(link.closest('.mobile-menu') ? null : link);   // из мобильного меню фокус вернётся на страницу
       });
     });
   }
@@ -543,9 +590,8 @@
     });
   }
 
-  /* ---------- Форма ---------- */
-  var form = document.querySelector('.form');
-  if (form) {
+  /* ---------- Форма (последний блок главной и окно «Получить консультацию») ---------- */
+  document.querySelectorAll('.form').forEach(function (form) {
     var contact = form.querySelector('[name="contact"]');
     var agree = form.querySelector('[name="agree"]');
     var note = form.querySelector('.form__note');
@@ -572,5 +618,5 @@
       note.textContent = 'Спасибо! Мы свяжемся с вами в ближайшее время.';
       form.reset();
     });
-  }
+  });
 })();

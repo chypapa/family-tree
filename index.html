@@ -19,7 +19,7 @@
   <header class="header header--sticky header--dark is-top">
     <div class="header__bar">
       <div class="header__left">
-        <a class="header__logo" href="#top" aria-label="Семейное древо — на главную">
+        <a class="header__logo" href="#top" aria-label="Родовое дерево — на главную">
           <!-- знак рисуется при загрузке страницы по центру экрана и переезжает сюда (js/main.js) -->
           <span class="logo-mark">
             <svg class="mark" viewBox="0 0 370 395" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -50,6 +50,8 @@
               </g>
             </svg>
           </span>
+          <!-- название в две строки; после знака строки выезжают снизу, как у заголовков (js/main.js) -->
+          <span class="header__name"><span class="tl"><span class="tl__in">Родовое</span></span><span class="tl"><span class="tl__in" style="--i:1">дерево</span></span></span>
         </a>
         <nav class="nav" aria-label="Основное меню">
           <a href="#about">О нас</a>
@@ -58,22 +60,8 @@
         </nav>
       </div>
       <div class="header__right">
-        <a class="header__phone" href="tel:+7 (915) 892-92-06">+7 (915) 892-92-06</a>
-        <div class="header__socials">
-          <!-- иконки из формы обратной связи (icons/…/brand-telegram.svg, logo-vk.svg) + обводка кружком, всё в одном SVG -->
-          <a class="round-icon" href="https://t.me/drevo_predkov" aria-label="Telegram">
-            <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
-              <circle cx="22" cy="22" r="21.25" stroke="currentColor" stroke-width="1.5"/>
-              <path transform="translate(22 22) scale(.5) translate(-21.5 -21.5)" d="M26.9516 17.9674L19.7647 25.1543L30.545 35.9346L37.7319 7.18701L5.39087 19.7641L12.5778 23.3576L16.1712 34.1379L21.5614 26.951" stroke="currentColor" stroke-width="3.59345" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-          <a class="round-icon" href="https://vk.ru/russiagenealogy" aria-label="ВКонтакте">
-            <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
-              <circle cx="22" cy="22" r="21.25" stroke="currentColor" stroke-width="1.5"/>
-              <path transform="translate(22 22) scale(.55) translate(-21.5 -21.5)" fill-rule="evenodd" clip-rule="evenodd" d="M40.8223 11.1172C41.1221 10.1672 40.8223 9.47655 39.4958 9.47655H35.0851C33.9726 9.47655 33.4588 10.0813 33.159 10.7281C33.159 10.7281 30.8901 16.253 27.7216 19.835C26.6941 20.8709 26.2233 21.2162 25.6666 21.2162C25.3668 21.2162 24.9811 20.8709 24.9811 19.9217V11.0725C24.9811 9.95072 24.6391 9.43275 23.6967 9.43275H16.7602C16.0746 9.43275 15.6468 9.95072 15.6468 10.4687C15.6468 11.5476 17.231 11.807 17.402 14.828V21.3922C17.402 22.8164 17.1493 23.0766 16.5884 23.0766C15.0901 23.0766 11.4509 17.5088 9.26785 11.1643C8.84338 9.90776 8.41216 9.43275 7.29875 9.43275H2.84596C1.56158 9.43275 1.34766 10.0366 1.34766 10.6843C1.34766 11.8499 2.84596 17.7193 8.32626 25.4879C11.9655 30.7939 17.1459 33.6456 21.8127 33.6456C24.6391 33.6456 24.9811 32.9979 24.9811 31.9191V27.9051C24.9811 26.6106 25.2379 26.395 26.1374 26.395C26.7792 26.395 27.9356 26.7394 30.5473 29.2863C33.5439 32.3073 34.0576 33.6886 35.7277 33.6886H40.1376C41.422 33.6886 42.0216 33.0409 41.6788 31.7894C41.2939 30.5378 39.8378 28.7254 37.9537 26.5676C36.9262 25.3599 35.385 24.0216 34.9142 23.3739C34.2724 22.5107 34.4434 22.1654 34.9142 21.3888C34.8712 21.3888 40.2664 13.7062 40.8223 11.1138" fill="currentColor"/>
-            </svg>
-          </a>
-        </div>
+        <!-- на главной кнопка ведёт к последнему блоку с формой -->
+        <a class="btn btn--white header__cta" href="#contact">Получить консультацию</a>
       </div>
     </div>
 
@@ -541,7 +529,7 @@
     </section>
   </main>
 
-  <!-- ============ FOOTER ============ -->
+  <!-- ============ FOOTER: соцсети в подвале главной — только на телефоне (на большом экране они в блоке с формой) ============ -->
   <footer class="footer">
     <div class="footer__inner">
       <a class="footer__logo" href="#top" aria-label="Семейное древо — наверх">
@@ -549,10 +537,10 @@
       </a>
       <img class="footer__watermark" src="img/logo.svg" alt="" aria-hidden="true">
       <div class="footer__socials">
-        <a href="#" aria-label="WhatsApp"><img src="img/icons/whatsapp.svg" width="44" height="44" alt=""></a>
-        <a href="#" aria-label="Telegram"><img src="img/icons/telegram.svg" width="44" height="44" alt=""></a>
-        <a href="#" aria-label="ВКонтакте"><img src="img/icons/vk.svg" width="44" height="44" alt=""></a>
-        <a href="#" aria-label="MAX"><img src="img/icons/max.svg" width="44" height="44" alt=""></a>
+        <a href="https://api.whatsapp.com/send/?phone=79158929206&text&type=phone_number&app_absent=0" aria-label="WhatsApp"><img src="img/icons/whatsapp.svg" width="44" height="44" alt=""></a>
+        <a href="https://t.me/drevo_predkov" aria-label="Telegram"><img src="img/icons/telegram.svg" width="44" height="44" alt=""></a>
+        <a href="https://vk.ru/im?sel=-228395135" aria-label="ВКонтакте"><img src="img/icons/vk.svg" width="44" height="44" alt=""></a>
+        <a href="https://www.avito.ru/moskva/predlozheniya_uslug/rodoslovnayagenealogiyadizayn_dreva_4729921847" aria-label="Avito"><img src="img/icons/max.svg" width="44" height="44" alt=""></a>
       </div>
       <a class="footer__policy" href="politika_personalnye_dannye_genealogiya.html">Политика конфиденциальности</a>
     </div>
