@@ -315,7 +315,22 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
 .header__burger[aria-expanded="true"] .burger__line--bot { transform: rotate(-45deg) translateY(-7px); }
 .is-menu-open .header__burger { background-color: var(--red); }   /* и над первым экраном */
 
-/* меню: панель справа на половину ширины и всю высоту экрана. Сверху знак с подписью, под ним пункты,
+/* затемнение и размытие страницы под открытым меню */
+.mobile-menu__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: none;
+  background: rgba(0, 0, 0, .2);
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .45s ease, visibility 0s linear .45s;
+}
+.is-menu-open .mobile-menu__backdrop { opacity: 1; visibility: visible; transition-delay: 0s; }
+
+/* меню: панель справа на половину ширины и всю высоту экрана (но не уже 320px — чтобы всё помещалось). Сверху знак с подписью, под ним пункты,
    внизу — кнопка «Получить консультацию» в 32px от нижнего края экрана */
 .mobile-menu {
   position: fixed;
@@ -325,7 +340,7 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
   z-index: 1;
   display: none;
   flex-direction: column;
-  width: 50vw;
+  width: max(50vw, min(100vw, 320px));
   height: 100vh;
   height: 100dvh;
   box-sizing: border-box;
@@ -340,6 +355,7 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
 .mobile-menu.is-open { transform: none; visibility: visible; transition-delay: 0s; }
 .mobile-menu__logo {
   display: inline-flex;
+  align-self: flex-start;                             /* только по ширине знака с подписью — не заходит под бургер */
   align-items: center;
   gap: var(--s-8);
   min-height: 36px;
@@ -356,7 +372,6 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
   padding-inline: var(--s-16);
   background: var(--white);
   color: var(--red);
-  white-space: normal;
   text-align: center;
 }
 .mobile-menu__cta:hover { background: var(--bg); box-shadow: none; }
@@ -997,9 +1012,8 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
   .russia__list { gap: var(--s-16); }
   .russia__list li { gap: var(--s-16); }
 }
-/* до 560px: картинка для телефона (img/about/sec-3-mobile.png) — сразу под текстом, без наложения.
-   На 559px она в 1.3 раза меньше своей полной ширины (430px вместо 559), к 320px плавно растёт
-   до полной ширины экрана: ширина = 320px + (экран − 320px) × 0.4615 */
+/* до 560px: картинка для телефона (img/about/sec-3-mobile.png) — сразу под текстом, без наложения,
+   во всю ширину блока (за полями страницы), ничего не обрезается */
 @media (max-width: 559px) {
   .russia.section { padding-bottom: 0; }
   .russia__title, .russia__content { max-width: none; }
@@ -1007,10 +1021,10 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
     order: 1;                                           /* под текстом, в общем потоке */
     position: relative;
     inset: auto;
-    align-self: center;
-    width: calc(46.15vw + 172.3px);
+    align-self: stretch;
+    width: auto;
     max-width: none;
-    margin-top: 0;
+    margin: 0 calc(-1 * var(--edge));
   }
 }
 
@@ -1559,6 +1573,7 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
   .header__bar { display: none; }
   .header__mobile { display: flex; align-items: center; justify-content: flex-end; }
   .mobile-menu { display: flex; }
+  .mobile-menu__backdrop { display: block; }
 }
 
 @media (max-width: 899px) {
