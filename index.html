@@ -120,7 +120,11 @@
          затемнение снизу слева, текст и кнопка поверх фото. Шапка над ним прозрачная ============ -->
     <section class="opening" aria-labelledby="opening-title">
       <div class="opening__media" aria-hidden="true">
-        <img class="opening__img" src="img/hero-album.jpg" width="1168" height="768" alt="" fetchpriority="high" decoding="async">
+        <!-- видео на фоне первого экрана: без звука, по кругу; на телефоне — облегчённая версия 960px -->
+        <video class="opening__img opening__video" autoplay muted loop playsinline preload="auto" poster="img/hero-video-poster.jpg" width="1764" height="1172">
+          <source src="video/hero-960.mp4" type="video/mp4" media="(max-width: 767px)">
+          <source src="video/hero.mp4" type="video/mp4">
+        </video>
         <div class="opening__shade"><img src="img/hero-shade.svg" width="2094" height="1559" alt=""></div>
       </div>
       <div class="opening__content">

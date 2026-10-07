@@ -390,31 +390,33 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(resplit);   // шрифт догрузился — переносы могли сдвинуться
   })();
 
-  /* ---------- «Этапы работы»: когда лента карточек доходит до середины экрана, блок останавливается
-     (position: sticky), и прокрутка страницы вниз сдвигает карточки вбок — ровно на столько, на сколько
-     прокрутили; после последней карточки страница снова прокручивается как обычно. Высоту блока
-     (запас под сдвиг) и точку остановки считаем здесь. Не помещается в экран по высоте — обычная лента ---------- */
+  /* ---------- «Этапы работы»: когда блок доходит до экрана, он останавливается и занимает весь экран под шапкой
+     (position: sticky, лента по центру по высоте) — остальная страница в это время стоит на месте. Прокрутка вниз
+     сдвигает карточки вбок ровно на столько, на сколько прокрутили; после последней карточки страница снова
+     прокручивается как обычно. Не помещается в экран по высоте — обычная лента с прокруткой вбок ---------- */
   document.querySelectorAll('.stages').forEach(function (section) {
     var pin = section.querySelector('.stages__pin');
-    var viewport = section.querySelector('.stages__viewport');
     var track = section.querySelector('.stages__track');
-    if (!pin || !viewport || !track) return;
+    if (!pin || !track) return;
     var top = 0, shift = 0, active = false, ticking = false;
 
     var layout = function () {
       section.style.height = '';
+      pin.style.height = '';
+      pin.style.top = '';
       track.style.transform = '';
+      section.classList.remove('is-pinned');
       var vh = window.innerHeight;
       var hdr = document.querySelector('.header--sticky');
-      var hdrBottom = hdr ? hdr.getBoundingClientRect().height + (parseFloat(getComputedStyle(hdr).top) || 0) : 0;
-      var h = pin.offsetHeight;
+      top = hdr ? Math.max(0, hdr.getBoundingClientRect().height + (parseFloat(getComputedStyle(hdr).top) || 0)) : 0;
+      var avail = vh - top;                               // экран под шапкой
       shift = Math.max(0, track.scrollWidth - section.clientWidth);
-      active = shift > 0 && h + hdrBottom + 16 <= vh;
-      section.classList.toggle('is-pinned', active);
-      if (!active) { pin.style.top = ''; return; }
-      top = Math.max(hdrBottom + 16, (vh - h) / 2);        // лента по центру экрана, но не под шапкой
+      active = shift > 0 && pin.offsetHeight + 32 <= avail;
+      if (!active) return;
+      section.classList.add('is-pinned');
       pin.style.top = top + 'px';
-      section.style.height = (h + shift) + 'px';
+      pin.style.height = avail + 'px';
+      section.style.height = (avail + shift) + 'px';
       update();
     };
     var update = function () {
@@ -430,6 +432,17 @@
     window.addEventListener('load', layout);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
     layout();
+  });
+
+  /* ---------- Видео на первом экране: при «уменьшить движение» не крутим, показываем первый кадр ---------- */
+  document.querySelectorAll('.opening__video').forEach(function (v) {
+    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var apply = function () {
+      if (mq.matches) { v.pause(); v.removeAttribute('autoplay'); }
+      else { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+    };
+    apply();
+    if (mq.addEventListener) mq.addEventListener('change', apply);
   });
 
   /* ---------- Видеоотзыв: по кнопке ▶ видео запускается в карточке со своими кнопками управления ---------- */

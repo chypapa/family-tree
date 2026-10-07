@@ -73,6 +73,30 @@
   var resultSum = result.querySelector('.calc__result-sum');
   var again = result.querySelector('.calc__again');
   var uid = 0;
+  var panel = document.querySelector('.calc__panel');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* анкета растёт и сжимается плавно: запоминаем высоту панели, меняем содержимое,
+     и высота доезжает от старой до новой (во время анимации лишнее обрезается) */
+  var endTimer = 0;
+  var resize = function (mutate) {
+    if (!panel || reduceMotion) { mutate(); return; }
+    var from = panel.offsetHeight;                      // текущая высота — в том числе посреди прошлой анимации
+    clearTimeout(endTimer);
+    panel.classList.remove('is-animating');
+    panel.style.height = '';
+    mutate();
+    var to = panel.offsetHeight;
+    if (Math.abs(to - from) < 2) return;
+    panel.style.height = from + 'px';
+    void panel.offsetHeight;
+    panel.classList.add('is-animating');
+    panel.style.height = to + 'px';
+    endTimer = setTimeout(function () {
+      panel.classList.remove('is-animating');
+      panel.style.height = '';
+    }, 480);
+  };
 
   var money = function (n) { return Math.round(n).toLocaleString('ru-RU') + ' ₽'; };
 
@@ -161,8 +185,7 @@
     custom.addEventListener('input', function () { customRadio.checked = true; });
 
     line.querySelector('.calc-line__remove').addEventListener('click', function () {
-      line.remove();
-      renumber();
+      resize(function () { line.remove(); renumber(); });
     });
     setupCombo(line);
     linesBox.appendChild(line);
@@ -234,8 +257,7 @@
       submit.classList.remove('is-loading');
       submit.removeAttribute('aria-busy');
       resultSum.textContent = money(total);
-      form.hidden = true;
-      result.hidden = false;
+      resize(function () { form.hidden = true; result.hidden = false; });
       result.focus({ preventScroll: true });
       bringIntoView(result);
     }, 600);
@@ -249,13 +271,18 @@
     if (q) q.classList.remove('is-invalid');
   });
   again.addEventListener('click', function () {
-    result.hidden = true;
-    form.hidden = false;
+    resize(function () { result.hidden = true; form.hidden = false; });
     bringIntoView(form);
     var first = form.querySelector('input');
     if (first) first.focus({ preventScroll: true });
   });
-  addBtn.addEventListener('click', function () { addLine(); });
+  addBtn.addEventListener('click', function () {
+    var line;
+    resize(function () { line = addLine(); });
+    // новая линия проявляется, пока панель растёт
+    line.classList.add('is-entering');
+    requestAnimationFrame(function () { requestAnimationFrame(function () { line.classList.remove('is-entering'); }); });
+  });
 
   addLine();
 })();
