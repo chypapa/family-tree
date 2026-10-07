@@ -853,8 +853,6 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
   box-sizing: border-box;
   min-height: calc(100vw * 1119 / 1920);
   padding-inline: var(--edge);
-  /* снизу — не меньше высоты нижней угловой области + воздух */
-  padding-bottom: max(var(--section-pad), calc(100vw * 107 / 1920 + var(--s-48)));
   background: var(--red);
   color: var(--white);
 }
@@ -921,21 +919,32 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
    во всю ширину блока, прижата к низу (img/about/sec-3-tablet.png, на телефоне sec-3-mobile.png).
    Угловые области убираем */
 @media (max-width: 1199px) {
-  .russia { min-height: 0; padding-bottom: 0; }
+  /* карта — отдельный слой у нижнего края блока, текст идёт поверх неё; снизу блок оставляет место
+     только под ту часть картинки, что ниже верхушки фото (выше — прозрачный фон и тонкие линии,
+     они могут проходить рядом с текстом). Планшет: картинка 1001 × 763, фото начинается с 41% высоты */
+  .russia.section {
+    min-height: 0;
+    padding-bottom: calc(100vw * 763 / 1001 * .59 + var(--s-24));
+  }
   .russia__region { display: none; }
   .russia__title { font-size: var(--fs-h2); white-space: normal; }
   .russia__content { max-width: 754px; margin: var(--gap-text) 0 0; gap: var(--s-48); }
   .russia__why { gap: var(--s-24); }
   .russia__decor {
-    order: 1;                                           /* карта — под текстом */
-    position: relative;
-    width: auto;
-    margin: var(--s-48) calc(-1 * var(--edge)) 0;       /* во всю ширину блока, за полями страницы */
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+    width: auto;                                        /* во всю ширину блока */
     -webkit-mask-image: none;
             mask-image: none;
   }
+  .russia__title, .russia__content { z-index: 1; }      /* текст — над картинкой */
 }
 @media (max-width: 767px) {
+  /* телефон: картинка 402 × 657, фото начинается с 40% высоты */
+  .russia.section { padding-bottom: calc(100vw * 657 / 402 * .6 + var(--s-24)); }
   .russia__title-wide { display: none; }
   .russia__title-phone { display: inline; }
   .russia__intro .russia__subtitle { display: none; }   /* в макете телефона «О нас» нет — текст сразу под заголовком */
