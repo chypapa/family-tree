@@ -390,28 +390,64 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(resplit);   // шрифт догрузился — переносы могли сдвинуться
   })();
 
-  /* ---------- Лента «Этапы работы»: мышью можно тянуть вбок (пальцем и тачпадом — как обычно) ---------- */
-  document.querySelectorAll('.stages__list').forEach(function (strip) {
-    var startX = 0, startScroll = 0, dragging = false, moved = false;
-    strip.addEventListener('pointerdown', function (e) {
-      if (e.pointerType !== 'mouse' || e.button !== 0) return;
-      dragging = true; moved = false;
-      startX = e.clientX; startScroll = strip.scrollLeft;
+  /* ---------- «Этапы работы»: когда лента карточек доходит до середины экрана, блок останавливается
+     (position: sticky), и прокрутка страницы вниз сдвигает карточки вбок — ровно на столько, на сколько
+     прокрутили; после последней карточки страница снова прокручивается как обычно. Высоту блока
+     (запас под сдвиг) и точку остановки считаем здесь. Не помещается в экран по высоте — обычная лента ---------- */
+  document.querySelectorAll('.stages').forEach(function (section) {
+    var pin = section.querySelector('.stages__pin');
+    var viewport = section.querySelector('.stages__viewport');
+    var track = section.querySelector('.stages__track');
+    if (!pin || !viewport || !track) return;
+    var top = 0, shift = 0, active = false, ticking = false;
+
+    var layout = function () {
+      section.style.height = '';
+      track.style.transform = '';
+      var vh = window.innerHeight;
+      var hdr = document.querySelector('.header--sticky');
+      var hdrBottom = hdr ? hdr.getBoundingClientRect().height + (parseFloat(getComputedStyle(hdr).top) || 0) : 0;
+      var h = pin.offsetHeight;
+      shift = Math.max(0, track.scrollWidth - section.clientWidth);
+      active = shift > 0 && h + hdrBottom + 16 <= vh;
+      section.classList.toggle('is-pinned', active);
+      if (!active) { pin.style.top = ''; return; }
+      top = Math.max(hdrBottom + 16, (vh - h) / 2);        // лента по центру экрана, но не под шапкой
+      pin.style.top = top + 'px';
+      section.style.height = (h + shift) + 'px';
+      update();
+    };
+    var update = function () {
+      ticking = false;
+      if (!active) return;
+      var p = Math.min(1, Math.max(0, (top - section.getBoundingClientRect().top) / shift));
+      track.style.transform = 'translate3d(' + (-p * shift).toFixed(1) + 'px,0,0)';
+    };
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    window.addEventListener('resize', layout);
+    window.addEventListener('load', layout);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+    layout();
+  });
+
+  /* ---------- Видеоотзыв: по кнопке ▶ видео запускается в карточке со своими кнопками управления ---------- */
+  document.querySelectorAll('.voice__video').forEach(function (box) {
+    var video = box.querySelector('video');
+    var play = box.querySelector('.voice__play');
+    if (!video || !play) return;
+    // файла ещё нет или он не открылся — возвращаем обложку с подписью «Видео скоро появится»
+    var fail = function () { box.classList.remove('is-playing'); video.controls = false; box.classList.add('is-missing'); };
+    var source = video.querySelector('source');
+    if (source) source.addEventListener('error', fail);
+    video.addEventListener('error', fail);
+    play.addEventListener('click', function () {
+      box.classList.add('is-playing');
+      video.controls = true;
+      var p = video.play();
+      if (p && p.catch) p.catch(function (err) { if (err && err.name !== 'AbortError') fail(); });
     });
-    window.addEventListener('pointermove', function (e) {
-      if (!dragging) return;
-      var dx = e.clientX - startX;
-      if (!moved && Math.abs(dx) < 4) return;
-      if (!moved) { moved = true; strip.classList.add('is-dragging'); }
-      strip.scrollLeft = startScroll - dx;
-    });
-    window.addEventListener('pointerup', function () {
-      if (!dragging) return;
-      dragging = false;
-      strip.classList.remove('is-dragging');
-    });
-    // после перетаскивания клик по ссылке внутри карточки не срабатывает
-    strip.addEventListener('click', function (e) { if (moved) { e.preventDefault(); moved = false; } }, true);
   });
 
   /* ---------- Блог: последние посты из группы ВКонтакте ---------- */

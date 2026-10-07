@@ -1,7 +1,7 @@
 /* Калькулятор стоимости родословной книги (rodoslovnaya-kniga.html).
    Цена одной фамильной линии = 100 000 ₽ × срок × эпоха × регион:
    — срок: 100 лет — ×1, 200 — ×2, 300 — ×3, свой вариант N лет — ×N/100;
-   — предок родился до 1917 года: «Да» — ×1, «Нет» — ×1.2;
+   — предок родился до 1917 года: «Да» — ×1, «Нет» — ×1.2, «Не знаю» — ×1.2 (считаем как более сложный случай);
    — регион: малооцифрованный — ×1.3, средне — ×1.2, неоцифрованный — ×1.4, оцифрованный — ×1.
    Каждая добавленная фамильная линия считается так же, суммы складываются. */
 (function () {
@@ -68,9 +68,11 @@
 
   var linesBox = form.querySelector('.calc__lines');
   var addBtn = form.querySelector('.calc__add');
-  var result = form.querySelector('.calc__result');
+  var submit = form.querySelector('.calc__submit');
+  var result = document.querySelector('.calc__result');
+  var resultSum = result.querySelector('.calc__result-sum');
+  var again = result.querySelector('.calc__again');
   var uid = 0;
-  var shown = false;          // результат уже показан — дальше пересчитываем при каждом изменении
 
   var money = function (n) { return Math.round(n).toLocaleString('ru-RU') + ' ₽'; };
 
@@ -161,7 +163,6 @@
     line.querySelector('.calc-line__remove').addEventListener('click', function () {
       line.remove();
       renumber();
-      update();
     });
     setupCombo(line);
     linesBox.appendChild(line);
@@ -185,71 +186,76 @@
     if (kYears === null) errors.push('years');
 
     var era = line.querySelector('[data-q="before1917"] input[type="radio"]:checked');
-    var kEra = era ? (era.value === 'yes' ? 1 : 1.2) : null;
+    var kEra = era ? (era.value === 'yes' ? 1 : 1.2) : null;      // «Нет» и «Не знаю» — ×1.2
     if (kEra === null) errors.push('before1917');
 
     var regionValue = line.querySelector('.combo__input').value.trim();
     var region = regionValue ? findRegion(regionValue) : null;
     if (!regionValue) errors.push('region');
 
-    return {
-      errors: errors,
-      unknownRegion: !!regionValue && !region,
-      price: errors.length ? 0 : BASE * kYears * kEra * (region ? region.k : 1)
-    };
+    // регион не из списка (опечатка, другая страна) — без надбавки
+    return { errors: errors, price: errors.length ? 0 : BASE * kYears * kEra * (region ? region.k : 1) };
   };
 
-  var render = function (showErrors) {
-    var lines = linesBox.querySelectorAll('.calc-line');
-    var total = 0, ok = true, rows = [], unknown = false;
-    lines.forEach(function (line, i) {
+  /* проверяем ответы; всё заполнено — возвращаем сумму по всем линиям, иначе подсвечиваем пропуски */
+  var calculate = function () {
+    var total = 0, ok = true;
+    linesBox.querySelectorAll('.calc-line').forEach(function (line) {
       var r = readLine(line);
       line.querySelectorAll('.calc-q').forEach(function (q) {
-        var bad = r.errors.indexOf(q.getAttribute('data-q')) >= 0;
-        q.classList.toggle('is-invalid', bad && showErrors);
+        q.classList.toggle('is-invalid', r.errors.indexOf(q.getAttribute('data-q')) >= 0);
       });
-      if (r.errors.length) { ok = false; return; }
-      if (r.unknownRegion) unknown = true;
-      total += r.price;
-      rows.push('<li><span>' + (i + 1) + ' фамильная линия</span><span>' + money(r.price) + '</span></li>');
+      if (r.errors.length) ok = false; else total += r.price;
     });
-    if (!ok) {
-      if (showErrors) {
-        var first = form.querySelector('.calc-q.is-invalid');
-        if (first) {
-          var field = first.querySelector('input');
-          if (field) field.focus({ preventScroll: true });
-          first.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }
-      return false;
+    if (ok) return total;
+    var first = form.querySelector('.calc-q.is-invalid');
+    if (first) {
+      var field = first.querySelector('input');
+      if (field) field.focus({ preventScroll: true });
+      first.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-    result.innerHTML =
-      '<p class="calc__result-label">Примерная стоимость</p>' +
-      '<p class="calc__result-sum">' + money(total) + '</p>' +
-      (lines.length > 1 ? '<ul class="calc__result-lines">' + rows.join('') + '</ul>' : '') +
-      (unknown ? '<p class="calc__result-note">Регион не нашёлся в нашем списке — посчитали без надбавки за архив. Уточним стоимость на консультации.</p>' : '') +
-      '<a class="calc__result-link" href="index.html#contact">Обсудить с&nbsp;нами&nbsp;→</a>';
-    result.hidden = false;
-    return true;
+    return null;
   };
 
-  var update = function () {
-    if (!shown) return;
-    if (!render(false)) result.hidden = true;
+  // карточка ушла за верх экрана — подводим к ней начало (шапка учтена в scroll-padding-top)
+  var bringIntoView = function (el) {
+    if (el.getBoundingClientRect().top < 0) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    shown = render(true) || shown;
+    if (submit.classList.contains('is-loading')) return;
+    var total = calculate();
+    if (total === null) return;
+    // считается мгновенно; короткая пауза со спиннером — чтобы было видно, что нажатие сработало
+    submit.classList.add('is-loading');
+    submit.setAttribute('aria-busy', 'true');
+    setTimeout(function () {
+      submit.classList.remove('is-loading');
+      submit.removeAttribute('aria-busy');
+      resultSum.textContent = money(total);
+      form.hidden = true;
+      result.hidden = false;
+      result.focus({ preventScroll: true });
+      bringIntoView(result);
+    }, 600);
   });
   form.addEventListener('input', function (e) {
     var q = e.target.closest('.calc-q');
     if (q) q.classList.remove('is-invalid');
-    update();
   });
-  form.addEventListener('change', update);
-  addBtn.addEventListener('click', function () { addLine(); update(); });
+  form.addEventListener('change', function (e) {
+    var q = e.target.closest('.calc-q');
+    if (q) q.classList.remove('is-invalid');
+  });
+  again.addEventListener('click', function () {
+    result.hidden = true;
+    form.hidden = false;
+    bringIntoView(form);
+    var first = form.querySelector('input');
+    if (first) first.focus({ preventScroll: true });
+  });
+  addBtn.addEventListener('click', function () { addLine(); });
 
   addLine();
 })();

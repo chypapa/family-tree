@@ -148,13 +148,17 @@
       <img class="why__img" src="img/kniga-why.jpg" width="902" height="886" alt="Родословная книга «Ваша уникальная история в одной книге» в руках" loading="lazy" decoding="async">
     </section>
 
-    <!-- ============ ЭТАПЫ РАБОТЫ: красные карточки в ленту с горизонтальной прокруткой (мышью можно тянуть) ============ -->
+    <!-- ============ ЭТАПЫ РАБОТЫ: красные карточки в ленту. Когда лента доходит до середины экрана, блок
+         останавливается, и прокрутка страницы вниз плавно ведёт карточки вбок; после последней — прокрутка
+         снова обычная (js/main.js) ============ -->
     <section class="stages container section" aria-labelledby="stages-title">
+      <div class="stages__pin">
       <div class="section-head">
         <h2 class="h2" id="stages-title">Этапы работы</h2>
         <p class="section-head__text">Работаем поэтапно: сначала оцениваем, что можно найти по&nbsp;вашей семье, затем ищем документы в&nbsp;архивах и&nbsp;оформляем результат</p>
       </div>
-      <div class="stages__list scroller">
+      <div class="stages__viewport">
+      <div class="stages__track">
         <article class="stage">
           <div class="stage__top">
             <span class="stage__tag">1–2 дня</span>
@@ -200,42 +204,32 @@
           <div class="stage__bottom"><span class="stage__num">4 этап</span></div>
         </article>
       </div>
+      </div>
+      </div>
     </section>
 
-    <!-- ============ ОТЗЫВЫ — как на главной ============ -->
-    <section class="reviews container section" id="reviews">
-      <div class="section-head">
-        <h2 class="h2 reviews__heading">Наши заказчики советуют сотрудничество с&nbsp;нами</h2>
-        <a class="link-more" href="#">Читать все на&nbsp;Авито&nbsp;→</a>
-      </div>
-      <div class="reviews__list scroller">
-        <article class="review">
-          <div>
-            <img class="review__stars" src="img/stars.svg" width="117" height="24" alt="Оценка 5 из 5">
-            <p class="review__text">Работа сделана очень быстро, качественно, по&nbsp;приятной цене, вежливый и&nbsp;честный человек, приятно с&nbsp;такими сотрудничать. Максимально довольна результатом, спасибо большое!!!</p>
+    <!-- ============ ОТЗЫВЫ: сетка в 4 колонки, карточки по высоте текста; в первой — видеоотзыв.
+         Видео: положите файл в video/review-valentina.mp4 (обложка до запуска — img/review-video-poster.jpg) ============ -->
+    <section class="voices container section" aria-labelledby="voices-title">
+      <h2 class="h2 voices__heading" id="voices-title">Наши заказчики советуют сотрудничество с&nbsp;нами</h2>
+      <div class="voices__grid">
+        <article class="voice">
+          <p class="voice__author"><img src="img/person.svg" width="22" height="22" alt="">Валентина, Рязань</p>
+          <p class="voice__text">Работа сделана очень быстро, качественно, по&nbsp;приятной цене, вежливый и&nbsp;честный человек, приятно с&nbsp;такими сотрудничать. Максимально довольна результатом, спасибо большое!!!</p>
+          <div class="voice__video">
+            <video class="voice__player" preload="none" poster="img/review-video-poster.jpg" playsinline>
+              <source src="video/review-valentina.mp4" type="video/mp4">
+            </video>
+            <button class="voice__play" type="button" aria-label="Смотреть видеоотзыв Валентины"></button>
           </div>
-          <p class="review__author"><img src="img/person.svg" width="26" height="26" alt="">Юлия, Калуга</p>
         </article>
-        <article class="review">
-          <div>
-            <img class="review__stars" src="img/stars.svg" width="117" height="24" alt="Оценка 5 из 5">
-            <p class="review__text">Знакомство с&nbsp;Глебом было предопределено кем‑то свыше, не&nbsp;иначе!)) Столько новых имен удалось узнать с&nbsp;его помощью&nbsp;— просто не&nbsp;перечесть! Там, куда я&nbsp;не&nbsp;знала как подступиться,</p>
-          </div>
-          <p class="review__author"><img src="img/person.svg" width="26" height="26" alt="">Ирина, Москва</p>
+        <article class="voice">
+          <p class="voice__author"><img src="img/person.svg" width="22" height="22" alt="">Юлия, Москва</p>
+          <p class="voice__text">Работа была выполнена очень быстро, но&nbsp;в&nbsp;процессе поисков я&nbsp;узнала, что информация мне уже неактуальна и&nbsp;написала об&nbsp;этом Глебу. Даже несмотря на&nbsp;это! Глеб все равно выслал мне документ, который удалось найти, за&nbsp;что я&nbsp;ему безумно благодарна. Всегда был на&nbsp;связи и&nbsp;по&nbsp;максимуму отвечал на&nbsp;все вопросы. Обязательно посоветую друзьям и&nbsp;знакомым.</p>
         </article>
-        <article class="review">
-          <div>
-            <img class="review__stars" src="img/stars.svg" width="117" height="24" alt="Оценка 5 из 5">
-            <p class="review__text">Знакомство с&nbsp;Глебом было предопределено кем‑то свыше, не&nbsp;иначе!)) Столько новых имен удалось узнать с&nbsp;его помощью&nbsp;— просто не&nbsp;перечесть! Там, куда я&nbsp;не&nbsp;знала как подступиться...</p>
-          </div>
-          <p class="review__author"><img src="img/person.svg" width="26" height="26" alt="">Ирина, Москва</p>
-        </article>
-        <article class="review">
-          <div>
-            <img class="review__stars" src="img/stars.svg" width="117" height="24" alt="Оценка 5 из 5">
-            <p class="review__text">Спасибо за&nbsp;проделанную работу!! Генеалогическое древо очень понравилось!! Юбиляр прослезился, получив такой подарок!! В&nbsp;процессе работы замучила правками, спасибо за&nbsp;терпение!!</p>
-          </div>
-          <p class="review__author"><img src="img/person.svg" width="26" height="26" alt="">Валентина, Рязань</p>
+        <article class="voice">
+          <p class="voice__author"><img src="img/person.svg" width="22" height="22" alt="">Наталья, Рязань</p>
+          <p class="voice__text">Спасибо за&nbsp;проделанную работу!! Генеалогическое древо очень понравилось!! Юбиляр прослезился получив такой подарок!! В&nbsp;процессе работы замучала правками, спасибо за&nbsp;терпение!!</p>
         </article>
       </div>
     </section>
@@ -254,16 +248,23 @@
           <svg viewBox="0 0 22 22" width="22" height="22" aria-hidden="true" focusable="false"><path d="M11 1v20M1 11h20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           Добавить фамильную линию
         </button>
-        <button class="btn calc__submit" type="submit">Рассчитать</button>
-        <div class="calc__result" aria-live="polite" hidden></div>
+        <button class="btn calc__submit" type="submit"><span class="calc__submit-text">Рассчитать</span><span class="spinner" aria-hidden="true"></span></button>
       </form>
+
+      <!-- результат: появляется на месте анкеты; «Пересчитать стоимость» возвращает к анкете с ответами -->
+      <div class="calc__result" tabindex="-1" aria-live="polite" hidden>
+        <p class="calc__result-label">Примерная цена услуги</p>
+        <p class="calc__result-sum">0&nbsp;₽</p>
+        <p class="calc__result-note">Мы&nbsp;не&nbsp;можем заранее знать все обстоятельства: сохранность архивов, доступность нужных записей и&nbsp;другие факторы, которые повлияют на&nbsp;объём работы. Точную стоимость назовём после того, как вы&nbsp;свяжетесь с&nbsp;нами и&nbsp;мы&nbsp;оценим вашу ситуацию.</p>
+        <button class="calc__again" type="button">←&nbsp;Пересчитать стоимость</button>
+      </div>
 
       <!-- одна фамильная линия анкеты; js/calculator.js клонирует её и задаёт уникальные имена полей -->
       <template id="calc-line">
         <fieldset class="calc-line">
           <div class="calc-line__head">
-            <h3 class="h3 calc-line__title"><span class="calc-line__num">2</span> фамильная линия</h3>
-            <button class="calc-line__remove" type="button">Удалить</button>
+            <h2 class="h2 calc-line__title"><span class="calc-line__num">2</span> фамильная линия</h2>
+            <button class="calc-line__remove" type="button"><img src="icons/delete.svg" width="18" height="19" alt="">Удалить</button>
           </div>
 
           <fieldset class="calc-q" data-q="years">
@@ -285,6 +286,7 @@
             <div class="calc-q__options">
               <label class="radio"><input type="radio" name="before1917" value="yes"><span>Да</span></label>
               <label class="radio"><input type="radio" name="before1917" value="no"><span>Нет</span></label>
+              <label class="radio"><input type="radio" name="before1917" value="unknown"><span>Не&nbsp;знаю</span></label>
             </div>
             <p class="calc-q__error">Выберите ответ</p>
           </fieldset>
