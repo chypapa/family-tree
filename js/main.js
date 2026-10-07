@@ -390,8 +390,9 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(resplit);   // шрифт догрузился — переносы могли сдвинуться
   })();
 
-  /* ---------- «Этапы работы»: курсор над лентой — круг с подписью. Лента в начале — «Листать вперёд», в конце —
-     «Листать назад», посередине — «вперёд» на правых двух третях экрана и «назад» на левой трети.
+  /* ---------- «Этапы работы»: курсор над лентой — круг с подписью. Лента в начале — «вперёд», в конце — «назад»,
+     посередине — «вперёд» на правых двух третях экрана и «назад» на левой трети. Подпись «вперёд» — текст круга
+     в разметке (span.stages__bubble), «назад» — его атрибут data-back.
      В правой трети лента сама едет вперёд, в левой — назад; в средней трети ничего не происходит ---------- */
   document.querySelectorAll('.stages').forEach(function (section) {
     var strip = section.querySelector('.stages__viewport');
@@ -399,13 +400,15 @@
     if (!strip || !bubble || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
     var x = 0, y = 0, over = false, dir = 0, raf = 0, last = 0;
     var SPEED = 0.9;                                    // px за мс (~900 px/с)
+    var fwdText = bubble.textContent.trim() || 'Листать вперёд';
+    var backText = bubble.getAttribute('data-back') || 'Листать назад';
 
     var state = function () {
       var max = strip.scrollWidth - strip.clientWidth;
       var atStart = strip.scrollLeft <= 1, atEnd = strip.scrollLeft >= max - 1;
       var third = window.innerWidth / 3;
       var back = atEnd || (!atStart && x < third);
-      bubble.textContent = back ? 'Листать назад' : 'Листать вперёд';
+      bubble.textContent = back ? backText : fwdText;
       dir = x > 2 * third && !atEnd ? 1 : (x < third && !atStart ? -1 : 0);
       if (dir && !raf) { last = 0; raf = requestAnimationFrame(step); }
     };
@@ -441,23 +444,60 @@
     if (mq.addEventListener) mq.addEventListener('change', apply);
   });
 
-  /* ---------- Видеоотзыв: по кнопке ▶ видео запускается в карточке со своими кнопками управления ---------- */
-  document.querySelectorAll('.voice__video').forEach(function (box) {
-    var video = box.querySelector('video');
-    var play = box.querySelector('.voice__play');
-    if (!video || !play) return;
-    // файла ещё нет или он не открылся — возвращаем обложку с подписью «Видео скоро появится»
-    var fail = function () { box.classList.remove('is-playing'); video.controls = false; box.classList.add('is-missing'); };
-    var source = video.querySelector('source');
-    if (source) source.addEventListener('error', fail);
-    video.addEventListener('error', fail);
-    play.addEventListener('click', function () {
-      box.classList.add('is-playing');
-      video.controls = true;
-      var p = video.play();
-      if (p && p.catch) p.catch(function (err) { if (err && err.name !== 'AbortError') fail(); });
+  /* ---------- Видеоотзыв: по кнопке ▶ видео открывается поверх страницы почти на весь экран, страница под ним
+     затемнена и размыта. Закрывается крестиком, кликом мимо видео и клавишей Esc ---------- */
+  var videoModal = document.getElementById('video-modal');
+  if (videoModal) {
+    var modalPlayer = videoModal.querySelector('.video-modal__player');
+    var modalClose = videoModal.querySelector('.video-modal__close');
+    var pageWrap = document.querySelector('.page');
+    var opener = null;
+    videoModal.hidden = false;                          // дальше окно прячут opacity / visibility — так оно плавно появляется
+    if ('inert' in videoModal) videoModal.inert = true;
+    // файла нет или он не открылся — вместо видео подпись «Видео скоро появится»
+    var modalFail = function () { videoModal.classList.add('is-missing'); };
+    modalPlayer.addEventListener('error', modalFail);
+    var openVideo = function (src, poster, from) {
+      opener = from;
+      videoModal.classList.remove('is-missing');
+      modalPlayer.poster = poster || '';
+      modalPlayer.src = src;
+      var root = document.documentElement;
+      root.classList.toggle('has-scrollbar', window.innerWidth > root.clientWidth);
+      root.classList.add('is-video-open');
+      videoModal.classList.add('is-open');
+      if ('inert' in videoModal) { videoModal.inert = false; if (pageWrap) pageWrap.inert = true; }
+      modalClose.focus({ preventScroll: true });
+      var p = modalPlayer.play();
+      if (p && p.catch) p.catch(function (err) { if (err && err.name === 'NotSupportedError') modalFail(); });
+    };
+    var closeVideo = function () {
+      if (!videoModal.classList.contains('is-open')) return;
+      modalPlayer.pause();
+      videoModal.classList.remove('is-open');
+      document.documentElement.classList.remove('is-video-open', 'has-scrollbar');
+      if ('inert' in videoModal) { videoModal.inert = true; if (pageWrap) pageWrap.inert = false; }
+      setTimeout(function () {                          // окно растаяло — выгружаем видео
+        if (videoModal.classList.contains('is-open')) return;
+        modalPlayer.removeAttribute('src');
+        modalPlayer.load();
+      }, 400);
+      if (opener) opener.focus({ preventScroll: true });
+    };
+    modalClose.addEventListener('click', closeVideo);
+    videoModal.addEventListener('click', function (e) { if (e.target === videoModal) closeVideo(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeVideo(); });
+
+    document.querySelectorAll('.voice__video').forEach(function (box) {
+      var video = box.querySelector('video');
+      var play = box.querySelector('.voice__play');
+      if (!video || !play) return;
+      var source = video.querySelector('source');
+      play.addEventListener('click', function () {
+        openVideo(source ? source.getAttribute('src') : video.getAttribute('src'), video.getAttribute('poster'), play);
+      });
     });
-  });
+  }
 
   /* ---------- Блог: последние посты из группы ВКонтакте ---------- */
   // лент с постами может быть несколько (основной блог и вариант с карточками) — заполняем каждую,

@@ -1873,7 +1873,8 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-sp
 .stage__link { color: var(--white); text-decoration: none; }
 .stage__link:hover { text-decoration: underline; }
 
-/* ---------- Отзывы: сетка в 4 колонки (три карточки), карточка — по высоте текста, кавычки справа сверху ---------- */
+/* ---------- Отзывы: всегда в один ряд — три карточки по 4 колонки из 12, на планшете и телефоне лента (см. ниже).
+   Карточка — по высоте текста, кавычки справа сверху ---------- */
 .voices__heading { margin-bottom: var(--gap-head); }
 .voices__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--col-gap); align-items: start; }   /* по 4 колонки из 12 */
 .voice {
@@ -1897,10 +1898,9 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-sp
 }
 .voice__author { display: flex; align-items: center; gap: var(--s-12); padding-right: 64px; color: var(--muted); }
 .voice__author img { width: 22px; height: 22px; }
-.voice__text { line-height: 1.3; color: var(--text); }
+.voice__text { margin-top: var(--s-16); line-height: 1.3; color: var(--text); }   /* текст ниже подписи на 16px */
 .voice__video { position: relative; width: min(233px, 100%); aspect-ratio: 233 / 161; overflow: hidden; border-radius: var(--radius-sm); background: #8e98a3; }
 .voice__player { display: block; width: 100%; height: 100%; object-fit: cover; }
-.voice__video.is-playing { width: min(100%, 320px); aspect-ratio: 9 / 16; }   /* видео вертикальное */
 .voice__play {
   position: absolute;
   inset: 0;
@@ -1924,8 +1924,62 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-sp
   transition: transform .2s ease, background-color .2s ease;
 }
 .voice__play:hover::before { transform: scale(1.08); background-color: rgba(255, 255, 255, .75); }
-.voice__video.is-playing .voice__play { display: none; }
-.voice__video.is-missing::after { content: "Видео скоро появится"; position: absolute; inset: auto 0 0; padding: var(--s-8); background: rgba(0, 0, 0, .55); color: var(--white); font-size: 13px; text-align: center; }
+
+/* видеоотзыв поверх страницы: страница затемнена на 20% и размыта (как под мобильным меню), видео — почти на весь экран.
+   Прокрутку страницы на это время выключаем; если у браузера видимая полоса прокрутки, место под неё остаётся — страница не дёргается */
+.is-video-open { overflow: hidden; }
+.is-video-open.has-scrollbar { scrollbar-gutter: stable; }
+.video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, .2);
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .35s ease, visibility 0s linear .35s;
+}
+.video-modal[hidden] { display: none; }
+.video-modal.is-open { opacity: 1; visibility: visible; transition-delay: 0s; }
+.video-modal__player,
+.video-modal__missing {
+  grid-area: 1 / 1;
+  box-sizing: border-box;
+  height: min(100vh - 48px, (100vw - 48px) * 16 / 9);   /* видео вертикальное 9 : 16 — по высоте экрана без 24px сверху и снизу */
+  height: min(100dvh - 48px, (100vw - 48px) * 16 / 9);
+  aspect-ratio: 9 / 16;
+  border-radius: var(--radius);
+  background: #000;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, .35);
+  transform: scale(.96);
+  transition: transform .35s ease;
+}
+.video-modal.is-open .video-modal__player,
+.video-modal.is-open .video-modal__missing { transform: none; }
+.video-modal__missing { display: none; place-items: center; margin: 0; padding: var(--s-24); background: #8e98a3; color: var(--white); text-align: center; }
+.video-modal.is-missing .video-modal__player { visibility: hidden; }
+.video-modal.is-missing .video-modal__missing { display: grid; }
+.video-modal__close {                                  /* крестик в правом верхнем углу экрана */
+  position: absolute;
+  top: var(--s-16);
+  right: var(--s-16);
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E") center / 22px no-repeat;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+  cursor: pointer;
+  transition: transform .2s ease;
+}
+.video-modal__close:hover { transform: rotate(90deg); }
+@media (prefers-reduced-motion: reduce) {
+  .video-modal, .video-modal__player, .video-modal__missing, .video-modal__close { transition: none; }
+}
 
 /* ---------- Калькулятор: сетка 12 колонок — пояснение занимает 5, анкета и результат — 7 ---------- */
 .calc {
@@ -2098,15 +2152,31 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; letter-sp
   .why { grid-template-columns: 1fr; gap: var(--s-48); }
   .why__img { max-width: 760px; }
   .stage { flex-basis: min(560px, 72vw); min-height: 380px; }
-  .voices__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .calc__intro, .calc__panel { grid-column: 1 / -1; }
   .calc { row-gap: var(--s-48); }
   .calc__card { padding: var(--pad-card); }
 }
+/* отзывы на планшете и телефоне: по-прежнему один ряд — лента до краёв экрана, листается пальцем,
+   следующая карточка выглядывает справа */
+@media (max-width: 1023px) {
+  .voices__grid {
+    display: flex;
+    align-items: flex-start;
+    margin-inline: calc(-1 * var(--gut));
+    padding-inline: var(--gut);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gut);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .voices__grid::-webkit-scrollbar { display: none; }
+  .voice { flex: 0 0 min(400px, 80vw); scroll-snap-align: start; }
+}
 @media (max-width: 767px) {
   .why__list li { gap: var(--s-16); }
   .stage { flex-basis: 86vw; min-height: 0; }
-  .voices__grid { grid-template-columns: 1fr; }
   .voice::after { width: 44px; height: 44px; }
   .calc__card { gap: var(--s-40); padding: var(--s-24); }
   .calc__lines, .calc-line { gap: var(--s-40); }

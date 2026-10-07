@@ -148,8 +148,9 @@
       <img class="why__img" src="img/kniga-why.jpg" width="902" height="886" alt="Родословная книга «Ваша уникальная история в одной книге» в руках" loading="lazy" decoding="async">
     </section>
 
-    <!-- ============ ЭТАПЫ РАБОТЫ: красные карточки в ленту. С мышью курсор над лентой — круг «Листать вперёд /
-         Листать назад»; у правого края лента сама едет вперёд, у левого — назад (js/main.js). Пальцем — обычная прокрутка вбок ============ -->
+    <!-- ============ ЭТАПЫ РАБОТЫ: красные карточки в ленту. С мышью курсор над лентой — круг с подписью; у правого края
+         лента сама едет вперёд, у левого — назад (js/main.js). Подпись «вперёд» — текст в span.stages__bubble внизу блока,
+         «назад» — его атрибут data-back. Пальцем — обычная прокрутка вбок ============ -->
     <section class="stages container section" aria-labelledby="stages-title">
       <div class="stages__pin">
       <div class="section-head">
@@ -204,12 +205,14 @@
         </article>
       </div>
       </div>
-      <span class="cursor-bubble stages__bubble" aria-hidden="true">Дальше → </span>
+      <span class="cursor-bubble stages__bubble" data-back="Листать назад" aria-hidden="true">Дальше →</span>
       </div>
     </section>
 
-    <!-- ============ ОТЗЫВЫ: сетка в 4 колонки, карточки по высоте текста; в первой — видеоотзыв.
-         Видео: положите файл в video/review-valentina.mp4 (обложка до запуска — img/review-video-poster.jpg) ============ -->
+    <!-- ============ ОТЗЫВЫ: всегда в один ряд — на большом экране три карточки по 4 колонки из 12, на планшете и телефоне
+         лента, которую листают пальцем. Карточки по высоте текста; в первой — видеоотзыв: по ▶ он открывается поверх
+         страницы почти на весь экран (окно .video-modal внизу страницы, js/main.js).
+         Видео: video/review-valentina.mp4 (обложка до запуска — img/review-video-poster.jpg) ============ -->
     <section class="voices container section" aria-labelledby="voices-title">
       <h2 class="h2 voices__heading" id="voices-title">Наши заказчики советуют сотрудничество с&nbsp;нами</h2>
       <div class="voices__grid">
@@ -224,12 +227,12 @@
           </div>
         </article>
         <article class="voice">
-          <p class="voice__author"><img src="img/person.svg" width="22" height="22" alt="">Юлия, Москва</p>
-          <p class="voice__text">Работа была выполнена очень быстро, но&nbsp;в&nbsp;процессе поисков я&nbsp;узнала, что информация мне уже неактуальна и&nbsp;написала об&nbsp;этом Глебу. Даже несмотря на&nbsp;это! Глеб все равно выслал мне документ, который удалось найти, за&nbsp;что я&nbsp;ему безумно благодарна. Всегда был на&nbsp;связи и&nbsp;по&nbsp;максимуму отвечал на&nbsp;все вопросы. Обязательно посоветую друзьям и&nbsp;знакомым.</p>
-        </article>
-        <article class="voice">
           <p class="voice__author"><img src="img/person.svg" width="22" height="22" alt="">Наталья, Рязань</p>
           <p class="voice__text">Спасибо за&nbsp;проделанную работу!! Генеалогическое древо очень понравилось!! Юбиляр прослезился получив такой подарок!! В&nbsp;процессе работы замучала правками, спасибо за&nbsp;терпение!!</p>
+        </article>
+        <article class="voice">
+          <p class="voice__author"><img src="img/person.svg" width="22" height="22" alt="">Юлия, Москва</p>
+          <p class="voice__text">Работа была выполнена очень быстро, но&nbsp;в&nbsp;процессе поисков я&nbsp;узнала, что информация мне уже неактуальна и&nbsp;написала об&nbsp;этом Глебу. Даже несмотря на&nbsp;это! Глеб все равно выслал мне документ, который удалось найти, за&nbsp;что я&nbsp;ему безумно благодарна. Всегда был на&nbsp;связи и&nbsp;по&nbsp;максимуму отвечал на&nbsp;все вопросы. Обязательно посоветую друзьям и&nbsp;знакомым.</p>
         </article>
       </div>
     </section>
@@ -327,6 +330,15 @@
   </footer>
 
 </div>
+
+<!-- ============ ВИДЕООТЗЫВ: окно поверх страницы. Страница под ним затемнена на 20% и размыта, как под мобильным меню.
+     Закрывается крестиком, кликом мимо видео и клавишей Esc ============ -->
+<div class="video-modal" id="video-modal" role="dialog" aria-modal="true" aria-label="Видеоотзыв" hidden>
+  <video class="video-modal__player" controls playsinline preload="none"></video>
+  <p class="video-modal__missing">Видео скоро появится</p>
+  <button class="video-modal__close" type="button" aria-label="Закрыть видео"></button>
+</div>
+
 <script src="js/main.js"></script>
 <script src="js/calculator.js"></script>
 </body>
