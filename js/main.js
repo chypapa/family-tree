@@ -110,10 +110,15 @@
     if (!block || !lenis || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
     var busy = false;       // идёт доводка или пауза после неё
+    var hold = false;       // пауза после доводки: колесо игнорируем
     var lastInput = 0;      // доводим только прокрутку самого человека
-    var mark = function () { lastInput = Date.now(); };
-    window.addEventListener('wheel', mark, { passive: true });
-    window.addEventListener('keydown', mark);
+    // в паузе гасим инерцию тачпада: перехватываем колесо раньше Lenis. lenis.stop() не используем —
+    // он прячет полосу прокрутки, и страница дёргается по ширине
+    window.addEventListener('wheel', function (ev) {
+      if (hold) { ev.preventDefault(); ev.stopImmediatePropagation(); return; }
+      lastInput = Date.now();
+    }, { passive: false, capture: true });
+    window.addEventListener('keydown', function () { lastInput = Date.now(); });
 
     var snap = function (y) {
       busy = true;
@@ -123,8 +128,8 @@
         lock: true,
         force: true,
         onComplete: function () {
-          lenis.stop();                                   // гасим инерцию тачпада, чтобы блок не проскочил дальше
-          setTimeout(function () { lenis.start(); busy = false; }, 450);
+          hold = true;                                    // гасим инерцию тачпада, чтобы блок не проскочил дальше
+          setTimeout(function () { hold = false; busy = false; }, 450);
         }
       });
     };
