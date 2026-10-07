@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Семейное древо</title>
+  <title>Древо предков</title>
   <meta name="description" content="Найдём историю семьи в архивах и составим родословную книгу. Метрические книги, ревизские сказки, работа с архивами по всей России.">
   <link rel="icon" href="img/favicon.ico" sizes="any">
   <link rel="stylesheet" href="css/style.css">
@@ -12,14 +12,15 @@
 <body>
 <div class="page">
 
-  <!-- экран загрузки: на нём рисуется знак, потом экран растворяется -->
-  <div class="preloader" aria-hidden="true"></div>
+  <!-- экран загрузки: на нём рисуется знак, рядом с ним выезжает название; потом знак уезжает в шапку,
+       а название растворяется вместе с экраном -->
+  <div class="preloader" aria-hidden="true"><span class="preloader__name">Древо<br>предков</span></div>
 
   <!-- ============ HEADER ============ -->
   <header class="header header--sticky header--dark is-top">
     <div class="header__bar">
       <div class="header__left">
-        <a class="header__logo" href="#top" aria-label="Родовое дерево — на главную">
+        <a class="header__logo" href="#top" aria-label="Древо предков — на главную">
           <!-- знак рисуется при загрузке страницы по центру экрана и переезжает сюда (js/main.js) -->
           <span class="logo-mark">
             <svg class="mark" viewBox="0 0 370 395" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -50,8 +51,6 @@
               </g>
             </svg>
           </span>
-          <!-- название в две строки; после знака строки выезжают снизу, как у заголовков (js/main.js) -->
-          <span class="header__name"><span class="tl"><span class="tl__in">Родовое</span></span><span class="tl"><span class="tl__in" style="--i:1">дерево</span></span></span>
         </a>
         <nav class="nav" aria-label="Основное меню">
           <a href="#about">О нас</a>
@@ -78,7 +77,7 @@
 
     <div class="mobile-menu__backdrop" aria-hidden="true"></div>
     <div class="mobile-menu" id="mobile-menu-1">
-      <a class="mobile-menu__logo" href="#top" aria-label="Семейное древо — на главную">
+      <a class="mobile-menu__logo" href="#top" aria-label="Древо предков — на главную">
         <svg class="mobile-menu__mark" viewBox="0 0 370 395" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
               <g fill="currentColor">
               <path d="M155.453 159.515C155.733 106.715 135.203 49.5645 57.9633 30.1345C55.3433 109.745 104.623 145.235 155.453 159.515Z"/>
@@ -90,7 +89,7 @@
               <path d="M148.738 164.832C147.919 163.992 148.933 162.695 149.928 163.317C200.736 195.065 234.813 232.444 234.812 281.868C234.852 334.185 207.745 361.569 164.205 393.239C164.039 393.36 163.837 393.428 163.631 393.431L97.8125 394.497C96.6892 394.515 96.3844 392.929 97.431 392.52C152.083 371.204 209.386 334.475 209.386 278.373C209.386 231.388 191.663 208.84 148.738 164.832Z"/>
               </g>
         </svg>
-        <span class="mobile-menu__logo-text">Семейное древо</span>
+        <span class="mobile-menu__logo-text">Древо предков</span>
       </a>
       <nav class="mobile-menu__nav" aria-label="Мобильное меню">
         <a href="#about">О&nbsp;нас</a>
@@ -207,7 +206,7 @@
           <div class="svc-card__body">
             <div class="svc-card__titles">
               <p class="svc-card__sub">генеалогический поиск + исследование + дизайн</p>
-              <h3 class="svc-card__title">Родословная книга</h3>
+              <h3 class="h4 svc-card__title">Родословная книга</h3>
             </div>
             <p class="svc-card__desc">Семейная реликвия для детей и&nbsp;внуков. Проводим архивное исследование, находим документы о&nbsp;ваших предках и&nbsp;раскрываем их через исторический контекст. Результат оформляем в&nbsp;родословную книгу.</p>
             <span class="svc-card__btn-mobile">Узнать подробнее</span>
@@ -229,7 +228,7 @@
           <div class="svc-card__body">
             <div class="svc-card__titles">
               <p class="svc-card__sub">генеалогический поиск</p>
-              <h3 class="svc-card__title">Архивный свиток</h3>
+              <h3 class="h4 svc-card__title">Архивный свиток</h3>
             </div>
             <p class="svc-card__desc">Находим архивные документы о&nbsp;ваших предках и&nbsp;оформляем в&nbsp;подробный отчёт&nbsp;— фотокопии документов с&nbsp;расшифровкой и&nbsp;поколенная роспись.</p>
             <span class="svc-card__btn-mobile">Узнать подробнее</span>
@@ -287,7 +286,7 @@
         <article class="dcard">
           <div class="dcard__body">
             <div class="dcard__top">
-              <h3 class="dcard__title">Родословная книга</h3>
+              <h3 class="h4 dcard__title">Родословная книга</h3>
               <p class="dcard__sub">генеалогический поиск + исследование + дизайн</p>
               <ul class="tags dcard__tags">
                 <li class="tag">от 1 месяца</li>
@@ -307,7 +306,7 @@
         <article class="dcard">
           <div class="dcard__body">
             <div class="dcard__top">
-              <h3 class="dcard__title">Архивный свиток</h3>
+              <h3 class="h4 dcard__title">Архивный свиток</h3>
               <p class="dcard__sub">генеалогический поиск</p>
               <ul class="tags dcard__tags">
                 <li class="tag">от 1 месяца</li>
@@ -343,7 +342,7 @@
             </ul>
           </div>
           <div class="tcard__body">
-            <h3 class="tcard__title">Родословная книга</h3>
+            <h3 class="h4 tcard__title">Родословная книга</h3>
             <p class="tcard__sub">генеалогический поиск + исследование + дизайн</p>
             <p class="tcard__desc">Семейная реликвия для детей и&nbsp;внуков. Проводим архивное исследование, находим документы о&nbsp;ваших предках и&nbsp;раскрываем их через исторический контекст. Результат оформляем в&nbsp;родословную книгу.</p>
             <a class="btn tcard__btn" href="#contact">Узнать подробнее →</a>
@@ -359,7 +358,7 @@
             </ul>
           </div>
           <div class="tcard__body">
-            <h3 class="tcard__title">Архивный свиток</h3>
+            <h3 class="h4 tcard__title">Архивный свиток</h3>
             <p class="tcard__sub">генеалогический поиск</p>
             <p class="tcard__desc">Находим архивные документы о&nbsp;ваших предках и&nbsp;оформляем в&nbsp;подробный отчёт&nbsp;— фотокопии документов с&nbsp;расшифровкой и&nbsp;поколенная роспись.</p>
             <a class="btn tcard__btn" href="#contact">Узнать подробнее →</a>
@@ -532,7 +531,7 @@
   <!-- ============ FOOTER: соцсети в подвале главной — только на телефоне (на большом экране они в блоке с формой) ============ -->
   <footer class="footer">
     <div class="footer__inner">
-      <a class="footer__logo" href="#top" aria-label="Семейное древо — наверх">
+      <a class="footer__logo" href="#top" aria-label="Древо предков — наверх">
         <img src="img/logo.svg" width="33" height="37" alt="">
       </a>
       <img class="footer__watermark" src="img/logo.svg" alt="" aria-hidden="true">

@@ -1,23 +1,16 @@
 (function () {
   'use strict';
 
-  /* ---------- Вступление: знак рисуется по центру светлого экрана (шапки не видно) → переезжает на своё место в шапке →
-     экран загрузки растворяется, появляются меню и первый экран. Когда знак встал на место, появляется заливка шапки
-     (если страница прокручена) и справа от знака выезжает название в две строки ---------- */
+  /* ---------- Вступление: на светлом экране (шапки не видно) рисуется знак, рядом с ним выезжает название
+     «Древо предков» — знак сдвигается влево, и вместе с названием они стоят по центру экрана. Потом знак переезжает
+     на своё место в шапке, а название растворяется вместе со светлым экраном; появляются меню и первый экран.
+     Когда знак встал на место, появляется заливка шапки (если страница прокручена) ---------- */
   (function () {
     var root = document.documentElement;
     var pre = document.querySelector('.preloader');
+    var word = pre && pre.querySelector('.preloader__name');
     var marks = Array.prototype.slice.call(document.querySelectorAll('.logo-mark'));
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var names = Array.prototype.slice.call(document.querySelectorAll('.header__name'));
-    // строки названия сразу (без анимации) прячутся под свою нижнюю границу
-    if (!reduce) names.forEach(function (n) {
-      var lines = Array.prototype.slice.call(n.querySelectorAll('.tl__in'));
-      lines.forEach(function (l) { l.style.transition = 'none'; });
-      n.classList.add('text-lines');
-      void n.offsetWidth;
-      lines.forEach(function (l) { l.style.transition = ''; });
-    });
     var ready = function () {
       marks.forEach(function (m) {
         var svg = m.querySelector('.mark');
@@ -27,24 +20,42 @@
       root.classList.add('is-ready');
       setTimeout(function () { if (pre) pre.remove(); }, 980);
     };
-    var finish = function () {                                 // знак на месте: заливка шапки и название
-      root.classList.add('is-intro-done');
-      names.forEach(function (n) { n.classList.add('is-in'); });
-    };
+    var finish = function () { root.classList.add('is-intro-done'); };   // знак на месте: заливка шапки
     var logo = marks.filter(function (m) { return m.offsetParent !== null; })[0];   // видимый знак: в шапке или в мобильной плашке
-    // без вступления: на телефоне (знака в шапке нет) заливка кнопок шапки появляется, когда растворится экран загрузки;
-    // на страницах без экрана загрузки название выезжает сразу после открытия
-    if (reduce || !pre || !logo || !window.Promise) { ready(); setTimeout(finish, reduce ? 0 : (pre ? 500 : 150)); return; }
+    // без вступления (на телефоне знака в шапке нет): заливка кнопок шапки появляется, когда растворится экран загрузки
+    if (reduce || !pre || !logo || !window.Promise) { ready(); setTimeout(finish, reduce || !pre ? 0 : 500); return; }
     try {
+      var vw = window.innerWidth, vh = window.innerHeight;
       var r = logo.getBoundingClientRect();
-      var size = Math.min(window.innerWidth * 0.42, window.innerHeight * 0.34, 260);  // высота знака по центру экрана
+      var size = Math.min(vh * 0.2, 180);                      // высота знака по центру экрана
       var s = size / r.height;
-      var dx = window.innerWidth / 2 - (r.left + r.width / 2);
-      var dy = window.innerHeight / 2 - (r.top + r.height / 2);
+      var logoW = r.width * s;
+      var gap = size * 0.28;                                   // знак → название
+      var shift = 0;
+      if (word) {
+        word.style.fontSize = Math.round(size * 0.36) + 'px';
+        var ww = word.offsetWidth, wh = word.offsetHeight;
+        var scaleDown = Math.min(1, (vw - 48) / (logoW + gap + ww));   // узкий экран — всё чуть меньше
+        if (scaleDown < 1) {
+          size *= scaleDown; s = size / r.height; logoW = r.width * s; gap *= scaleDown;
+          word.style.fontSize = Math.round(size * 0.36) + 'px';
+          ww = word.offsetWidth; wh = word.offsetHeight;
+        }
+        shift = (gap + ww) / 2;                                // знак с названием — по центру экрана
+        word.style.left = (vw / 2 - shift + logoW / 2 + gap) + 'px';
+        word.style.top = (vh / 2 - wh / 2) + 'px';
+      }
+      var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      var place = function (dx) { logo.style.transform = 'translate(' + (dx - cx) + 'px,' + (vh / 2 - cy) + 'px) scale(' + s + ')'; };
       logo.style.color = '#a53625';
-      logo.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + s + ')';
+      place(vw / 2);
       void logo.offsetWidth;
       logo.querySelector('.mark').classList.add('play');     // 1. рисуется контур, затем заливка (около 1,1 с)
+      if (word) setTimeout(function () {                       // 2. знак сдвигается влево, рядом выезжает название
+        logo.style.transition = 'transform .6s cubic-bezier(.4, 0, .2, 1)';
+        place(vw / 2 - shift);
+        word.classList.add('is-in');
+      }, 150);
 
       var drawn = new Promise(function (res) { setTimeout(res, 1180); });
       var loaded = new Promise(function (res) {
@@ -52,14 +63,15 @@
         setTimeout(res, 5000);                                // медленный интернет — не ждём дольше 5 с
       });
       Promise.all([drawn, loaded]).then(function () {
-        // 2. знак уезжает вверх-в сторону на своё место и становится белым. Если страница прокручена (у шапки будет заливка),
-        //    знак остаётся красным, пока едет, и белеет вместе с появлением заливки — на светлом фоне он не пропадает
+        // 3. знак уезжает на своё место в шапке и становится белым, название растворяется вместе с экраном.
+        //    Если страница прокручена (у шапки будет заливка), знак остаётся красным, пока едет, и белеет
+        //    вместе с появлением заливки — на светлом фоне он не пропадает
         var header = document.querySelector('.header--sticky');
         var filled = !header || !header.classList.contains('is-top');
         logo.style.transition = 'transform .58s cubic-bezier(.75, 0, .2, 1), color ' + (filled ? '.3s ease .58s' : '.45s ease .09s');
         logo.style.transform = '';
         logo.style.color = '';
-        ready();                                              // 3. экран растворяется, появляются меню и первый экран
+        ready();                                              // экран с названием растворяется, появляются меню и первый экран
         setTimeout(finish, 600);                              // 4. знак на месте
         setTimeout(function () { logo.style.transition = ''; }, 900);
       });
@@ -67,16 +79,26 @@
   })();
 
   /* ---------- Шапка без заливки над первым экраном; при прокрутке заливка появляется.
+     Прокрутка вниз — шапка уезжает вверх за край окна, прокрутка вверх — возвращается.
      Первый экран при прокрутке: фото чуть приближается, текст уходит вверх и гаснет ---------- */
   var topHeader = document.querySelector('.header--sticky');
   var opening = document.querySelector('.opening');
   if (topHeader) {
     var openingMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var topTicking = false;
+    var lastY = window.scrollY;
     var updateTop = function () {
       topTicking = false;
       var y = window.scrollY;
       topHeader.classList.toggle('is-top', !!opening && y <= 40);
+      // в самом верху и при открытом меню шапка всегда видна; мелкие подёргивания (до 6px) не считаем
+      if (y <= 120 || document.documentElement.classList.contains('is-menu-open')) {
+        topHeader.classList.remove('is-hidden');
+        lastY = y;
+      } else if (Math.abs(y - lastY) > 6) {
+        topHeader.classList.toggle('is-hidden', y > lastY);
+        lastY = y;
+      }
       if (opening && openingMotion) {
         opening.style.setProperty('--hp', Math.min(1, Math.max(0, y / window.innerHeight)).toFixed(3));
       }
@@ -85,6 +107,7 @@
       if (!topTicking) { topTicking = true; requestAnimationFrame(updateTop); }
     }, { passive: true });
     window.addEventListener('resize', updateTop);
+    topHeader.addEventListener('focusin', function () { topHeader.classList.remove('is-hidden'); });   // переход по Tab — шапка видна
     updateTop();
   }
 
