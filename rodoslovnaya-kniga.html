@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Родословная книга — Семейное древо</title>
+  <meta name="description" content="Родословная книга о вашей семье: архивное исследование, история рода и фамильное древо в одном издании. Рассчитайте примерную стоимость онлайн.">
+  <link rel="icon" href="img/favicon.ico" sizes="any">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <header class="header header--sticky header--dark is-top">
+    <div class="header__bar">
+      <div class="header__left">
+        <a class="header__logo" href="index.html" aria-label="Семейное древо — на главную">
+          <!-- знак рисуется при загрузке страницы по центру экрана и переезжает сюда (js/main.js) -->
+          <span class="logo-mark">
+            <svg class="mark" viewBox="0 0 370 395" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <defs>
+                <!-- маска прячет линию заднего стебля там, где его перекрывает передний -->
+                <mask id="mark-behind-1" maskUnits="userSpaceOnUse" x="-10" y="-10" width="390" height="415">
+                  <rect x="-10" y="-10" width="390" height="415" fill="#fff"/>
+                  <path fill="#000" d="M220.482 164.832C221.301 163.992 220.287 162.695 219.292 163.317C168.484 195.065 134.407 232.444 134.408 281.868C134.368 334.185 161.475 361.569 205.015 393.239C205.181 393.36 205.383 393.428 205.589 393.431L271.408 394.497C272.531 394.515 272.836 392.929 271.789 392.52C217.137 371.204 159.834 334.475 159.834 278.373C159.834 231.388 177.557 208.84 220.482 164.832Z"/>
+                </mask>
+              </defs>
+              <g class="mark-lines">
+                <path pathLength="1" d="M155.453 159.515C155.733 106.715 135.203 49.5645 57.9633 30.1345C55.3433 109.745 104.623 145.235 155.453 159.515Z"/>
+                <path pathLength="1" d="M161.61 190.925C123.18 154.715 67.38 130.745 0.5 173.995C56.93 230.195 116.5 218.355 161.61 190.925Z"/>
+                <path pathLength="1" d="M213.767 159.654C213.487 106.854 234.017 49.7036 311.257 30.2736C313.877 109.884 264.597 145.374 213.767 159.654Z"/>
+                <path pathLength="1" d="M207.61 190.786C246.04 154.576 301.84 130.606 368.72 173.856C312.29 230.056 252.72 218.216 207.61 190.786Z"/>
+                <path pathLength="1" d="M184.61 162.5C216.61 120.5 234.61 62.5 184.61 0.5C134.61 62.5 152.61 120.5 184.61 162.5Z"/>
+                <path pathLength="1" stroke-miterlimit="6" d="M220.482 164.832C221.301 163.992 220.287 162.695 219.292 163.317C168.484 195.065 134.407 232.444 134.408 281.868C134.368 334.185 161.475 361.569 205.015 393.239C205.181 393.36 205.383 393.428 205.589 393.431L271.408 394.497C272.531 394.515 272.836 392.929 271.789 392.52C217.137 371.204 159.834 334.475 159.834 278.373C159.834 231.388 177.557 208.84 220.482 164.832Z"/>
+                <path mask="url(#mark-behind-1)" pathLength="1" stroke-miterlimit="6" d="M148.738 164.832C147.919 163.992 148.933 162.695 149.928 163.317C200.736 195.065 234.813 232.444 234.812 281.868C234.852 334.185 207.745 361.569 164.205 393.239C164.039 393.36 163.837 393.428 163.631 393.431L97.8125 394.497C96.6892 394.515 96.3844 392.929 97.431 392.52C152.083 371.204 209.386 334.475 209.386 278.373C209.386 231.388 191.663 208.84 148.738 164.832Z"/>
+              </g>
+              <g class="mark-fill">
+                <path d="M155.453 159.515C155.733 106.715 135.203 49.5645 57.9633 30.1345C55.3433 109.745 104.623 145.235 155.453 159.515Z"/>
+                <path d="M161.61 190.925C123.18 154.715 67.38 130.745 0.5 173.995C56.93 230.195 116.5 218.355 161.61 190.925Z"/>
+                <path d="M213.767 159.654C213.487 106.854 234.017 49.7036 311.257 30.2736C313.877 109.884 264.597 145.374 213.767 159.654Z"/>
+                <path d="M207.61 190.786C246.04 154.576 301.84 130.606 368.72 173.856C312.29 230.056 252.72 218.216 207.61 190.786Z"/>
+                <path d="M184.61 162.5C216.61 120.5 234.61 62.5 184.61 0.5C134.61 62.5 152.61 120.5 184.61 162.5Z"/>
+                <path d="M220.482 164.832C221.301 163.992 220.287 162.695 219.292 163.317C168.484 195.065 134.407 232.444 134.408 281.868C134.368 334.185 161.475 361.569 205.015 393.239C205.181 393.36 205.383 393.428 205.589 393.431L271.408 394.497C272.531 394.515 272.836 392.929 271.789 392.52C217.137 371.204 159.834 334.475 159.834 278.373C159.834 231.388 177.557 208.84 220.482 164.832Z"/>
+                <path d="M148.738 164.832C147.919 163.992 148.933 162.695 149.928 163.317C200.736 195.065 234.813 232.444 234.812 281.868C234.852 334.185 207.745 361.569 164.205 393.239C164.039 393.36 163.837 393.428 163.631 393.431L97.8125 394.497C96.6892 394.515 96.3844 392.929 97.431 392.52C152.083 371.204 209.386 334.475 209.386 278.373C209.386 231.388 191.663 208.84 148.738 164.832Z"/>
+              </g>
+            </svg>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Основное меню">
+          <a href="index.html#about">О нас</a>
+          <a href="rodoslovnaya-kniga.html" aria-current="page">Родословная книга</a>
+          <a href="index.html#process">Исследование</a>
+        </nav>
+      </div>
+      <div class="header__right">
+        <a class="header__phone" href="tel:+7 (915) 892-92-06">+7 (915) 892-92-06</a>
+        <div class="header__socials">
+          <!-- иконки из формы обратной связи (icons/…/brand-telegram.svg, logo-vk.svg) + обводка кружком, всё в одном SVG -->
+          <a class="round-icon" href="https://t.me/drevo_predkov" aria-label="Telegram">
+            <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
+              <circle cx="22" cy="22" r="21.25" stroke="currentColor" stroke-width="1.5"/>
+              <path transform="translate(22 22) scale(.5) translate(-21.5 -21.5)" d="M26.9516 17.9674L19.7647 25.1543L30.545 35.9346L37.7319 7.18701L5.39087 19.7641L12.5778 23.3576L16.1712 34.1379L21.5614 26.951" stroke="currentColor" stroke-width="3.59345" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a class="round-icon" href="https://vk.ru/russiagenealogy" aria-label="ВКонтакте">
+            <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
+              <circle cx="22" cy="22" r="21.25" stroke="currentColor" stroke-width="1.5"/>
+              <path transform="translate(22 22) scale(.55) translate(-21.5 -21.5)" fill-rule="evenodd" clip-rule="evenodd" d="M40.8223 11.1172C41.1221 10.1672 40.8223 9.47655 39.4958 9.47655H35.0851C33.9726 9.47655 33.4588 10.0813 33.159 10.7281C33.159 10.7281 30.8901 16.253 27.7216 19.835C26.6941 20.8709 26.2233 21.2162 25.6666 21.2162C25.3668 21.2162 24.9811 20.8709 24.9811 19.9217V11.0725C24.9811 9.95072 24.6391 9.43275 23.6967 9.43275H16.7602C16.0746 9.43275 15.6468 9.95072 15.6468 10.4687C15.6468 11.5476 17.231 11.807 17.402 14.828V21.3922C17.402 22.8164 17.1493 23.0766 16.5884 23.0766C15.0901 23.0766 11.4509 17.5088 9.26785 11.1643C8.84338 9.90776 8.41216 9.43275 7.29875 9.43275H2.84596C1.56158 9.43275 1.34766 10.0366 1.34766 10.6843C1.34766 11.8499 2.84596 17.7193 8.32626 25.4879C11.9655 30.7939 17.1459 33.6456 21.8127 33.6456C24.6391 33.6456 24.9811 32.9979 24.9811 31.9191V27.9051C24.9811 26.6106 25.2379 26.395 26.1374 26.395C26.7792 26.395 27.9356 26.7394 30.5473 29.2863C33.5439 32.3073 34.0576 33.6886 35.7277 33.6886H40.1376C41.422 33.6886 42.0216 33.0409 41.6788 31.7894C41.2939 30.5378 39.8378 28.7254 37.9537 26.5676C36.9262 25.3599 35.385 24.0216 34.9142 23.3739C34.2724 22.5107 34.4434 22.1654 34.9142 21.3888C34.8712 21.3888 40.2664 13.7062 40.8223 11.1138" fill="currentColor"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="header__mobile">
+      <!-- на телефоне и планшете в шапке только бургер; по нажатию он превращается в крестик, справа выезжает меню -->
+      <button class="icon-btn header__burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-menu-1">
+        <svg class="burger" viewBox="0 0 50 50" width="50" height="50" aria-hidden="true" focusable="false">
+          <line class="burger__line burger__line--top" x1="15" y1="18" x2="35" y2="18"/>
+          <line class="burger__line burger__line--mid" x1="15" y1="25" x2="35" y2="25"/>
+          <line class="burger__line burger__line--bot" x1="15" y1="32" x2="35" y2="32"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="mobile-menu__backdrop" aria-hidden="true"></div>
+    <div class="mobile-menu" id="mobile-menu-1">
+      <a class="mobile-menu__logo" href="index.html" aria-label="Семейное древо — на главную">
+        <svg class="mobile-menu__mark" viewBox="0 0 370 395" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <g fill="currentColor">
+              <path d="M155.453 159.515C155.733 106.715 135.203 49.5645 57.9633 30.1345C55.3433 109.745 104.623 145.235 155.453 159.515Z"/>
+              <path d="M161.61 190.925C123.18 154.715 67.38 130.745 0.5 173.995C56.93 230.195 116.5 218.355 161.61 190.925Z"/>
+              <path d="M213.767 159.654C213.487 106.854 234.017 49.7036 311.257 30.2736C313.877 109.884 264.597 145.374 213.767 159.654Z"/>
+              <path d="M207.61 190.786C246.04 154.576 301.84 130.606 368.72 173.856C312.29 230.056 252.72 218.216 207.61 190.786Z"/>
+              <path d="M184.61 162.5C216.61 120.5 234.61 62.5 184.61 0.5C134.61 62.5 152.61 120.5 184.61 162.5Z"/>
+              <path d="M220.482 164.832C221.301 163.992 220.287 162.695 219.292 163.317C168.484 195.065 134.407 232.444 134.408 281.868C134.368 334.185 161.475 361.569 205.015 393.239C205.181 393.36 205.383 393.428 205.589 393.431L271.408 394.497C272.531 394.515 272.836 392.929 271.789 392.52C217.137 371.204 159.834 334.475 159.834 278.373C159.834 231.388 177.557 208.84 220.482 164.832Z"/>
+              <path d="M148.738 164.832C147.919 163.992 148.933 162.695 149.928 163.317C200.736 195.065 234.813 232.444 234.812 281.868C234.852 334.185 207.745 361.569 164.205 393.239C164.039 393.36 163.837 393.428 163.631 393.431L97.8125 394.497C96.6892 394.515 96.3844 392.929 97.431 392.52C152.083 371.204 209.386 334.475 209.386 278.373C209.386 231.388 191.663 208.84 148.738 164.832Z"/>
+              </g>
+        </svg>
+        <span class="mobile-menu__logo-text">Семейное древо</span>
+      </a>
+      <nav class="mobile-menu__nav" aria-label="Мобильное меню">
+        <a href="index.html#about">О&nbsp;нас</a>
+        <a href="rodoslovnaya-kniga.html" aria-current="page">Родословная книга</a>
+        <a href="index.html#svc">Архивная книга</a>
+        <a href="index.html#contact">Контакты</a>
+      </nav>
+      <a class="btn mobile-menu__cta" href="index.html#contact">Получить консультацию</a>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ ПЕРВЫЙ ЭКРАН — как на главной: фото на весь экран, затемнение снизу слева, текст и кнопка поверх ============ -->
+    <section class="opening opening--kniga" aria-labelledby="opening-title">
+      <div class="opening__media" aria-hidden="true">
+        <img class="opening__img" src="img/kniga-hero.jpg" srcset="img/kniga-hero-960.jpg 960w, img/kniga-hero.jpg 1920w" sizes="100vw" width="1920" height="1018" alt="" fetchpriority="high" decoding="async">
+        <div class="opening__shade"><img src="img/hero-shade.svg" width="2094" height="1559" alt=""></div>
+      </div>
+      <div class="opening__content">
+        <h1 class="opening__title" id="opening-title">
+          <span class="line"><span>Трогательный подарок</span></span>
+          <span class="line"><span>для близких</span></span>
+        </h1>
+        <p class="opening__text">Изучаем метрические книги, ревизские сказки и&nbsp;другие документы, чтобы восстановить ваш род на&nbsp;300+ лет и&nbsp;оформить его в&nbsp;семейную реликвию с&nbsp;фамильным древом.</p>
+        <div class="opening__cta"><a class="btn opening__btn" href="#calc">Узнать историю моей семьи</a></div>
+      </div>
+    </section>
+
+    <!-- ============ ЗАЧЕМ КНИГА: слева текст и список «для кого», справа фото ============ -->
+    <section class="why container section" aria-labelledby="why-title">
+      <div class="why__text">
+        <h2 class="h2" id="why-title">Почему стоит заказать родословную книгу?</h2>
+        <div class="why__body">
+          <p>Семейная память живёт недолго&nbsp;— обычно два-три поколения, а&nbsp;дальше имена и&nbsp;истории стираются, если их&nbsp;никто не&nbsp;записал. Родословная книга останавливает это забвение: то, что сегодня хранится в&nbsp;разрозненных рассказах бабушек и&nbsp;дедушек, становится документом, который невозможно потерять.</p>
+          <p>Это ещё и&nbsp;способ лучше понять себя&nbsp;— откуда в&nbsp;семье та&nbsp;или иная черта характера, почему предки оказались именно в&nbsp;этих местах, через что они прошли, чтобы сегодня существовали вы.</p>
+          <p>И, наконец, это подарок, который со&nbsp;временем становится только ценнее&nbsp;— обычную вещь забывают через месяц, а&nbsp;родословную книгу через 20&nbsp;лет будут показывать внукам как главную семейную реликвию.</p>
+        </div>
+        <h3 class="h3 why__subtitle">Для кого эта услуга?</h3>
+        <ul class="why__list">
+          <li>Для тех, кто хочет сохранить память о&nbsp;старшем поколении, пока не&nbsp;поздно расспросить и&nbsp;найти документы</li>
+          <li>Для тех, кто ищет особенный подарок&nbsp;— на&nbsp;юбилей родителей, свадьбу, день рождения&nbsp;— который невозможно купить готовым</li>
+          <li>Для тех, кто вырос без чёткого понимания своих корней и&nbsp;хочет наконец узнать, откуда родом их&nbsp;семья</li>
+          <li>Для тех, кто хочет оставить историю детям и&nbsp;внукам&nbsp;— не&nbsp;в&nbsp;виде разрозненных фото, а&nbsp;как цельную, оформленную книгу</li>
+        </ul>
+      </div>
+      <img class="why__img" src="img/kniga-why.jpg" width="902" height="886" alt="Родословная книга «Ваша уникальная история в одной книге» в руках" loading="lazy" decoding="async">
+    </section>
+
+    <!-- ============ ЭТАПЫ РАБОТЫ: красные карточки в ленту. Когда лента доходит до середины экрана, блок
+         останавливается, и прокрутка страницы вниз плавно ведёт карточки вбок; после последней — прокрутка
+         снова обычная (js/main.js) ============ -->
+    <section class="stages container section" aria-labelledby="stages-title">
+      <div class="stages__pin">
+      <div class="section-head">
+        <h2 class="h2" id="stages-title">Этапы работы</h2>
+        <p class="section-head__text">Работаем поэтапно: сначала оцениваем, что можно найти по&nbsp;вашей семье, затем ищем документы в&nbsp;архивах и&nbsp;оформляем результат</p>
+      </div>
+      <div class="stages__viewport">
+      <div class="stages__track">
+        <article class="stage">
+          <div class="stage__top">
+            <span class="stage__tag">1–2 дня</span>
+            <h3 class="stage__title">Интервью</h3>
+            <div class="stage__text">
+              <p>Первым этапом мы&nbsp;проводим беседу с&nbsp;членами семьи в&nbsp;удобном формате, чтобы собрать имеющуюся информацию о&nbsp;семье, собираем материалы.</p>
+              <p>Вместе принимаем решение о&nbsp;необходимом наполнении документа, слушаем ваши желания и&nbsp;предпочтения.</p>
+            </div>
+          </div>
+          <div class="stage__bottom"><span class="stage__num">1 этап</span></div>
+        </article>
+        <article class="stage">
+          <div class="stage__top">
+            <span class="stage__tag">20–30 дней</span>
+            <h3 class="stage__title">Архивный поиск</h3>
+            <div class="stage__text">
+              <p>Команда работает с&nbsp;государственными и&nbsp;частными архивами по&nbsp;всему миру, восстанавливая контекст эпохи и&nbsp;уходя иногда на&nbsp;несколько веков назад. О&nbsp;ключевых находках мы&nbsp;сообщаем по&nbsp;мере их&nbsp;появления.</p>
+            </div>
+          </div>
+          <div class="stage__bottom">
+            <span class="stage__num">2 этап</span>
+            <a class="stage__link" href="index.html#about">Как мы работаем с&nbsp;архивами&nbsp;→</a>
+          </div>
+        </article>
+        <article class="stage">
+          <div class="stage__top">
+            <span class="stage__tag">2–3 дня</span>
+            <h3 class="stage__title">Реконструкция истории и&nbsp;содержание книги</h3>
+            <div class="stage__text">
+              <p>Обрабатываем найденные документы, разъясняем исторический контекст, согласовываем с&nbsp;вами содержание&nbsp;— какие сведения и&nbsp;разделы войдут в&nbsp;книгу.</p>
+            </div>
+          </div>
+          <div class="stage__bottom"><span class="stage__num">3 этап</span></div>
+        </article>
+        <article class="stage">
+          <div class="stage__top">
+            <span class="stage__tag">2–3 дня</span>
+            <h3 class="stage__title">Дизайн и&nbsp;вёрстка книги</h3>
+            <div class="stage__text">
+              <p>Оформляем согласованное содержание в&nbsp;готовое издание&nbsp;— с&nbsp;расшифровками документов, историческими справками и&nbsp;векторным древом для печати на&nbsp;холсте.</p>
+            </div>
+          </div>
+          <div class="stage__bottom"><span class="stage__num">4 этап</span></div>
+        </article>
+      </div>
+      </div>
+      </div>
+    </section>
+
+    <!-- ============ ОТЗЫВЫ: сетка в 4 колонки, карточки по высоте текста; в первой — видеоотзыв.
+         Видео: положите файл в video/review-valentina.mp4 (обложка до запуска — img/review-video-poster.jpg) ============ -->
+    <section class="voices container section" aria-labelledby="voices-title">
+      <h2 class="h2 voices__heading" id="voices-title">Наши заказчики советуют сотрудничество с&nbsp;нами</h2>
+      <div class="voices__grid">
+        <article class="voice">
+          <p class="voice__author"><img src="img/person.svg" width="22" height="22" alt="">Валентина, Рязань</p>
+          <p class="voice__text">Работа сделана очень быстро, качественно, по&nbsp;приятной цене, вежливый и&nbsp;честный человек, приятно с&nbsp;такими сотрудничать. Максимально довольна результатом, спасибо большое!!!</p>
+          <div class="voice__video">
+            <video class="voice__player" preload="none" poster="img/review-video-poster.jpg" playsinline>
+              <source src="video/review-valentina.mp4" type="video/mp4">
+            </video>
+            <button class="voice__play" type="button" aria-label="Смотреть видеоотзыв Валентины"></button>
+          </div>
+        </article>
+        <article class="voice">
+          <p class="voice__author"><img src="img/person.svg" width="22" height="22" alt="">Юлия, Москва</p>
+          <p class="voice__text">Работа была выполнена очень быстро, но&nbsp;в&nbsp;процессе поисков я&nbsp;узнала, что информация мне уже неактуальна и&nbsp;написала об&nbsp;этом Глебу. Даже несмотря на&nbsp;это! Глеб все равно выслал мне документ, который удалось найти, за&nbsp;что я&nbsp;ему безумно благодарна. Всегда был на&nbsp;связи и&nbsp;по&nbsp;максимуму отвечал на&nbsp;все вопросы. Обязательно посоветую друзьям и&nbsp;знакомым.</p>
+        </article>
+        <article class="voice">
+          <p class="voice__author"><img src="img/person.svg" width="22" height="22" alt="">Наталья, Рязань</p>
+          <p class="voice__text">Спасибо за&nbsp;проделанную работу!! Генеалогическое древо очень понравилось!! Юбиляр прослезился получив такой подарок!! В&nbsp;процессе работы замучала правками, спасибо за&nbsp;терпение!!</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ КАЛЬКУЛЯТОР: слева пояснение, справа анкета. Логика — js/calculator.js ============ -->
+    <section class="calc container section" id="calc" aria-labelledby="calc-title">
+      <div class="calc__intro">
+        <h2 class="h2" id="calc-title">Калькулятор стоимости</h2>
+        <p class="h3 calc__lead">Результат&nbsp;— примерная стоимость исследования</p>
+        <p class="calc__text">Конечная стоимость услуги зависит от&nbsp;нескольких факторов. <a class="calc__contact" href="index.html#contact">Можете связаться с&nbsp;нами</a> для уточнения цены или ответить на&nbsp;несколько вопросов ниже, чтобы узнать сумму.</p>
+      </div>
+
+      <div class="calc__panel">
+      <form class="calc__card" novalidate>
+        <div class="calc__lines"></div>
+        <button class="calc__add" type="button">
+          <svg viewBox="0 0 22 22" width="22" height="22" aria-hidden="true" focusable="false"><path d="M11 1v20M1 11h20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Добавить фамильную линию
+        </button>
+        <button class="btn calc__submit" type="submit"><span class="calc__submit-text">Рассчитать</span><span class="spinner" aria-hidden="true"></span></button>
+      </form>
+
+      <!-- результат: появляется на месте анкеты; «Пересчитать стоимость» возвращает к анкете с ответами -->
+      <div class="calc__result" tabindex="-1" aria-live="polite" hidden>
+        <p class="calc__result-label">Примерная цена услуги</p>
+        <p class="calc__result-sum">0&nbsp;₽</p>
+        <p class="calc__result-note">Мы&nbsp;не&nbsp;можем заранее знать все обстоятельства: сохранность архивов, доступность нужных записей и&nbsp;другие факторы, которые повлияют на&nbsp;объём работы. Точную стоимость назовём после того, как вы&nbsp;свяжетесь с&nbsp;нами и&nbsp;мы&nbsp;оценим вашу ситуацию.</p>
+        <button class="calc__again" type="button">←&nbsp;Пересчитать стоимость</button>
+      </div>
+      </div>
+
+      <!-- одна фамильная линия анкеты; js/calculator.js клонирует её и задаёт уникальные имена полей -->
+      <template id="calc-line">
+        <fieldset class="calc-line">
+          <div class="calc-line__head">
+            <h2 class="h2 calc-line__title"><span class="calc-line__num">2</span> фамильная линия</h2>
+            <button class="calc-line__remove" type="button"><img src="icons/delete.svg" width="18" height="19" alt="">Удалить</button>
+          </div>
+
+          <fieldset class="calc-q" data-q="years">
+            <legend class="calc-q__title">За сколько лет вести исследование?</legend>
+            <p class="calc-q__hint">Это период от&nbsp;последнего известного вам предка вглубь истории. Например, если предок родился в&nbsp;1920&nbsp;году, исследование на&nbsp;100&nbsp;лет приведёт нас примерно к&nbsp;началу XIX&nbsp;века. Если не&nbsp;уверены&nbsp;— выбирайте 100&nbsp;лет, это самый частый запрос.</p>
+            <div class="calc-q__options">
+              <label class="radio"><input type="radio" name="years" value="100"><span>100</span></label>
+              <label class="radio"><input type="radio" name="years" value="200"><span>200</span></label>
+              <label class="radio"><input type="radio" name="years" value="300"><span>300</span></label>
+              <label class="radio radio--custom"><input type="radio" name="years" value="custom"><span>Свой вариант:</span>
+                <input class="input calc-q__custom" type="number" inputmode="numeric" min="1" max="1000" step="1" aria-label="Свой вариант, лет"></label>
+            </div>
+            <p class="calc-q__error">Выберите срок или впишите свой</p>
+          </fieldset>
+
+          <fieldset class="calc-q" data-q="before1917">
+            <legend class="calc-q__title">Родился ли&nbsp;последний известный предок до&nbsp;революции (1917&nbsp;года)?</legend>
+            <p class="calc-q__hint">Это важно, потому что после 1917&nbsp;года записи о&nbsp;рождении, браке и&nbsp;смерти велись в&nbsp;ЗАГСах, а&nbsp;до&nbsp;этого&nbsp;— в&nbsp;церковных метрических книгах. Архивы и&nbsp;методы поиска в&nbsp;этих двух случаях разные.</p>
+            <div class="calc-q__options">
+              <label class="radio"><input type="radio" name="before1917" value="yes"><span>Да</span></label>
+              <label class="radio"><input type="radio" name="before1917" value="no"><span>Нет</span></label>
+              <label class="radio"><input type="radio" name="before1917" value="unknown"><span>Не&nbsp;знаю</span></label>
+            </div>
+            <p class="calc-q__error">Выберите ответ</p>
+          </fieldset>
+
+          <div class="calc-q" data-q="region">
+            <label class="calc-q__title" for="region">В&nbsp;каком регионе жил этот род?</label>
+            <p class="calc-q__hint">Регион определяет, в&nbsp;каком архиве вести поиск&nbsp;— это может повлиять на&nbsp;сроки и&nbsp;стоимость исследования.</p>
+            <div class="combo">
+              <input class="input combo__input" id="region" type="text" autocomplete="off" placeholder="Москва"
+                     role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="region-list">
+              <ul class="combo__list" id="region-list" role="listbox" hidden></ul>
+            </div>
+            <p class="calc-q__error">Впишите регион</p>
+          </div>
+        </fieldset>
+      </template>
+    </section>
+  </main>
+
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <a class="footer__logo" href="index.html" aria-label="Семейное древо — наверх">
+        <img src="img/logo.svg" width="33" height="37" alt="">
+      </a>
+      <img class="footer__watermark" src="img/logo.svg" alt="" aria-hidden="true">
+      <div class="footer__socials">
+        <a href="#" aria-label="WhatsApp"><img src="img/icons/whatsapp.svg" width="44" height="44" alt=""></a>
+        <a href="#" aria-label="Telegram"><img src="img/icons/telegram.svg" width="44" height="44" alt=""></a>
+        <a href="#" aria-label="ВКонтакте"><img src="img/icons/vk.svg" width="44" height="44" alt=""></a>
+        <a href="#" aria-label="MAX"><img src="img/icons/max.svg" width="44" height="44" alt=""></a>
+      </div>
+      <a class="footer__policy" href="#">Политика конфиденциальности</a>
+    </div>
+  </footer>
+
+</div>
+<script src="js/main.js"></script>
+<script src="js/calculator.js"></script>
+</body>
+</html>

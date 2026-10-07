@@ -1,20 +1,6 @@
 (function () {
   'use strict';
 
-  /* ---------- Плавная прокрутка колесом / тачпадом (Lenis) ---------- */
-  // Без библиотеки или при «уменьшить движение» остаётся обычная прокрутка + CSS scroll-behavior для якорей.
-  if (window.Lenis && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    var headerEl = document.querySelector('.header--sticky');
-    var lenis = new Lenis({
-      lerp: 0.1,                 // чем меньше, тем «мягче» и дольше доезжает
-      autoRaf: true,
-      anchors: {                 // ссылки #about, #contact и т.п. — тоже плавно, с учётом закреплённой шапки и отступа над ней
-        offset: -((headerEl ? headerEl.getBoundingClientRect().bottom : 0) + 16)
-      }
-    });
-    window.lenis = lenis;
-  }
-
   /* ---------- Вступление: знак рисуется по центру экрана → переезжает на своё место в шапке →
      экран загрузки растворяется, появляются меню и первый экран ---------- */
   (function () {
@@ -82,113 +68,36 @@
     updateTop();
   }
 
-  /* ---------- Шапка: красная, пока под ней блок «Найдём историю» (.focus), в остальное время зелёная ---------- */
-  var stickyHeader = document.querySelector('.header--sticky');
-  var redZone = document.querySelector('.focus');
-  if (stickyHeader && redZone) {
-    var headerTicking = false;
-    var updateHeader = function () {
-      headerTicking = false;
-      var h = stickyHeader.getBoundingClientRect();
-      var line = h.top + h.height / 2 + 80;          // середина шапки + 80px: цвет меняется чуть раньше, чем шапка дойдёт до края блока
-      var z = redZone.getBoundingClientRect();
-      stickyHeader.classList.toggle('header--dark', !(z.top <= line && z.bottom >= line));
-    };
-    window.addEventListener('scroll', function () {
-      if (!headerTicking) { headerTicking = true; requestAnimationFrame(updateHeader); }
-    }, { passive: true });
-    window.addEventListener('resize', updateHeader);
-    updateHeader();
-  }
-
-  /* ---------- Блог (#blog, пятый блок) «прилипает» к верху окна. С мышью/тачпадом прокрутка доводится сама:
-     чуть прокрутили вниз — блок встаёт верхним краем к верху окна, ещё чуть — уезжает вверх целиком
-     (и так же в обратную сторону). Переходы по якорям и прокрутку пальцем не трогаем ---------- */
-  (function () {
-    var block = document.getElementById('blog');
-    var lenis = window.lenis;
-    if (!block || !lenis || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-
-    var busy = false;       // идёт доводка или пауза после неё
-    var hold = false;       // пауза после доводки: колесо игнорируем
-    var lastInput = 0;      // доводим только прокрутку самого человека
-    // в паузе гасим инерцию тачпада: перехватываем колесо раньше Lenis. lenis.stop() не используем —
-    // он прячет полосу прокрутки, и страница дёргается по ширине
-    window.addEventListener('wheel', function (ev) {
-      if (hold) { ev.preventDefault(); ev.stopImmediatePropagation(); return; }
-      lastInput = Date.now();
-    }, { passive: false, capture: true });
-    window.addEventListener('keydown', function () { lastInput = Date.now(); });
-
-    var snap = function (y) {
-      busy = true;
-      lenis.scrollTo(y, {
-        duration: 0.9,
-        easing: function (t) { return 1 - Math.pow(1 - t, 3); },
-        lock: true,
-        force: true,
-        onComplete: function () {
-          hold = true;                                    // гасим инерцию тачпада, чтобы блок не проскочил дальше
-          setTimeout(function () { hold = false; busy = false; }, 450);
-        }
-      });
-    };
-
-    lenis.on('scroll', function (l) {
-      if (busy || Date.now() - lastInput > 250) return;
-      var vh = window.innerHeight;
-      var r = block.getBoundingClientRect();
-      var top = r.top + window.scrollY;
-      var bottom = r.bottom + window.scrollY;
-      var e = 2;
-      if (l.direction > 0) {
-        if (r.top > e && r.top < vh - e) snap(top);                                  // показался — встаёт к верху окна
-        else if (r.top < -e && r.bottom > e && r.bottom <= vh + e) snap(bottom);     // дошли до низа — уезжает вверх
-      } else if (l.direction < 0) {
-        if (r.top > e && r.top < vh - e) snap(Math.max(0, top - vh));                // сдвинулся вниз — уезжает вниз целиком
-        else if (r.top < -e && r.bottom > e && r.bottom < vh - e) snap(Math.max(top, bottom - vh));   // показался сверху — снова у верха окна
-      }
-    });
-  })();
-
-  /* ---------- Мобильное меню (в каждой шапке своё) ---------- */
-  var burgers = document.querySelectorAll('.header__burger');
-
-  function closeAll(except) {
-    burgers.forEach(function (b) {
-      var m = document.getElementById(b.getAttribute('aria-controls'));
-      if (!m || m === except || m.hidden) return;
-      m.hidden = true;
-      b.setAttribute('aria-expanded', 'false');
-      b.setAttribute('aria-label', 'Открыть меню');
-    });
-  }
-
-  burgers.forEach(function (burger) {
-    var menu = document.getElementById(burger.getAttribute('aria-controls'));
-    if (!menu) return;
-    burger.addEventListener('click', function (e) {
-      e.stopPropagation();
-      var open = menu.hidden;
-      closeAll(menu);
-      menu.hidden = !open;
+  /* ---------- Мобильное меню: бургер превращается в крестик, панель выезжает справа ---------- */
+  var burger = document.querySelector('.header__burger');
+  var drawer = burger && document.getElementById(burger.getAttribute('aria-controls'));
+  if (burger && drawer) {
+    var setMenu = function (open) {
+      document.documentElement.classList.toggle('is-menu-open', open);
+      drawer.classList.toggle('is-open', open);
+      drawer.setAttribute('aria-hidden', String(!open));
+      if ('inert' in drawer) drawer.inert = !open;
       burger.setAttribute('aria-expanded', String(open));
       burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    };
+    setMenu(false);
+    burger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setMenu(!drawer.classList.contains('is-open'));
     });
-    menu.addEventListener('click', function (e) {
-      if (e.target.closest('a')) closeAll();
+    drawer.addEventListener('click', function (e) {
+      if (e.target.closest('a')) setMenu(false);              // перешли по пункту — меню закрывается
     });
-  });
-
-  document.addEventListener('click', function (e) {
-    if (!e.target.closest('.mobile-menu')) closeAll();
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeAll();
-  });
-  window.addEventListener('resize', function () {
-    if (window.innerWidth >= 1024) closeAll();
-  });
+    document.addEventListener('click', function (e) {
+      if (drawer.classList.contains('is-open') && !drawer.contains(e.target)) setMenu(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setMenu(false);
+    });
+    window.addEventListener('resize', function () {
+      if (window.innerWidth >= 1024) setMenu(false);
+    });
+  }
 
   /* ---------- Бегущая лента: едет сама, можно тянуть мышкой / пальцем ---------- */
   var marquee = document.querySelector('.marquee');
@@ -404,35 +313,27 @@
     }
   }
 
-  /* ---------- Появление при прокрутке ----------
-     Текст с иерархией: заголовки и подзаголовки (шрифт больше 16px) — построчно снизу вверх,
-     основной текст (16px и меньше) — целиком, спокойным проявлением. Карточки и форма — мягко снизу. */
-  var motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (motionOK && 'IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        e.target.classList.add('is-in');
-        io.unobserve(e.target);
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+  /* ---------- Заголовки H2: каждая строка выезжает снизу из-под своей нижней границы, когда заголовок
+     появляется на экране (один раз). Строки размечаются по тому, как браузер реально перенёс слова,
+     и заново — при смене ширины окна. На прокрутку не влияет; при «уменьшить движение» всё видно сразу ---------- */
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+    // у заголовка блока «О нас» два варианта текста (для широкого экрана и для телефона) — размечаем каждый
+    var targets = [];
+    document.querySelectorAll('h2').forEach(function (h) {
+      if (h.closest('[hidden], .opening')) return;
+      var parts = h.querySelectorAll(':scope > span');
+      if (parts.length) parts.forEach(function (p) { targets.push({ el: p, root: h }); });
+      else targets.push({ el: h, root: h });
+    });
+    if (!targets.length) return;
 
-    var prepare = function (el, cls) {
-      el.style.transition = 'none';               // прячем сразу, без обратного «затухания» при загрузке
-      el.classList.add(cls);
-      io.observe(el);
-    };
-
-    // разбивка текста на строки — по тому, как браузер реально перенёс слова (с учётом <br> и ширины)
-    var escapeHtml = function (s) {
-      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    };
-    var splitLines = function (el) {
+    var esc = function (t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+    var split = function (el) {
       el.innerHTML = el.getAttribute('data-text-src');
-      // каждое слово — во временный span; пробелы обычные (неразрывные остаются внутри слова)
       var words = [];
       Array.prototype.slice.call(el.childNodes).forEach(function (node) {
-        if (node.nodeType !== 3) return;           // <br> и прочее оставляем на месте для замера
+        if (node.nodeType !== 3) return;
         var frag = document.createDocumentFragment();
         node.nodeValue.split(/([ \t\n\r]+)/).forEach(function (part) {
           if (!part) return;
@@ -444,7 +345,7 @@
         });
         el.replaceChild(frag, node);
       });
-      // слова с одинаковой высотой над краем — одна строка
+      if (!words.length || !words[0].offsetParent) return;          // скрыт (другой вариант заголовка) — разметим при показе
       var lines = [], top = null;
       words.forEach(function (w) {
         var t = w.offsetTop;
@@ -452,53 +353,115 @@
         lines[lines.length - 1].push(w.textContent);
       });
       el.innerHTML = lines.map(function (line, i) {
-        return '<span class="tl"><span class="tl__in" style="--i:' + i + '">' + escapeHtml(line.join(' ')) + '</span></span>';
+        return '<span class="tl"><span class="tl__in" style="--i:' + i + '">' + esc(line.join(' ')) + '</span></span>';
       }).join('');
     };
 
-    // текст: заголовки, подзаголовки, абзацы и списки (первый экран анимируется отдельно, во вступлении)
-    var textEls = Array.prototype.slice.call(document.querySelectorAll(
-      '.h2, .h3, .section-head__text, .about__text, .about .dots, .contact__text, ' +
-      '.russia__title, .russia__text, .russia__subtitle, .russia__list'
-    )).filter(function (el, i, all) {
-      return all.indexOf(el) === i && !el.closest('.opening, [hidden]');
-    });
-    var lineEls = [];
-    textEls.forEach(function (el) {
-      var big = parseFloat(getComputedStyle(el).fontSize) > 16;
-      // построчно — только «чистый» текст (без вложенных блоков и ссылок); иначе — целиком
-      var plain = !el.querySelector('*:not(br)');
-      if (big && plain) {
-        el.setAttribute('data-text-src', el.innerHTML);
-        prepare(el, 'text-lines');                 // сначала прячем, потом размечаем строки — без мелькания
-        splitLines(el);
-        lineEls.push(el);
-      } else {
-        prepare(el, 'text-fade');
-      }
-    });
-    // ширина окна изменилась — строки переносятся иначе: размечаем заново
-    if (lineEls.length) {
-      var lastW = window.innerWidth, splitTimer = 0;
-      window.addEventListener('resize', function () {
-        if (window.innerWidth === lastW) return;
-        lastW = window.innerWidth;
-        clearTimeout(splitTimer);
-        splitTimer = setTimeout(function () { lineEls.forEach(splitLines); }, 150);
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('is-in');
+        io.unobserve(e.target);
       });
-      // шрифт догрузился позже — переносы могли сдвинуться
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { lineEls.forEach(splitLines); });
-    }
+    }, { threshold: 0.2 });
 
-    // карточки, форма, ссылки «Читать…»
-    document.querySelectorAll(
-      '.section-head .link-more, .svc__list, .directions__list, .tours__list, ' +
-      '.reviews__list, .blog__grid, .contact .socials, .contact .form'
-    ).forEach(function (el) { prepare(el, 'reveal'); });
+    targets.forEach(function (t) {
+      t.el.setAttribute('data-text-src', t.el.innerHTML);
+      t.el.classList.add('text-lines');
+      split(t.el);
+      io.observe(t.root === t.el ? t.el : t.root);
+    });
+    // у составного заголовка класс is-in ставится на сам h2 — передаём его частям
+    targets.forEach(function (t) {
+      if (t.root === t.el) return;
+      new MutationObserver(function () {
+        if (t.root.classList.contains('is-in')) t.el.classList.add('is-in');
+      }).observe(t.root, { attributes: true, attributeFilter: ['class'] });
+    });
 
-    void document.body.offsetHeight;
-    document.querySelectorAll('.text-lines, .text-fade, .reveal').forEach(function (el) { el.style.transition = ''; });
-  }
+    var lastW = window.innerWidth, timer = 0;
+    var resplit = function () { targets.forEach(function (t) { split(t.el); }); };
+    window.addEventListener('resize', function () {
+      if (window.innerWidth === lastW) return;
+      lastW = window.innerWidth;
+      clearTimeout(timer);
+      timer = setTimeout(resplit, 150);
+    });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(resplit);   // шрифт догрузился — переносы могли сдвинуться
+  })();
+
+  /* ---------- «Этапы работы»: когда блок доходит до экрана, он останавливается и занимает весь экран под шапкой
+     (position: sticky, лента по центру по высоте) — остальная страница в это время стоит на месте. Прокрутка вниз
+     сдвигает карточки вбок ровно на столько, на сколько прокрутили; после последней карточки страница снова
+     прокручивается как обычно. Не помещается в экран по высоте — обычная лента с прокруткой вбок ---------- */
+  document.querySelectorAll('.stages').forEach(function (section) {
+    var pin = section.querySelector('.stages__pin');
+    var track = section.querySelector('.stages__track');
+    if (!pin || !track) return;
+    var top = 0, shift = 0, active = false, ticking = false;
+
+    var layout = function () {
+      section.style.height = '';
+      pin.style.height = '';
+      pin.style.top = '';
+      track.style.transform = '';
+      section.classList.remove('is-pinned');
+      var vh = window.innerHeight;
+      var hdr = document.querySelector('.header--sticky');
+      top = hdr ? Math.max(0, hdr.getBoundingClientRect().height + (parseFloat(getComputedStyle(hdr).top) || 0)) : 0;
+      var avail = vh - top;                               // экран под шапкой
+      shift = Math.max(0, track.scrollWidth - section.clientWidth);
+      active = shift > 0 && pin.offsetHeight + 32 <= avail;
+      if (!active) return;
+      section.classList.add('is-pinned');
+      pin.style.top = top + 'px';
+      pin.style.height = avail + 'px';
+      section.style.height = (avail + shift) + 'px';
+      update();
+    };
+    var update = function () {
+      ticking = false;
+      if (!active) return;
+      var p = Math.min(1, Math.max(0, (top - section.getBoundingClientRect().top) / shift));
+      track.style.transform = 'translate3d(' + (-p * shift).toFixed(1) + 'px,0,0)';
+    };
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    window.addEventListener('resize', layout);
+    window.addEventListener('load', layout);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+    layout();
+  });
+
+  /* ---------- Видео на первом экране: при «уменьшить движение» не крутим, показываем первый кадр ---------- */
+  document.querySelectorAll('.opening__video').forEach(function (v) {
+    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var apply = function () {
+      if (mq.matches) { v.pause(); v.removeAttribute('autoplay'); }
+      else { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+    };
+    apply();
+    if (mq.addEventListener) mq.addEventListener('change', apply);
+  });
+
+  /* ---------- Видеоотзыв: по кнопке ▶ видео запускается в карточке со своими кнопками управления ---------- */
+  document.querySelectorAll('.voice__video').forEach(function (box) {
+    var video = box.querySelector('video');
+    var play = box.querySelector('.voice__play');
+    if (!video || !play) return;
+    // файла ещё нет или он не открылся — возвращаем обложку с подписью «Видео скоро появится»
+    var fail = function () { box.classList.remove('is-playing'); video.controls = false; box.classList.add('is-missing'); };
+    var source = video.querySelector('source');
+    if (source) source.addEventListener('error', fail);
+    video.addEventListener('error', fail);
+    play.addEventListener('click', function () {
+      box.classList.add('is-playing');
+      video.controls = true;
+      var p = video.play();
+      if (p && p.catch) p.catch(function (err) { if (err && err.name !== 'AbortError') fail(); });
+    });
+  });
 
   /* ---------- Блог: последние посты из группы ВКонтакте ---------- */
   // лент с постами может быть несколько (основной блог и вариант с карточками) — заполняем каждую,
