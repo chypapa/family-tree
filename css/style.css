@@ -282,7 +282,6 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
   background: var(--red);
   cursor: pointer;
 }
-.mobile-menu { background: var(--red); }          /* меню шапки всегда красное */
 
 /* над первым экраном (пока страница не прокручена) заливки у шапки нет — она появляется при прокрутке (класс is-top ставит main.js) */
 .header--sticky.is-top .header__bar,
@@ -298,22 +297,69 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
 /* шапка закреплена вверху окна, всегда красная */
 .header--sticky { position: sticky; top: var(--hdr-gap); z-index: 50; margin-top: var(--hdr-gap); }
 .header--sticky .header__bar, .header--sticky .header__pill,
-.header--sticky .icon-btn, .header--sticky .mobile-menu { transition: background-color .45s ease; }
+.header--sticky .icon-btn { transition: background-color .45s ease; }
 
-.mobile-menu {
-  position: absolute;
-  top: calc(100% + var(--s-8));
-  left: 0;
-  right: 0;
-  padding: var(--s-24);
-  border-radius: 0;
-  color: var(--white);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, .18);
+/* бургер: три линии; когда меню открыто — верхняя и нижняя поворачиваются в крестик, средняя гаснет */
+.header__burger { position: relative; z-index: 2; display: grid; place-items: center; color: var(--white); }
+.burger { display: block; width: 50px; height: 50px; overflow: visible; }
+.burger__line {
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  transform-box: view-box;
+  transform-origin: 25px 25px;
+  transition: transform .35s cubic-bezier(.65, 0, .35, 1), opacity .2s ease;
 }
-.mobile-menu[hidden] { display: none; }
-.mobile-menu__nav { display: flex; flex-direction: column; gap: var(--s-16); }
-.mobile-menu__nav a, .mobile-menu__phone { color: var(--white); text-decoration: none; }
-.mobile-menu__phone { display: inline-block; margin-top: var(--s-24); font-weight: 600; }
+.header__burger[aria-expanded="true"] .burger__line--top { transform: rotate(45deg) translateY(7px); }
+.header__burger[aria-expanded="true"] .burger__line--mid { opacity: 0; transform: scaleX(.2); }
+.header__burger[aria-expanded="true"] .burger__line--bot { transform: rotate(-45deg) translateY(-7px); }
+.is-menu-open .header__burger { background-color: var(--red); }   /* и над первым экраном */
+
+/* меню: панель справа на половину ширины и всю высоту экрана. Сверху знак с подписью, под ним пункты,
+   внизу — кнопка «Получить консультацию» в 32px от нижнего края экрана */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  display: none;
+  flex-direction: column;
+  width: 50vw;
+  height: 100vh;
+  height: 100dvh;
+  box-sizing: border-box;
+  padding: calc(var(--hdr-gap) + 7px) var(--s-24) var(--s-32);   /* знак — на одной высоте с бургером */
+  background: var(--red);
+  color: var(--white);
+  box-shadow: -16px 0 40px rgba(0, 0, 0, .18);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform .45s cubic-bezier(.65, 0, .35, 1), visibility 0s linear .45s;
+}
+.mobile-menu.is-open { transform: none; visibility: visible; transition-delay: 0s; }
+.mobile-menu__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-8);
+  min-height: 36px;
+  color: var(--white);
+  text-decoration: none;
+}
+.mobile-menu__mark { flex: none; width: 26px; height: 28px; }
+.mobile-menu__logo-text { width: 72px; font-weight: 200; line-height: 1; }
+.mobile-menu__nav { display: flex; flex-direction: column; gap: var(--s-24); margin-top: var(--s-48); }
+.mobile-menu__nav a { color: var(--white); text-decoration: none; }
+.mobile-menu__nav a:hover { opacity: .75; }
+.mobile-menu__cta {
+  margin-top: auto;                                   /* к низу панели */
+  padding-inline: var(--s-16);
+  background: var(--white);
+  color: var(--red);
+  white-space: normal;
+  text-align: center;
+}
+.mobile-menu__cta:hover { background: var(--bg); box-shadow: none; }
 
 /* =========================================================
    ПЕРВЫЙ ЭКРАН — по макету Figma (plat-fam, узел 230:178): фото на весь экран
@@ -921,14 +967,15 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
 @media (max-width: 1199px) {
   /* карта — отдельный слой у нижнего края блока, текст идёт поверх неё; снизу блок оставляет место
      только под ту часть картинки, что ниже верхушки фото (выше — прозрачный фон и тонкие линии,
-     они могут проходить рядом с текстом). Планшет: картинка 1001 × 763, фото начинается с 41% высоты */
+     они могут проходить рядом с текстом). Картинка 1001 × 763, фото начинается с 41% высоты;
+     +20px — картинка на 20px ниже относительно текста. Текст — на 2/3 ширины экрана */
   .russia.section {
     min-height: 0;
-    padding-bottom: calc(100vw * 763 / 1001 * .59 + var(--s-24));
+    padding-bottom: calc(100vw * 763 / 1001 * .59 + var(--s-24) + 20px);
   }
   .russia__region { display: none; }
-  .russia__title { font-size: var(--fs-h2); white-space: normal; }
-  .russia__content { max-width: 754px; margin: var(--gap-text) 0 0; gap: var(--s-48); }
+  .russia__title { max-width: calc(100vw * 2 / 3); font-size: var(--fs-h2); white-space: normal; }
+  .russia__content { max-width: calc(100vw * 2 / 3); margin: var(--gap-text) 0 0; gap: var(--s-48); }
   .russia__why { gap: var(--s-24); }
   .russia__decor {
     top: auto;
@@ -943,14 +990,28 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
   .russia__title, .russia__content { z-index: 1; }      /* текст — над картинкой */
 }
 @media (max-width: 767px) {
-  /* телефон: картинка 402 × 657, фото начинается с 40% высоты */
-  .russia.section { padding-bottom: calc(100vw * 657 / 402 * .6 + var(--s-24)); }
   .russia__title-wide { display: none; }
   .russia__title-phone { display: inline; }
   .russia__intro .russia__subtitle { display: none; }   /* в макете телефона «О нас» нет — текст сразу под заголовком */
   .russia__content { gap: var(--s-40); }
   .russia__list { gap: var(--s-16); }
   .russia__list li { gap: var(--s-16); }
+}
+/* до 560px: картинка для телефона (img/about/sec-3-mobile.png) — сразу под текстом, без наложения.
+   На 559px она в 1.3 раза меньше своей полной ширины (430px вместо 559), к 320px плавно растёт
+   до полной ширины экрана: ширина = 320px + (экран − 320px) × 0.4615 */
+@media (max-width: 559px) {
+  .russia.section { padding-bottom: 0; }
+  .russia__title, .russia__content { max-width: none; }
+  .russia__decor {
+    order: 1;                                           /* под текстом, в общем потоке */
+    position: relative;
+    inset: auto;
+    align-self: center;
+    width: calc(46.15vw + 172.3px);
+    max-width: none;
+    margin-top: 0;
+  }
 }
 
 /* =========================================================
@@ -1496,7 +1557,8 @@ h3, .h3 { font-size: var(--fs-h3); line-height: 1.3; }
   .input--area { height: clamp(120px, calc(100svh - 700px), 200px); }
   .header { width: auto; margin-inline: var(--gut); }
   .header__bar { display: none; }
-  .header__mobile { display: flex; align-items: center; justify-content: space-between; }
+  .header__mobile { display: flex; align-items: center; justify-content: flex-end; }
+  .mobile-menu { display: flex; }
 }
 
 @media (max-width: 899px) {

@@ -6,7 +6,6 @@
   <title>Семейное древо</title>
   <meta name="description" content="Найдём историю семьи в архивах и составим родословную книгу. Метрические книги, ревизские сказки, работа с архивами по всей России.">
   <link rel="icon" href="img/favicon.ico" sizes="any">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.css">
   <link rel="stylesheet" href="css/style.css">
   <script>document.documentElement.classList.add('is-intro');</script>
 </head>
@@ -79,26 +78,20 @@
     </div>
 
     <div class="header__mobile">
-      <a class="header__pill" href="#top" aria-label="Семейное древо — на главную">
-        <span class="logo-mark">
-          <svg class="mark" viewBox="0 0 370 395" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-            <defs>
-              <!-- маска прячет линию заднего стебля там, где его перекрывает передний -->
-              <mask id="mark-behind-2" maskUnits="userSpaceOnUse" x="-10" y="-10" width="390" height="415">
-                <rect x="-10" y="-10" width="390" height="415" fill="#fff"/>
-                <path fill="#000" d="M220.482 164.832C221.301 163.992 220.287 162.695 219.292 163.317C168.484 195.065 134.407 232.444 134.408 281.868C134.368 334.185 161.475 361.569 205.015 393.239C205.181 393.36 205.383 393.428 205.589 393.431L271.408 394.497C272.531 394.515 272.836 392.929 271.789 392.52C217.137 371.204 159.834 334.475 159.834 278.373C159.834 231.388 177.557 208.84 220.482 164.832Z"/>
-              </mask>
-            </defs>
-            <g class="mark-lines">
-              <path pathLength="1" d="M155.453 159.515C155.733 106.715 135.203 49.5645 57.9633 30.1345C55.3433 109.745 104.623 145.235 155.453 159.515Z"/>
-              <path pathLength="1" d="M161.61 190.925C123.18 154.715 67.38 130.745 0.5 173.995C56.93 230.195 116.5 218.355 161.61 190.925Z"/>
-              <path pathLength="1" d="M213.767 159.654C213.487 106.854 234.017 49.7036 311.257 30.2736C313.877 109.884 264.597 145.374 213.767 159.654Z"/>
-              <path pathLength="1" d="M207.61 190.786C246.04 154.576 301.84 130.606 368.72 173.856C312.29 230.056 252.72 218.216 207.61 190.786Z"/>
-              <path pathLength="1" d="M184.61 162.5C216.61 120.5 234.61 62.5 184.61 0.5C134.61 62.5 152.61 120.5 184.61 162.5Z"/>
-              <path pathLength="1" stroke-miterlimit="6" d="M220.482 164.832C221.301 163.992 220.287 162.695 219.292 163.317C168.484 195.065 134.407 232.444 134.408 281.868C134.368 334.185 161.475 361.569 205.015 393.239C205.181 393.36 205.383 393.428 205.589 393.431L271.408 394.497C272.531 394.515 272.836 392.929 271.789 392.52C217.137 371.204 159.834 334.475 159.834 278.373C159.834 231.388 177.557 208.84 220.482 164.832Z"/>
-              <path mask="url(#mark-behind-2)" pathLength="1" stroke-miterlimit="6" d="M148.738 164.832C147.919 163.992 148.933 162.695 149.928 163.317C200.736 195.065 234.813 232.444 234.812 281.868C234.852 334.185 207.745 361.569 164.205 393.239C164.039 393.36 163.837 393.428 163.631 393.431L97.8125 394.497C96.6892 394.515 96.3844 392.929 97.431 392.52C152.083 371.204 209.386 334.475 209.386 278.373C209.386 231.388 191.663 208.84 148.738 164.832Z"/>
-            </g>
-            <g class="mark-fill">
+      <!-- на телефоне и планшете в шапке только бургер; по нажатию он превращается в крестик, справа выезжает меню -->
+      <button class="icon-btn header__burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-menu-1">
+        <svg class="burger" viewBox="0 0 50 50" width="50" height="50" aria-hidden="true" focusable="false">
+          <line class="burger__line burger__line--top" x1="15" y1="18" x2="35" y2="18"/>
+          <line class="burger__line burger__line--mid" x1="15" y1="25" x2="35" y2="25"/>
+          <line class="burger__line burger__line--bot" x1="15" y1="32" x2="35" y2="32"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="mobile-menu" id="mobile-menu-1">
+      <a class="mobile-menu__logo" href="#top" aria-label="Семейное древо — на главную">
+        <svg class="mobile-menu__mark" viewBox="0 0 370 395" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <g fill="currentColor">
               <path d="M155.453 159.515C155.733 106.715 135.203 49.5645 57.9633 30.1345C55.3433 109.745 104.623 145.235 155.453 159.515Z"/>
               <path d="M161.61 190.925C123.18 154.715 67.38 130.745 0.5 173.995C56.93 230.195 116.5 218.355 161.61 190.925Z"/>
               <path d="M213.767 159.654C213.487 106.854 234.017 49.7036 311.257 30.2736C313.877 109.884 264.597 145.374 213.767 159.654Z"/>
@@ -106,26 +99,17 @@
               <path d="M184.61 162.5C216.61 120.5 234.61 62.5 184.61 0.5C134.61 62.5 152.61 120.5 184.61 162.5Z"/>
               <path d="M220.482 164.832C221.301 163.992 220.287 162.695 219.292 163.317C168.484 195.065 134.407 232.444 134.408 281.868C134.368 334.185 161.475 361.569 205.015 393.239C205.181 393.36 205.383 393.428 205.589 393.431L271.408 394.497C272.531 394.515 272.836 392.929 271.789 392.52C217.137 371.204 159.834 334.475 159.834 278.373C159.834 231.388 177.557 208.84 220.482 164.832Z"/>
               <path d="M148.738 164.832C147.919 163.992 148.933 162.695 149.928 163.317C200.736 195.065 234.813 232.444 234.812 281.868C234.852 334.185 207.745 361.569 164.205 393.239C164.039 393.36 163.837 393.428 163.631 393.431L97.8125 394.497C96.6892 394.515 96.3844 392.929 97.431 392.52C152.083 371.204 209.386 334.475 209.386 278.373C209.386 231.388 191.663 208.84 148.738 164.832Z"/>
-            </g>
-          </svg>
-        </span>
-        <span class="header__pill-text">Семейное древо</span>
+              </g>
+        </svg>
+        <span class="mobile-menu__logo-text">Семейное древо</span>
       </a>
-      <div class="header__buttons">
-        <a class="icon-btn" href="tel:+7 (915) 892-92-06" aria-label="Позвонить"><img src="img/icon-phone.svg" width="50" height="50" alt=""></a>
-        <button class="icon-btn header__burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-menu-1">
-          <img src="img/icon-menu.svg" width="50" height="50" alt="">
-        </button>
-      </div>
-    </div>
-
-    <div class="mobile-menu" id="mobile-menu-1" hidden>
       <nav class="mobile-menu__nav" aria-label="Мобильное меню">
+        <a href="#about">О&nbsp;нас</a>
         <a href="#svc">Родословная книга</a>
-        <a href="#process">Исследование</a>
+        <a href="#svc">Архивная книга</a>
         <a href="#contact">Контакты</a>
       </nav>
-
+      <a class="btn mobile-menu__cta" href="#contact">Получить консультацию</a>
     </div>
   </header>
 
@@ -269,7 +253,7 @@
            по углам справа — две области-контура (только в двухколоночной раскладке, от 1200px) -->
       <div class="russia__decor" aria-hidden="true">
         <picture>
-          <source media="(max-width: 767px)" srcset="img/about/sec-3-mobile.png" width="402" height="657">
+          <source media="(max-width: 559px)" srcset="img/about/sec-3-mobile.png" width="402" height="657">
           <source media="(max-width: 1199px)" srcset="img/about/sec-3-tablet.png" width="1001" height="763">
           <img class="russia__map" src="img/about/sec-3.webp" width="1182" height="1119" alt="" loading="lazy" decoding="async">
         </picture>
@@ -570,7 +554,6 @@
   </footer>
 
 </div>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
