@@ -4,9 +4,9 @@
 
    ТИПОГРАФИКА — одна система на весь сайт, только Manrope, без размеров «по месту».
                  размер (телефон)   начертание     межстрочный   трекинг
-   H1 — заголовок страницы     56 (36)   SemiBold 600   120%   −1%
-   H2 — заголовок раздела      40 (28)   SemiBold 600   120%   −1%
-   H3 — подраздел              32 (22)   SemiBold 600   125%   −0,5%
+   H1 — заголовок страницы     56 (36)   Medium 500     120%   −1%
+   H2 — заголовок раздела      40 (28)   Medium 500     120%   −1%
+   H3 — подраздел              32 (22)   Medium 500     125%   −0,5%
    H4 — заголовок карточки     24 (18)   Medium 500     130%   −0,5%
    P  — текст                  16        Regular 400    150%   0
    Выделение в тексте — Medium 500 того же размера. Уровень заголовка (тег) — по смыслу (H1 → H2 → H3 → H4),
@@ -146,9 +146,9 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4, .mcard__title {
   font-family: "Manrope", system-ui, sans-serif;
   text-wrap: balance;                                 /* ровные строки, без одного слова на последней */
 }
-h1, .h1 { font-size: var(--fs-h1); font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
-h2, .h2, .mcard__title { font-size: var(--fs-h2); font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
-h3, .h3 { font-size: var(--fs-h3); font-weight: 600; line-height: 1.25; letter-spacing: -.005em; }
+h1, .h1 { font-size: var(--fs-h1); font-weight: 500; line-height: 1.2; letter-spacing: -.01em; }
+h2, .h2, .mcard__title { font-size: var(--fs-h2); font-weight: 500; line-height: 1.2; letter-spacing: -.01em; }
+h3, .h3 { font-size: var(--fs-h3); font-weight: 500; line-height: 1.25; letter-spacing: -.005em; }
 h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-spacing: -.005em; }
 /* ---------- Заголовки H2 появляются построчно (классы ставит js/main.js; без JS всё видно сразу):
    каждая строка выезжает снизу из-под своей нижней границы, строки — одна за другой (.tl > .tl__in) */
@@ -2153,7 +2153,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   outline: none;
 }
 .calc__result-label { color: var(--text); }   /* стиль H3 — класс h3 в разметке */
-.calc__result-sum { margin-top: var(--s-16); font-size: var(--fs-h2); font-weight: 600; letter-spacing: -.01em; line-height: 1.2; color: var(--red); }   /* сумма — размером H2 */
+.calc__result-sum { margin-top: var(--s-16); font-size: var(--fs-h2); font-weight: 500; letter-spacing: -.01em; line-height: 1.2; color: var(--red); }   /* сумма — размером H2 */
 .calc__result-note { max-width: 640px; margin-top: var(--s-32); color: var(--muted); }
 .calc__again {
   margin-top: var(--s-24);
