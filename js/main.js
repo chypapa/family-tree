@@ -413,7 +413,7 @@
     // у заголовка блока «О нас» два варианта текста (для широкого экрана и для телефона) — размечаем каждый
     var targets = [];
     document.querySelectorAll('h2').forEach(function (h) {
-      if (h.closest('[hidden], .opening, .overlay')) return;
+      if (h.closest('[hidden], .opening, .overlay') || h.classList.contains('about-svc__chip')) return;
       var parts = h.querySelectorAll(':scope > span');
       if (parts.length) parts.forEach(function (p) { targets.push({ el: p, root: h }); });
       else targets.push({ el: h, root: h });
