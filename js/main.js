@@ -50,6 +50,14 @@
     var logo = marks.filter(function (m) { return m.offsetParent !== null; })[0];   // видимый знак: в шапке или в мобильной плашке
     // без вступления (на телефоне знака в шапке нет): заливка кнопок шапки появляется, когда растворится экран загрузки
     if (reduce || !pre || !logo || !window.Promise) { ready(); setTimeout(finish, reduce || !pre ? 0 : 500); return; }
+    // название меряем только когда загрузился Manrope: иначе его размер берётся от запасного шрифта
+    // и знак встаёт не на одну линию с названием
+    var start = function () { if (start.done) return; start.done = true; run(); };
+    if (word && document.fonts && document.fonts.load) {
+      document.fonts.load('500 40px Manrope', word.textContent).then(start, start);
+      setTimeout(start, 1500);
+    } else start();
+    function run() {
     try {
       var vw = window.innerWidth, vh = window.innerHeight;
       var r = logo.getBoundingClientRect();
@@ -102,6 +110,7 @@
         setTimeout(function () { logo.style.transition = ''; }, 900);
       });
     } catch (e) { ready(); finish(); }
+    }
   })();
 
   /* ---------- Шапка без заливки над первым экраном; при прокрутке заливка появляется.
