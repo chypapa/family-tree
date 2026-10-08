@@ -9,6 +9,20 @@
   setScrollbar();
   window.addEventListener('resize', setScrollbar);
 
+  /* плавная прокрутка колесом мыши и по якорям (Lenis); на телефоне и при «уменьшении движения» — обычная */
+  if (window.Lenis && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var lenis = new window.Lenis({ duration: 1.1, anchors: { offset: -88 }, smoothWheel: true });
+    window.lenis = lenis;
+    var raf = function (t) { lenis.raf(t); requestAnimationFrame(raf); };
+    requestAnimationFrame(raf);
+    // открыто меню или окно консультации — страница под ними не прокручивается
+    var rootEl = document.documentElement;
+    new MutationObserver(function () {
+      var locked = rootEl.classList.contains('is-menu-open') || rootEl.classList.contains('is-overlay-open');
+      if (locked) lenis.stop(); else lenis.start();
+    }).observe(rootEl, { attributes: true, attributeFilter: ['class'] });
+  }
+
   /* переходы между страницами: браузеры с View Transitions сами плавно сменяют страницы (@view-transition в CSS);
      в остальных (класс fade-nav) страница растворяется перед переходом по ссылке на другую страницу сайта */
   if (document.documentElement.classList.contains('fade-nav')) {
