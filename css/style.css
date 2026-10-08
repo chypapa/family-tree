@@ -81,11 +81,11 @@
   /* секция не выше видимой части окна под шапкой (с небольшим «воздухом») */
   --fit: calc(100svh - var(--hdr-h) - var(--hdr-gap) - 32px);  /* с учётом закреплённой шапки и отступа над ней */
 
-  /* размеры текста (на телефоне H1 — 36, H2 — 28) */
-  --fs-h1: 64px;
-  --fs-h2: 55px;
-  --fs-h3: 32px;
-  --fs-h4: 24px;
+  /* размеры текста: плавно меняются между шириной окна 375px (телефон) и 1440px (компьютер) */
+  --fs-h1: clamp(36px, 26.14px + 2.63vw, 64px);       /* 36 → 64 */
+  --fs-h2: clamp(28px, 20.96px + 1.88vw, 48px);       /* 28 → 48 */
+  --fs-h3: clamp(22px, 18.48px + .94vw, 32px);        /* 22 → 32 */
+  --fs-h4: clamp(18px, 15.89px + .56vw, 24px);        /* 18 → 24 */
   --fs-body: 16px;
 }
 
@@ -1635,10 +1635,6 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
     --gap-head: var(--s-32);
     --section-pad: var(--s-64);
     --pad-card: var(--s-24);
-    --fs-h1: 36px;
-    --fs-h2: 28px;
-    --fs-h3: 22px;                                    /* на телефоне H3 и H4 мельче H2 */
-    --fs-h4: 18px;
   }
 
   .section-head__text { color: var(--muted); }
