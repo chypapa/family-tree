@@ -1,6 +1,14 @@
 (function () {
   'use strict';
 
+  /* ширина полосы прокрутки → --sbw: ленты во всю ширину окна считают ширину без неё (100vw её включает) */
+  var setScrollbar = function () {
+    var root = document.documentElement;
+    root.style.setProperty('--sbw', Math.max(0, window.innerWidth - root.clientWidth) + 'px');
+  };
+  setScrollbar();
+  window.addEventListener('resize', setScrollbar);
+
   /* ---------- Вступление: на светлом экране (шапки не видно) рисуется знак, рядом с ним выезжает название
      «Древо предков» — знак сдвигается влево, и вместе с названием они стоят по центру экрана. Потом знак переезжает
      на своё место в шапке, а название растворяется вместе со светлым экраном; появляются меню и первый экран.

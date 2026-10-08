@@ -55,7 +55,7 @@
         <nav class="nav" aria-label="Основное меню">
           <a href="#about">О нас</a>
           <a href="rodoslovnaya-kniga.html">Родословная книга</a>
-          <a href="#process">Исследование</a>
+          <a href="issledovanie.html">Исследование</a>
         </nav>
       </div>
       <div class="header__right">
@@ -94,7 +94,7 @@
       <nav class="mobile-menu__nav" aria-label="Мобильное меню">
         <a href="#about">О&nbsp;нас</a>
         <a href="rodoslovnaya-kniga.html">Родословная книга</a>
-        <a href="#svc">Архивная книга</a>
+        <a href="issledovanie.html">Исследование</a>
         <a href="#contact">Контакты</a>
       </nav>
       <a class="btn mobile-menu__cta" href="#contact">Получить консультацию</a>
@@ -112,7 +112,6 @@
           <source src="video/hero-960.mp4" type="video/mp4" media="(max-width: 767px)">
           <source src="video/hero.mp4" type="video/mp4">
         </video>
-        <div class="opening__shade"><img src="img/hero-shade.svg" width="2094" height="1559" alt=""></div>
       </div>
       <div class="opening__content">
         <h1 class="opening__title" id="opening-title">
@@ -214,9 +213,9 @@
           <span class="cursor-bubble" aria-hidden="true">Узнать подробнее</span>
         </a>
 
-        <a class="svc-card has-cursor" href="#contact">
+        <a class="svc-card has-cursor" href="issledovanie.html">
           <div class="svc-card__media">
-            <img src="img/service-archive.jpg" width="914" height="481" alt="Старые семейные фотографии в руках" loading="lazy" decoding="async">
+            <img src="img/issledovanie-about.jpg" width="867" height="608" alt="Старые фотографии и письма предков" loading="lazy" decoding="async">
             <div class="svc-card__bar">
               <ul class="tags svc-card__tags" aria-label="Сроки и стоимость">
                 <li class="tag">от&nbsp;1&nbsp;месяца</li>
@@ -238,25 +237,23 @@
       </div>
     </section>
 
-    <!-- ============ О НАС — красный блок по макету Figma (plat-fam, «Desktop - 3» и «iPhone 17 - 4»):
-         слева карта (фото в контуре области + линии границ), справа колонка текста; на телефоне карта под текстом ============ -->
+    <!-- ============ О НАС — красный блок по макету Figma (plat-fam, узел 456:1485, кадр 1920 × 936):
+         слева карта — фото в контуре области и линии границ (img/about/sec-3-desktop.png), линии уходят под текст;
+         справа у края — линии соседних областей (img/about/lines-right.png, только на компьютере).
+         Весь текст — одной колонкой. На планшете и телефоне карта — под текстом (своя картинка) ============ -->
     <section class="russia section" id="about" aria-labelledby="russia-title">
-      <!-- карта: фото в контуре области и линии границ — своя картинка для компьютера, планшета и телефона;
-           по углам справа — две области-контура (только в двухколоночной раскладке, от 1200px) -->
       <div class="russia__decor" aria-hidden="true">
         <picture>
           <source media="(max-width: 559px)" srcset="img/about/sec-3-mobile.png" width="402" height="507">
           <source media="(max-width: 1199px)" srcset="img/about/sec-3-tablet.png" width="1001" height="763">
-          <img class="russia__map" src="img/about/sec-3.webp" width="1182" height="1119" alt="" loading="lazy" decoding="async">
+          <img class="russia__map" src="img/about/sec-3-desktop.png" width="965" height="936" alt="" loading="lazy" decoding="async">
         </picture>
       </div>
-      <img class="russia__region russia__region--top" src="img/about/region-top.png" width="336" height="172" alt="" aria-hidden="true">
-      <img class="russia__region russia__region--bottom" src="img/about/region-bottom.png" width="277" height="107" alt="" aria-hidden="true">
+      <img class="russia__lines" src="img/about/lines-right.png" width="293" height="936" alt="" aria-hidden="true" loading="lazy" decoding="async">
 
-      <h2 class="russia__title" id="russia-title"><span class="russia__title-wide">Находим ваших предков</span><span class="russia__title-phone">Находим предков. Возвращаем историю</span></h2>
       <div class="russia__content">
         <div class="russia__intro">
-          <h3 class="russia__subtitle">О&nbsp;нас</h3>
+          <h2 class="russia__title" id="russia-title">О&nbsp;нас</h2>
           <div class="russia__text">
             <p>Мы занимаемся генеалогическими исследованиями и&nbsp;составлением родословных&nbsp;— работаем с&nbsp;архивами по&nbsp;всей России, находим метрические книги, ревизские сказки и&nbsp;другие архивные записи и&nbsp;превращаем их&nbsp;в&nbsp;понятную историю вашего рода.</p>
             <p>Каждое исследование начинается с&nbsp;того немногого, что уже известно семье,&nbsp;— имени, примерной даты, места рождения&nbsp;— и&nbsp;разворачивается в&nbsp;цепочку архивных запросов и&nbsp;расшифровок. Мы работаем напрямую с&nbsp;архивами и&nbsp;ЗАГСами, сверяем найденные данные между собой и&nbsp;оформляем результат в&nbsp;родословную книгу с&nbsp;историческим контекстом.</p>
@@ -420,7 +417,7 @@
           <img class="post__img" src="https://sun9-57.vkuserphoto.ru/s/v1/ig2/vi1DBRthe_U-Eu406gLm0ZncodinImf2RdQdP_9PGj3OyPxVohfhkEpY28KJeD5R9xbN90BLUhEDaSgGPvS2iVWW.jpg?quality=95&amp;as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960,1440x1080&amp;from=bu&amp;u=MSmhdUww6Kh-TCCy1Ifwu7X7OXn09U9IX2xeTPh0aKM&amp;cs=1280x0" alt="Илья Репин (1844-1930)" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='img/blog-main.jpg'">
           <div class="post__body">
             <div class="post__texts">
-              <h3 class="post__title">Илья Репин (1844-1930)</h3>
+              <h3 class="h4 post__title">Илья Репин (1844-1930)</h3>
               <p class="post__desc">Родился в Чугуеве Харьковской губернии. Дед — Василий Ефимович Репин — неслуживый казак, владел постоялым двором и вёл торговлю. Умер в 1830-х годах. Отец — Ефим Васильевич Репин (1804-1894) после введения военных поселений в 1817 году получил статус &quot;военного поселянина&quot; (это звание считалось презренным среди чугуевцев-казаков). Занимался торговлей лошадьми — ежегодно ездил за 300 вёрст на Дон и пригонял табуны на…</p>
             </div>
             <a class="post__link" href="https://vk.com/wall-228395135_43" target="_blank" rel="noopener">Читать полностью →</a>
@@ -433,7 +430,7 @@
             <img class="post__img" src="https://sun9-69.vkuserphoto.ru/s/v1/ig2/Y83wlDrvDAXhMMU_mG9PfY61jc-lctqte6tW2oxXUb-gIvLJqyfv0q-Rb9XVL3dJK7wE7ivwzG76tDXUY0aJ8l7K.jpg?quality=95&amp;as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960&amp;from=bu&amp;u=DBxXhdE_h_3-DjdANFr7Sgux7iU9BUq6dSL_967d4kE&amp;cs=640x0" alt="Бор, Боровичи, Борок, Боровая, Боровня…" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='img/blog-1.jpg'">
             <div class="post__body">
               <div class="post__texts">
-                <h3 class="post__title">Бор, Боровичи, Борок, Боровая, Боровня…</h3>
+                <h3 class="h4 post__title">Бор, Боровичи, Борок, Боровая, Боровня…</h3>
                 <p class="post__desc">Путешествуя по Новгородской области, можно встретить многочисленные населенные пункты, названия которых восходят к корню бор-. Если взглянуть на растительность в округе, часто интуитивно становится понятно, что эти названия – вариации на тему бора как соснового леса. И действительно, Новгородская область славится своими хвойными лесами: они занимают половину территории, а 28% этих лесов занимают именно сосны. Корень…</p>
               </div>
               <a class="post__link" href="https://vk.com/wall-228395135_42" target="_blank" rel="noopener">Читать полностью →</a>
@@ -445,7 +442,7 @@
             <img class="post__img" src="https://sun9-13.vkuserphoto.ru/s/v1/ig2/TPhrwy9MR9Lus3qjxW_uJn6TqqkPaYybKADGPD8QEbB53gL-CzmnXpfdkepqUJHa0PXphmEpMydofq89Kxh3ZwW8.jpg?quality=95&amp;as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960,1440x1080&amp;from=bu&amp;u=vhwEHnwDRJWmstTHI713038aU4GB949NU6roz5zqOYI&amp;cs=640x0" alt="Когда держишь в руках старинный документ, первое чувство — трепет. Метрическая книга XVIII века, ревизская сказка, исповедная ведомость… Бумага пожелтела, чернила выцвели, а буквы — ну точно пляшут как хотят. И возникает вопрос: как это вообще читать? Мы в проекте «Древо Предков» расшифровываем такие рукописи каждый день. И сегодня покажем вам несколько секретов, которые помогут самостоятельно разобрать текст XVIII–XIX века. Поехали!" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='img/blog-2.jpg'">
             <div class="post__body">
               <div class="post__texts">
-                <h3 class="post__title">Когда держишь в руках старинный документ, первое чувство — трепет. Метрическая книга XVIII века, ревизская сказка, исповедная ведомость… Бумага пожелтела, чернила выцвели, а буквы — ну точно пляшут как хотят. И возникает вопрос: как это вообще читать? Мы в проекте «Древо Предков» расшифровываем такие рукописи каждый день. И сегодня покажем вам несколько секретов, которые помогут самостоятельно разобрать текст XVIII–XIX века. Поехали!</h3>
+                <h3 class="h4 post__title">Когда держишь в руках старинный документ, первое чувство — трепет. Метрическая книга XVIII века, ревизская сказка, исповедная ведомость… Бумага пожелтела, чернила выцвели, а буквы — ну точно пляшут как хотят. И возникает вопрос: как это вообще читать? Мы в проекте «Древо Предков» расшифровываем такие рукописи каждый день. И сегодня покажем вам несколько секретов, которые помогут самостоятельно разобрать текст XVIII–XIX века. Поехали!</h3>
                 <p class="post__desc">Особенности почерков: от уставов до скорописи В XVIII–XIX веках почерки менялись. Если в XVII веке ещё встречался устав (буквы стояли ровно, как солдаты на параде), то позже в обиход вошла скоропись. Что это значит? — Буквы стали писаться слитно, с наклоном. — Появились выносные элементы — хвостики, завитки. — Одна и та же буква могла выглядеть по-разному.</p>
               </div>
               <a class="post__link" href="https://vk.com/wall-228395135_40" target="_blank" rel="noopener">Читать полностью →</a>
@@ -457,7 +454,7 @@
             <img class="post__img" src="https://sun9-23.vkuserphoto.ru/s/v1/ig2/YWb3jC3WW3fZ70lcfDXVkipRxDRTKxERm_Io78vdp7DJU8pCMaiEVVm5M_qMs9lwxqyMTyOw386jStXNfG2NsLfv.jpg?quality=95&amp;as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960,1440x1080&amp;from=bu&amp;u=yVFAjkIFJ0VKnxijMuq-SH07NiXx2-yMan15Vcvuvig&amp;cs=640x0" alt="Продолжаем изучать места, где жили наши предки." loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='img/blog-3.jpg'">
             <div class="post__body">
               <div class="post__texts">
-                <h3 class="post__title">Продолжаем изучать места, где жили наши предки.</h3>
+                <h3 class="h4 post__title">Продолжаем изучать места, где жили наши предки.</h3>
                 <p class="post__desc">А есть ли единая классификация топонимов? Их много, иногда они спорят между собой, поэтому мы не будем подробно останавливаться на громоздких классификациях лингвистов. На примере топонимов, образованных по природным признакам, а именно хвойного леса - бора, рассмотрим словообразование топонимов. Самый простой способ – прямой переход слова в топоним. Бывали в городке Бор, до которого можно добраться по канатной…</p>
               </div>
               <a class="post__link" href="https://vk.com/wall-228395135_39" target="_blank" rel="noopener">Читать полностью →</a>
