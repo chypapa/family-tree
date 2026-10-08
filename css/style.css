@@ -1671,7 +1671,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .post .post__link { color: var(--text); display: none; }
   .post__btn-mobile {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     gap: var(--s-8);
     color: var(--red);
     text-decoration: none;
@@ -1722,8 +1722,8 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 
 /* планшет и телефон: в блоге вместо круга-курсора — ссылка «Читать полностью» со стрелкой */
 @media (max-width: 1199px) {
-  .post__btn-mobile { display: flex !important; align-items: flex-end; gap: var(--s-8); }
-  .post__btn-icon { align-self: flex-end; flex-shrink: 0; }
+  .post__btn-mobile { display: flex !important; align-items: center; gap: var(--s-8); }
+  .post__btn-icon { align-self: center; flex-shrink: 0; }
   .post__btn-icon path { stroke-width: calc(1 / 1.5); }
   .post .post__link { display: none !important; }
 }
