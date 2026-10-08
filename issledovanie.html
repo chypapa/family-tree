@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Исследование родословной — Древо предков</title>
-  <meta name="description" content="Генеалогическое исследование: найдём документы о ваших предках в архивах и передадим результаты в электронном виде. Рассчитайте примерную стоимость онлайн.">
+  <title>Генеалогическое исследование по архивам — Архивный свиток | Древо предков</title>
+  <meta name="description" content="Генеалогическое исследование семьи по архивам России, Украины и Беларуси с результатом в электронном виде: копии документов с расшифровкой и поколенная роспись. Рассчитайте стоимость.">
   <link rel="icon" href="img/favicon.ico" sizes="any">
   <link rel="stylesheet" href="css/style.css">
+  <script>if (!('onpagereveal' in window)) document.documentElement.classList.add('fade-nav');</script>
 </head>
 <body>
 <div class="page">
@@ -50,7 +51,8 @@
         <nav class="nav" aria-label="Основное меню">
           <a href="index.html#about">О нас</a>
           <a href="rodoslovnaya-kniga.html">Родословная книга</a>
-          <a href="issledovanie.html" aria-current="page">Исследование</a>
+          <a href="issledovanie.html" aria-current="page">Архивный свиток</a>
+          <a href="tochechnye-issledovaniya.html">Точечные исследования</a>
         </nav>
       </div>
       <div class="header__right">
@@ -89,7 +91,8 @@
       <nav class="mobile-menu__nav" aria-label="Мобильное меню">
         <a href="index.html#about">О&nbsp;нас</a>
         <a href="rodoslovnaya-kniga.html">Родословная книга</a>
-        <a href="issledovanie.html" aria-current="page">Исследование</a>
+        <a href="issledovanie.html" aria-current="page">Архивный свиток</a>
+        <a href="tochechnye-issledovaniya.html">Точечные исследования</a>
         <a href="index.html#contact">Контакты</a>
       </nav>
       <a class="btn mobile-menu__cta" href="index.html#contact" data-consult>Получить консультацию</a>
@@ -98,58 +101,51 @@
 
   <main id="top">
 
-    <!-- ============ ПЕРВЫЙ ЭКРАН — по макету Figma (plat-fam, узел 181:1133): фото на весь экран, затемнение-градиент снизу,
-         текст и кнопка поверх ============ -->
+    <!-- ============ ПЕРВЫЙ ЭКРАН — по макету Figma (plat-fam, узел 181:1133): фото на 90% высоты окна, нижние углы скруглены,
+         затемнение-градиент снизу, заголовок и текст поверх ============ -->
     <section class="opening opening--issl" aria-labelledby="opening-title">
       <div class="opening__media" aria-hidden="true">
         <img class="opening__img" src="img/issledovanie-hero.jpg" srcset="img/issledovanie-hero-960.jpg 960w, img/issledovanie-hero.jpg 1920w" sizes="100vw" width="1920" height="875" alt="" fetchpriority="high" decoding="async">
       </div>
       <div class="opening__content">
         <h1 class="opening__title" id="opening-title">
-          <span class="line"><span>Исследование</span></span>
-          <span class="line"><span>вашей родословной</span></span>
+          <span class="line"><span>Генеалогическое исследование</span></span>
+          <span class="line"><span>вашей семьи</span></span>
         </h1>
-        <p class="opening__text">Узнайте историю своей семьи, восстановите родословные связи и&nbsp;сохраните результаты исследования в&nbsp;удобном для вас формате.</p>
-        <div class="opening__cta"><a class="btn opening__btn" href="#calc">Узнать историю моей семьи</a></div>
+        <p class="opening__text">Тот же&nbsp;архивный поиск, что&nbsp;и&nbsp;для&nbsp;родословной книги, но&nbsp;без&nbsp;печатного издания: результаты, копии документов и&nbsp;поколенную роспись вы&nbsp;получаете в&nbsp;электронном виде.</p>
       </div>
     </section>
 
-    <!-- ============ ДЛЯ КОГО: слева заголовок, справа список (половина ширины контента) ============ -->
-    <section class="who container section" aria-labelledby="who-title">
-      <h2 class="h2 who__title" id="who-title">Услуги генеалогических исследований&nbsp;— для кого?</h2>
-      <ul class="who__list">
-        <li>Для тех, кому интересна история своей семьи</li>
-        <li>Наследники без документов о&nbsp;родстве&nbsp;— нужно доказать родство для вступления в&nbsp;наследство</li>
-        <li>Репатрианты&nbsp;— подтверждение родства для гражданства по&nbsp;происхождению</li>
-        <li>Для тех, кто хочет составить и&nbsp;оформить родословную книгу самостоятельно</li>
-        <li>Участники судебных споров&nbsp;— доказательство родства для суда</li>
-      </ul>
-    </section>
-
-    <!-- ============ ОБ УСЛУГЕ: слева фото, справа текст — два варианта услуги ============ -->
-    <section class="service container section" aria-labelledby="service-title">
-      <img class="service__img" src="img/issledovanie-about.jpg" width="867" height="608" alt="Старые фотографии и письма предков" loading="lazy" decoding="async">
-      <div class="service__text">
-        <h2 class="h2" id="service-title">Об услуге</h2>
-        <div class="service__item">
-          <h3 class="h3">Генеалогический отчёт</h3>
-          <p>То&nbsp;же полноценное исследование, что мы&nbsp;проводим для создания родословного дерева, но&nbsp;без печатного оформления. Все найденные сведения, документы, родословные связи и&nbsp;результаты поиска передаются в&nbsp;электронном виде.</p>
-          <p>У&nbsp;вас есть возможность <a class="link-red" href="#calc">узнать примерную предварительную цену услуги</a>.</p>
+    <!-- ============ ОБ УСЛУГЕ: две колонки — «почему» и «для кого» ============ -->
+    <section class="about-svc container section" aria-labelledby="about-svc-title">
+      <h2 class="h2" id="about-svc-title">Об&nbsp;услуге</h2>
+      <div class="about-svc__cols">
+        <div class="about-svc__col">
+          <h3 class="h3">Почему выбирают архивный свиток?</h3>
+          <div>
+            <p>Архивный свиток подходит, когда важнее всего сами сведения: кем были ваши предки, где жили, какие документы о&nbsp;них сохранились.</p>
+            <p>Исследование проводится так же&nbsp;подробно, как&nbsp;для&nbsp;родословной книги,&nbsp;— разница лишь в&nbsp;форме результата. Вы&nbsp;получаете фотокопии документов, их&nbsp;расшифровку и&nbsp;поколенную роспись в&nbsp;электронном виде, без&nbsp;дизайна и&nbsp;печати.</p>
+            <p>Электронный отчёт удобно хранить и&nbsp;пересылать родственникам, где бы они ни&nbsp;жили.</p>
+          </div>
         </div>
-        <div class="service__item">
-          <h3 class="h3">Точечное исследование</h3>
-          <p>Если вам не&nbsp;нужно исследование всей родословной, можно заказать отдельный поиск: установить личность предка, найти сведения о&nbsp;родственнике, проверить конкретную родственную связь, изучить отдельную ветвь рода и&nbsp;т.&nbsp;д. Для уточнения всех условий предоставления услуги <a class="link-red" href="index.html#contact" data-consult>свяжитесь с&nbsp;нами</a>.</p>
+        <div class="about-svc__col">
+          <h3 class="h3">Для&nbsp;кого эта услуга?</h3>
+          <ul class="dot-list">
+            <li>Для&nbsp;тех, кто хочет узнать историю семьи и&nbsp;получить подтверждающие документы</li>
+            <li>Для&nbsp;тех, кто планирует оформить родословную книгу самостоятельно</li>
+            <li>Для&nbsp;тех, кто хочет поделиться результатами с&nbsp;родственниками в&nbsp;разных городах и&nbsp;странах</li>
+            <li>Для&nbsp;тех, кто только начинает изучать своё происхождение</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <!-- ============ ЭТАПЫ РАБОТЫ: три красные карточки — на компьютере в ряд по ширине контента (4 колонки из 12),
-         на планшете и телефоне — лента, которую листают пальцем ============ -->
-    <section class="stages stages--three container section" aria-labelledby="stages-title">
+    <!-- ============ ЭТАПЫ РАБОТЫ: на компьютере карточки в ряд по ширине контента, на планшете и телефоне — лента ============ -->
+    <section class="stages stages--grid stages--green container section" aria-labelledby="stages-title">
       <div class="stages__pin">
       <div class="section-head">
         <h2 class="h2" id="stages-title">Этапы работы</h2>
-        <p class="section-head__text">Работаем поэтапно: сначала оцениваем, что можно найти по&nbsp;вашей семье, затем ищем документы в&nbsp;архивах и&nbsp;оформляем результат</p>
+        <p class="section-head__text">Сначала оцениваем, что&nbsp;можно найти по&nbsp;вашей семье, затем ищем документы в&nbsp;архивах и&nbsp;готовим отчёт.</p>
       </div>
       <div class="stages__viewport">
       <div class="stages__track">
@@ -158,8 +154,7 @@
             <span class="stage__tag">1–2 дня</span>
             <h3 class="h4 stage__title">Интервью</h3>
             <div class="stage__text">
-              <p>Первым этапом мы&nbsp;проводим беседу с&nbsp;членами семьи в&nbsp;удобном формате, чтобы собрать имеющуюся информацию о&nbsp;семье, собираем материалы.</p>
-              <p>Вместе принимаем решение о&nbsp;необходимом наполнении документа, слушаем ваши желания и&nbsp;предпочтения.</p>
+              <p>Беседуем с&nbsp;членами семьи в&nbsp;удобном формате, собираем сведения и&nbsp;материалы. Вместе решаем, что&nbsp;войдёт в&nbsp;отчёт.</p>
             </div>
           </div>
           <div class="stage__bottom"><span class="stage__num">1 этап</span></div>
@@ -169,7 +164,7 @@
             <span class="stage__tag">20–30 дней</span>
             <h3 class="h4 stage__title">Архивный поиск</h3>
             <div class="stage__text">
-              <p>Команда работает с&nbsp;государственными и&nbsp;частными архивами по&nbsp;всему миру, восстанавливая контекст эпохи и&nbsp;уходя иногда на&nbsp;несколько веков назад. О&nbsp;ключевых находках мы&nbsp;сообщаем по&nbsp;мере их&nbsp;появления.</p>
+              <p>Работаем с&nbsp;государственными и&nbsp;частными архивами, восстанавливаем контекст эпохи. О&nbsp;ключевых находках сообщаем по&nbsp;мере их&nbsp;появления.</p>
             </div>
           </div>
           <div class="stage__bottom"><span class="stage__num">2 этап</span></div>
@@ -179,7 +174,7 @@
             <span class="stage__tag">1–2 дня</span>
             <h3 class="h4 stage__title">Оформление отчёта</h3>
             <div class="stage__text">
-              <p>Собираем фотокопии документов, их&nbsp;расшифровку и&nbsp;поколенную роспись в&nbsp;подробный отчёт&nbsp;— без дизайна, только факты.</p>
+              <p>Собираем фотокопии документов, их&nbsp;расшифровку и&nbsp;поколенную роспись в&nbsp;подробный отчёт&nbsp;— без&nbsp;дизайна, только факты.</p>
             </div>
           </div>
           <div class="stage__bottom"><span class="stage__num">3 этап</span></div>
@@ -189,34 +184,47 @@
       </div>
     </section>
 
-    <!-- ============ КАЛЬКУЛЯТОР: слева пояснение, справа анкета — те же вопросы, что для родословной книги,
-         но базовая цена 30 000 ₽ (атрибут data-base). Логика — js/calculator.js ============ -->
-    <section class="calc container section" id="calc" aria-labelledby="calc-title" data-base="30000">
-      <div class="calc__intro">
-        <div class="calc__heading">
-          <h2 class="h2" id="calc-title">Калькулятор стоимости</h2>
-          <p class="h3 calc__lead">Для услуги генеалогического отчёта</p>
+    <!-- ============ ТОЧЕЧНЫЕ ИССЛЕДОВАНИЯ: плашка-ссылка на отдельную страницу ============ -->
+    <section class="container section" aria-labelledby="promo-title">
+      <div class="promo">
+        <div class="promo__text">
+          <h2 class="h2 promo__title" id="promo-title">Нужен ответ на&nbsp;конкретный вопрос?</h2>
+          <p>Если исследование всей родословной не&nbsp;требуется, найдём нужный документ, установим личность предка или&nbsp;подтвердим родство&nbsp;— в&nbsp;том числе для&nbsp;суда, наследства или&nbsp;гражданства.</p>
         </div>
-        <p class="calc__text">Конечная стоимость услуги зависит от&nbsp;нескольких факторов. <a class="calc__contact" href="index.html#contact" data-consult>Можете связаться с&nbsp;нами</a> для уточнения цены или ответить на&nbsp;несколько вопросов ниже, чтобы узнать сумму.</p>
+        <a class="btn btn--white promo__btn" href="tochechnye-issledovaniya.html">Узнать подробнее&nbsp;→</a>
+      </div>
+    </section>
+
+    <!-- ============ КАЛЬКУЛЯТОР: заголовок и текст по центру, под ними анкета; по бокам — ветви родословного древа.
+         Те же вопросы, что для родословной книги, базовая цена — 30 000 ₽ (атрибут data-base). Логика — js/calculator.js ============ -->
+    <section class="calc calc--center container section" id="calc" aria-labelledby="calc-title" data-base="30000">
+      <div class="calc__intro">
+        <h2 class="h2" id="calc-title">Калькулятор стоимости</h2>
+        <p class="calc__text">Итоговая стоимость зависит от&nbsp;нескольких факторов. Ответьте на&nbsp;вопросы ниже, чтобы узнать ориентировочную сумму, или <a class="calc__contact" href="index.html#contact" data-consult>свяжитесь с&nbsp;нами</a>&nbsp;— уточним цену на&nbsp;консультации.</p>
       </div>
 
-      <div class="calc__panel">
-      <form class="calc__card" novalidate>
-        <div class="calc__lines"></div>
-        <button class="calc__add" type="button">
-          <svg viewBox="0 0 22 22" width="22" height="22" aria-hidden="true" focusable="false"><path d="M11 1v20M1 11h20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          Добавить фамильную линию
-        </button>
-        <button class="btn calc__submit" type="submit"><span class="calc__submit-text">Рассчитать</span><span class="spinner" aria-hidden="true"></span></button>
-      </form>
+      <div class="calc__stage">
+        <img class="calc__tree calc__tree--left" src="img/tree-ornament.png" width="437" height="575" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        <img class="calc__tree calc__tree--right" src="img/tree-ornament.png" width="437" height="575" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        <div class="calc__panel">
+        <form class="calc__card" novalidate>
+          <div class="calc__lines"></div>
+          <button class="calc__add" type="button">
+            <svg viewBox="0 0 22 22" width="22" height="22" aria-hidden="true" focusable="false"><path d="M11 1v20M1 11h20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Добавить фамильную линию
+          </button>
+          <button class="btn calc__submit" type="submit"><span class="calc__submit-text">Рассчитать</span><span class="spinner" aria-hidden="true"></span></button>
+        </form>
 
-      <!-- результат: появляется на месте анкеты; «Пересчитать стоимость» возвращает к анкете с ответами -->
-      <div class="calc__result" tabindex="-1" aria-live="polite" hidden>
-        <p class="h3 calc__result-label">Примерная цена услуги</p>
-        <p class="calc__result-sum">0&nbsp;₽</p>
-        <p class="calc__result-note">Мы&nbsp;не&nbsp;можем заранее знать все обстоятельства: сохранность архивов, доступность нужных записей и&nbsp;другие факторы, которые повлияют на&nbsp;объём работы. Точную стоимость назовём после того, как вы&nbsp;свяжетесь с&nbsp;нами и&nbsp;мы&nbsp;оценим вашу ситуацию.</p>
-        <button class="calc__again" type="button">←&nbsp;Пересчитать стоимость</button>
-      </div>
+        <!-- результат: появляется на месте анкеты; «Пересчитать стоимость» возвращает к анкете с ответами -->
+        <div class="calc__result" tabindex="-1" aria-live="polite" hidden>
+          <p class="h3 calc__result-label">Примерная цена услуги</p>
+          <p class="calc__result-sum">0&nbsp;₽</p>
+          <p class="calc__result-note">Мы&nbsp;не&nbsp;можем заранее знать все обстоятельства: сохранность архивов, доступность нужных записей и&nbsp;другие факторы, которые повлияют на&nbsp;объём работы. Точную стоимость назовём после того, как вы&nbsp;свяжетесь с&nbsp;нами и&nbsp;мы&nbsp;оценим вашу ситуацию.</p>
+          <button class="calc__again" type="button">←&nbsp;Пересчитать стоимость</button>
+        </div>
+        </div>
+
       </div>
 
       <!-- одна фамильная линия анкеты; js/calculator.js клонирует её и задаёт уникальные имена полей -->
@@ -285,15 +293,15 @@
 
 </div>
 
-<!-- ============ КОНСУЛЬТАЦИЯ: окно поверх страницы, такое же, как последний блок главной (заголовок, соцсети и форма).
+<!-- ============ КОНСУЛЬТАЦИЯ: окно поверх страницы — красная плашка в одну колонку: заголовок, текст и соцсети над формой.
      Открывается кнопкой «Получить консультацию» в шапке и в мобильном меню и ссылкой «Можете связаться с нами» (атрибут data-consult).
      Страница под окном затемнена на 20% и размыта, как под мобильным меню. Закрывается крестиком, кликом мимо окна и клавишей Esc ============ -->
 <div class="overlay consult-modal" id="consult-modal" role="dialog" aria-modal="true" aria-labelledby="consult-title" hidden>
   <div class="consult-modal__box">
     <div class="contact__inner">
       <div class="contact__info">
-        <h2 class="h2 contact__title" id="consult-title">Обращайтесь к&nbsp;нам за&nbsp;бесплатной консультацией</h2>
-        <p class="contact__text">Оставьте сообщение на&nbsp;сайте или в&nbsp;соц. сетях</p>
+        <h2 class="h2 contact__title" id="consult-title">Начните с&nbsp;бесплатной консультации</h2>
+        <p class="contact__text">Расскажите, что&nbsp;уже известно о&nbsp;вашей семье,&nbsp;— подскажем, с&nbsp;чего начать поиск и&nbsp;какой формат подойдёт.</p>
         <div class="socials">
           <a href="https://api.whatsapp.com/send/?phone=79158929206&text&type=phone_number&app_absent=0" aria-label="WhatsApp"><img src="img/icons/whatsapp.svg" width="44" height="44" alt=""></a>
           <a href="https://t.me/drevo_predkov" aria-label="Telegram"><img src="img/icons/telegram.svg" width="44" height="44" alt=""></a>

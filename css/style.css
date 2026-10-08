@@ -233,6 +233,11 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   transition: opacity .2s ease;
 }
 .nav a:hover { opacity: .75; }
+/* узкий ноутбук: четыре пункта меню и кнопка помещаются в одну строку */
+@media (max-width: 1199px) {
+  .header__left { gap: var(--s-32); }
+  .nav { gap: var(--s-24); }
+}
 /* справа — белая кнопка «Получить консультацию»: на главной ведёт к форме внизу, на остальных страницах открывает окно с формой */
 .header__cta { padding: var(--s-8) var(--s-24); }
 
@@ -368,9 +373,10 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .opening {
   --ease-out: cubic-bezier(.2, .75, .15, 1);
   position: relative;
-  height: 100vh;
-  height: 100svh;
-  min-height: 620px;
+  height: 90vh;                                       /* 90% высоты окна, нижние углы скруглены */
+  height: 90svh;
+  min-height: 560px;
+  border-radius: 0 0 var(--radius) var(--radius);
   margin-top: calc(-1 * (var(--hdr-h) + var(--hdr-gap)));   /* блок начинается от верха окна, под шапкой */
   overflow: hidden;
   background: #3a3833;
@@ -2244,21 +2250,23 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 }
 .overlay__close:hover { transform: rotate(90deg); }
 
-/* «Получить консультацию»: окно — как последний блок главной (красная плашка: слева заголовок и соцсети, справа форма).
-   Если окно выше экрана, оно прокручивается внутри затемнения */
+/* «Получить консультацию»: красная плашка, как последний блок главной, но в одну колонку — заголовок, текст
+   и соцсети над формой. Если окно выше экрана, оно прокручивается внутри затемнения */
 .consult-modal { place-items: stretch; padding: var(--s-24) var(--gut); overflow-y: auto; overscroll-behavior: contain; }
 .consult-modal__box {
   position: relative;
-  width: min(var(--container), 100%);
+  width: min(760px, 100%);
   margin: auto;                                       /* по центру экрана, а если не помещается — от верхнего края */
   transform: translateY(24px);
   transition: transform .45s cubic-bezier(.2, .75, .15, 1);
 }
 .consult-modal.is-open .consult-modal__box { transform: none; }
-.consult-modal .contact__inner { border-radius: var(--radius); box-shadow: 0 24px 64px rgba(0, 0, 0, .25); }
+.consult-modal .contact__inner { flex-direction: column; align-items: stretch; gap: var(--s-32); border-radius: var(--radius); box-shadow: 0 24px 64px rgba(0, 0, 0, .25); }
+.consult-modal .form { flex: none; width: 100%; }
+.consult-modal .input--area { height: 160px; }       /* окно целиком помещается на экране ноутбука */
 .consult-modal .contact__info { padding-right: 56px; }  /* заголовок не заходит под крестик */
 .consult-modal .overlay__close { position: absolute; top: var(--s-16); right: var(--s-16); }
-/* на большом экране справа вверху плашки — форма, поэтому крестик стоит над плашкой, у её правого края */
+/* на большом экране крестик стоит над плашкой, у её правого края */
 @media (min-width: 1024px) {
   .consult-modal { padding-top: var(--s-96); }
   .consult-modal .contact__info { padding-right: 0; }
@@ -2275,49 +2283,137 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 }
 
 /* =========================================================
-   СТРАНИЦА «ИССЛЕДОВАНИЕ РОДОСЛОВНОЙ» (issledovanie.html, макет Figma plat-fam, узел 181:1133).
-   Сетка, отступы и стили текста — общие для сайта; этапы и калькулятор — те же, что на странице книги
+   СТРАНИЦЫ УСЛУГ: «Родословная книга», «Архивный свиток», «Точечные исследования»
+   (макеты Figma plat-fam: 181:732, 181:1133, 481:387). Сетка, отступы и стили текста — общие для сайта
    ========================================================= */
 .opening--issl .opening__img { object-position: 50% 40%; }
+.opening--tochno .opening__img { object-position: 50% 30%; }
 .link-red { color: var(--red); font-weight: 500; text-decoration: none; }   /* ссылка в тексте */
 .link-red:hover { text-decoration: underline; }
 
-/* для кого: слева заголовок, справа список — по половине ширины контента */
-.who { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-head) var(--col-gap); align-items: start; }
-.who__title { max-width: 760px; }
-.who__list { display: flex; flex-direction: column; gap: var(--s-16); margin: 0; padding: 0; list-style: none; }
-.who__list li { display: flex; align-items: center; gap: var(--s-32); }
-.who__list li::before { content: ""; flex: none; width: 16px; height: 16px; border-radius: 50%; background: var(--gold); }
+/* «Об услуге»: заголовок раздела, под ним две колонки — «почему» (текст) и «для кого» (список) */
+.about-svc__cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-48); margin-top: var(--gap-head); align-items: start; }
+.about-svc__col { display: flex; flex-direction: column; gap: var(--s-32); max-width: 880px; }   /* H3 → текст — 32px */
+.about-svc__col p + p { margin-top: var(--s-16); }   /* абзац → абзац — 16px */
 
-/* об услуге: слева фото, справа заголовок и два варианта услуги */
-.service { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-48); align-items: start; }   /* фото ↔ колонка текста — 48px */
-.service__img { width: 100%; height: auto; aspect-ratio: 867 / 608; object-fit: cover; border-radius: var(--radius); }
-.service__text { display: flex; flex-direction: column; gap: var(--s-56); max-width: 760px; }   /* последний абзац → H3 — 56px */
-.service__text > .h2 { margin-bottom: calc(var(--s-32) - var(--s-56)); }   /* H2 → первый H3 — 32px */
-.service__item { display: flex; flex-direction: column; gap: var(--s-32); }   /* H3 → текст — 32px */
-.service__item p + p { margin-top: calc(var(--s-16) - var(--s-32)); }        /* абзац → абзац — 16px */
+/* список с золотыми точками */
+.dot-list { display: flex; flex-direction: column; gap: var(--s-16); margin: 0; padding: 0; list-style: none; }
+.dot-list li { display: flex; align-items: center; gap: var(--s-32); }
+.dot-list li::before { content: ""; flex: none; width: 16px; height: 16px; border-radius: 50%; background: var(--gold); }
 
-/* этапы: три карточки — на компьютере в ряд по ширине контента (по 4 колонки из 12), без прокрутки;
-   на планшете и телефоне — лента, как на странице книги */
+/* примеры работ: два фото рядом, под ними подпись */
+.gallery__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--col-gap); }
+.gallery__grid img { width: 100%; height: auto; aspect-ratio: 903 / 885; object-fit: cover; border-radius: var(--radius); }
+.gallery__note { margin-top: var(--s-8); color: var(--muted); }   /* фото → подпись — 8px */
+
+/* этапы сеткой (без ленты): на компьютере все карточки в ряд по ширине контента; книга — 4 карточки
+   (до 1440px — по две в ряд), свиток — 3. На планшете и телефоне — лента, как раньше */
+.stages--grid { --cols: 3; }
+.stages--four { --cols: 4; }
+.stages--gold .stage { background: var(--gold); }
+.stages--green .stage { background: var(--green); }
 @media (min-width: 1200px) {
-  .stages--three .stages__viewport { margin-inline: 0; padding-left: 0; overflow: visible; }
-  .stages--three .stages__track { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: auto; }
-  .stages--three .stages__track::after { display: none; }
-  .stages--three .stages__track .stage { width: auto; }
+  .stages--grid .stages__viewport { margin-inline: 0; padding-left: 0; overflow: visible; }
+  .stages--grid .stages__track { display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); width: auto; }
+  .stages--grid .stages__track::after { display: none; }
+  .stages--grid .stages__track .stage { width: auto; }
+}
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .stages--four { --cols: 2; }
 }
 
-/* калькулятор: под заголовком — подзаголовок «Для услуги генеалогического отчёта» */
-.calc__heading { display: flex; flex-direction: column; gap: var(--s-16); }
+/* плашка «Точечные исследования» на странице свитка: фото с затемнением, слева текст, справа кнопка */
+.promo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-48);
+  min-height: 355px;
+  padding: var(--s-48);
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: #3a3833 url("../img/tochechnye-hero.jpg") 50% 40% / cover no-repeat;
+  color: var(--white);
+}
+.promo::before {                                      /* затемнение слева, под текстом */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, .78) 0%, rgba(0, 0, 0, .55) 50%, rgba(0, 0, 0, .25) 100%);
+}
+.promo__text { position: relative; display: flex; flex-direction: column; gap: var(--gap-text); max-width: 760px; }
+.promo__title { color: var(--white); }
+.promo__btn { position: relative; flex: none; }
 
+/* калькулятор по центру: заголовок и текст над анкетой; по бокам — ветви родословного древа (только на компьютере) */
+.calc--center { row-gap: var(--gap-head); }
+.calc--center .calc__intro { grid-column: 3 / span 8; align-items: center; text-align: center; }
+.calc--center .calc__text { max-width: 680px; }
+.calc--center .calc__stage { position: relative; grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--col-gap); }
+.calc--center .calc__panel { position: relative; z-index: 1; grid-column: 4 / span 6; }
+.calc__tree { display: none; }
+@media (min-width: 1200px) {
+  .calc--center .calc__stage::before {               /* пунктир между ветвями, проходит за анкетой */
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: calc(50% - var(--vw) / 2 + 22vw);
+    right: calc(50% - var(--vw) / 2 + 22vw);
+    border-top: 1px dashed rgba(165, 54, 37, .6);
+  }
+  .calc__tree {
+    position: absolute;
+    top: 50%;
+    display: block;
+    width: 22.8vw;                                    /* 437px на 1920 */
+    max-width: 437px;
+    height: auto;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  .calc__tree--left { left: calc(50% - var(--vw) / 2); }
+  .calc__tree--right { right: calc(50% - var(--vw) / 2); transform: translateY(-50%) scaleX(-1); }
+}
+
+/* главная: «Как проходит исследование» — четыре шага в ряд */
+.process__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--col-gap); margin: 0; padding: 0; list-style: none; counter-reset: step; }
+.process__item { display: flex; flex-direction: column; gap: var(--s-16); padding-top: var(--s-24); border-top: 1px solid rgba(60, 60, 60, .2); counter-increment: step; }
+.process__item::before { content: "0" counter(step); color: var(--red); font-weight: 600; }
+.process__note { max-width: 760px; margin-top: var(--s-48); }
+
+@media (max-width: 1199px) {
+  .calc--center .calc__intro, .calc--center .calc__stage, .calc--center .calc__panel { grid-column: 1 / -1; }
+  .calc--center .calc__stage { display: block; }
+  .process__list { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--s-48); }
+}
 @media (max-width: 1023px) {
-  .who, .service { grid-template-columns: 1fr; }
-  .who { row-gap: var(--s-32); }
-  .service { gap: var(--s-32); }                      /* фото и текст одной колонкой — 32px */
+  .about-svc__cols { grid-template-columns: 1fr; }
+  .promo { flex-direction: column; align-items: flex-start; min-height: 0; }
 }
 @media (max-width: 767px) {
-  .who__list li { gap: var(--s-16); }
-  .who__list li::before { width: 12px; height: 12px; }
-  .service__text { gap: 40px; }                       /* телефон: последний абзац → H3 — 40px */
-  .service__text > .h2 { margin-bottom: calc(var(--s-32) - 40px); }
+  .about-svc__cols { gap: 40px; }                     /* телефон: последний абзац → H3 — 40px */
+  .dot-list li { gap: var(--s-16); }
+  .dot-list li::before { width: 12px; height: 12px; }
+  .gallery__grid { grid-template-columns: 1fr; gap: var(--s-16); }
+  .promo { padding: var(--s-24); }
+  .promo__btn { align-self: stretch; }
+  .process__list { grid-template-columns: 1fr; row-gap: var(--s-32); }
+}
+
+/* =========================================================
+   ПЕРЕХОДЫ МЕЖДУ СТРАНИЦАМИ: браузеры с View Transitions плавно сменяют страницы сами;
+   в остальных (класс fade-nav ставится в <head>) страница растворяется перед переходом по ссылке (js/main.js)
+   и проявляется после загрузки. На главной вместо проявления — вступление со знаком
+   ========================================================= */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .4s; }
+@keyframes page-in { from { opacity: 0; } }
+.fade-nav body { animation: page-in .4s ease both; }
+.fade-nav.is-intro body { animation: none; }
+.fade-nav.is-leaving body { opacity: 0; transition: opacity .25s ease; }
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+  .fade-nav body { animation: none; }
 }
 
