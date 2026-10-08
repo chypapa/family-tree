@@ -82,8 +82,8 @@
   --fit: calc(100svh - var(--hdr-h) - var(--hdr-gap) - 32px);  /* с учётом закреплённой шапки и отступа над ней */
 
   /* размеры текста (на телефоне H1 — 36, H2 — 28) */
-  --fs-h1: 56px;
-  --fs-h2: 40px;
+  --fs-h1: 64px;
+  --fs-h2: 55px;
   --fs-h3: 32px;
   --fs-h4: 24px;
   --fs-body: 16px;
@@ -147,7 +147,7 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4, .mcard__title {
   text-wrap: balance;                                 /* ровные строки, без одного слова на последней */
 }
 h1, .h1 { font-size: var(--fs-h1); font-weight: 500; line-height: 1.2; letter-spacing: -.01em; }
-h2, .h2, .mcard__title { font-size: var(--fs-h2); font-weight: 500; line-height: 1.2; letter-spacing: -.01em; }
+h2, .h2, .mcard__title { font-size: var(--fs-h2); font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
 h3, .h3 { font-size: var(--fs-h3); font-weight: 500; line-height: 1.25; letter-spacing: -.005em; }
 h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-spacing: -.005em; }
 /* ---------- Заголовки H2 появляются построчно (классы ставит js/main.js; без JS всё видно сразу):
