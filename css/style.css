@@ -67,7 +67,7 @@
   --section-pad: var(--s-96);                         /* внутренний отступ цветных разделов сверху и снизу */
   --gap-head: var(--s-48);                            /* заголовок / описание раздела → карточки (на телефоне 32) */
   --gap-text: var(--s-24);                            /* H2 → описание */
-  --col-gap: 24px;                                    /* сетка 12 колонок с промежутком 24px; между карточками */
+  --col-gap: clamp(16px, 6.86px + 1.19vw, 24px);     /* промежуток сетки 12 колонок: 24px на компьютере (1440+) плавно сужается до 16px к планшету (768) */
   --pad-card: var(--s-32);                            /* внутренний отступ карточек */
   --radius: 16px;
   --radius-sm: 12px;                                  /* кнопки, поля, чекбокс — всё, что лежит внутри карточек */
@@ -81,11 +81,11 @@
   /* секция не выше видимой части окна под шапкой (с небольшим «воздухом») */
   --fit: calc(100svh - var(--hdr-h) - var(--hdr-gap) - 32px);  /* с учётом закреплённой шапки и отступа над ней */
 
-  /* размеры текста (на телефоне H1 — 36, H2 — 28) */
-  --fs-h1: 64px;
-  --fs-h2: 55px;
-  --fs-h3: 32px;
-  --fs-h4: 24px;
+  /* размеры текста: плавно меняются между шириной окна 375px (телефон) и 1440px (компьютер) */
+  --fs-h1: clamp(36px, 26.14px + 2.63vw, 64px);       /* 36 → 64 */
+  --fs-h2: clamp(28px, 20.96px + 1.88vw, 48px);       /* 28 → 48 */
+  --fs-h3: clamp(22px, 18.48px + .94vw, 32px);        /* 22 → 32 */
+  --fs-h4: clamp(18px, 15.89px + .56vw, 24px);        /* 18 → 24 */
   --fs-body: 16px;
 }
 
@@ -1120,6 +1120,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   margin-bottom: var(--gap-head);                     /* заголовок секции → карточки */
 }
 .section-head__text { max-width: 600px; color: var(--muted); }
+.section-head > .h2 { flex: 0 0 auto; min-width: 50%; }   /* заголовок — не уже половины ширины блока */
 
 .tags { display: flex; flex-wrap: wrap; gap: var(--s-8); }
 .tag {
@@ -1635,10 +1636,6 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
     --gap-head: var(--s-32);
     --section-pad: var(--s-64);
     --pad-card: var(--s-24);
-    --fs-h1: 36px;
-    --fs-h2: 28px;
-    --fs-h3: 22px;                                    /* на телефоне H3 и H4 мельче H2 */
-    --fs-h4: 18px;
   }
 
   .section-head__text { color: var(--muted); }
@@ -1674,7 +1671,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .post .post__link { color: var(--text); display: none; }
   .post__btn-mobile {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     gap: var(--s-8);
     color: var(--red);
     text-decoration: none;
@@ -1725,8 +1722,8 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 
 /* планшет и телефон: в блоге вместо круга-курсора — ссылка «Читать полностью» со стрелкой */
 @media (max-width: 1199px) {
-  .post__btn-mobile { display: flex !important; align-items: flex-end; gap: var(--s-8); }
-  .post__btn-icon { align-self: flex-end; flex-shrink: 0; }
+  .post__btn-mobile { display: flex !important; align-items: center; gap: var(--s-8); }
+  .post__btn-icon { align-self: center; flex-shrink: 0; }
   .post__btn-icon path { stroke-width: calc(1 / 1.5); }
   .post .post__link { display: none !important; }
 }
@@ -1949,10 +1946,10 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   background: url("../icons/quote.svg") center / contain no-repeat;
   pointer-events: none;
 }
-.voice__author { display: flex; align-items: center; gap: var(--s-8); margin-bottom: var(--s-24); padding-right: 64px; color: var(--muted); }   /* текст — не ближе 48px */
+.voice__author { display: flex; align-items: center; gap: var(--s-8); margin-top: auto; padding-top: var(--s-8); color: var(--muted); }   /* автор — внизу карточки */
 .voice__author img { width: 22px; height: 22px; }
-.voice__text { margin-block: auto; color: var(--text); }   /* имя и кавычки сверху, текст — по центру оставшейся высоты */
-.voice__video { position: relative; width: min(233px, 100%); aspect-ratio: 233 / 161; overflow: hidden; border-radius: var(--radius); background: #8e98a3; }
+.voice__text { margin-top: 48px; color: var(--text); }   /* кавычки в углу, под ними текст, затем видео; автор — внизу */
+.voice__video { position: relative; width: 100%; aspect-ratio: 233 / 115; overflow: hidden; border-radius: var(--radius); background: #8e98a3; }
 .voice__player { display: block; width: 100%; height: 100%; object-fit: cover; }
 .voice__play {
   position: absolute;
@@ -2205,7 +2202,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 /* промежуток между блоками на планшете и телефоне меньше, чем на больших экранах */
 
 /* форма связи в одну колонку (заголовок над формой) — красный блок вплотную к подвалу */
-@media (max-width: 1023px) {
+@media (max-width: 767px) {   /* только телефон: красный блок во всю ширину; на планшете — отступ снизу и скругления, как сбоку */
   .page:has(.contact) .footer { margin-top: 0; }
   .contact__inner { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
 }
@@ -2318,9 +2315,6 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .stages--grid .stages__track { display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); width: auto; }
   .stages--grid .stages__track::after { display: none; }
   .stages--grid .stages__track .stage { width: auto; }
-}
-@media (min-width: 1200px) and (max-width: 1439px) {
-  .stages--four { --cols: 2; }
 }
 
 /* плашка «Точечные исследования» на странице свитка: фото с затемнением, слева текст, справа кнопка */
