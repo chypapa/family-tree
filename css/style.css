@@ -2202,7 +2202,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 /* промежуток между блоками на планшете и телефоне меньше, чем на больших экранах */
 
 /* форма связи в одну колонку (заголовок над формой) — красный блок вплотную к подвалу */
-@media (max-width: 1023px) {
+@media (max-width: 767px) {   /* только телефон: красный блок во всю ширину; на планшете — отступ снизу и скругления, как сбоку */
   .page:has(.contact) .footer { margin-top: 0; }
   .contact__inner { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
 }
