@@ -1,12 +1,24 @@
 (function () {
   'use strict';
 
-  /* ---------- Вступление: знак рисуется по центру экрана → переезжает на своё место в шапке →
-     экран загрузки растворяется, появляются меню и первый экран ---------- */
+  /* ширина полосы прокрутки → --sbw: ленты во всю ширину окна считают ширину без неё (100vw её включает) */
+  var setScrollbar = function () {
+    var root = document.documentElement;
+    root.style.setProperty('--sbw', Math.max(0, window.innerWidth - root.clientWidth) + 'px');
+  };
+  setScrollbar();
+  window.addEventListener('resize', setScrollbar);
+
+  /* ---------- Вступление: на светлом экране (шапки не видно) рисуется знак, рядом с ним выезжает название
+     «Древо предков» — знак сдвигается влево, и вместе с названием они стоят по центру экрана. Потом знак переезжает
+     на своё место в шапке, а название растворяется вместе со светлым экраном; появляются меню и первый экран.
+     Когда знак встал на место, появляется заливка шапки (если страница прокручена) ---------- */
   (function () {
     var root = document.documentElement;
     var pre = document.querySelector('.preloader');
+    var word = pre && pre.querySelector('.preloader__name');
     var marks = Array.prototype.slice.call(document.querySelectorAll('.logo-mark'));
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var ready = function () {
       marks.forEach(function (m) {
         var svg = m.querySelector('.mark');
@@ -14,49 +26,87 @@
         svg.classList.add('done');
       });
       root.classList.add('is-ready');
-      setTimeout(function () { if (pre) pre.remove(); }, 1470);
+      setTimeout(function () { if (pre) pre.remove(); }, 980);
     };
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var finish = function () { root.classList.add('is-intro-done'); };   // знак на месте: заливка шапки
     var logo = marks.filter(function (m) { return m.offsetParent !== null; })[0];   // видимый знак: в шапке или в мобильной плашке
-    if (reduce || !pre || !logo || !window.Promise) { ready(); return; }
+    // без вступления (на телефоне знака в шапке нет): заливка кнопок шапки появляется, когда растворится экран загрузки
+    if (reduce || !pre || !logo || !window.Promise) { ready(); setTimeout(finish, reduce || !pre ? 0 : 500); return; }
     try {
+      var vw = window.innerWidth, vh = window.innerHeight;
       var r = logo.getBoundingClientRect();
-      var size = Math.min(window.innerWidth * 0.42, window.innerHeight * 0.34, 260);  // высота знака по центру экрана
+      var size = Math.min(vh * 0.2, 180);                      // высота знака по центру экрана
       var s = size / r.height;
-      var dx = window.innerWidth / 2 - (r.left + r.width / 2);
-      var dy = window.innerHeight / 2 - (r.top + r.height / 2);
+      var logoW = r.width * s;
+      var gap = size * 0.28;                                   // знак → название
+      var shift = 0;
+      if (word) {
+        word.style.fontSize = Math.round(size * 0.36) + 'px';
+        var ww = word.offsetWidth, wh = word.offsetHeight;
+        var scaleDown = Math.min(1, (vw - 48) / (logoW + gap + ww));   // узкий экран — всё чуть меньше
+        if (scaleDown < 1) {
+          size *= scaleDown; s = size / r.height; logoW = r.width * s; gap *= scaleDown;
+          word.style.fontSize = Math.round(size * 0.36) + 'px';
+          ww = word.offsetWidth; wh = word.offsetHeight;
+        }
+        shift = (gap + ww) / 2;                                // знак с названием — по центру экрана
+        word.style.left = (vw / 2 - shift + logoW / 2 + gap) + 'px';
+        word.style.top = (vh / 2 - wh / 2) + 'px';
+      }
+      var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      var place = function (dx) { logo.style.transform = 'translate(' + (dx - cx) + 'px,' + (vh / 2 - cy) + 'px) scale(' + s + ')'; };
       logo.style.color = '#a53625';
-      logo.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + s + ')';
+      place(vw / 2);
       void logo.offsetWidth;
-      logo.querySelector('.mark').classList.add('play');     // 1. рисуется контур, затем заливка (около 1,7 с)
+      logo.querySelector('.mark').classList.add('play');     // 1. рисуется контур, затем заливка (около 1,1 с)
+      if (word) setTimeout(function () {                       // 2. знак сдвигается влево, рядом выезжает название
+        logo.style.transition = 'transform .6s cubic-bezier(.4, 0, .2, 1)';
+        place(vw / 2 - shift);
+        word.classList.add('is-in');
+      }, 150);
 
-      var drawn = new Promise(function (res) { setTimeout(res, 1770); });
+      var drawn = new Promise(function (res) { setTimeout(res, 1180); });
       var loaded = new Promise(function (res) {
         if (document.readyState === 'complete') res(); else window.addEventListener('load', res, { once: true });
         setTimeout(res, 5000);                                // медленный интернет — не ждём дольше 5 с
       });
       Promise.all([drawn, loaded]).then(function () {
-        // 2. знак уезжает вверх-в сторону на своё место и становится белым
-        logo.style.transition = 'transform .87s cubic-bezier(.75, 0, .2, 1), color .67s ease .13s';
+        // 3. знак уезжает на своё место в шапке и становится белым, название растворяется вместе с экраном.
+        //    Если страница прокручена (у шапки будет заливка), знак остаётся красным, пока едет, и белеет
+        //    вместе с появлением заливки — на светлом фоне он не пропадает
+        var header = document.querySelector('.header--sticky');
+        var filled = !header || !header.classList.contains('is-top');
+        logo.style.transition = 'transform .58s cubic-bezier(.75, 0, .2, 1), color ' + (filled ? '.3s ease .58s' : '.45s ease .09s');
         logo.style.transform = '';
         logo.style.color = '';
-        ready();                                              // 3. экран растворяется, появляются меню и первый экран
-        setTimeout(function () { logo.style.transition = ''; }, 940);
+        ready();                                              // экран с названием растворяется, появляются меню и первый экран
+        setTimeout(finish, 600);                              // 4. знак на месте
+        setTimeout(function () { logo.style.transition = ''; }, 900);
       });
-    } catch (e) { ready(); }
+    } catch (e) { ready(); finish(); }
   })();
 
   /* ---------- Шапка без заливки над первым экраном; при прокрутке заливка появляется.
+     Прокрутка вниз — шапка уезжает вверх за край окна, прокрутка вверх — возвращается.
      Первый экран при прокрутке: фото чуть приближается, текст уходит вверх и гаснет ---------- */
   var topHeader = document.querySelector('.header--sticky');
   var opening = document.querySelector('.opening');
   if (topHeader) {
     var openingMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var topTicking = false;
+    var lastY = window.scrollY;
     var updateTop = function () {
       topTicking = false;
       var y = window.scrollY;
       topHeader.classList.toggle('is-top', !!opening && y <= 40);
+      // в самом верху и при открытом меню шапка всегда видна; мелкие подёргивания (до 6px) не считаем
+      if (y <= 120 || document.documentElement.classList.contains('is-menu-open')) {
+        topHeader.classList.remove('is-hidden');
+        lastY = y;
+      } else if (Math.abs(y - lastY) > 6) {
+        topHeader.classList.toggle('is-hidden', y > lastY);
+        lastY = y;
+      }
       if (opening && openingMotion) {
         opening.style.setProperty('--hp', Math.min(1, Math.max(0, y / window.innerHeight)).toFixed(3));
       }
@@ -65,6 +115,7 @@
       if (!topTicking) { topTicking = true; requestAnimationFrame(updateTop); }
     }, { passive: true });
     window.addEventListener('resize', updateTop);
+    topHeader.addEventListener('focusin', function () { topHeader.classList.remove('is-hidden'); });   // переход по Tab — шапка видна
     updateTop();
   }
 
@@ -321,7 +372,7 @@
     // у заголовка блока «О нас» два варианта текста (для широкого экрана и для телефона) — размечаем каждый
     var targets = [];
     document.querySelectorAll('h2').forEach(function (h) {
-      if (h.closest('[hidden], .opening')) return;
+      if (h.closest('[hidden], .opening, .overlay')) return;
       var parts = h.querySelectorAll(':scope > span');
       if (parts.length) parts.forEach(function (p) { targets.push({ el: p, root: h }); });
       else targets.push({ el: h, root: h });
@@ -390,48 +441,47 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(resplit);   // шрифт догрузился — переносы могли сдвинуться
   })();
 
-  /* ---------- «Этапы работы»: когда блок доходит до экрана, он останавливается и занимает весь экран под шапкой
-     (position: sticky, лента по центру по высоте) — остальная страница в это время стоит на месте. Прокрутка вниз
-     сдвигает карточки вбок ровно на столько, на сколько прокрутили; после последней карточки страница снова
-     прокручивается как обычно. Не помещается в экран по высоте — обычная лента с прокруткой вбок ---------- */
+  /* ---------- «Этапы работы»: курсор над лентой — круг с подписью. Лента в начале — «вперёд», в конце — «назад»,
+     посередине — «вперёд» на правых двух третях экрана и «назад» на левой трети. Подпись «вперёд» — текст круга
+     в разметке (span.stages__bubble), «назад» — его атрибут data-back.
+     В правой трети лента сама едет вперёд, в левой — назад; в средней трети ничего не происходит ---------- */
   document.querySelectorAll('.stages').forEach(function (section) {
-    var pin = section.querySelector('.stages__pin');
-    var track = section.querySelector('.stages__track');
-    if (!pin || !track) return;
-    var top = 0, shift = 0, active = false, ticking = false;
+    var strip = section.querySelector('.stages__viewport');
+    var bubble = section.querySelector('.stages__bubble');
+    if (!strip || !bubble || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    var x = 0, y = 0, over = false, dir = 0, raf = 0, last = 0;
+    var SPEED = 0.9;                                    // px за мс (~900 px/с)
+    var fwdText = bubble.textContent.trim() || 'Листать вперёд';
+    var backText = bubble.getAttribute('data-back') || 'Листать назад';
 
-    var layout = function () {
-      section.style.height = '';
-      pin.style.height = '';
-      pin.style.top = '';
-      track.style.transform = '';
-      section.classList.remove('is-pinned');
-      var vh = window.innerHeight;
-      var hdr = document.querySelector('.header--sticky');
-      top = hdr ? Math.max(0, hdr.getBoundingClientRect().height + (parseFloat(getComputedStyle(hdr).top) || 0)) : 0;
-      var avail = vh - top;                               // экран под шапкой
-      shift = Math.max(0, track.scrollWidth - section.clientWidth);
-      active = shift > 0 && pin.offsetHeight + 32 <= avail;
-      if (!active) return;
-      section.classList.add('is-pinned');
-      pin.style.top = top + 'px';
-      pin.style.height = avail + 'px';
-      section.style.height = (avail + shift) + 'px';
-      update();
+    var state = function () {
+      var max = strip.scrollWidth - strip.clientWidth;
+      var atStart = strip.scrollLeft <= 1, atEnd = strip.scrollLeft >= max - 1;
+      var third = window.innerWidth / 3;
+      var back = atEnd || (!atStart && x < third);
+      bubble.textContent = back ? backText : fwdText;
+      dir = x > 2 * third && !atEnd ? 1 : (x < third && !atStart ? -1 : 0);
+      if (dir && !raf) { last = 0; raf = requestAnimationFrame(step); }
     };
-    var update = function () {
-      ticking = false;
-      if (!active) return;
-      var p = Math.min(1, Math.max(0, (top - section.getBoundingClientRect().top) / shift));
-      track.style.transform = 'translate3d(' + (-p * shift).toFixed(1) + 'px,0,0)';
+    var step = function (t) {
+      raf = 0;
+      if (!over || !dir) return;
+      var dt = last ? Math.min(40, t - last) : 16;
+      last = t;
+      strip.scrollLeft += dir * SPEED * dt;
+      state();
+      if (dir && !raf) raf = requestAnimationFrame(step);
     };
-    window.addEventListener('scroll', function () {
-      if (!ticking) { ticking = true; requestAnimationFrame(update); }
-    }, { passive: true });
-    window.addEventListener('resize', layout);
-    window.addEventListener('load', layout);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
-    layout();
+    var place = function () {
+      var r = section.getBoundingClientRect();
+      section.style.setProperty('--cx', (x - r.left).toFixed(1) + 'px');
+      section.style.setProperty('--cy', (y - r.top).toFixed(1) + 'px');
+    };
+    strip.addEventListener('pointerenter', function (e) { over = true; x = e.clientX; y = e.clientY; place(); section.classList.add('is-cursor'); state(); });
+    strip.addEventListener('pointermove', function (e) { x = e.clientX; y = e.clientY; place(); state(); });
+    strip.addEventListener('pointerleave', function () { over = false; dir = 0; section.classList.remove('is-cursor'); });
+    strip.addEventListener('scroll', function () { if (over) state(); }, { passive: true });
+    window.addEventListener('scroll', function () { if (over) place(); }, { passive: true });
   });
 
   /* ---------- Видео на первом экране: при «уменьшить движение» не крутим, показываем первый кадр ---------- */
@@ -445,23 +495,87 @@
     if (mq.addEventListener) mq.addEventListener('change', apply);
   });
 
-  /* ---------- Видеоотзыв: по кнопке ▶ видео запускается в карточке со своими кнопками управления ---------- */
-  document.querySelectorAll('.voice__video').forEach(function (box) {
-    var video = box.querySelector('video');
-    var play = box.querySelector('.voice__play');
-    if (!video || !play) return;
-    // файла ещё нет или он не открылся — возвращаем обложку с подписью «Видео скоро появится»
-    var fail = function () { box.classList.remove('is-playing'); video.controls = false; box.classList.add('is-missing'); };
-    var source = video.querySelector('source');
-    if (source) source.addEventListener('error', fail);
-    video.addEventListener('error', fail);
-    play.addEventListener('click', function () {
-      box.classList.add('is-playing');
-      video.controls = true;
-      var p = video.play();
-      if (p && p.catch) p.catch(function (err) { if (err && err.name !== 'AbortError') fail(); });
+  /* ---------- Окна поверх страницы (видеоотзыв, «Получить консультацию»): страница под окном затемнена и размыта,
+     прокрутка страницы выключена. Закрываются крестиком, кликом мимо окна и клавишей Esc ---------- */
+  var pageWrap = document.querySelector('.page');
+  var openOverlay = null;
+  var makeOverlay = function (el, onClose) {
+    var closeBtn = el.querySelector('.overlay__close');
+    var opener = null;
+    el.hidden = false;                                  // дальше окно прячут opacity / visibility — так оно плавно появляется
+    if ('inert' in el) el.inert = true;
+    var api = {
+      open: function (from) {
+        if (openOverlay) openOverlay.close();
+        opener = from || null;
+        var root = document.documentElement;
+        root.classList.toggle('has-scrollbar', window.innerWidth > root.clientWidth);
+        root.classList.add('is-overlay-open');
+        el.scrollTop = 0;
+        el.classList.add('is-open');
+        if ('inert' in el) { el.inert = false; if (pageWrap) pageWrap.inert = true; }
+        closeBtn.focus({ preventScroll: true });
+        openOverlay = api;
+      },
+      close: function () {
+        if (!el.classList.contains('is-open')) return;
+        el.classList.remove('is-open');
+        document.documentElement.classList.remove('is-overlay-open', 'has-scrollbar');
+        if ('inert' in el) { el.inert = true; if (pageWrap) pageWrap.inert = false; }
+        if (onClose) onClose();
+        if (opener) opener.focus({ preventScroll: true });
+        openOverlay = null;
+      }
+    };
+    closeBtn.addEventListener('click', api.close);
+    el.addEventListener('click', function (e) { if (e.target === el) api.close(); });   // клик по затемнению
+    return api;
+  };
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && openOverlay) openOverlay.close(); });
+
+  /* видеоотзыв: по кнопке ▶ видео открывается почти на весь экран */
+  var videoModal = document.getElementById('video-modal');
+  if (videoModal) {
+    var modalPlayer = videoModal.querySelector('.video-modal__player');
+    var videoOverlay = makeOverlay(videoModal, function () {
+      modalPlayer.pause();
+      setTimeout(function () {                          // окно растаяло — выгружаем видео
+        if (videoModal.classList.contains('is-open')) return;
+        modalPlayer.removeAttribute('src');
+        modalPlayer.load();
+      }, 400);
     });
-  });
+    // файла нет или он не открылся — вместо видео подпись «Видео скоро появится»
+    var modalFail = function () { videoModal.classList.add('is-missing'); };
+    modalPlayer.addEventListener('error', modalFail);
+    document.querySelectorAll('.voice__video').forEach(function (box) {
+      var video = box.querySelector('video');
+      var play = box.querySelector('.voice__play');
+      if (!video || !play) return;
+      var source = video.querySelector('source');
+      play.addEventListener('click', function () {
+        videoModal.classList.remove('is-missing');
+        modalPlayer.poster = video.getAttribute('poster') || '';
+        modalPlayer.src = source ? source.getAttribute('src') : video.getAttribute('src');
+        videoOverlay.open(play);
+        var p = modalPlayer.play();
+        if (p && p.catch) p.catch(function (err) { if (err && err.name === 'NotSupportedError') modalFail(); });
+      });
+    });
+  }
+
+  /* «Получить консультацию» не на главной: кнопка в шапке и в мобильном меню и ссылка «Можете связаться с нами»
+     (атрибут data-consult) открывают окно с формой, как в последнем блоке главной. Без скрипта ссылки ведут на форму главной */
+  var consultModal = document.getElementById('consult-modal');
+  if (consultModal) {
+    var consultOverlay = makeOverlay(consultModal);
+    document.querySelectorAll('[data-consult]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        consultOverlay.open(link.closest('.mobile-menu') ? null : link);   // из мобильного меню фокус вернётся на страницу
+      });
+    });
+  }
 
   /* ---------- Блог: последние посты из группы ВКонтакте ---------- */
   // лент с постами может быть несколько (основной блог и вариант с карточками) — заполняем каждую,
@@ -507,9 +621,8 @@
     });
   }
 
-  /* ---------- Форма ---------- */
-  var form = document.querySelector('.form');
-  if (form) {
+  /* ---------- Форма (последний блок главной и окно «Получить консультацию») ---------- */
+  document.querySelectorAll('.form').forEach(function (form) {
     var contact = form.querySelector('[name="contact"]');
     var agree = form.querySelector('[name="agree"]');
     var note = form.querySelector('.form__note');
@@ -536,5 +649,5 @@
       note.textContent = 'Спасибо! Мы свяжемся с вами в ближайшее время.';
       form.reset();
     });
-  }
+  });
 })();
