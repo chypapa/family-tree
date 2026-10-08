@@ -2355,26 +2355,17 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .calc--center .calc__panel { position: relative; z-index: 1; grid-column: 4 / span 6; }
 .calc__tree { display: none; }
 @media (min-width: 1200px) {
-  .calc--center .calc__stage::before {               /* пунктир между ветвями, проходит за анкетой */
-    content: "";
+  .calc__tree {                                       /* ветви древа на всю ширину окна, за анкетой */
     position: absolute;
     top: 50%;
-    left: calc(50% - var(--vw) / 2 + 22.6vw);
-    right: calc(50% - var(--vw) / 2 + 22.6vw);
-    border-top: 1px dashed rgba(60, 60, 60, .55);
-  }
-  .calc__tree {
-    position: absolute;
-    top: 50%;
+    left: calc(50% - var(--vw) / 2);
     display: block;
-    width: 22.5vw;                                    /* 432px на 1920 */
-    max-width: 432px;
+    width: var(--vw);
     height: auto;
     transform: translateY(-50%);
     pointer-events: none;
   }
-  .calc__tree--left { left: calc(50% - var(--vw) / 2); }
-  .calc__tree--right { right: calc(50% - var(--vw) / 2); transform: translateY(-50%) scaleX(-1); }
+}
 }
 
 /* главная: «Как проходит исследование» — четыре шага в ряд */
