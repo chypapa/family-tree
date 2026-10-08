@@ -2319,9 +2319,6 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .stages--grid .stages__track::after { display: none; }
   .stages--grid .stages__track .stage { width: auto; }
 }
-@media (min-width: 1200px) and (max-width: 1439px) {
-  .stages--four { --cols: 2; }
-}
 
 /* плашка «Точечные исследования» на странице свитка: фото с затемнением, слева текст, справа кнопка */
 .promo {
