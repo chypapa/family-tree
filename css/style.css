@@ -1120,6 +1120,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   margin-bottom: var(--gap-head);                     /* заголовок секции → карточки */
 }
 .section-head__text { max-width: 600px; color: var(--muted); }
+.section-head > .h2 { flex: 0 0 auto; min-width: 50%; }   /* заголовок — не уже половины ширины блока */
 
 .tags { display: flex; flex-wrap: wrap; gap: var(--s-8); }
 .tag {
