@@ -9,6 +9,24 @@
   setScrollbar();
   window.addEventListener('resize', setScrollbar);
 
+  /* переходы между страницами: браузеры с View Transitions сами плавно сменяют страницы (@view-transition в CSS);
+     в остальных (класс fade-nav) страница растворяется перед переходом по ссылке на другую страницу сайта */
+  if (document.documentElement.classList.contains('fade-nav')) {
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a[href]');
+      if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if ((a.target && a.target !== '_self') || a.hasAttribute('download')) return;
+      var url = new URL(a.href, location.href);
+      if (url.origin !== location.origin || !/^https?:$/.test(url.protocol)) return;
+      if (url.pathname === location.pathname && url.search === location.search) return;   // якорь на этой же странице
+      e.preventDefault();
+      document.documentElement.classList.add('is-leaving');
+      setTimeout(function () { location.href = a.href; }, 250);
+    });
+    // вернулись кнопкой «Назад» (страница из кэша) — показываем её снова
+    window.addEventListener('pageshow', function () { document.documentElement.classList.remove('is-leaving'); });
+  }
+
   /* ---------- Вступление: на светлом экране (шапки не видно) рисуется знак, рядом с ним выезжает название
      «Древо предков» — знак сдвигается влево, и вместе с названием они стоят по центру экрана. Потом знак переезжает
      на своё место в шапке, а название растворяется вместе со светлым экраном; появляются меню и первый экран.
@@ -32,6 +50,14 @@
     var logo = marks.filter(function (m) { return m.offsetParent !== null; })[0];   // видимый знак: в шапке или в мобильной плашке
     // без вступления (на телефоне знака в шапке нет): заливка кнопок шапки появляется, когда растворится экран загрузки
     if (reduce || !pre || !logo || !window.Promise) { ready(); setTimeout(finish, reduce || !pre ? 0 : 500); return; }
+    // название меряем только когда загрузился Manrope: иначе его размер берётся от запасного шрифта
+    // и знак встаёт не на одну линию с названием
+    var start = function () { if (start.done) return; start.done = true; run(); };
+    if (word && document.fonts && document.fonts.load) {
+      document.fonts.load('500 40px Manrope', word.textContent).then(start, start);
+      setTimeout(start, 1500);
+    } else start();
+    function run() {
     try {
       var vw = window.innerWidth, vh = window.innerHeight;
       var r = logo.getBoundingClientRect();
@@ -84,6 +110,7 @@
         setTimeout(function () { logo.style.transition = ''; }, 900);
       });
     } catch (e) { ready(); finish(); }
+    }
   })();
 
   /* ---------- Шапка без заливки над первым экраном; при прокрутке заливка появляется.
