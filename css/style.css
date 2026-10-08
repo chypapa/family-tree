@@ -2261,13 +2261,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .consult-modal .form { flex: none; width: 100%; }
 .consult-modal .input--area { height: 160px; }       /* окно целиком помещается на экране ноутбука */
 .consult-modal .contact__info { padding-right: 56px; }  /* заголовок не заходит под крестик */
-.consult-modal .overlay__close { position: absolute; top: var(--s-16); right: var(--s-16); }
-/* на большом экране крестик стоит над плашкой, у её правого края */
-@media (min-width: 1024px) {
-  .consult-modal { padding-top: var(--s-96); }
-  .consult-modal .contact__info { padding-right: 0; }
-  .consult-modal .overlay__close { top: -72px; right: 0; }
-}
+.consult-modal .overlay__close { position: absolute; top: var(--s-16); right: var(--s-16); }   /* крестик — в правом верхнем углу плашки, на положение окна не влияет */
 @media (max-width: 767px) {
   .consult-modal { padding: var(--s-16); }
   .consult-modal .contact__inner { padding: var(--s-24) var(--s-16); }
