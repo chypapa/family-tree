@@ -492,8 +492,8 @@
     if (!strip || !bubble || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
     var x = 0, y = 0, over = false, dir = 0, raf = 0, last = 0;
     var SPEED = 0.9;                                    // px за мс (~900 px/с)
-    var fwdText = bubble.textContent.trim() || 'Листать вперёд';
-    var backText = bubble.getAttribute('data-back') || 'Листать назад';
+    var fwdText = bubble.textContent.trim() || 'Вперёд →';
+    var backText = bubble.getAttribute('data-back') || '← Назад';
 
     var state = function () {
       var max = strip.scrollWidth - strip.clientWidth;
