@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="432" height="576" viewBox="0 0 432 576" fill="none" stroke="#a53625" stroke-dasharray="4 3">
+  <defs><filter id="b" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.4"/></filter></defs>
+  <g opacity=".22" stroke-width="3" filter="url(#b)">
+    <path d="M0 6H114Q142 6 142 34V47Q142 75 114 75H0"/>
+    <path d="M0 169H114Q142 169 142 197V210Q142 238 114 238H0"/>
+    <path d="M0 336H114Q142 336 142 364V377Q142 405 114 405H0"/>
+    <path d="M0 500H114Q142 500 142 528V541Q142 569 114 569H0"/>
+  </g>
+  <g opacity=".35" stroke-width="2" filter="url(#b)">
+    <path d="M142 41H252Q280 41 280 69V176Q280 204 252 204H142"/>
+    <path d="M142 372H252Q280 372 280 400V507Q280 535 252 535H142"/>
+  </g>
+  <path opacity=".85" stroke-width="1" d="M280 121H402Q430 121 430 149V426Q430 454 402 454H280"/>
+</svg>

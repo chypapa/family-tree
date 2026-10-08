@@ -373,8 +373,8 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .opening {
   --ease-out: cubic-bezier(.2, .75, .15, 1);
   position: relative;
-  height: 90vh;                                       /* 90% высоты окна, нижние углы скруглены */
-  height: 90svh;
+  height: 95vh;                                       /* 95% высоты окна, нижние углы скруглены */
+  height: 95svh;
   min-height: 560px;
   border-radius: 0 0 var(--radius) var(--radius);
   margin-top: calc(-1 * (var(--hdr-h) + var(--hdr-gap)));   /* блок начинается от верха окна, под шапкой */
@@ -2358,16 +2358,16 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
     content: "";
     position: absolute;
     top: 50%;
-    left: calc(50% - var(--vw) / 2 + 22vw);
-    right: calc(50% - var(--vw) / 2 + 22vw);
-    border-top: 1px dashed rgba(165, 54, 37, .6);
+    left: calc(50% - var(--vw) / 2 + 22.6vw);
+    right: calc(50% - var(--vw) / 2 + 22.6vw);
+    border-top: 1px dashed rgba(60, 60, 60, .55);
   }
   .calc__tree {
     position: absolute;
     top: 50%;
     display: block;
-    width: 22.8vw;                                    /* 437px на 1920 */
-    max-width: 437px;
+    width: 22.5vw;                                    /* 432px на 1920 */
+    max-width: 432px;
     height: auto;
     transform: translateY(-50%);
     pointer-events: none;
