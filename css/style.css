@@ -830,7 +830,11 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
    Виден только у мыши (hover + fine pointer); на телефоне карточка — обычная ссылка */
 .cursor-bubble { display: none; }
 .svc-card__btn-mobile { display: none; }
-.post__btn-mobile { display: none; }
+/* блог: под текстом поста — «Читать полностью ↗» (на всех экранах); нажатие на карточку открывает пост */
+.post__btn-mobile { display: flex; align-items: center; gap: var(--s-8); margin-top: auto; color: var(--red); font-weight: 500; }
+.post__btn-icon { flex: none; }
+.post__btn-icon path { stroke-width: calc(1 / 1.5); }
+.blog .section-head { margin-bottom: calc(var(--gap-head) / 1.2); }   /* заголовок блога → посты — на 1,2 меньше обычного */
 @media (hover: hover) and (pointer: fine) {
   .has-cursor { cursor: none; }
   .has-cursor a { cursor: none; }
@@ -893,8 +897,8 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 /* телефон: карточки одна под другой */
 @media (max-width: 767px) {
   .svc__list { grid-template-columns: 1fr; }
-  .svc-card__media { aspect-ratio: 16 / 10; padding: var(--s-8); }   /* внутренние отступы карточки — вдвое меньше: 8 и 12px */
-  .svc-card__body { gap: var(--s-12, 12px); padding: var(--s-16) 12px 12px; }
+  .svc-card__media { aspect-ratio: 16 / 10; padding: 12px; }   /* внутренние отступы карточки на телефоне: 12 и 18px */
+  .svc-card__body { gap: 18px; padding: 20px 18px 18px; }
   .svc-card__bar { padding: 0; }
   .svc-card__tags { gap: var(--s-8); }
   .svc-card__tags .tag { height: 32px; padding: 0 var(--s-16); }
@@ -1443,16 +1447,16 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   display: flex;
   flex-direction: column;
   gap: var(--s-24);
-  padding: var(--s-48) var(--s-56);
+  padding: var(--s-48) var(--s-56) var(--s-32);   /* под кнопкой — меньше */
   border-radius: 10px;
   background: var(--bg);
   color: var(--text);
 }
-.lead__title { font-size: var(--fs-h3); font-weight: 500; line-height: 1.3; letter-spacing: -.005em; }
-.lead__head p { max-width: 640px; margin-top: var(--s-16); font-size: 18px; line-height: 1.45; }
+.lead__title { font-size: var(--fs-h2); font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }   /* стиль H2 */
+.lead__head p { max-width: 640px; margin-top: var(--gap-text, 24px); }   /* основной текст сайта */
 .lead__chips { display: flex; flex-wrap: wrap; gap: var(--s-16); margin: 0; padding: 0; list-style: none; }
-.lead__chips li { padding: 8px var(--s-24); border: 1px solid #333; border-radius: 24px; line-height: 22px; }
-.lead__fields { display: flex; flex-direction: column; gap: 12px; }
+.lead__chips li { padding: var(--s-8) var(--s-24); border: 1px solid var(--text); border-radius: 999px; line-height: 1.5; }
+.lead__fields { display: flex; flex-direction: column; gap: 12px; margin-top: var(--s-16); }   /* над полями — больше воздуха */
 .field { position: relative; }
 .field__input {
   display: block;
@@ -1463,7 +1467,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   border-radius: 11px;
   background: var(--white);
   color: var(--text);
-  font-size: 18px;
+  font-size: var(--fs-body);
   line-height: 1.3;
   outline: none;
   transition: border-color .2s ease, box-shadow .2s ease;
@@ -1478,8 +1482,8 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   left: 25px;
   right: 25px;
   overflow: hidden;
-  color: #858585;
-  font-size: 18px;
+  color: var(--placeholder);
+  font-size: var(--fs-body);
   line-height: 1.2;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -1490,10 +1494,10 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .field--area .field__label { top: 22px; transform: none; white-space: normal; }
 .field__input:focus + .field__label,
 .field__input:not(:placeholder-shown) + .field__label { top: 8px; font-size: 13px; transform: none; }
-.lead__agree { align-items: flex-start; font-size: 14px; line-height: 20px; }
+.lead__agree { align-items: flex-start; }
 .lead__agree input { margin-top: 0; border: 2px solid var(--red); }
 .lead__agree a { color: var(--red); text-decoration: underline; }
-.lead__submit { width: 100%; min-height: 64px; border-radius: 12px; font-size: 18px; font-weight: 600; }
+.lead__submit { width: 100%; min-height: 56px; }   /* кнопка — как на всём сайте */
 .lead__note { margin-top: calc(-1 * var(--s-8)); color: var(--red); }
 .lead__note:empty { display: none; }
 @media (max-width: 1023px) {
@@ -1506,13 +1510,11 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .lead.container { width: 100%; }
   .lead__inner { padding: var(--s-64) var(--gut); border-radius: 0; }
   .page:has(.lead) .footer { margin-top: 0; }
-  .lead__curve { display: block; position: absolute; top: var(--s-8); right: -12%; width: 112%; height: auto; pointer-events: none; }
   .lead__card { padding: 0; background: transparent; color: var(--white); }
   .lead__title { color: var(--white); }
-  .lead__head p { font-size: 16px; }
   .lead__chips { gap: var(--s-8); }
   .lead__chips li { border-color: rgba(255, 255, 255, .8); padding: 6px var(--s-16); }
-  .field__input, .field__label { font-size: 16px; }
+  .field__input { font-size: 16px; }   /* 16px: иначе iPhone увеличивает страницу при вводе */
   .field__input { height: 56px; padding: 24px 16px 6px; }
   .field--area .field__input { height: 112px; padding-top: 28px; }
   .field__label { top: 28px; left: 17px; right: 17px; }
@@ -1524,7 +1526,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .lead__agree input { border-color: var(--white); }
   .lead__agree input:checked { background: var(--white); box-shadow: inset 0 0 0 4px var(--red); }
   .lead__agree a { color: var(--white); }
-  .lead__submit { min-height: 50px; background: var(--white); color: var(--text); font-size: 16px; }
+  .lead__submit { min-height: 50px; background: var(--white); color: var(--text); }
   .lead__submit:hover { background: var(--bg); }
   .lead__note { color: var(--white); }
 }
