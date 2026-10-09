@@ -140,8 +140,12 @@
       topTicking = false;
       var y = window.scrollY;
       topHeader.classList.toggle('is-top', !!opening && y <= 40);
-      // в самом верху и при открытом меню шапка всегда видна; мелкие подёргивания (до 6px) не считаем
-      if (y <= 120 || document.documentElement.classList.contains('is-menu-open')) {
+      // в самом верху, при открытом меню и пока идёт заставка шапка всегда видна; мелкие подёргивания (до 6px) не считаем.
+      // Заставка: знак сидит в шапке — если шапка уедет (страница открыта по ссылке на блок, например «О нас»,
+      // и прокручивается к нему), знак уедет вместе с ней и встанет выше названия
+      var rootCls = document.documentElement.classList;
+      var introRunning = rootCls.contains('is-intro') && !rootCls.contains('is-intro-done');
+      if (y <= 120 || rootCls.contains('is-menu-open') || introRunning) {
         topHeader.classList.remove('is-hidden');
         lastY = y;
       } else if (Math.abs(y - lastY) > 6) {
@@ -495,7 +499,20 @@
     var fwdText = bubble.textContent.trim() || 'Вперёд →';
     var backText = bubble.getAttribute('data-back') || '← Назад';
 
+    // все карточки поместились (свиток на компьютере) — листать некуда: обычный курсор, круга нет
+    var canScroll = function () { return strip.scrollWidth - strip.clientWidth > 1; };
+    var sync = function () {
+      var can = canScroll();
+      section.classList.toggle('is-scrollable', can);
+      if (!can) { section.classList.remove('is-cursor'); dir = 0; }
+      return can;
+    };
+    sync();
+    window.addEventListener('resize', sync);
+    window.addEventListener('load', sync);
     var state = function () {
+      if (!sync()) return;
+      if (over) section.classList.add('is-cursor');
       var max = strip.scrollWidth - strip.clientWidth;
       var atStart = strip.scrollLeft <= 1, atEnd = strip.scrollLeft >= max - 1;
       var third = window.innerWidth / 3;
@@ -518,7 +535,7 @@
       section.style.setProperty('--cx', (x - r.left).toFixed(1) + 'px');
       section.style.setProperty('--cy', (y - r.top).toFixed(1) + 'px');
     };
-    strip.addEventListener('pointerenter', function (e) { over = true; x = e.clientX; y = e.clientY; place(); section.classList.add('is-cursor'); state(); });
+    strip.addEventListener('pointerenter', function (e) { over = true; x = e.clientX; y = e.clientY; place(); state(); });
     strip.addEventListener('pointermove', function (e) { x = e.clientX; y = e.clientY; place(); state(); });
     strip.addEventListener('pointerleave', function () { over = false; dir = 0; section.classList.remove('is-cursor'); });
     strip.addEventListener('scroll', function () { if (over) state(); }, { passive: true });

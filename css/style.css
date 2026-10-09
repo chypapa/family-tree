@@ -83,7 +83,7 @@
   --fit: calc(100svh - var(--hdr-h) - var(--hdr-gap) - 32px);  /* с учётом закреплённой шапки и отступа над ней */
 
   /* размеры текста: плавно меняются между шириной окна 375px (телефон) и 1440px (компьютер) */
-  --fs-h1: clamp(36px, 26.14px + 2.63vw, 64px);       /* 36 → 64 */
+  --fs-h1: clamp(30px, 18.03px + 3.19vw, 64px);       /* 30 → 64 (на телефоне в строку первого экрана помещается больше одного слова) */
   --fs-h2: clamp(28px, 20.96px + 1.88vw, 48px);       /* 28 → 48 */
   --fs-h3: clamp(22px, 18.48px + .94vw, 32px);        /* 22 → 32 */
   --fs-h4: clamp(18px, 15.89px + .56vw, 24px);        /* 18 → 24 */
@@ -147,7 +147,7 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4, .mcard__title {
   font-family: "Manrope", system-ui, sans-serif;
   text-wrap: balance;                                 /* ровные строки, без одного слова на последней */
 }
-h1, .h1 { font-size: var(--fs-h1); font-weight: 500; line-height: 1.2; letter-spacing: -.01em; }
+h1, .h1 { font-size: var(--fs-h1); font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
 h2, .h2, .mcard__title { font-size: var(--fs-h2); font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
 h3, .h3 { font-size: var(--fs-h3); font-weight: 500; line-height: 1.25; letter-spacing: -.005em; }
 h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-spacing: -.005em; }
@@ -285,6 +285,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
    (position: fixed) встанет относительно шапки */
 .header--sticky { position: sticky; top: var(--hdr-gap); z-index: 50; margin-top: var(--hdr-gap); transition: transform .4s cubic-bezier(.4, 0, .2, 1); }
 .header--sticky.is-hidden { transform: translateY(calc(-100% - var(--hdr-gap) - 8px)); }
+.is-intro:not(.is-intro-done) .header--sticky { transform: none; }   /* пока идёт заставка, шапка (и знак в ней) не двигается */
 .header--sticky .header__bar, .header--sticky .header__pill,
 .header--sticky .icon-btn { transition: background-color .45s ease; }
 
@@ -823,7 +824,6 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .svc-card__titles { display: flex; flex-direction: column; gap: var(--s-8); }
 .svc-card__sub { margin: 0; }
 .svc-card__desc { max-width: 631px; margin: 0; }
-@media (max-width: 767px) { .svc-card__desc { font-size: 15px; } }   /* на телефоне текст карточки на 1px мельче */
 
 /* слой «cursor» из макета: красный круг 161px с подписью; центр круга — в точке курсора.
    Общий для карточек-ссылок (.has-cursor): карточки услуг и карточки первого блога.
@@ -1637,7 +1637,13 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
     --gap-head: var(--s-48);
     --section-pad: var(--s-64);
     --pad-card: var(--s-24);
+    --fs-body: 15px;                                  /* основной текст на телефоне — 15px */
   }
+
+  .opening { height: 98vh; height: 98svh; }           /* первый экран — 98% высоты экрана */
+  .btn { min-height: 50px; padding-block: 13px; }     /* кнопки — высотой с кнопку бургер-меню (50px) */
+  /* поля ввода — 16px: при более мелком шрифте iPhone увеличивает страницу, когда нажимаешь на поле */
+  input:not([type="checkbox"]):not([type="radio"]), textarea, select { font-size: 16px; }
 
   .section-head__text { color: var(--muted); }
   .link-more { color: var(--red); }
@@ -1669,7 +1675,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .post .post__img, .post--main .post__img, .post--side .post__img { aspect-ratio: 336 / 201; }
   .post .post__body, .post--main .post__body, .post--side .post__body { gap: var(--s-16); display: flex; flex-direction: column; }
   .post .post__desc { color: var(--text); }
-  .post .post__link { color: var(--text); display: none; }
+  .post .post__link { color: var(--text); }
   .post__btn-mobile {
     display: flex;
     align-items: center;
@@ -1698,7 +1704,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .check { align-items: flex-start; gap: var(--s-16); color: var(--white); }
   .check input { width: 21px; height: 21px; border-color: var(--white); }
   .check input:checked { background: var(--white); border-color: var(--white); box-shadow: inset 0 0 0 4px var(--red); }
-  .form__submit { width: 100%; height: 52px; background: var(--white); color: var(--text); }
+  .form__submit { width: 100%; height: 50px; background: var(--white); color: var(--text); }
   .form__submit:hover { background: var(--bg); }
   .form__note { margin-top: calc(var(--s-16) - var(--s-32)); color: var(--white); }
 
@@ -1721,12 +1727,12 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .footer__policy { position: relative; align-self: center; }
 }
 
-/* планшет и телефон: в блоге вместо круга-курсора — ссылка «Читать полностью» со стрелкой */
+/* планшет и телефон: в блоге вместо круга-курсора — надпись «Читать полностью» со стрелкой; нажатие на карточку
+   (и на эту надпись) открывает пост — как на компьютере, карточку накрывает ссылка .post__link */
 @media (max-width: 1199px) {
   .post__btn-mobile { display: flex !important; align-items: center; gap: var(--s-8); }
   .post__btn-icon { align-self: center; flex-shrink: 0; }
   .post__btn-icon path { stroke-width: calc(1 / 1.5); }
-  .post .post__link { display: none !important; }
 }
 
 @media (min-width: 420px) and (max-width: 767px) {
@@ -1885,14 +1891,15 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 /* после последней карточки — поле до края контента, как слева (минус промежуток ленты) */
 .stages__track::after { content: ""; flex: none; width: max(0px, calc((var(--vw) - min(var(--container), var(--vw) - 2 * var(--gut))) / 2 - var(--col-gap))); }
 @media (hover: hover) and (pointer: fine) {
-  .stages__viewport, .stages__viewport a { cursor: none; }
+  .stages.is-scrollable .stages__viewport, .stages.is-scrollable .stages__viewport a { cursor: none; }   /* круг вместо курсора — только если ленту есть куда листать */
   .stages__bubble { background: var(--white); color: var(--red); box-shadow: 0 8px 24px rgba(60, 40, 30, .18); }
   .stages.is-cursor .stages__bubble { transform: scale(1); }
 }
 .stage {
   position: relative;
-  /* 5 колонок из 12: ширина контента − 11 промежутков, делим на 12, берём 5 колонок и 4 промежутка между ними */
-  --stage-w: calc((min(var(--container), var(--vw) - 2 * var(--gut)) - 11 * var(--col-gap)) / 12 * 5 + 4 * var(--col-gap));
+  /* ширина — как у карточки отзыва: 4 колонки из 12 (ширина контента − 11 промежутков, делим на 12, берём 4 колонки
+     и 3 промежутка между ними); на планшете и телефоне — min(400px, 80vw), тоже как у отзыва */
+  --stage-w: calc((min(var(--container), var(--vw) - 2 * var(--gut)) - 11 * var(--col-gap)) / 12 * 4 + 3 * var(--col-gap));
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -2167,7 +2174,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 @media (max-width: 1199px) {
   .why { grid-template-columns: 1fr; gap: var(--s-48); }
   .why__img { max-width: 760px; }
-  .stage { --stage-w: min(560px, 72vw); min-height: 380px; }
+  .stage { min-height: 380px; }
   .calc__intro, .calc__panel { grid-column: 1 / -1; }
   .calc { row-gap: var(--s-48); }
   .calc__card { padding: var(--pad-card); }
@@ -2188,11 +2195,12 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   }
   .voices__grid::-webkit-scrollbar { display: none; }
   .voice { flex: 0 0 min(400px, 80vw); scroll-snap-align: start; }
+  .stage { --stage-w: min(400px, 80vw); }            /* этапы — той же ширины, что отзывы */
 }
 @media (max-width: 767px) {
   .why { gap: var(--s-32); }                         /* текст и фото одной колонкой — 32px */
   .why__list li { gap: var(--s-16); }
-  .stage { --stage-w: 86vw; min-height: 0; }
+  .stage { min-height: 0; }
   .stages, .voices { --col-gap: var(--s-16); }        /* между карточками в лентах — на треть меньше (24 → 16) */
   .voice::after { width: 44px; height: 44px; }
   .calc__card { gap: var(--s-32); padding: var(--s-24); }
@@ -2301,22 +2309,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .gallery__grid img { width: 100%; height: auto; aspect-ratio: 903 / 885; object-fit: cover; border-radius: var(--radius); }
 .gallery__note { margin-top: var(--s-8); color: var(--muted); }   /* фото → подпись — 8px */
 
-/* этапы сеткой (без ленты): на компьютере все карточки в ряд по ширине контента; книга — 4 карточки
-   (до 1440px — по две в ряд), свиток — 3. На планшете и телефоне — лента, как раньше */
-.stages--grid { --cols: 3; }
-.stages--four { --cols: 4; }
-/* «Этапы» книги: лента, карточки по 4 колонки из 12 — в ряд видно три, четвёртая выглядывает справа */
-@media (min-width: 1200px) {
-  .stages--four:not(.stages--grid) .stage { --stage-w: calc((min(var(--container), var(--vw) - 2 * var(--gut)) - 11 * var(--col-gap)) / 12 * 4 + 3 * var(--col-gap)); }
-}
-.stages--gold .stage { background: var(--red); }
-.stages--green .stage { background: var(--red); }
-@media (min-width: 1200px) {
-  .stages--grid .stages__viewport { margin-inline: 0; padding-left: 0; overflow: visible; }
-  .stages--grid .stages__track { display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); width: auto; }
-  .stages--grid .stages__track::after { display: none; }
-  .stages--grid .stages__track .stage { width: auto; }
-}
+/* «Этапы работы» на страницах книги и свитка — лента (см. «Этапы работы» выше): карточки шириной с карточку отзыва */
 
 /* плашка «Точечные исследования» на странице свитка: фото с затемнением, слева текст, справа кнопка */
 .promo {
