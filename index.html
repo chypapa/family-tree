@@ -242,6 +242,17 @@
          слева карта — фото в контуре области и линии границ (img/about/sec-3-desktop.png), линии уходят под текст;
          справа у края — линии соседних областей (img/about/lines-right.png, только на компьютере).
          Весь текст — одной колонкой. На планшете и телефоне карта — под текстом (своя картинка) ============ -->
+    <!-- ============ О НАС — текстовый блок по макету Figma (plat-fam, узел 528:242): плашка «О нас» и два абзаца
+         крупным текстом (Manrope Medium 32px, первая фраза — красным). Прежний красный блок «О нас» с картой лежит
+         ниже в <template id="about-v1"> — на странице он не показывается ============ -->
+    <section class="intro-text container section" id="about" aria-labelledby="intro-text-title">
+      <h2 class="about-svc__chip intro-text__chip" id="intro-text-title">О&nbsp;нас</h2>
+      <div class="intro-text__body">
+        <p><span class="intro-text__accent">«Древо Предков» проводит профессиональные генеалогические исследования.</span> Мы&nbsp;восстанавливаем историю рода по&nbsp;архивным документам и&nbsp;оформляем результат в&nbsp;родословное древо и&nbsp;семейную книгу.</p>
+        <p>Мы&nbsp;работаем с&nbsp;первоисточниками. Находим архивные документы, расшифровываем старинные рукописи, в&nbsp;том числе XVI века, и&nbsp;сопоставляем сведения из&nbsp;разных источников. Так мы&nbsp;видим связи, которые не&nbsp;заметны с&nbsp;первого взгляда, и&nbsp;восстанавливаем родословную, в&nbsp;которой можно быть уверенным.</p>
+      </div>
+    </section>
+    <template id="about-v1">
     <section class="russia section" id="about" aria-labelledby="russia-title">
       <div class="russia__decor" aria-hidden="true">
         <picture>
@@ -272,6 +283,7 @@
         </div>
       </div>
     </section>
+    </template>
 
     <!-- ============ НАПРАВЛЕНИЯ И УСЛУГИ ============ -->
     <!-- <section class="directions container section" id="directions" aria-labelledby="directions-title" hidden>
