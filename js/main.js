@@ -708,7 +708,7 @@
       var msg = '';
       if (agree && !agree.checked) { agree.classList.add('is-invalid'); msg = 'Подтвердите согласие с политикой конфиденциальности.'; }
       if (!contact.value.trim()) { contact.classList.add('is-invalid'); msg = 'Укажите телефон, почту или ник в мессенджере.'; }
-      if (name && !name.value.trim()) { name.classList.add('is-invalid'); msg = 'Напишите, как к вам обращаться.'; }
+      if (name && name.required && !name.value.trim()) { name.classList.add('is-invalid'); msg = 'Напишите, как к вам обращаться.'; }
       if (msg) { note.textContent = msg; return; }
 
       // Здесь подключается отправка на сервер (fetch / CRM / почта).

@@ -474,12 +474,12 @@
          поднимаются вверх; справа — мессенджеры, сверху справа — декоративная кривая (img/lead-curve.png) ============ -->
     <section class="lead container section" id="contact" aria-labelledby="lead-title">
     <div class="lead__inner">
+      <img class="lead__map" src="img/lead-map.jpg" width="701" height="795" alt="" aria-hidden="true" loading="lazy" decoding="async">
       <img class="lead__curve" src="img/lead-curve.png" width="1550" height="738" alt="" aria-hidden="true" loading="lazy" decoding="async">
       <form class="lead__card" action="#" method="post" novalidate>
         <div class="lead__head">
           <h2 class="lead__title" id="lead-title">Начните с&nbsp;бесплатной консультации</h2>
           <p>Расскажите, что&nbsp;уже известно о&nbsp;вашей семье,&nbsp;— подскажем, с&nbsp;чего начать поиск и&nbsp;какой формат подойдёт.</p>
-          <p>Консультация ни&nbsp;к&nbsp;чему не&nbsp;обязывает: решить, подходит ли&nbsp;вам исследование, вы&nbsp;сможете уже после разговора.</p>
         </div>
         <ul class="lead__chips" aria-label="Условия консультации">
           <li>Онлайн</li>
@@ -488,32 +488,25 @@
         </ul>
         <div class="lead__fields">
           <div class="field">
-            <input class="field__input" id="lead-name" name="name" type="text" autocomplete="name" placeholder=" " required>
-            <label class="field__label" for="lead-name">Как вас зовут?</label>
+            <input class="field__input" id="lead-name" name="name" type="text" autocomplete="name" placeholder=" ">
+            <label class="field__label" for="lead-name">Ваше имя</label>
           </div>
           <div class="field">
             <input class="field__input" id="lead-contact" name="contact" type="text" autocomplete="tel" placeholder=" " required>
-            <label class="field__label" for="lead-contact">Телефон или&nbsp;ник в&nbsp;мессенджере</label>
+            <label class="field__label" for="lead-contact">Телефон или&nbsp;ник в&nbsp;мессенджере*</label>
           </div>
           <div class="field field--area">
             <textarea class="field__input" id="lead-ancestors" name="ancestors" placeholder=" "></textarea>
-            <label class="field__label" for="lead-ancestors">Что известно о&nbsp;предках (необязательно)</label>
+            <label class="field__label" for="lead-ancestors">Что известно о&nbsp;предках</label>
           </div>
         </div>
+        <label class="check lead__agree">
+          <input type="checkbox" name="agree" required>
+          <span>Нажимая «Отправить заявку», вы&nbsp;даёте согласие на&nbsp;обработку персональных данных и&nbsp;соглашаетесь с&nbsp;<a href="politika_personalnye_dannye_genealogiya.html">политикой конфиденциальности</a>.</span>
+        </label>
         <button class="btn lead__submit" type="submit">Отправить заявку</button>
         <p class="lead__note" role="status" aria-live="polite"></p>
-        <p class="lead__consent">Нажимая «Отправить заявку», вы&nbsp;даёте согласие на&nbsp;обработку персональных данных и&nbsp;соглашаетесь с&nbsp;<a href="politika_personalnye_dannye_genealogiya.html">политикой конфиденциальности</a>.</p>
       </form>
-      <div class="lead__side">
-        <p class="h4 lead__side-title">Удобнее написать в&nbsp;мессенджер?</p>
-        <p class="lead__side-text">Ответим в&nbsp;WhatsApp, Telegram, ВКонтакте или&nbsp;на&nbsp;Авито.</p>
-        <div class="socials lead__socials">
-          <a href="https://api.whatsapp.com/send/?phone=79158929206&text&type=phone_number&app_absent=0" aria-label="WhatsApp"><img src="img/icons/whatsapp.svg" width="44" height="44" alt=""></a>
-          <a href="https://t.me/drevo_predkov" aria-label="Telegram"><img src="img/icons/telegram.svg" width="44" height="44" alt=""></a>
-          <a href="https://vk.ru/im?sel=-228395135" aria-label="ВКонтакте"><img src="img/icons/vk.svg" width="44" height="44" alt=""></a>
-          <a href="https://www.avito.ru/moskva/predlozheniya_uslug/rodoslovnayagenealogiyadizayn_dreva_4729921847" aria-label="Avito"><img src="img/icons/max.svg" width="44" height="44" alt=""></a>
-        </div>
-      </div>
     </div>
     </section>
     <!-- прежний вариант формы (до 09.10): чтобы вернуть, замените блок выше содержимым этого шаблона — на странице он не показывается -->
@@ -576,7 +569,7 @@
   </main>
 
   <!-- ============ FOOTER: соцсети в подвале главной — только на телефоне (на большом экране они в блоке с формой) ============ -->
-  <footer class="footer">
+  <footer class="footer footer--socials">
     <div class="footer__inner">
       <a class="footer__logo" href="#top" aria-label="Древо предков — наверх">
         <img src="img/logo.svg" width="33" height="37" alt="">
