@@ -689,29 +689,27 @@
     });
   }
 
-  /* ---------- Форма (последний блок главной и окно «Получить консультацию») ---------- */
-  document.querySelectorAll('.form').forEach(function (form) {
+  /* ---------- Формы заявки (блок «Заявка» и окно «Получить консультацию»; прежний вариант .form — тоже) ---------- */
+  document.querySelectorAll('.lead__card, .form').forEach(function (form) {
+    var name = form.querySelector('[name="name"]');
     var contact = form.querySelector('[name="contact"]');
-    var agree = form.querySelector('[name="agree"]');
-    var note = form.querySelector('.form__note');
+    var agree = form.querySelector('[name="agree"]');               // галочка была в прежней форме; в новой — текст согласия
+    var note = form.querySelector('.lead__note, .form__note');
+    if (!contact || !note) return;
 
-    [contact, agree].forEach(function (el) {
+    [name, contact, agree].forEach(function (el) {
+      if (!el) return;
       el.addEventListener('input', function () { el.classList.remove('is-invalid'); });
       el.addEventListener('change', function () { el.classList.remove('is-invalid'); });
     });
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var ok = true;
-      if (!contact.value.trim()) { contact.classList.add('is-invalid'); ok = false; }
-      if (!agree.checked) { agree.classList.add('is-invalid'); ok = false; }
-
-      if (!ok) {
-        note.textContent = !contact.value.trim()
-          ? 'Укажите телефон, почту или мессенджер.'
-          : 'Подтвердите согласие с политикой конфиденциальности.';
-        return;
-      }
+      var msg = '';
+      if (agree && !agree.checked) { agree.classList.add('is-invalid'); msg = 'Подтвердите согласие с политикой конфиденциальности.'; }
+      if (!contact.value.trim()) { contact.classList.add('is-invalid'); msg = 'Укажите телефон, почту или ник в мессенджере.'; }
+      if (name && !name.value.trim()) { name.classList.add('is-invalid'); msg = 'Напишите, как к вам обращаться.'; }
+      if (msg) { note.textContent = msg; return; }
 
       // Здесь подключается отправка на сервер (fetch / CRM / почта).
       note.textContent = 'Спасибо! Мы свяжемся с вами в ближайшее время.';
