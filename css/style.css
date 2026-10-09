@@ -2305,8 +2305,9 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 
 /* примеры работ: два фото рядом, под ними подпись */
 .about-svc + .gallery { margin-top: var(--s-64); }   /* фото иллюстрируют «Об услуге» — стоят ближе к нему, чем обычный отступ между блоками */
-.gallery__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--col-gap); }
-.gallery__grid img { width: 100%; height: auto; aspect-ratio: 903 / 885; object-fit: cover; border-radius: var(--radius); }
+/* два фото во всю ширину окна, каждое — половина экрана, без промежутков и скруглений */
+.gallery__grid { display: grid; grid-template-columns: 1fr 1fr; margin-inline: calc(50% - var(--vw) / 2); }
+.gallery__grid img { width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; }
 .gallery__note { margin-top: var(--s-8); color: var(--muted); }   /* фото → подпись — 8px */
 
 /* «Этапы работы» на страницах книги и свитка — лента (см. «Этапы работы» выше): карточки шириной с карточку отзыва */
@@ -2377,7 +2378,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .about-svc__cols { gap: 40px; }                     /* телефон: последний абзац → H3 — 40px */
   .dot-list li { gap: var(--s-16); }
   .dot-list li::before { width: 12px; height: 12px; }
-  .gallery__grid { grid-template-columns: 1fr; gap: var(--s-16); }
+  .gallery__grid { grid-template-columns: 1fr; }
   .promo { padding: var(--s-24); }
   .promo__btn { align-self: stretch; }
   .process__list { grid-template-columns: 1fr; row-gap: var(--s-32); }
