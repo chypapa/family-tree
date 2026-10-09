@@ -2539,3 +2539,28 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 @media (max-width: 767px) {
   .intro-text__body { gap: var(--s-16); margin-top: var(--s-32); }
 }
+
+/* «Почему выбирают нас» (в блоке «О нас» на главной): строки с тонкой линией сверху;
+   на компьютере — номер (1 колонка), заголовок (4 колонки), текст (6 колонок) из 12; на телефоне — номер и заголовок, под ними текст */
+.why-us { margin-top: var(--s-96); }
+.why-us__heading { margin-bottom: var(--s-32); }
+.why-us__list { margin: 0; padding: 0; list-style: none; border-bottom: 1px solid rgba(60, 60, 60, .2); }
+.why-us__item {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  align-items: baseline;
+  padding: var(--s-32) 0;
+  border-top: 1px solid rgba(60, 60, 60, .2);
+}
+.why-us__num { grid-column: 1 / span 1; color: var(--red); font-weight: 600; font-size: var(--fs-h4); line-height: 1.3; }
+.why-us__title { grid-column: 2 / span 4; }
+.why-us__text { grid-column: 7 / span 6; color: var(--muted); }
+@media (max-width: 767px) {
+  .why-us { margin-top: var(--s-64); }
+  .why-us__heading { margin-bottom: var(--s-16); }
+  .why-us__item { grid-template-columns: 28px 1fr; column-gap: var(--s-16); row-gap: var(--s-8); padding: var(--s-24) 0; }
+  .why-us__num { grid-column: 1; grid-row: 1; }
+  .why-us__title { grid-column: 2; }
+  .why-us__text { grid-column: 2; }
+}
