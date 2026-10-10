@@ -827,7 +827,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 
 /* компьютер с мышью: карточка с внутренним полем; при наведении — красная подложка, текст белый */
 @media (hover: hover) and (pointer: fine) and (min-width: 1200px) {
-  .svc-card { padding: var(--s-8) var(--s-8) var(--s-24); }
+  .svc-card { padding-bottom: var(--s-24); }        /* фото во всю ширину карточки, красная подложка — только под текстом */
   .svc-card:hover { background: var(--red); color: var(--white); }
   .svc-card:hover .svc-card__title { color: var(--white); }
 }
