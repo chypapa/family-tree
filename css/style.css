@@ -2529,11 +2529,11 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 
 /* ---------- Главная: «О нас» — текстовый блок (Figma 528:242). Текст — Manrope Medium 32px / 1.3 на компьютере,
    плавно до 20px на телефоне; первая фраза красная; ширина текста ~ 9,5 колонок из 12 (1216px при контенте 1296px) ---------- */
-.intro-text__chip { font-weight: 600; padding: 10px 20px; line-height: 1.2; }
-.intro-text__body { display: flex; flex-direction: column; gap: var(--s-24); max-width: 1216px; margin-top: 40px; }   /* плашка → текст, как в макете */
+.intro-text__body { display: flex; flex-direction: column; align-items: center; gap: var(--s-32); max-width: 1016px; margin: 0 auto; text-align: center; }   /* заголовок H2 и текст по центру */
+.intro-text__sub { max-width: 1000px; font-size: var(--fs-body-l, 20px); font-weight: 400; line-height: 1.5; }
 .intro-text__accent { color: var(--red); }
 @media (max-width: 767px) {
-  .intro-text__body { gap: var(--s-16); margin-top: var(--s-32); }
+  .intro-text__body { gap: var(--s-16); }
 }
 
 /* «Почему нас выбирают?»: подзаголовок (H4) и четыре красные карточки в ряд (по 3 колонки из 12);
@@ -2545,14 +2545,16 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--s-16);
-  min-height: 300px;
-  padding: var(--pad-card);
+  justify-content: space-between;
+  gap: var(--s-24);
+  min-height: 264px;
+  padding: var(--s-24) var(--s-24) var(--s-32);
   border-radius: var(--radius);
   background: var(--red);
   color: var(--white);
 }
-.why-card::after { content: ""; position: absolute; top: var(--pad-card); right: var(--pad-card); width: 16px; height: 16px; border-radius: 50%; background: var(--white); }   /* белая точка, как у карточек этапов */
-.why-card__title { padding-right: var(--s-32); color: var(--white); }
-@media (max-width: 1199px) { .why-cards__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } .why-card { min-height: 240px; } }
-@media (max-width: 767px) { .why-cards__list { grid-template-columns: 1fr; gap: var(--s-16); } .why-card { min-height: 0; } }
+.why-card::after { content: ""; position: absolute; top: var(--s-16); right: var(--s-16); width: 12px; height: 12px; border-radius: 50%; background: var(--white); }   /* белая точка, как у карточек этапов */
+.why-card__title { padding-right: var(--s-24); font-size: 24px; font-weight: 400; line-height: 1.25; color: var(--white); }
+.why-cards__list { gap: var(--s-16); }
+@media (max-width: 1199px) { .why-cards__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } .why-card { min-height: 220px; } }
+@media (max-width: 767px) { .why-cards { margin-top: var(--s-32); } .why-cards__list { grid-template-columns: 1fr; gap: var(--s-8, 8px); } .why-card { min-height: 0; padding: var(--s-16) var(--s-16) var(--s-24); } }
