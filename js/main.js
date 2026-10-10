@@ -316,30 +316,6 @@
     }, { passive: true });
   });
 
-  /* ---------- Карточки-ссылки (.has-cursor: услуги и первый блог): курсор над карточкой — красный круг ---------- */
-  // только для мыши: на телефоне круга нет, карточка — обычная ссылка
-  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    document.querySelectorAll('.has-cursor').forEach(function (card) {
-      var lastX = 0, lastY = 0;
-      var put = function () {
-        var r = card.getBoundingClientRect();
-        card.style.setProperty('--cx', (lastX - r.left).toFixed(1) + 'px');
-        card.style.setProperty('--cy', (lastY - r.top).toFixed(1) + 'px');
-      };
-      var onMove = function (e) { lastX = e.clientX; lastY = e.clientY; put(); };
-      card.addEventListener('pointerenter', function (e) {
-        onMove(e);                                // круг появляется в точке входа и плавно вырастает
-        card.classList.add('is-cursor');
-      });
-      card.addEventListener('pointermove', onMove);
-      card.addEventListener('pointerleave', function () { card.classList.remove('is-cursor'); });
-      // страницу прокрутили, а мышь стоит на месте — круг остаётся под курсором
-      window.addEventListener('scroll', function () {
-        if (card.classList.contains('is-cursor')) put();
-      }, { passive: true });
-    });
-  }
-
   /* ---------- Древо: при прокрутке листва «заливает» голые ветви сверху вниз, край неровный, как чернила ---------- */
   var ink = document.querySelector('.inkswap__frame');
   if (ink) {

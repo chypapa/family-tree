@@ -68,7 +68,7 @@
   --section-pad: var(--s-96);                         /* внутренний отступ цветных разделов сверху и снизу */
   --gap-head: clamp(32px, 28.12px + 1.036vw, 48px);   /* заголовок раздела → содержимое: 32px на телефоне → 48px на экране 1920 */
   --gap-text: var(--s-24);                            /* H2 → описание */
-  --col-gap: clamp(16px, 6.86px + 1.19vw, 24px);     /* промежуток сетки 12 колонок: 24px на компьютере (1440+) плавно сужается до 16px к планшету (768) */
+  --col-gap: 15px;                                    /* промежуток сетки 12 колонок — 15px */
   --pad-card: var(--s-32);                            /* внутренний отступ карточек */
   --radius: 16px;
   --radius-sm: 12px;                                  /* кнопки, поля, чекбокс — всё, что лежит внутри карточек */
@@ -772,17 +772,19 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   display: flex;
   flex-direction: column;
   min-width: 0;
-  overflow: hidden;                                   /* круг-курсор не выходит за карточку */
+  overflow: hidden;
+  border-radius: var(--radius);
   color: var(--text);
   text-decoration: none;
+  transition: background-color .3s ease, color .3s ease;
 }
 .svc-card:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
 .svc-card__media {
   position: relative;
-  aspect-ratio: 907 / 401;
+  aspect-ratio: 16 / 9;                               /* фото выше: 16:9 */
   padding: var(--s-16);
   overflow: hidden;
-  border-radius: var(--radius);                       /* скругление — только у фото, карточка без заливки */
+  border-radius: var(--radius);                       /* скругление у фото; карточка без заливки, при наведении — красная */
   background: #c9c3bc;
 }
 .svc-card__media > img {
@@ -794,7 +796,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   transition: transform .6s cubic-bezier(.2, .7, .2, 1);
 }
 .svc-card:hover .svc-card__media > img { transform: scale(1.03); }
-/* плашки на фото: сроки и цена в одну строку, под ними — состав услуги */
+/* плашки на фото: сроки и цена */
 .svc-card__bar {
   position: relative;
   display: flex;
@@ -803,7 +805,6 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   gap: var(--s-8);
   padding: 0;
 }
-.tag.svc-card__kind { display: inline-flex; align-items: center; white-space: normal; min-height: 32px; max-width: 100%; margin: 0; padding-block: 4px; padding: 0 var(--s-16); border-radius: 999px; background: #f5f4f2; line-height: 1.2; }
 .svc-card__tags .tag {
   height: 32px;
   gap: var(--s-8);
@@ -812,8 +813,6 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   background: #f5f4f2;
   line-height: 1.2;
 }
-.svc-card__arrow { display: inline-block; width: .55em; height: .55em; vertical-align: .05em; transition: transform .25s ease; }   /* стрелка ↗ после названия */
-.svc-card:hover .svc-card__arrow { transform: translate(2px, -2px); }
 
 .svc-card__body {
   flex: 1;
@@ -823,21 +822,20 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   padding: var(--s-24) var(--radius) 0;               /* текст начинается там, где кончается скругление фото (16px) */
 }
 .svc-card__titles { display: flex; flex-direction: column; gap: var(--s-8); }
-.svc-card__sub { margin: 0; }
+.svc-card__sub { margin: 0; font-size: 14px; line-height: 1.3; opacity: .7; }   /* состав услуги — мелкой строкой над названием */
 .svc-card__desc { max-width: 631px; margin: 0; }
 
-/* слой «cursor» из макета: красный круг 161px с подписью; центр круга — в точке курсора.
-   Общий для карточек-ссылок (.has-cursor): карточки услуг и карточки первого блога.
-   Виден только у мыши (hover + fine pointer); на телефоне карточка — обычная ссылка */
+/* компьютер с мышью: карточка с внутренним полем; при наведении — красная подложка, текст белый */
+@media (hover: hover) and (pointer: fine) and (min-width: 1200px) {
+  .svc-card { padding: var(--s-8) var(--s-8) var(--s-24); }
+  .svc-card:hover { background: var(--red); color: var(--white); }
+  .svc-card:hover .svc-card__title { color: var(--white); }
+}
+
+/* круг-курсор (span.cursor-bubble): красный круг 161px с подписью, центр — в точке курсора.
+   Сейчас используется лентой этапов (.stages__bubble); виден только у мыши */
 .cursor-bubble { display: none; }
-.svc-card__btn-mobile { display: none; }
-/* блог: под текстом поста — «Читать полностью ↗» (на всех экранах); нажатие на карточку открывает пост */
-.post__btn-mobile { display: flex; align-items: center; gap: var(--s-8); margin-top: auto; color: var(--red); font-weight: 500; }
-.post__btn-icon { flex: none; }
-.post__btn-icon path { stroke-width: calc(1 / 1.5); }
 @media (hover: hover) and (pointer: fine) {
-  .has-cursor { cursor: none; }
-  .has-cursor a { cursor: none; }
   .cursor-bubble {
     position: absolute;
     left: var(--cx, 50%);                             /* центр круга — в точке курсора (координаты ставит main.js) */
@@ -861,13 +859,14 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
     transition: transform .3s cubic-bezier(.2, .7, .2, 1);   /* плавно только появление; за курсором — без задержки */
     will-change: transform;
   }
-  .has-cursor.is-cursor .cursor-bubble { transform: scale(1); }
 }
 
-/* ноутбук и планшет: те же две колонки, отступы карточки — общие для сайта */
-@media (max-width: 1199px) {
-  .svc-card__media { aspect-ratio: 2 / 1; }
-}
+.svc-card__btn-mobile { display: none; }
+/* блог: под текстом поста — «Читать полностью ↗» (на всех экранах); нажатие на карточку открывает пост */
+.post__btn-mobile { display: flex; align-items: center; gap: var(--s-8); margin-top: auto; color: var(--red); font-weight: 500; }
+.post__btn-icon { flex: none; }
+.post__btn-icon path { stroke-width: calc(1 / 1.5); }
+
 /* узкий планшет: подзаголовок секции под заголовком */
 @media (max-width: 899px) {
   .svc__head { grid-template-columns: 1fr; }
@@ -904,7 +903,6 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .svc-card__bar { padding: 0; }
   .svc-card__tags { gap: var(--s-8); }
   .svc-card__tags .tag { height: 30px; padding: 0 12px; }
-  .tag.svc-card__kind { min-height: 30px; padding: 4px 12px; }
 }
 
 /* =========================================================
