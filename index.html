@@ -192,15 +192,14 @@
       </div>
 
       <div class="svc__list">
-        <a class="svc-card has-cursor" href="rodoslovnaya-kniga.html">
+        <a class="svc-card" href="rodoslovnaya-kniga.html">
           <div class="svc-card__media">
-            <img src="img/kniga-why.jpg" width="902" height="886" alt="Родословная книга «Ваша уникальная история в одной книге» в руках" loading="lazy" decoding="async">
+            <img src="img/kniga-why.jpg" width="1200" height="1200" alt="Родословная книга «Ваша уникальная история в одной книге» в руках" loading="lazy" decoding="async">
             <div class="svc-card__bar">
               <ul class="tags svc-card__tags" aria-label="Сроки и стоимость">
                 <li class="tag">от&nbsp;1&nbsp;месяца</li>
                 <li class="tag">от&nbsp;60&nbsp;000&nbsp;₽</li>
               </ul>
-              <img class="svc-card__arrow" src="icons/svc-arrow.svg" width="33" height="33" alt="">
             </div>
           </div>
           <div class="svc-card__body">
@@ -211,10 +210,9 @@
             <p class="svc-card__desc">Результаты поиска, оформленные в&nbsp;книгу: история рода, копии документов с&nbsp;расшифровкой и&nbsp;родословное древо. Издание, которое можно хранить и&nbsp;передавать детям и&nbsp;внукам.</p>
             <span class="svc-card__btn-mobile">Узнать подробнее</span>
           </div>
-          <span class="cursor-bubble" aria-hidden="true">Узнать подробнее</span>
         </a>
 
-        <a class="svc-card has-cursor" href="issledovanie.html">
+        <a class="svc-card" href="issledovanie.html">
           <div class="svc-card__media">
             <img src="img/issledovanie-about.jpg" width="867" height="608" alt="Старые фотографии и письма предков" loading="lazy" decoding="async">
             <div class="svc-card__bar">
@@ -222,7 +220,6 @@
                 <li class="tag">от&nbsp;1&nbsp;месяца</li>
                 <li class="tag">от&nbsp;30&nbsp;000&nbsp;₽</li>
               </ul>
-              <img class="svc-card__arrow" src="icons/svc-arrow.svg" width="33" height="33" alt="">
             </div>
           </div>
           <div class="svc-card__body">
@@ -233,7 +230,6 @@
             <p class="svc-card__desc">Тот же&nbsp;поиск по&nbsp;архивам без&nbsp;печатного издания: фотокопии документов с&nbsp;расшифровкой и&nbsp;поколенная роспись в&nbsp;подробном электронном отчёте.</p>
             <span class="svc-card__btn-mobile">Узнать подробнее</span>
           </div>
-          <span class="cursor-bubble" aria-hidden="true">Узнать подробнее</span>
         </a>
       </div>
     </section>
@@ -242,6 +238,37 @@
          слева карта — фото в контуре области и линии границ (img/about/sec-3-desktop.png), линии уходят под текст;
          справа у края — линии соседних областей (img/about/lines-right.png, только на компьютере).
          Весь текст — одной колонкой. На планшете и телефоне карта — под текстом (своя картинка) ============ -->
+    <!-- ============ О НАС — текстовый блок по макету Figma (plat-fam, узел 528:242): плашка «О нас» и два абзаца
+         крупным текстом (Manrope Medium 32px, первая фраза — красным). Прежний красный блок «О нас» с картой лежит
+         ниже в <template id="about-v1"> — на странице он не показывается ============ -->
+    <section class="intro-text container section" id="about" aria-labelledby="intro-text-title">
+      <div class="intro-text__body">
+        <h2 class="intro-text__lead" id="intro-text-title"><span class="intro-text__accent">«Древо Предков» проводит профессиональные генеалогические исследования.</span> Мы&nbsp;восстанавливаем историю рода по&nbsp;архивным документам и&nbsp;оформляем результат в&nbsp;родословное древо и&nbsp;семейную книгу.</h2>
+        <p class="h3 intro-text__sub">Мы&nbsp;работаем с&nbsp;первоисточниками. Находим архивные документы, расшифровываем старинные рукописи, в&nbsp;том числе XVI века, и&nbsp;сопоставляем сведения из&nbsp;разных источников. Так мы&nbsp;видим связи, которые не&nbsp;заметны с&nbsp;первого взгляда, и&nbsp;восстанавливаем родословную, в&nbsp;которой можно быть уверенным.</p>
+      </div>
+      <!-- «Почему нас выбирают?»: четыре красные карточки в ряд — заголовок 24px Regular, внизу основной текст -->
+      <div class="why-cards">
+        <ul class="why-cards__list" aria-label="Почему нас выбирают">
+          <li class="why-card">
+            <h3 class="why-card__title">Глубокий поиск</h3>
+            <p class="why-card__text">Мы&nbsp;не&nbsp;ограничиваемся тем, что&nbsp;лежит на&nbsp;поверхности, и&nbsp;идём вглубь веков, документ за&nbsp;документом.</p>
+          </li>
+          <li class="why-card">
+            <h3 class="why-card__title">Экспертная работа с&nbsp;источниками</h3>
+            <p class="why-card__text">Мы&nbsp;читаем дореволюционные документы и&nbsp;рукописи, которые без&nbsp;специальной подготовки разобрать почти невозможно.</p>
+          </li>
+          <li class="why-card">
+            <h3 class="why-card__title">История, а&nbsp;не&nbsp;список имён</h3>
+            <p class="why-card__text">Вы&nbsp;узнаете, кем были ваши предки, где&nbsp;они жили и&nbsp;чем занимались.</p>
+          </li>
+          <li class="why-card">
+            <h3 class="why-card__title">Индивидуальный подход</h3>
+            <p class="why-card__text">Каждое исследование мы&nbsp;выстраиваем вокруг вашей семьи: того, что&nbsp;уже известно, и&nbsp;того, что&nbsp;хочется узнать.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <template id="about-v1">
     <section class="russia section" id="about" aria-labelledby="russia-title">
       <div class="russia__decor" aria-hidden="true">
         <picture>
@@ -272,6 +299,7 @@
         </div>
       </div>
     </section>
+    </template>
 
     <!-- ============ НАПРАВЛЕНИЯ И УСЛУГИ ============ -->
     <!-- <section class="directions container section" id="directions" aria-labelledby="directions-title" hidden>
@@ -365,6 +393,66 @@
       </div>
     </section>
 
+    <!-- ============ БЛОГ ============ -->
+    <section class="blog container section" id="blog">
+      <div class="section-head">
+        <h2 class="h2">Блог о&nbsp;поиске предков</h2>
+        <a class="link-more" href="https://vk.ru/russiagenealogy" target="_blank" rel="noopener">Читать блог во&nbsp;ВКонтакте&nbsp;→</a>
+      </div>
+      <!-- Посты из группы ВК. Здесь — снимок последних постов на 28.09.2026:
+           его видно, когда сайт открыт как файл. На хостинге js/main.js заменяет
+           карточки свежими постами из api/vk-posts.php (последний пост — большая карточка,
+           следующие три — справа сверху вниз). -->
+      <div class="blog__grid scroller" data-vk-blog="api/vk-posts.php">
+        <article class="post post--main">
+          <img class="post__img" src="https://sun9-57.vkuserphoto.ru/s/v1/ig2/vi1DBRthe_U-Eu406gLm0ZncodinImf2RdQdP_9PGj3OyPxVohfhkEpY28KJeD5R9xbN90BLUhEDaSgGPvS2iVWW.jpg?quality=95&amp;as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960,1440x1080&amp;from=bu&amp;u=MSmhdUww6Kh-TCCy1Ifwu7X7OXn09U9IX2xeTPh0aKM&amp;cs=1280x0" alt="Илья Репин (1844-1930)" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='img/blog-main.jpg'">
+          <div class="post__body">
+            <div class="post__texts">
+              <h3 class="h4 post__title">Илья Репин (1844-1930)</h3>
+              <p class="post__desc">Родился в Чугуеве Харьковской губернии. Дед — Василий Ефимович Репин — неслуживый казак, владел постоялым двором и вёл торговлю. Умер в 1830-х годах. Отец — Ефим Васильевич Репин (1804-1894) после введения военных поселений в 1817 году получил статус &quot;военного поселянина&quot; (это звание считалось презренным среди чугуевцев-казаков). Занимался торговлей лошадьми — ежегодно ездил за 300 вёрст на Дон и пригонял табуны на…</p>
+            </div>
+            <a class="post__link" href="https://vk.com/wall-228395135_43" target="_blank" rel="noopener">Читать полностью →</a>
+            <span class="post__btn-mobile">Читать полностью <svg class="post__btn-icon" width="14" height="14" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0.707188 4.93705L5.14426 0.499972M5.14426 4.75956V0.499972H0.884672" stroke="currentColor" stroke-linecap="square" stroke-linejoin="round"/></svg></span>
+          </div>
+        </article>
+        <div class="blog__side">
+          <article class="post post--side">
+            <img class="post__img" src="https://sun9-69.vkuserphoto.ru/s/v1/ig2/Y83wlDrvDAXhMMU_mG9PfY61jc-lctqte6tW2oxXUb-gIvLJqyfv0q-Rb9XVL3dJK7wE7ivwzG76tDXUY0aJ8l7K.jpg?quality=95&amp;as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960&amp;from=bu&amp;u=DBxXhdE_h_3-DjdANFr7Sgux7iU9BUq6dSL_967d4kE&amp;cs=640x0" alt="Бор, Боровичи, Борок, Боровая, Боровня…" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='img/blog-1.jpg'">
+            <div class="post__body">
+              <div class="post__texts">
+                <h3 class="h4 post__title">Бор, Боровичи, Борок, Боровая, Боровня…</h3>
+                <p class="post__desc">Путешествуя по Новгородской области, можно встретить многочисленные населенные пункты, названия которых восходят к корню бор-. Если взглянуть на растительность в округе, часто интуитивно становится понятно, что эти названия – вариации на тему бора как соснового леса. И действительно, Новгородская область славится своими хвойными лесами: они занимают половину территории, а 28% этих лесов занимают именно сосны. Корень…</p>
+              </div>
+              <a class="post__link" href="https://vk.com/wall-228395135_42" target="_blank" rel="noopener">Читать полностью →</a>
+              <span class="post__btn-mobile">Читать полностью <svg class="post__btn-icon" width="14" height="14" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0.707188 4.93705L5.14426 0.499972M5.14426 4.75956V0.499972H0.884672" stroke="currentColor" stroke-linecap="square" stroke-linejoin="round"/></svg></span>
+            </div>
+          </article>
+          <article class="post post--side">
+            <img class="post__img" src="https://sun9-13.vkuserphoto.ru/s/v1/ig2/TPhrwy9MR9Lus3qjxW_uJn6TqqkPaYybKADGPD8QEbB53gL-CzmnXpfdkepqUJHa0PXphmEpMydofq89Kxh3ZwW8.jpg?quality=95&amp;as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960,1440x1080&amp;from=bu&amp;u=vhwEHnwDRJWmstTHI713038aU4GB949NU6roz5zqOYI&amp;cs=640x0" alt="Когда держишь в руках старинный документ, первое чувство — трепет. Метрическая книга XVIII века, ревизская сказка, исповедная ведомость… Бумага пожелтела, чернила выцвели, а буквы — ну точно пляшут как хотят. И возникает вопрос: как это вообще читать? Мы в проекте «Древо Предков» расшифровываем такие рукописи каждый день. И сегодня покажем вам несколько секретов, которые помогут самостоятельно разобрать текст XVIII–XIX века. Поехали!" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='img/blog-2.jpg'">
+            <div class="post__body">
+              <div class="post__texts">
+                <h3 class="h4 post__title">Когда держишь в руках старинный документ, первое чувство — трепет. Метрическая книга XVIII века, ревизская сказка, исповедная ведомость… Бумага пожелтела, чернила выцвели, а буквы — ну точно пляшут как хотят. И возникает вопрос: как это вообще читать? Мы в проекте «Древо Предков» расшифровываем такие рукописи каждый день. И сегодня покажем вам несколько секретов, которые помогут самостоятельно разобрать текст XVIII–XIX века. Поехали!</h3>
+                <p class="post__desc">Особенности почерков: от уставов до скорописи В XVIII–XIX веках почерки менялись. Если в XVII веке ещё встречался устав (буквы стояли ровно, как солдаты на параде), то позже в обиход вошла скоропись. Что это значит? — Буквы стали писаться слитно, с наклоном. — Появились выносные элементы — хвостики, завитки. — Одна и та же буква могла выглядеть по-разному.</p>
+              </div>
+              <a class="post__link" href="https://vk.com/wall-228395135_40" target="_blank" rel="noopener">Читать полностью →</a>
+              <span class="post__btn-mobile">Читать полностью <svg class="post__btn-icon" width="14" height="14" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0.707188 4.93705L5.14426 0.499972M5.14426 4.75956V0.499972H0.884672" stroke="currentColor" stroke-linecap="square" stroke-linejoin="round"/></svg></span>
+            </div>
+          </article>
+          <article class="post post--side">
+            <img class="post__img" src="https://sun9-23.vkuserphoto.ru/s/v1/ig2/YWb3jC3WW3fZ70lcfDXVkipRxDRTKxERm_Io78vdp7DJU8pCMaiEVVm5M_qMs9lwxqyMTyOw386jStXNfG2NsLfv.jpg?quality=95&amp;as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960,1440x1080&amp;from=bu&amp;u=yVFAjkIFJ0VKnxijMuq-SH07NiXx2-yMan15Vcvuvig&amp;cs=640x0" alt="Продолжаем изучать места, где жили наши предки." loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='img/blog-3.jpg'">
+            <div class="post__body">
+              <div class="post__texts">
+                <h3 class="h4 post__title">Продолжаем изучать места, где жили наши предки.</h3>
+                <p class="post__desc">А есть ли единая классификация топонимов? Их много, иногда они спорят между собой, поэтому мы не будем подробно останавливаться на громоздких классификациях лингвистов. На примере топонимов, образованных по природным признакам, а именно хвойного леса - бора, рассмотрим словообразование топонимов. Самый простой способ – прямой переход слова в топоним. Бывали в городке Бор, до которого можно добраться по канатной…</p>
+              </div>
+              <a class="post__link" href="https://vk.com/wall-228395135_39" target="_blank" rel="noopener">Читать полностью →</a>
+              <span class="post__btn-mobile">Читать полностью <svg class="post__btn-icon" width="14" height="14" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0.707188 4.93705L5.14426 0.499972M5.14426 4.75956V0.499972H0.884672" stroke="currentColor" stroke-linecap="square" stroke-linejoin="round"/></svg></span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ ОТЗЫВЫ ============ -->
     <section class="reviews container section" id="reviews">
       <div class="section-head">
@@ -403,73 +491,49 @@
       </div>
     </section>
 
-    <!-- ============ БЛОГ ============ -->
-    <section class="blog container section" id="blog">
-      <div class="section-head">
-        <h2 class="h2">Блог о&nbsp;поиске предков</h2>
-        <a class="link-more" href="https://vk.ru/russiagenealogy" target="_blank" rel="noopener">Читать блог во&nbsp;ВКонтакте&nbsp;→</a>
-      </div>
-      <!-- Посты из группы ВК. Здесь — снимок последних постов на 28.09.2026:
-           его видно, когда сайт открыт как файл. На хостинге js/main.js заменяет
-           карточки свежими постами из api/vk-posts.php (последний пост — большая карточка,
-           следующие три — справа сверху вниз). -->
-      <div class="blog__grid scroller" data-vk-blog="api/vk-posts.php">
-        <article class="post post--main has-cursor">
-          <img class="post__img" src="https://sun9-57.vkuserphoto.ru/s/v1/ig2/vi1DBRthe_U-Eu406gLm0ZncodinImf2RdQdP_9PGj3OyPxVohfhkEpY28KJeD5R9xbN90BLUhEDaSgGPvS2iVWW.jpg?quality=95&amp;as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960,1440x1080&amp;from=bu&amp;u=MSmhdUww6Kh-TCCy1Ifwu7X7OXn09U9IX2xeTPh0aKM&amp;cs=1280x0" alt="Илья Репин (1844-1930)" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='img/blog-main.jpg'">
-          <div class="post__body">
-            <div class="post__texts">
-              <h3 class="h4 post__title">Илья Репин (1844-1930)</h3>
-              <p class="post__desc">Родился в Чугуеве Харьковской губернии. Дед — Василий Ефимович Репин — неслуживый казак, владел постоялым двором и вёл торговлю. Умер в 1830-х годах. Отец — Ефим Васильевич Репин (1804-1894) после введения военных поселений в 1817 году получил статус &quot;военного поселянина&quot; (это звание считалось презренным среди чугуевцев-казаков). Занимался торговлей лошадьми — ежегодно ездил за 300 вёрст на Дон и пригонял табуны на…</p>
-            </div>
-            <a class="post__link" href="https://vk.com/wall-228395135_43" target="_blank" rel="noopener">Читать полностью →</a>
-            <span class="post__btn-mobile">Читать полностью <svg class="post__btn-icon" width="14" height="14" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0.707188 4.93705L5.14426 0.499972M5.14426 4.75956V0.499972H0.884672" stroke="currentColor" stroke-linecap="square" stroke-linejoin="round"/></svg></span>
-          </div>
-          <span class="cursor-bubble" aria-hidden="true">Читать полностью</span>
-        </article>
-        <div class="blog__side">
-          <article class="post post--side has-cursor">
-            <img class="post__img" src="https://sun9-69.vkuserphoto.ru/s/v1/ig2/Y83wlDrvDAXhMMU_mG9PfY61jc-lctqte6tW2oxXUb-gIvLJqyfv0q-Rb9XVL3dJK7wE7ivwzG76tDXUY0aJ8l7K.jpg?quality=95&amp;as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960&amp;from=bu&amp;u=DBxXhdE_h_3-DjdANFr7Sgux7iU9BUq6dSL_967d4kE&amp;cs=640x0" alt="Бор, Боровичи, Борок, Боровая, Боровня…" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='img/blog-1.jpg'">
-            <div class="post__body">
-              <div class="post__texts">
-                <h3 class="h4 post__title">Бор, Боровичи, Борок, Боровая, Боровня…</h3>
-                <p class="post__desc">Путешествуя по Новгородской области, можно встретить многочисленные населенные пункты, названия которых восходят к корню бор-. Если взглянуть на растительность в округе, часто интуитивно становится понятно, что эти названия – вариации на тему бора как соснового леса. И действительно, Новгородская область славится своими хвойными лесами: они занимают половину территории, а 28% этих лесов занимают именно сосны. Корень…</p>
-              </div>
-              <a class="post__link" href="https://vk.com/wall-228395135_42" target="_blank" rel="noopener">Читать полностью →</a>
-              <span class="post__btn-mobile">Читать полностью <svg class="post__btn-icon" width="14" height="14" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0.707188 4.93705L5.14426 0.499972M5.14426 4.75956V0.499972H0.884672" stroke="currentColor" stroke-linecap="square" stroke-linejoin="round"/></svg></span>
-            </div>
-            <span class="cursor-bubble" aria-hidden="true">Читать полностью</span>
-          </article>
-          <article class="post post--side has-cursor">
-            <img class="post__img" src="https://sun9-13.vkuserphoto.ru/s/v1/ig2/TPhrwy9MR9Lus3qjxW_uJn6TqqkPaYybKADGPD8QEbB53gL-CzmnXpfdkepqUJHa0PXphmEpMydofq89Kxh3ZwW8.jpg?quality=95&amp;as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960,1440x1080&amp;from=bu&amp;u=vhwEHnwDRJWmstTHI713038aU4GB949NU6roz5zqOYI&amp;cs=640x0" alt="Когда держишь в руках старинный документ, первое чувство — трепет. Метрическая книга XVIII века, ревизская сказка, исповедная ведомость… Бумага пожелтела, чернила выцвели, а буквы — ну точно пляшут как хотят. И возникает вопрос: как это вообще читать? Мы в проекте «Древо Предков» расшифровываем такие рукописи каждый день. И сегодня покажем вам несколько секретов, которые помогут самостоятельно разобрать текст XVIII–XIX века. Поехали!" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='img/blog-2.jpg'">
-            <div class="post__body">
-              <div class="post__texts">
-                <h3 class="h4 post__title">Когда держишь в руках старинный документ, первое чувство — трепет. Метрическая книга XVIII века, ревизская сказка, исповедная ведомость… Бумага пожелтела, чернила выцвели, а буквы — ну точно пляшут как хотят. И возникает вопрос: как это вообще читать? Мы в проекте «Древо Предков» расшифровываем такие рукописи каждый день. И сегодня покажем вам несколько секретов, которые помогут самостоятельно разобрать текст XVIII–XIX века. Поехали!</h3>
-                <p class="post__desc">Особенности почерков: от уставов до скорописи В XVIII–XIX веках почерки менялись. Если в XVII веке ещё встречался устав (буквы стояли ровно, как солдаты на параде), то позже в обиход вошла скоропись. Что это значит? — Буквы стали писаться слитно, с наклоном. — Появились выносные элементы — хвостики, завитки. — Одна и та же буква могла выглядеть по-разному.</p>
-              </div>
-              <a class="post__link" href="https://vk.com/wall-228395135_40" target="_blank" rel="noopener">Читать полностью →</a>
-              <span class="post__btn-mobile">Читать полностью <svg class="post__btn-icon" width="14" height="14" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0.707188 4.93705L5.14426 0.499972M5.14426 4.75956V0.499972H0.884672" stroke="currentColor" stroke-linecap="square" stroke-linejoin="round"/></svg></span>
-            </div>
-            <span class="cursor-bubble" aria-hidden="true">Читать полностью</span>
-          </article>
-          <article class="post post--side has-cursor">
-            <img class="post__img" src="https://sun9-23.vkuserphoto.ru/s/v1/ig2/YWb3jC3WW3fZ70lcfDXVkipRxDRTKxERm_Io78vdp7DJU8pCMaiEVVm5M_qMs9lwxqyMTyOw386jStXNfG2NsLfv.jpg?quality=95&amp;as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960,1440x1080&amp;from=bu&amp;u=yVFAjkIFJ0VKnxijMuq-SH07NiXx2-yMan15Vcvuvig&amp;cs=640x0" alt="Продолжаем изучать места, где жили наши предки." loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='img/blog-3.jpg'">
-            <div class="post__body">
-              <div class="post__texts">
-                <h3 class="h4 post__title">Продолжаем изучать места, где жили наши предки.</h3>
-                <p class="post__desc">А есть ли единая классификация топонимов? Их много, иногда они спорят между собой, поэтому мы не будем подробно останавливаться на громоздких классификациях лингвистов. На примере топонимов, образованных по природным признакам, а именно хвойного леса - бора, рассмотрим словообразование топонимов. Самый простой способ – прямой переход слова в топоним. Бывали в городке Бор, до которого можно добраться по канатной…</p>
-              </div>
-              <a class="post__link" href="https://vk.com/wall-228395135_39" target="_blank" rel="noopener">Читать полностью →</a>
-              <span class="post__btn-mobile">Читать полностью <svg class="post__btn-icon" width="14" height="14" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0.707188 4.93705L5.14426 0.499972M5.14426 4.75956V0.499972H0.884672" stroke="currentColor" stroke-linecap="square" stroke-linejoin="round"/></svg></span>
-            </div>
-            <span class="cursor-bubble" aria-hidden="true">Читать полностью</span>
-          </article>
-        </div>
-      </div>
-    </section>
-
   
 
     <!-- ============ КОНТАКТЫ ============ -->
+    <!-- ============ ЗАЯВКА: красный блок; слева светлая карточка — заголовок, текст, плашки, поля с подписями, которые при вводе
+         поднимаются вверх; справа — мессенджеры, сверху справа — декоративная кривая (img/lead-curve.png) ============ -->
+    <section class="lead container section" id="contact" aria-labelledby="lead-title">
+    <div class="lead__inner">
+      <img class="lead__map" src="img/lead-map.png" width="965" height="936" alt="" aria-hidden="true" loading="lazy" decoding="async">
+      <form class="lead__card" action="#" method="post" novalidate>
+        <div class="lead__head">
+          <h2 class="lead__title" id="lead-title">Начните с&nbsp;бесплатной консультации</h2>
+          <p>Расскажите, что&nbsp;уже известно о&nbsp;вашей семье,&nbsp;— подскажем, с&nbsp;чего начать поиск и&nbsp;какой формат подойдёт.</p>
+        </div>
+        <ul class="lead__chips" aria-label="Условия консультации">
+          <li>Онлайн</li>
+          <li>Бесплатно</li>
+          <li>С&nbsp;конкретными рекомендациями</li>
+        </ul>
+        <div class="lead__fields">
+          <div class="field">
+            <input class="field__input" id="lead-name" name="name" type="text" autocomplete="name" placeholder=" ">
+            <label class="field__label" for="lead-name">Ваше имя</label>
+          </div>
+          <div class="field">
+            <input class="field__input" id="lead-contact" name="contact" type="text" autocomplete="tel" placeholder=" " required>
+            <label class="field__label" for="lead-contact">Телефон или&nbsp;ник в&nbsp;мессенджере*</label>
+          </div>
+          <div class="field field--area">
+            <textarea class="field__input" id="lead-ancestors" name="ancestors" placeholder=" "></textarea>
+            <label class="field__label" for="lead-ancestors">Что известно о&nbsp;предках</label>
+          </div>
+        </div>
+        <label class="check lead__agree">
+          <input type="checkbox" name="agree" required>
+          <span>Нажимая «Отправить заявку», вы&nbsp;даёте согласие на&nbsp;обработку персональных данных и&nbsp;соглашаетесь с&nbsp;<a href="politika_personalnye_dannye_genealogiya.html">политикой конфиденциальности</a>.</span>
+        </label>
+        <button class="btn lead__submit" type="submit">Отправить заявку</button>
+        <p class="lead__note" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+    </section>
+    <!-- прежний вариант формы (до 09.10): чтобы вернуть, замените блок выше содержимым этого шаблона — на странице он не показывается -->
+    <template id="contact-v1">
     <section class="contact container section" id="contact">
       <div class="contact__inner">
         <div class="contact__info">
@@ -491,7 +555,7 @@
             <textarea class="input input--area" id="ancestors-field" name="ancestors" placeholder="Что известно о предках (необязательно): имена, фамилии, места проживания"></textarea>
             <label class="check">
               <input type="checkbox" name="agree" required>
-              <span>Отправляя форму я&nbsp;принимаю <a href="politika_personalnye_dannye_genealogiya.html" target="_blank" rel="noopener">политику конфиденциальности</a></span>
+              <span>Отправляя форму я&nbsp;принимаю <a href="politika_personalnye_dannye_genealogiya.html">политику конфиденциальности</a></span>
             </label>
           </div>
           <button class="btn form__submit" type="submit">Отправить</button>
@@ -499,6 +563,7 @@
         </form>
       </div>
     </section>
+    </template>
 
     <!-- ============ ДРЕВО — при прокрутке голые ветви «заливаются» листвой с неровным, чернильным краем ============ -->
     <section class="inkswap container section" aria-label="Древо рода" hidden>
@@ -527,7 +592,7 @@
   </main>
 
   <!-- ============ FOOTER: соцсети в подвале главной — только на телефоне (на большом экране они в блоке с формой) ============ -->
-  <footer class="footer">
+  <footer class="footer footer--socials">
     <div class="footer__inner">
       <a class="footer__logo" href="#top" aria-label="Древо предков — наверх">
         <img src="img/logo.svg" width="33" height="37" alt="">

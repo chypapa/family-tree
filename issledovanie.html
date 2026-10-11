@@ -140,8 +140,9 @@
       </div>
     </section>
 
-    <!-- ============ ЭТАПЫ РАБОТЫ: на компьютере карточки в ряд по ширине контента, на планшете и телефоне — лента ============ -->
-    <section class="stages stages--grid stages--green container section" aria-labelledby="stages-title">
+    <!-- ============ ЭТАПЫ РАБОТЫ: лента, карточки шириной с карточку отзыва (на компьютере 4 колонки из 12); листается вбок ============ -->
+    <section class="stages container section" aria-labelledby="stages-title">
+      <span class="cursor-bubble stages__bubble" data-back="← Назад" aria-hidden="true">Вперёд →</span>
       <div class="stages__pin">
       <div class="section-head">
         <h2 class="h2" id="stages-title">Этапы работы</h2>
@@ -296,7 +297,42 @@
      Открывается кнопкой «Получить консультацию» в шапке и в мобильном меню и ссылкой «Можете связаться с нами» (атрибут data-consult).
      Страница под окном затемнена на 20% и размыта, как под мобильным меню. Закрывается крестиком, кликом мимо окна и клавишей Esc ============ -->
 <div class="overlay consult-modal" id="consult-modal" role="dialog" aria-modal="true" aria-labelledby="consult-title" hidden>
-  <div class="consult-modal__box" data-lenis-prevent>
+  <div class="consult-modal__box lead lead--modal" data-lenis-prevent>
+    <div class="lead__inner">
+      <form class="lead__card" action="#" method="post" novalidate>
+        <div class="lead__head">
+          <h2 class="lead__title" id="consult-title">Начните с&nbsp;бесплатной консультации</h2>
+          <p>Расскажите, что&nbsp;уже известно о&nbsp;вашей семье,&nbsp;— подскажем, с&nbsp;чего начать поиск и&nbsp;какой формат подойдёт.</p>
+        </div>
+        <ul class="lead__chips" aria-label="Условия консультации">
+          <li>Онлайн</li>
+          <li>Бесплатно</li>
+          <li>С&nbsp;конкретными рекомендациями</li>
+        </ul>
+        <div class="lead__fields">
+          <div class="field">
+            <input class="field__input" id="consult-name" name="name" type="text" autocomplete="name" placeholder=" ">
+            <label class="field__label" for="consult-name">Ваше имя</label>
+          </div>
+          <div class="field">
+            <input class="field__input" id="consult-contact" name="contact" type="text" autocomplete="tel" placeholder=" " required>
+            <label class="field__label" for="consult-contact">Телефон или&nbsp;ник в&nbsp;мессенджере*</label>
+          </div>
+          <div class="field field--area">
+            <textarea class="field__input" id="consult-ancestors" name="ancestors" placeholder=" "></textarea>
+            <label class="field__label" for="consult-ancestors">Что известно о&nbsp;предках</label>
+          </div>
+        </div>
+        <label class="check lead__agree">
+          <input type="checkbox" name="agree" required>
+          <span>Нажимая «Отправить заявку», вы&nbsp;даёте согласие на&nbsp;обработку персональных данных и&nbsp;соглашаетесь с&nbsp;<a href="politika_personalnye_dannye_genealogiya.html">политикой конфиденциальности</a>.</span>
+        </label>
+        <button class="btn lead__submit" type="submit">Отправить заявку</button>
+        <p class="lead__note" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+    <!-- прежний вариант формы (до 09.10): чтобы вернуть, замените блок выше содержимым этого шаблона — на странице он не показывается -->
+    <template id="contact-v1">
     <div class="contact__inner">
       <div class="contact__info">
         <h2 class="h2 contact__title" id="consult-title">Начните с&nbsp;бесплатной консультации</h2>
@@ -317,13 +353,14 @@
           <textarea class="input input--area" id="consult-ancestors" name="ancestors" placeholder="Что известно о предках (необязательно): имена, фамилии, места проживания"></textarea>
           <label class="check">
             <input type="checkbox" name="agree" required>
-            <span>Отправляя форму я&nbsp;принимаю <a href="politika_personalnye_dannye_genealogiya.html" target="_blank" rel="noopener">политику конфиденциальности</a></span>
+            <span>Отправляя форму я&nbsp;принимаю <a href="politika_personalnye_dannye_genealogiya.html">политику конфиденциальности</a></span>
           </label>
         </div>
         <button class="btn form__submit" type="submit">Отправить</button>
         <p class="form__note" role="status" aria-live="polite"></p>
       </form>
     </div>
+    </template>
     <button class="overlay__close" type="button" aria-label="Закрыть"></button>
   </div>
 </div>

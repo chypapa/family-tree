@@ -127,6 +127,16 @@
     }
   })();
 
+  /* ---------- Политика конфиденциальности открывается в той же вкладке: «← Назад» возвращает на страницу,
+     с которой пришли (например, к форме), а если пришли не с сайта — на главную (адрес в href) ---------- */
+  var policyBack = document.querySelector('.policy__back');
+  if (policyBack) {
+    policyBack.addEventListener('click', function (e) {
+      var ref = document.referrer;
+      if (ref && ref.indexOf(location.origin) === 0 && history.length > 1) { e.preventDefault(); history.back(); }
+    });
+  }
+
   /* ---------- Шапка без заливки над первым экраном; при прокрутке заливка появляется.
      Прокрутка вниз — шапка уезжает вверх за край окна, прокрутка вверх — возвращается.
      Первый экран при прокрутке: фото чуть приближается, текст уходит вверх и гаснет ---------- */
@@ -140,8 +150,13 @@
       topTicking = false;
       var y = window.scrollY;
       topHeader.classList.toggle('is-top', !!opening && y <= 40);
-      // в самом верху и при открытом меню шапка всегда видна; мелкие подёргивания (до 6px) не считаем
-      if (y <= 120 || document.documentElement.classList.contains('is-menu-open')) {
+      // в самом верху, при открытом меню и пока идёт заставка шапка всегда видна; мелкие подёргивания (до 6px) не считаем.
+      // Заставка: знак сидит в шапке — если шапка уедет (страница открыта по ссылке на блок, например «О нас»,
+      // и прокручивается к нему), знак уедет вместе с ней и встанет выше названия
+      var rootCls = document.documentElement.classList;
+      var introRunning = rootCls.contains('is-intro') && !rootCls.contains('is-intro-done');
+      // на телефоне и планшете (бургер-меню) шапка не прячется при прокрутке
+      if (y <= 120 || rootCls.contains('is-menu-open') || introRunning || window.innerWidth < 1024) {
         topHeader.classList.remove('is-hidden');
         lastY = y;
       } else if (Math.abs(y - lastY) > 6) {
@@ -300,30 +315,6 @@
       if (focusCard.classList.contains('is-focus')) aim();
     }, { passive: true });
   });
-
-  /* ---------- Карточки-ссылки (.has-cursor: услуги и первый блог): курсор над карточкой — красный круг ---------- */
-  // только для мыши: на телефоне круга нет, карточка — обычная ссылка
-  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    document.querySelectorAll('.has-cursor').forEach(function (card) {
-      var lastX = 0, lastY = 0;
-      var put = function () {
-        var r = card.getBoundingClientRect();
-        card.style.setProperty('--cx', (lastX - r.left).toFixed(1) + 'px');
-        card.style.setProperty('--cy', (lastY - r.top).toFixed(1) + 'px');
-      };
-      var onMove = function (e) { lastX = e.clientX; lastY = e.clientY; put(); };
-      card.addEventListener('pointerenter', function (e) {
-        onMove(e);                                // круг появляется в точке входа и плавно вырастает
-        card.classList.add('is-cursor');
-      });
-      card.addEventListener('pointermove', onMove);
-      card.addEventListener('pointerleave', function () { card.classList.remove('is-cursor'); });
-      // страницу прокрутили, а мышь стоит на месте — круг остаётся под курсором
-      window.addEventListener('scroll', function () {
-        if (card.classList.contains('is-cursor')) put();
-      }, { passive: true });
-    });
-  }
 
   /* ---------- Древо: при прокрутке листва «заливает» голые ветви сверху вниз, край неровный, как чернила ---------- */
   var ink = document.querySelector('.inkswap__frame');
@@ -492,10 +483,23 @@
     if (!strip || !bubble || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
     var x = 0, y = 0, over = false, dir = 0, raf = 0, last = 0;
     var SPEED = 0.9;                                    // px за мс (~900 px/с)
-    var fwdText = bubble.textContent.trim() || 'Листать вперёд';
-    var backText = bubble.getAttribute('data-back') || 'Листать назад';
+    var fwdText = bubble.textContent.trim() || 'Вперёд →';
+    var backText = bubble.getAttribute('data-back') || '← Назад';
 
+    // все карточки поместились (свиток на компьютере) — листать некуда: обычный курсор, круга нет
+    var canScroll = function () { return strip.scrollWidth - strip.clientWidth > 1; };
+    var sync = function () {
+      var can = canScroll();
+      section.classList.toggle('is-scrollable', can);
+      if (!can) { section.classList.remove('is-cursor'); dir = 0; }
+      return can;
+    };
+    sync();
+    window.addEventListener('resize', sync);
+    window.addEventListener('load', sync);
     var state = function () {
+      if (!sync()) return;
+      if (over) section.classList.add('is-cursor');
       var max = strip.scrollWidth - strip.clientWidth;
       var atStart = strip.scrollLeft <= 1, atEnd = strip.scrollLeft >= max - 1;
       var third = window.innerWidth / 3;
@@ -518,7 +522,7 @@
       section.style.setProperty('--cx', (x - r.left).toFixed(1) + 'px');
       section.style.setProperty('--cy', (y - r.top).toFixed(1) + 'px');
     };
-    strip.addEventListener('pointerenter', function (e) { over = true; x = e.clientX; y = e.clientY; place(); section.classList.add('is-cursor'); state(); });
+    strip.addEventListener('pointerenter', function (e) { over = true; x = e.clientX; y = e.clientY; place(); state(); });
     strip.addEventListener('pointermove', function (e) { x = e.clientX; y = e.clientY; place(); state(); });
     strip.addEventListener('pointerleave', function () { over = false; dir = 0; section.classList.remove('is-cursor'); });
     strip.addEventListener('scroll', function () { if (over) state(); }, { passive: true });
@@ -662,29 +666,27 @@
     });
   }
 
-  /* ---------- Форма (последний блок главной и окно «Получить консультацию») ---------- */
-  document.querySelectorAll('.form').forEach(function (form) {
+  /* ---------- Формы заявки (блок «Заявка» и окно «Получить консультацию»; прежний вариант .form — тоже) ---------- */
+  document.querySelectorAll('.lead__card, .form').forEach(function (form) {
+    var name = form.querySelector('[name="name"]');
     var contact = form.querySelector('[name="contact"]');
-    var agree = form.querySelector('[name="agree"]');
-    var note = form.querySelector('.form__note');
+    var agree = form.querySelector('[name="agree"]');               // галочка была в прежней форме; в новой — текст согласия
+    var note = form.querySelector('.lead__note, .form__note');
+    if (!contact || !note) return;
 
-    [contact, agree].forEach(function (el) {
+    [name, contact, agree].forEach(function (el) {
+      if (!el) return;
       el.addEventListener('input', function () { el.classList.remove('is-invalid'); });
       el.addEventListener('change', function () { el.classList.remove('is-invalid'); });
     });
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var ok = true;
-      if (!contact.value.trim()) { contact.classList.add('is-invalid'); ok = false; }
-      if (!agree.checked) { agree.classList.add('is-invalid'); ok = false; }
-
-      if (!ok) {
-        note.textContent = !contact.value.trim()
-          ? 'Укажите телефон, почту или мессенджер.'
-          : 'Подтвердите согласие с политикой конфиденциальности.';
-        return;
-      }
+      var msg = '';
+      if (agree && !agree.checked) { agree.classList.add('is-invalid'); msg = 'Подтвердите согласие с политикой конфиденциальности.'; }
+      if (!contact.value.trim()) { contact.classList.add('is-invalid'); msg = 'Укажите телефон, почту или ник в мессенджере.'; }
+      if (name && name.required && !name.value.trim()) { name.classList.add('is-invalid'); msg = 'Напишите, как к вам обращаться.'; }
+      if (msg) { note.textContent = msg; return; }
 
       // Здесь подключается отправка на сервер (fetch / CRM / почта).
       note.textContent = 'Спасибо! Мы свяжемся с вами в ближайшее время.';
