@@ -101,21 +101,90 @@
 
   <main id="top">
 
-    <!-- ============ ПЕРВЫЙ ЭКРАН — по макету Figma (plat-fam, узел 181:732): фото на 90% высоты окна, нижние углы скруглены,
-         затемнение-градиент снизу, заголовок и текст поверх ============ -->
-    <section class="opening opening--kniga" aria-labelledby="opening-title">
+    <!-- ============ ШАПКА СТРАНИЦЫ — по макету Figma (plat-fam, узел 690:550): невысокий баннер с фото,
+         затемнение слева снизу, название услуги Cormorant ============ -->
+    <section class="opening opening--kniga opening--banner" aria-labelledby="opening-title">
       <div class="opening__media" aria-hidden="true">
-        <img class="opening__img" src="img/kniga-hero.jpg" srcset="img/kniga-hero-960.jpg 960w, img/kniga-hero.jpg 2000w" sizes="100vw" width="2000" height="1333" alt="" fetchpriority="high" decoding="async">
+        <img class="opening__img" src="img/kniga2/banner.jpg" srcset="img/kniga2/banner-960.jpg 960w, img/kniga2/banner.jpg 2000w" sizes="100vw" width="2000" height="1116" alt="" fetchpriority="high" decoding="async">
       </div>
       <div class="opening__content">
-        <h1 class="opening__title" id="opening-title">
-          <span class="line"><span>Родословная книга</span></span>
-          <span class="line"><span>вашей семьи</span></span>
-        </h1>
-        <p class="opening__text">Глубокое генеалогическое исследование: находим документы о&nbsp;ваших предках в&nbsp;архивах, изучаем и&nbsp;расшифровываем их, а&nbsp;затем оформляем всё найденное в&nbsp;книгу и&nbsp;родословное древо&nbsp;— на&nbsp;долгую память.</p>
+        <h1 class="opening__title" id="opening-title"><span class="line"><span>Родословная книга</span></span></h1>
       </div>
     </section>
 
+    <!-- ============ О КНИГЕ — две колонки, как блок «О проекте» на главной: слева крупный текст и кнопка, справа «Как создаётся книга» ============ -->
+    <section class="about2 about2--book container section" aria-labelledby="book-intro-title">
+      <div class="about2__intro">
+        <h2 class="book-lead" id="book-intro-title"><em>Родословная книга&nbsp;— это история вашего рода, рассказанная живым языком.</em> Когда исследование завершено и&nbsp;имена предков найдены, мы&nbsp;превращаем архивные записи в&nbsp;повествование о&nbsp;людях, их&nbsp;судьбах и&nbsp;времени, в&nbsp;котором они жили.</h2>
+        <a class="btn btn--pill" href="index.html#contact" data-consult>Заказать книгу</a>
+      </div>
+      <div class="about2__how">
+        <h3 class="about2__subtitle">Как создаётся книга</h3>
+        <ul class="about2__list">
+          <li>Всё начинается с&nbsp;исследования. Мы&nbsp;находим ваших предков в&nbsp;метрических книгах, ревизских сказках и&nbsp;переписях, восстанавливаем имена, даты и&nbsp;родственные связи. Каждое поколение в&nbsp;книге подтверждено документами&nbsp;— это не&nbsp;легенда, а&nbsp;история, на&nbsp;которую можно опереться.</li>
+          <li>Затем мы&nbsp;пишем текст. Не&nbsp;сухой перечень дат, а&nbsp;живой рассказ: где стоял дом вашей семьи, чем занимались прадеды, как большие события эпохи отзывались в&nbsp;судьбе каждого из&nbsp;них. Мы&nbsp;бережно сохраняем точность документа, но&nbsp;рассказываем так, чтобы книгу хотелось читать вслух и&nbsp;перечитывать.</li>
+          <li>Книга готовится в&nbsp;электронном виде: её&nbsp;удобно читать с&nbsp;телефона, пересылать родным и&nbsp;хранить. А&nbsp;если хочется держать историю семьи в&nbsp;руках, напечатаем её&nbsp;в&nbsp;типографии&nbsp;— в&nbsp;твёрдом переплёте, с&nbsp;архивными фотографиями и&nbsp;копиями документов. Печатное издание выполняется по&nbsp;предоплате.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ ПРИМЕРЫ: два фото рядом, под первым — подпись ============ -->
+    <section class="gallery gallery--pair container section" aria-label="Примеры родословных книг">
+      <div class="gallery__grid">
+        <figure class="gallery__item">
+          <img src="img/kniga2/gallery-cover.webp" width="1778" height="956" alt="Родословная книга «Ваша уникальная история в одной книге» с фамильным знаком на обложке" loading="lazy" decoding="async">
+          <figcaption class="gallery__note">*&nbsp;Примеры выполненных работ. Дизайн каждой книги создаётся индивидуально.</figcaption>
+        </figure>
+        <figure class="gallery__item">
+          <img src="img/kniga2/gallery-spread.webp" width="1786" height="962" alt="Раскрытая родословная книга в руках: рассказ о роде и старинная азбука" loading="lazy" decoding="async">
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ ПОЧЕМУ МЫ: слева фото-карточка «Почему мы?», справа четыре белые карточки (2 × 2) ============ -->
+    <section class="why2 container section" aria-labelledby="why2-title">
+      <div class="why2__photo">
+        <img class="why2__img" src="img/kniga2/why.webp" width="1024" height="682" alt="" loading="lazy" decoding="async">
+        <img class="why2__logo" src="img/kniga2/logo-white.png" width="97" height="117" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        <div class="why2__caption">
+          <h2 class="h2 why2__title" id="why2-title">Почему мы?</h2>
+          <p>Ваша история&nbsp;— в&nbsp;надёжных руках профессионалов</p>
+        </div>
+      </div>
+      <ul class="why2__cards">
+        <li class="why2__card"><h3 class="h3">Глубокий поиск</h3><p>Мы&nbsp;не&nbsp;ограничиваемся тем, что&nbsp;лежит на&nbsp;поверхности, и&nbsp;идём вглубь веков, документ за&nbsp;документом.</p></li>
+        <li class="why2__card"><h3 class="h3">Экспертная работа с&nbsp;источниками</h3><p>Мы&nbsp;читаем дореволюционные документы и&nbsp;рукописи, которые без&nbsp;специальной подготовки разобрать почти невозможно.</p></li>
+        <li class="why2__card"><h3 class="h3">История, а&nbsp;не&nbsp;список имён</h3><p>Вы&nbsp;узнаете, кем были ваши предки, где&nbsp;они жили и&nbsp;чем занимались.</p></li>
+        <li class="why2__card"><h3 class="h3">Индивидуальный подход</h3><p>Каждое исследование мы&nbsp;выстраиваем вокруг вашей семьи: того, что&nbsp;уже известно, и&nbsp;того, что&nbsp;хочется узнать.</p></li>
+      </ul>
+    </section>
+
+    <!-- ============ ОТЗЫВЫ: слева заголовок, справа две карточки с текстом и видеоотзыв (по ▶ видео открывается поверх страницы, js/main.js) ============ -->
+    <section class="voices voices--side container section" aria-labelledby="voices-title">
+      <h2 class="h2 voices__heading" id="voices-title">Наши заказчики советуют сотрудничество с&nbsp;нами</h2>
+      <div class="voices__grid">
+        <article class="voice">
+          <p class="voice__author"><img src="img/kniga2/avatar.svg" width="39" height="39" alt="">Юлия, Москва</p>
+          <p class="voice__text">Работа была выполнена очень быстро, но&nbsp;в&nbsp;процессе поисков я&nbsp;узнала, что информация мне уже неактуальна и&nbsp;написала об&nbsp;этом Глебу. Даже несмотря на&nbsp;это! Глеб все равно выслал мне документ, который удалось найти, за&nbsp;что я&nbsp;ему безумно благодарна. Всегда был на&nbsp;связи и&nbsp;по&nbsp;максимуму отвечал на&nbsp;все вопросы. Обязательно посоветую друзьям и&nbsp;знакомым.</p>
+        </article>
+        <article class="voice">
+          <p class="voice__author"><img src="img/kniga2/avatar.svg" width="39" height="39" alt="">Наталья, Рязань</p>
+          <p class="voice__text">Спасибо за&nbsp;проделанную работу!! Генеалогическое древо очень понравилось!! Юбиляр прослезился, получив такой подарок!! В&nbsp;процессе работы замучала правками, спасибо за&nbsp;терпение!!</p>
+        </article>
+        <article class="voice voice--video">
+          <div class="voice__video">
+            <video class="voice__player" preload="none" poster="img/review-video-poster.jpg" playsinline>
+              <source src="video/review-valentina.mp4" type="video/mp4">
+            </video>
+            <button class="voice__play" type="button" aria-label="Смотреть видеоотзыв Валентины"></button>
+          </div>
+          <p class="voice__author"><img src="img/kniga2/avatar.svg" width="39" height="39" alt="">Валентина, Рязань</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- прежние блоки страницы («Об услуге», «Этапы работы») — не показываются, лежат здесь на случай возврата -->
+    <template id="kniga-v2-blocks">
     <!-- ============ ОБ УСЛУГЕ: две колонки — «почему» и «для кого» ============ -->
     <section class="about-svc container section" aria-labelledby="about-svc-title">
       <h2 class="about-svc__chip" id="about-svc-title">Об&nbsp;услуге</h2>
@@ -138,15 +207,6 @@
           </ul>
         </div>
       </div>
-    </section>
-
-    <!-- ============ ПРИМЕРЫ РАБОТ: два фото, под ними подпись ============ -->
-    <section class="gallery container section" aria-label="Примеры родословных книг">
-      <div class="gallery__grid">
-        <img src="img/kniga-why.jpg" width="1200" height="1200" alt="Родословная книга «Ваша уникальная история в одной книге» в руках" loading="lazy" decoding="async">
-        <img src="img/kniga-example.jpg" width="1116" height="1116" alt="Родословная книга, раскрытая в подарочной коробке: страница о рождении предка с метрической записью" loading="lazy" decoding="async">
-      </div>
-      <p class="gallery__note">*Примеры выполненных работ. Дизайн каждой книги обсуждается и&nbsp;создаётся индивидуально.</p>
     </section>
 
     <!-- ============ ЭТАПЫ РАБОТЫ: лента, карточки шириной с карточку отзыва (на компьютере 4 колонки из 12); листается вбок ============ -->
@@ -203,45 +263,18 @@
       </div>
     </section>
 
-    <!-- ============ ОТЗЫВЫ: всегда в один ряд — на большом экране три карточки по 4 колонки из 12, на планшете и телефоне
-         лента, которую листают пальцем. Карточки одной высоты: имя и кавычки сверху, текст по центру; в первой — видеоотзыв: по ▶ он открывается поверх
-         страницы почти на весь экран (окно .video-modal внизу страницы, js/main.js).
-         Видео: video/review-valentina.mp4 (обложка до запуска — img/review-video-poster.jpg) ============ -->
-    <section class="voices container section" aria-labelledby="voices-title">
-      <h2 class="h2 voices__heading" id="voices-title">Отзывы наших клиентов</h2>
-      <div class="voices__grid">
-        <article class="voice">
-          <p class="voice__text">Работа сделана очень быстро, качественно, по&nbsp;приятной цене, вежливый и&nbsp;честный человек, приятно с&nbsp;такими сотрудничать. Максимально довольна результатом, спасибо большое!!!</p>
-          <div class="voice__video">
-            <video class="voice__player" preload="none" poster="img/review-video-poster.jpg" playsinline>
-              <source src="video/review-valentina.mp4" type="video/mp4">
-            </video>
-            <button class="voice__play" type="button" aria-label="Смотреть видеоотзыв Валентины"></button>
-          </div>
-          <p class="voice__author"><img src="img/person.svg" width="22" height="22" alt="">Валентина, Рязань</p>
-        </article>
-        <article class="voice">
-          <p class="voice__text">Работа была выполнена очень быстро, но&nbsp;в&nbsp;процессе поисков я&nbsp;узнала, что информация мне уже неактуальна и&nbsp;написала об&nbsp;этом Глебу. Даже несмотря на&nbsp;это! Глеб все равно выслал мне документ, который удалось найти, за&nbsp;что я&nbsp;ему безумно благодарна. Всегда был на&nbsp;связи и&nbsp;по&nbsp;максимуму отвечал на&nbsp;все вопросы. Обязательно посоветую друзьям и&nbsp;знакомым.</p>
-          <p class="voice__author"><img src="img/person.svg" width="22" height="22" alt="">Юлия, Москва</p>
-        </article>
-        <article class="voice">
-          <p class="voice__text">Спасибо за&nbsp;проделанную работу!! Генеалогическое древо очень понравилось!! Юбиляр прослезился получив такой подарок!! В&nbsp;процессе работы замучала правками, спасибо за&nbsp;терпение!!</p>
-          <p class="voice__author"><img src="img/person.svg" width="22" height="22" alt="">Наталья, Рязань</p>
-        </article>
-      </div>
-    </section>
+    </template>
 
     <!-- ============ КАЛЬКУЛЯТОР: заголовок и текст по центру, под ними анкета; по бокам — ветви родословного древа.
          Базовая цена — 100 000 ₽ (атрибут data-base). Логика — js/calculator.js ============ -->
-    <section class="calc calc--center container section" id="calc" aria-labelledby="calc-title" data-base="100000">
-      <div class="calc__intro">
-        <h2 class="h2" id="calc-title">Калькулятор стоимости</h2>
-        <p class="calc__text">Итоговая стоимость зависит от&nbsp;нескольких факторов. Ответьте на&nbsp;вопросы ниже, чтобы узнать ориентировочную сумму, или <a class="calc__contact" href="index.html#contact" data-consult>свяжитесь с&nbsp;нами</a>&nbsp;— уточним цену на&nbsp;консультации.</p>
-      </div>
+    <section class="calc calc--center calc--photo container section" id="calc" aria-labelledby="calc-title" data-base="100000">
 
       <div class="calc__stage">
-        <img class="calc__tree" src="img/calc-tree.png" width="1930" height="576" alt="" aria-hidden="true" loading="lazy" decoding="async">
         <div class="calc__panel">
+          <div class="calc__intro">
+            <h2 class="h2" id="calc-title">Калькулятор стоимости услуги</h2>
+            <p class="calc__text">Итоговая стоимость зависит от&nbsp;нескольких факторов. Ответьте на&nbsp;вопросы ниже, чтобы узнать ориентировочную сумму, или <a class="calc__contact" href="index.html#contact" data-consult>свяжитесь с&nbsp;нами</a>&nbsp;— уточним цену на&nbsp;консультации.</p>
+          </div>
         <form class="calc__card" novalidate>
           <div class="calc__lines"></div>
           <button class="calc__add" type="button">

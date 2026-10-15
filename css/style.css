@@ -2682,3 +2682,142 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .about2 { gap: 32px; }
   .about2__subtitle { font-size: 24px; }
 }
+
+/* =========================================================
+   РОДОСЛОВНАЯ КНИГА — страница по макету Figma (plat-fam, узел 690:550).
+   Сетка, поля, размеры текста и скругления — общие с главной
+   ========================================================= */
+/* баннер: 355px под шапкой на 1920, затемнение слева снизу, название Cormorant 56px */
+.opening--banner { height: calc(355px + var(--hdr-h) + var(--hdr-gap)); min-height: 0; }
+.opening--banner .opening__img { object-position: 50% 55%; }
+.opening--banner .opening__media::after { background: linear-gradient(68.3deg, rgba(0, 0, 0, .55) .7%, rgba(0, 0, 0, 0) 55.7%); }
+.opening--banner .opening__content { bottom: 49px; }
+.opening--banner .opening__title { font-size: 56px; font-weight: 400; line-height: 1.1; }
+
+/* о книге: та же сетка, что «О проекте» на главной; слева крупный текст (Cormorant 32px, первая фраза — красным курсивом) и кнопка-«таблетка» */
+.about2__intro { display: flex; flex-direction: column; align-items: flex-start; gap: 30px; }
+.book-lead {
+  max-width: 733px;
+  font-family: "Cormorant", Georgia, serif;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -.01em;
+  text-wrap: wrap;
+  color: var(--text);
+}
+.book-lead em { font-style: italic; font-weight: 400; color: var(--red); }
+.btn--pill { padding: 12px 27px; border-radius: 999px; font-weight: 700; }
+
+/* примеры: два фото рядом (889 × 478 на 1920), промежуток 20px, подпись под первым */
+.gallery--pair .gallery__grid { grid-template-columns: 1fr 1fr; gap: 20px; margin-inline: 0; }
+.gallery--pair .gallery__item { margin: 0; }
+.gallery--pair .gallery__grid img { aspect-ratio: 889 / 478; height: auto; border-radius: var(--radius); }
+.gallery--pair .gallery__note { margin-top: var(--s-32); }
+
+/* почему мы: фото-карточка (половина ширины) и четыре белые карточки 2 × 2; высота фото = двум карточкам */
+.why2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.why2__photo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 734px;
+  padding: 42px;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: #2f2c26;
+  color: var(--white);
+}
+.why2__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.why2__photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0, 0, 0, .25) 0%, rgba(0, 0, 0, .1) 40%, rgba(0, 0, 0, .6) 100%); pointer-events: none; }
+.why2__logo { position: relative; z-index: 1; width: 53px; height: auto; }
+.why2__caption { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 11px; }
+.why2__title { color: var(--white); }
+.why2__caption p { max-width: 453px; }
+.why2__cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.why2__card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--s-24);
+  min-height: 357px;
+  padding: 35px;
+  border-radius: var(--radius);
+  background: var(--white);
+}
+.why2__card p { color: var(--text-body); }
+
+/* отзывы: слева заголовок (одна колонка из четырёх), справа три карточки 435 × 437; имя сверху, под ним текст; третья — видео */
+.voices--side { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; align-items: start; }
+.voices--side .voices__heading { margin: 0; max-width: 435px; }
+.voices--side .voices__grid { grid-column: 2 / -1; gap: 20px; }
+.voices--side .voice { min-height: 437px; padding: 35px; gap: 0; }
+.voices--side .voice::after { display: none; }
+.voices--side .voice__author { gap: 17px; margin: 0; padding: 0; color: var(--text-body); }
+.voices--side .voice__author img { width: 39px; height: 39px; }
+.voices--side .voice__text { margin-top: 56px; }
+.voice--video { overflow: hidden; background: #2f2c26; }
+.voice--video .voice__video { position: absolute; inset: 0; aspect-ratio: auto; border-radius: 0; }
+.voice--video .voice__author { position: relative; z-index: 1; color: var(--white); pointer-events: none; }
+.voice--video .voice__play::before { width: 53px; height: 53px; margin: -26px 0 0 -26px; background: url("../img/kniga2/play.svg") center / contain no-repeat; background-color: transparent; }
+.voice--video .voice__play:hover::before { background-color: rgba(255, 255, 255, .2); }
+
+/* калькулятор на фоне фото поля: белая карточка по центру (8 колонок из 12), заголовок красным внутри карточки */
+.calc--photo { position: relative; padding-bottom: 360px; }
+.calc--photo::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 0;
+  left: calc(50% - var(--vw) / 2);
+  width: var(--vw);
+  height: 1100px;
+  background: linear-gradient(180deg, var(--bg) 6.8%, rgba(241, 238, 233, .2) 74.3%), url("../img/kniga2/field.jpg") 50% 100% / cover no-repeat;
+  pointer-events: none;
+}
+.calc--photo .calc__panel { grid-column: 3 / span 8; padding: 70px; border-radius: var(--radius); background: var(--white); }
+.calc--photo .calc__intro { align-items: flex-start; margin-bottom: var(--s-48); text-align: left; gap: 20px; }
+.calc--photo .calc__intro .h2 { color: var(--red); }
+.calc--photo .calc__card, .calc--photo .calc__result { padding: 0; border-radius: 0; }
+
+@media (max-width: 1439px) {
+  .opening--banner { height: calc(300px + var(--hdr-h) + var(--hdr-gap)); }
+  .opening--banner .opening__title { font-size: 48px; }
+  .book-lead { font-size: 28px; }
+  .why2__photo { min-height: 640px; }
+  .why2__card { min-height: 310px; padding: 28px; }
+  .voices--side .voice { min-height: 400px; padding: 28px; }
+  .calc--photo .calc__panel { grid-column: 2 / span 10; padding: 56px; }
+}
+@media (max-width: 1199px) {
+  .why2 { grid-template-columns: 1fr; }
+  .why2__photo { min-height: 460px; }
+  .why2__card { min-height: 260px; }
+  .voices--side { display: block; }
+  .voices--side .voices__heading { max-width: 640px; margin-bottom: var(--gap-head); }
+  .calc--photo .calc__panel { grid-column: 1 / -1; padding: 40px; }
+}
+@media (max-width: 1023px) {
+  .book-lead { font-size: 26px; }
+  .voices--side .voice { min-height: 380px; }
+}
+@media (max-width: 767px) {
+  .opening--banner { height: calc(220px + var(--hdr-h) + var(--hdr-gap)); }
+  .opening--banner .opening__content { bottom: 28px; }
+  .opening--banner .opening__title { font-size: 40px; }
+  .book-lead { font-size: 24px; }
+  .btn--pill { width: auto; }
+  .gallery--pair .gallery__grid { grid-template-columns: 1fr; gap: var(--s-16); }
+  .gallery--pair .gallery__note { margin-top: var(--s-8); }
+  .why2__photo { min-height: 380px; padding: 24px; }
+  .why2__cards { grid-template-columns: 1fr; gap: var(--s-16); }
+  .why2__card { min-height: 0; padding: 24px; }
+  .voices--side .voice { min-height: 360px; padding: 24px; }
+  .voices--side .voice__text { margin-top: 32px; }
+  .calc--photo { padding-bottom: 220px; }
+  .calc--photo::before { height: 700px; }
+  .calc--photo .calc__panel { padding: 24px; }
+  .calc--photo .calc__intro { margin-bottom: var(--s-32); }
+}
+.page:has(.calc--photo) .footer { margin-top: 0; }   /* фото поля доходит до подвала */
