@@ -480,6 +480,7 @@
     var targets = [];
     document.querySelectorAll('h2').forEach(function (h) {
       if (h.closest('[hidden], .opening, .overlay') || h.classList.contains('about-svc__chip')) return;
+      if (h.querySelector('em, strong, a')) return;            // с выделением внутри (курсив, ссылка) — без построчной разметки, иначе выделение теряется
       var parts = h.querySelectorAll(':scope > span');
       if (parts.length) parts.forEach(function (p) { targets.push({ el: p, root: h }); });
       else targets.push({ el: h, root: h });
@@ -768,4 +769,35 @@
       form.reset();
     });
   });
+  /* ---------- Скругление карточек и контейнеров — по их размеру на экране ----------
+     Эталон: 582 × 582 → 32px. radius = 32 × min(ширина, высота) / 582, не больше 32px, округление до 2px
+     (858 × 517 → 28, 431 × 328 → 18, 276 × 218 → 12). Скругляются только те углы, что скруглены в CSS.
+     Не трогаем: кнопки, поля, плашки-«таблетки» и круги, а также мелкие элементы (меньше 64px) — это не карточки */
+  (function () {
+    var SKIP = 'button, input, select, textarea, label, svg, svg *, video, .btn, .tag, [class*="btn"], [class*="chip"], .cursor-bubble';
+    var CORNERS = ['borderTopLeftRadius', 'borderTopRightRadius', 'borderBottomRightRadius', 'borderBottomLeftRadius'];
+    var items = [];
+    [].forEach.call(document.querySelectorAll('body *'), function (el) {
+      if (el.matches(SKIP)) return;
+      var cs = getComputedStyle(el);
+      var vals = CORNERS.map(function (c) { return cs[c]; });
+      if (vals.some(function (v) { return v.indexOf('%') !== -1; })) return;          // круги и эллипсы
+      var px = vals.map(function (v) { return parseFloat(v) || 0; });
+      var max = Math.max.apply(null, px);
+      if (!max || max >= 100) return;                                                  // без скругления или «таблетка» 999px
+      items.push({ el: el, mask: px.map(function (v) { return v > 0; }), orig: max });
+    });
+    if (!items.length || !('ResizeObserver' in window)) return;
+    var byEl = new Map(items.map(function (it) { return [it.el, it]; }));
+    var apply = function (it) {
+      var w = it.el.offsetWidth, h = it.el.offsetHeight, m = Math.min(w, h);
+      if (!m || m < 64 || it.orig >= m / 2) return;                                   // мелкое, скрытое или «таблетка» по размеру
+      var r = Math.min(32, Math.round(32 * m / 582 / 2) * 2) + 'px';
+      CORNERS.forEach(function (c, i) { if (it.mask[i]) it.el.style[c] = r; });
+    };
+    var ro = new ResizeObserver(function (entries) {
+      entries.forEach(function (e) { var it = byEl.get(e.target); if (it) apply(it); });
+    });
+    items.forEach(function (it) { ro.observe(it.el); });
+  })();
 })();

@@ -215,88 +215,45 @@
       </div>
     </section>
 
-    <!-- ============ НАПРАВЛЕНИЯ — вариант по макету Figma (plat-fam, 228:146): белые карточки, фото сверху,
-         плашки и стрелка на фото. Вместо кнопки — вся карточка-ссылка; над карточкой курсор
-         превращается в красный круг «Узнать подробнее» (js/main.js) ============ -->
-    <section class="svc container section" id="svc" aria-labelledby="svc-title">
-      <div class="svc__head">
-        <h2 class="h2 svc__heading" id="svc-title">Направления и&nbsp;услуги</h2>
-      </div>
-
-      <div class="svc__list">
-        <a class="svc-card" href="rodoslovnaya-kniga.html">
-          <div class="svc-card__media">
-            <img src="img/kniga-why.jpg" width="1200" height="1200" alt="Родословная книга «Ваша уникальная история в одной книге» в руках" loading="lazy" decoding="async">
-            <div class="svc-card__bar">
-              <ul class="tags svc-card__tags" aria-label="Сроки и стоимость">
-                <li class="tag">от&nbsp;1&nbsp;месяца</li>
-                <li class="tag">от&nbsp;60&nbsp;000&nbsp;₽</li>
-              </ul>
-            </div>
-          </div>
-          <div class="svc-card__body">
-            <div class="svc-card__titles">
-              <p class="svc-card__sub">генеалогическое исследование + дизайн + печать</p>
-              <h3 class="h3 svc-card__title">Родословная книга</h3>
-            </div>
-            <p class="svc-card__desc">Результаты поиска, оформленные в&nbsp;книгу: история рода, копии документов с&nbsp;расшифровкой и&nbsp;родословное древо. Издание, которое можно хранить и&nbsp;передавать детям и&nbsp;внукам.</p>
-            <span class="svc-card__btn-mobile">Узнать подробнее</span>
-          </div>
+    <!-- ============ НАПРАВЛЕНИЯ УСЛУГ — по макету Figma (plat-fam, узел 745:1714): заголовок Cormorant 55px,
+         три квадратные карточки-фото с затемнением снизу, название и круглая стрелка ============ -->
+    <section class="dirs container section" id="svc" aria-labelledby="svc-title">
+      <h2 class="h2 dirs__title" id="svc-title">Направления услуг</h2>
+      <div class="dirs__list">
+        <a class="dir-card" href="rodoslovnaya-kniga.html">
+          <img class="dir-card__img" src="img/dir/dir-kniga.webp" width="1164" height="1164" alt="Раскрытая родословная книга «Древо предков» в руках" loading="lazy" decoding="async">
+          <span class="dir-card__bar">
+            <span class="dir-card__name">Родословная книга</span>
+            <img class="dir-card__arrow" src="img/dir/arrow.svg" width="53" height="53" alt="" aria-hidden="true">
+          </span>
         </a>
-
-        <a class="svc-card" href="issledovanie.html">
-          <div class="svc-card__media">
-            <img src="img/issledovanie-about.jpg" width="867" height="608" alt="Старые фотографии и письма предков" loading="lazy" decoding="async">
-            <div class="svc-card__bar">
-              <ul class="tags svc-card__tags" aria-label="Сроки и стоимость">
-                <li class="tag">от&nbsp;1&nbsp;месяца</li>
-                <li class="tag">от&nbsp;30&nbsp;000&nbsp;₽</li>
-              </ul>
-            </div>
-          </div>
-          <div class="svc-card__body">
-            <div class="svc-card__titles">
-              <p class="svc-card__sub">генеалогическое исследование + цифровой отчёт</p>
-              <h3 class="h3 svc-card__title">Архивный свиток</h3>
-            </div>
-            <p class="svc-card__desc">Тот же&nbsp;поиск по&nbsp;архивам без&nbsp;печатного издания: фотокопии документов с&nbsp;расшифровкой и&nbsp;поколенная роспись в&nbsp;подробном электронном отчёте.</p>
-            <span class="svc-card__btn-mobile">Узнать подробнее</span>
-          </div>
+        <a class="dir-card" href="issledovanie.html">
+          <img class="dir-card__img" src="img/dir/dir-istoriya.webp" width="1164" height="1164" alt="Старые документы и семейная фотография на столе" loading="lazy" decoding="async">
+          <span class="dir-card__bar">
+            <span class="dir-card__name">История семьи</span>
+            <img class="dir-card__arrow" src="img/dir/arrow.svg" width="53" height="53" alt="" aria-hidden="true">
+          </span>
+        </a>
+        <a class="dir-card" href="tochechnye-issledovaniya.html">
+          <img class="dir-card__img" src="img/dir/dir-tochechnye.webp" width="1164" height="1164" alt="Советский паспорт на столе" loading="lazy" decoding="async">
+          <span class="dir-card__bar">
+            <span class="dir-card__name">Точечные исследования</span>
+            <img class="dir-card__arrow" src="img/dir/arrow.svg" width="53" height="53" alt="" aria-hidden="true">
+          </span>
         </a>
       </div>
     </section>
 
-    <!-- ============ О НАС — красный блок по макету Figma (plat-fam, узел 456:1485, кадр 1920 × 936):
-         слева карта — фото в контуре области и линии границ (img/about/sec-3-desktop.png), линии уходят под текст;
-         справа у края — линии соседних областей (img/about/lines-right.png, только на компьютере).
-         Весь текст — одной колонкой. На планшете и телефоне карта — под текстом (своя картинка) ============ -->
-    <!-- ============ О НАС — текстовый блок по макету Figma (plat-fam, узел 528:242): плашка «О нас» и два абзаца
-         крупным текстом (Manrope Medium 32px, первая фраза — красным). Прежний красный блок «О нас» с картой лежит
-         ниже в <template id="about-v1"> — на странице он не показывается ============ -->
-    <section class="intro-text container section" id="about" aria-labelledby="intro-text-title">
-      <div class="intro-text__body">
-        <h2 class="intro-text__lead" id="intro-text-title"><span class="intro-text__accent">«Древо Предков» проводит профессиональные генеалогические исследования.</span> Мы&nbsp;восстанавливаем историю рода по&nbsp;архивным документам и&nbsp;оформляем результат в&nbsp;родословное древо и&nbsp;семейную книгу.</h2>
-        <p class="h3 intro-text__sub">Мы&nbsp;работаем с&nbsp;первоисточниками. Находим архивные документы, расшифровываем старинные рукописи, в&nbsp;том числе XVI века, и&nbsp;сопоставляем сведения из&nbsp;разных источников. Так мы&nbsp;видим связи, которые не&nbsp;заметны с&nbsp;первого взгляда, и&nbsp;восстанавливаем родословную, в&nbsp;которой можно быть уверенным.</p>
-      </div>
-      <!-- «Почему нас выбирают?»: четыре красные карточки в ряд — заголовок 24px Regular, внизу основной текст -->
-      <div class="why-cards">
-        <ul class="why-cards__list" aria-label="Почему нас выбирают">
-          <li class="why-card">
-            <h3 class="why-card__title">Глубокий поиск</h3>
-            <p class="why-card__text">Мы&nbsp;не&nbsp;ограничиваемся тем, что&nbsp;лежит на&nbsp;поверхности, и&nbsp;идём вглубь веков, документ за&nbsp;документом.</p>
-          </li>
-          <li class="why-card">
-            <h3 class="why-card__title">Экспертная работа с&nbsp;источниками</h3>
-            <p class="why-card__text">Мы&nbsp;читаем дореволюционные документы и&nbsp;рукописи, которые без&nbsp;специальной подготовки разобрать почти невозможно.</p>
-          </li>
-          <li class="why-card">
-            <h3 class="why-card__title">История, а&nbsp;не&nbsp;список имён</h3>
-            <p class="why-card__text">Вы&nbsp;узнаете, кем были ваши предки, где&nbsp;они жили и&nbsp;чем занимались.</p>
-          </li>
-          <li class="why-card">
-            <h3 class="why-card__title">Индивидуальный подход</h3>
-            <p class="why-card__text">Каждое исследование мы&nbsp;выстраиваем вокруг вашей семьи: того, что&nbsp;уже известно, и&nbsp;того, что&nbsp;хочется узнать.</p>
-          </li>
+    <!-- ============ О ПРОЕКТЕ — две колонки по макету Figma (plat-fam, узел 743:1558): слева крупный текст Cormorant 32px
+         (первая фраза — красным курсивом), справа «Как мы работаем» — три пункта с квадратными маркерами ============ -->
+    <section class="about2 container section" id="about" aria-labelledby="about2-title">
+      <h2 class="about2__lead" id="about2-title"><em>«Древо Предков» проводит профессиональные генеалогические исследования.</em> Мы&nbsp;восстанавливаем историю рода по&nbsp;архивным документам и&nbsp;оформляем результат в&nbsp;родословное древо и&nbsp;семейную книгу.</h2>
+      <div class="about2__how">
+        <h3 class="about2__subtitle">Как мы работаем</h3>
+        <ul class="about2__list">
+          <li>Каждое исследование начинается с&nbsp;разговора с&nbsp;заказчиком. Мы&nbsp;знакомимся с&nbsp;историей семьи, собираем известные сведения, изучаем семейные документы и&nbsp;фотографии, определяем цели и&nbsp;направления поиска. На&nbsp;основе этой информации формируется план исследования, а&nbsp;стоимость рассчитывается индивидуально&nbsp;— с&nbsp;учётом сложности задачи, глубины поиска и&nbsp;объёма предстоящей работы.</li>
+          <li>Затем начинается работа с&nbsp;архивами и&nbsp;историческими источниками. Мы&nbsp;ищем документальные свидетельства, сопоставляем сведения из&nbsp;разных источников, проверяем факты и&nbsp;прослеживаем судьбы предков в&nbsp;контексте эпохи. Это кропотливая работа, в&nbsp;которой отдельные записи, даты и&nbsp;имена складываются в&nbsp;более полную картину истории рода.</li>
+          <li>Результат зависит от&nbsp;вашей задачи: это может быть поиск конкретного предка, восстановление родственных связей, родословное дерево, подборка архивных документов или семейная книга с&nbsp;историческими очерками и&nbsp;рассказами о&nbsp;жизни предыдущих поколений. Мы&nbsp;подбираем формат исследования индивидуально, чтобы вы&nbsp;получили именно те&nbsp;сведения и&nbsp;материалы, которые важны для&nbsp;вас и&nbsp;вашей семьи.</li>
         </ul>
       </div>
     </section>
