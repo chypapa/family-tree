@@ -316,6 +316,81 @@
     }, { passive: true });
   });
 
+  /* ---------- Коллаж (второй экран): фото уходят от курсора, на телефоне — от наклона устройства ----------
+     Чем меньше фото, тем сильнее сдвиг (глубина ~ 1/√площади). Карточка с подписью неподвижна */
+  var collage = document.querySelector('.collage');
+  if (collage && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var cPhotos = [].map.call(collage.querySelectorAll('.collage__photo'), function (el) {
+      var cs = el.style;
+      return { el: el, area: parseFloat(cs.getPropertyValue('--w')) * parseFloat(cs.getPropertyValue('--h')) };
+    });
+    var maxArea = Math.max.apply(null, cPhotos.map(function (p) { return p.area; }));
+    cPhotos.forEach(function (p) { p.depth = Math.sqrt(maxArea / p.area); });   // самое крупное — 1, самое мелкое — ~2
+
+    var SHIFT = 16, TURN = 3;                         // px и градусы для самого крупного фото
+    var aim = { x: 0, y: 0 }, cur = { x: 0, y: 0 }, cRaf = 0, cVisible = false;
+    var unit = function () { return Math.min(1, collage.offsetWidth / 1440); };   // на узком экране сдвиг меньше
+    var render = function () {
+      cur.x += (aim.x - cur.x) * .08;                 // мягкое «покачивание» вслед за курсором
+      cur.y += (aim.y - cur.y) * .08;
+      var k = Math.max(.5, unit());
+      cPhotos.forEach(function (p) {
+        var s = p.el.style;
+        s.setProperty('--tx', (-cur.x * SHIFT * p.depth * k).toFixed(2) + 'px');
+        s.setProperty('--ty', (-cur.y * SHIFT * p.depth * k).toFixed(2) + 'px');
+        s.setProperty('--rx', (cur.y * TURN * p.depth).toFixed(2) + 'deg');
+        s.setProperty('--ry', (-cur.x * TURN * p.depth).toFixed(2) + 'deg');
+      });
+      if (Math.abs(aim.x - cur.x) > .001 || Math.abs(aim.y - cur.y) > .001) cRaf = requestAnimationFrame(render);
+      else cRaf = 0;
+    };
+    var kick = function () { if (!cRaf && cVisible) cRaf = requestAnimationFrame(render); };
+    var clamp = function (v) { return Math.max(-1, Math.min(1, v)); };
+
+    new IntersectionObserver(function (entries) {
+      cVisible = entries[0].isIntersecting;
+      if (cVisible) kick();
+    }).observe(collage);
+
+    // мышь: положение курсора относительно центра блока, −1…1
+    collage.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      var r = collage.getBoundingClientRect();
+      aim.x = clamp((e.clientX - r.left) / r.width * 2 - 1);
+      aim.y = clamp((e.clientY - r.top) / r.height * 2 - 1);
+      kick();
+    });
+    collage.addEventListener('pointerleave', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      aim.x = 0; aim.y = 0; kick();
+    });
+
+    // телефон: наклон вправо — фото уходят влево; нулевое положение — то, как человек держит телефон сейчас
+    if (window.matchMedia('(hover: none)').matches && 'DeviceOrientationEvent' in window) {
+      var base = null;
+      var onTilt = function (e) {
+        if (e.gamma == null || e.beta == null) return;
+        if (!base) base = { g: e.gamma, b: e.beta };
+        aim.x = clamp((e.gamma - base.g) / 25);
+        aim.y = clamp((e.beta - base.b) / 25);
+        kick();
+      };
+      var listen = function () { window.addEventListener('deviceorientation', onTilt); };
+      if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+        // iPhone: датчик доступен только после касания — спрашиваем при первом касании страницы
+        var ask = function () {
+          document.removeEventListener('touchend', ask);
+          DeviceOrientationEvent.requestPermission().then(function (state) { if (state === 'granted') listen(); }).catch(function () {});
+        };
+        document.addEventListener('touchend', ask);
+      } else {
+        listen();
+      }
+      // новая опорная точка, когда блок снова появляется на экране
+      new IntersectionObserver(function (entries) { if (entries[0].isIntersecting) base = null; }).observe(collage);
+    }
+  }
+
   /* ---------- Древо: при прокрутке листва «заливает» голые ветви сверху вниз, край неровный, как чернила ---------- */
   var ink = document.querySelector('.inkswap__frame');
   if (ink) {
