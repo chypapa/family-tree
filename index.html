@@ -125,40 +125,9 @@
       </div>
     </section>
 
-    <!-- ============ КОЛЛАЖ — по макету Figma (plat-fam, узел 743:1524): архивные фото вокруг карточки.
-         Фото (кроме карточки) чуть уходят от курсора, на телефоне — от наклона устройства (js/main.js) ============ -->
-    <section class="collage" aria-labelledby="collage-title">
-      <div class="collage__stage">
-        <div data-m class="collage__photo collage__photo--crop" style="--x:1041.18;--y:10.91;--w:165.88;--h:186.58;--mx:275.27;--my:200.29;--mw:98.81;--mh:111.56"><img src="img/collage/photo-01.webp" alt="" loading="lazy" decoding="async" style="height:113.55%;top:-0.92%"></div>
-        <div data-m class="collage__photo collage__photo--cover" style="--x:1195.72;--y:243.68;--w:205.46;--h:261.86;--mx:99.01;--my:118.21;--mw:93.16;--mh:118.45"><img src="img/collage/photo-02.webp" alt="" loading="lazy" decoding="async"></div>
-        <div class="collage__photo collage__photo--crop" style="--x:401.7;--y:878.34;--w:290.11;--h:186.64"><img src="img/collage/photo-03.webp" alt="" loading="lazy" decoding="async" style="height:103.56%;top:-1.06%"></div>
-        <div data-m class="collage__photo collage__photo--crop" style="--x:646.3;--y:43.64;--w:243.53;--h:259.58;--mx:160.44;--my:26.39;--mw:102;--mh:109"><img src="img/collage/photo-04.webp" alt="" loading="lazy" decoding="async" style="height:138.74%;left:-2.13%;top:-20.11%;width:104.27%"></div>
-        <div class="collage__card">
-          <h2 class="collage__title" id="collage-title">Генеалогические исследования</h2>
-          <div class="collage__logo" aria-hidden="true">
-            <span class="collage__leaf collage__leaf--tl"><img src="img/collage/leaf-top-l.svg" alt=""></span>
-            <span class="collage__leaf collage__leaf--bl"><img src="img/collage/leaf-bot-l.svg" alt=""></span>
-            <span class="collage__leaf collage__leaf--tr"><img src="img/collage/leaf-top-r.svg" alt=""></span>
-            <span class="collage__leaf collage__leaf--br"><img src="img/collage/leaf-bot-r.svg" alt=""></span>
-            <span class="collage__stem"><img src="img/collage/stem.svg" alt=""></span>
-          </div>
-          <p class="collage__text">Найдите своих предков.<br> Сохраните память</p>
-          <a class="collage__btn" href="#contact">Заказать услугу</a>
-        </div>
-        <div class="collage__photo collage__photo--cover" style="--x:1485.64;--y:283.69;--w:134.61;--h:138.71"><img src="img/collage/photo-05.webp" alt="" loading="lazy" decoding="async"></div>
-        <div class="collage__photo collage__photo--fill" style="--x:1750.59;--y:396.43;--w:123.53;--h:130.93"><img src="img/collage/photo-06.webp" alt="" loading="lazy" decoding="async"></div>
-        <div class="collage__photo collage__photo--fill" style="--x:1351.73;--y:760.13;--w:194.12;--h:298.23"><img src="img/collage/photo-07.webp" alt="" loading="lazy" decoding="async"></div>
-        <div data-m class="collage__photo collage__photo--crop" style="--x:1510.55;--y:549.19;--w:222.35;--h:290.96;--mx:233.56;--my:671.84;--mw:102;--mh:133"><img src="img/collage/photo-08.webp" alt="" loading="lazy" decoding="async" style="height:112.89%;left:-23.86%;top:-12.89%;width:147.72%"></div>
-        <div class="collage__photo collage__photo--fill" style="--x:62.1;--y:751.21;--w:183.53;--h:276.41"><img src="img/collage/photo-09.webp" alt="" loading="lazy" decoding="async"></div>
-        <div data-m class="collage__photo collage__photo--crop" style="--x:217.76;--y:468.24;--w:296.86;--h:214.13;--mx:-42.55;--my:646.88;--mw:123;--mh:89"><img src="img/collage/photo-10.webp" alt="" loading="lazy" decoding="async" style="height:167.3%;left:-26.37%;top:-13.48%;width:154.47%"></div>
-        <div class="collage__photo collage__photo--cover" style="--x:370.59;--y:109.11;--w:137.7;--h:155.76"><img src="img/collage/photo-11.webp" alt="" loading="lazy" decoding="async"></div>
-        <div data-m class="collage__photo collage__photo--crop" style="--x:1637.65;--y:76.14;--w:208.24;--h:247.32;--mx:295.71;--my:62.46;--mw:83;--mh:99"><img src="img/collage/photo-12.webp" alt="" loading="lazy" decoding="async" style="height:124.86%;top:-1.56%"></div>
-        <div data-m class="collage__photo collage__photo--fill" style="--x:38.82;--y:29.1;--w:218.82;--h:283.69;--mx:16;--my:20;--mw:86;--mh:112"><img src="img/collage/photo-13.webp" alt="" loading="lazy" decoding="async"></div>
-      </div>
-    </section>
-
-    <!-- ============ HERO (бегущая лента карточек) ============ -->
-    <section class="hero4" aria-label="Первый экран" hidden>
+    <!-- ============ ЛЕНТА (макет Figma plat-fam, узел 56:995): цветные карточки и архивные фото едут справа налево,
+         ленту можно тянуть мышью или пальцем — она ускоряется и затем возвращается к обычной скорости (js/main.js) ============ -->
+    <section class="hero4" aria-label="Коротко о нас">
       <div class="marquee">
         <div class="marquee__track">
           <article class="mcard mcard--green">
@@ -195,6 +164,39 @@
         </div>
       </div>
     </section>
+
+    <!-- ============ КОЛЛАЖ — по макету Figma (plat-fam, узел 743:1524): архивные фото вокруг карточки.
+         Фото (кроме карточки) чуть уходят от курсора, на телефоне — от наклона устройства (js/main.js) ============ -->
+    <section class="collage" aria-labelledby="collage-title">
+      <div class="collage__stage">
+        <div data-m class="collage__photo collage__photo--crop" style="--x:1041.18;--y:10.91;--w:165.88;--h:186.58;--mx:275.27;--my:200.29;--mw:98.81;--mh:111.56"><img src="img/collage/photo-01.webp" alt="" loading="lazy" decoding="async" style="height:113.55%;top:-0.92%"></div>
+        <div data-m class="collage__photo collage__photo--cover" style="--x:1195.72;--y:243.68;--w:205.46;--h:261.86;--mx:99.01;--my:118.21;--mw:93.16;--mh:118.45"><img src="img/collage/photo-02.webp" alt="" loading="lazy" decoding="async"></div>
+        <div class="collage__photo collage__photo--crop" style="--x:401.7;--y:878.34;--w:290.11;--h:186.64"><img src="img/collage/photo-03.webp" alt="" loading="lazy" decoding="async" style="height:103.56%;top:-1.06%"></div>
+        <div data-m class="collage__photo collage__photo--crop" style="--x:646.3;--y:43.64;--w:243.53;--h:259.58;--mx:160.44;--my:26.39;--mw:102;--mh:109"><img src="img/collage/photo-04.webp" alt="" loading="lazy" decoding="async" style="height:138.74%;left:-2.13%;top:-20.11%;width:104.27%"></div>
+        <div class="collage__card">
+          <h2 class="collage__title" id="collage-title">Генеалогические исследования</h2>
+          <div class="collage__logo" aria-hidden="true">
+            <span class="collage__leaf collage__leaf--tl"><img src="img/collage/leaf-top-l.svg" alt=""></span>
+            <span class="collage__leaf collage__leaf--bl"><img src="img/collage/leaf-bot-l.svg" alt=""></span>
+            <span class="collage__leaf collage__leaf--tr"><img src="img/collage/leaf-top-r.svg" alt=""></span>
+            <span class="collage__leaf collage__leaf--br"><img src="img/collage/leaf-bot-r.svg" alt=""></span>
+            <span class="collage__stem"><img src="img/collage/stem.svg" alt=""></span>
+          </div>
+          <p class="collage__text">Найдите своих предков.<br> Сохраните память</p>
+          <a class="collage__btn" href="#contact">Заказать услугу</a>
+        </div>
+        <div class="collage__photo collage__photo--cover" style="--x:1485.64;--y:283.69;--w:134.61;--h:138.71"><img src="img/collage/photo-05.webp" alt="" loading="lazy" decoding="async"></div>
+        <div class="collage__photo collage__photo--fill" style="--x:1750.59;--y:396.43;--w:123.53;--h:130.93"><img src="img/collage/photo-06.webp" alt="" loading="lazy" decoding="async"></div>
+        <div class="collage__photo collage__photo--fill" style="--x:1351.73;--y:760.13;--w:194.12;--h:298.23"><img src="img/collage/photo-07.webp" alt="" loading="lazy" decoding="async"></div>
+        <div data-m class="collage__photo collage__photo--crop" style="--x:1510.55;--y:549.19;--w:222.35;--h:290.96;--mx:233.56;--my:671.84;--mw:102;--mh:133"><img src="img/collage/photo-08.webp" alt="" loading="lazy" decoding="async" style="height:112.89%;left:-23.86%;top:-12.89%;width:147.72%"></div>
+        <div class="collage__photo collage__photo--fill" style="--x:62.1;--y:751.21;--w:183.53;--h:276.41"><img src="img/collage/photo-09.webp" alt="" loading="lazy" decoding="async"></div>
+        <div data-m class="collage__photo collage__photo--crop" style="--x:217.76;--y:468.24;--w:296.86;--h:214.13;--mx:-42.55;--my:646.88;--mw:123;--mh:89"><img src="img/collage/photo-10.webp" alt="" loading="lazy" decoding="async" style="height:167.3%;left:-26.37%;top:-13.48%;width:154.47%"></div>
+        <div class="collage__photo collage__photo--cover" style="--x:370.59;--y:109.11;--w:137.7;--h:155.76"><img src="img/collage/photo-11.webp" alt="" loading="lazy" decoding="async"></div>
+        <div data-m class="collage__photo collage__photo--crop" style="--x:1637.65;--y:76.14;--w:208.24;--h:247.32;--mx:295.71;--my:62.46;--mw:83;--mh:99"><img src="img/collage/photo-12.webp" alt="" loading="lazy" decoding="async" style="height:124.86%;top:-1.56%"></div>
+        <div data-m class="collage__photo collage__photo--fill" style="--x:38.82;--y:29.1;--w:218.82;--h:283.69;--mx:16;--my:20;--mw:86;--mh:112"><img src="img/collage/photo-13.webp" alt="" loading="lazy" decoding="async"></div>
+      </div>
+    </section>
+
 
     <!-- ============ НАЙДЁМ ИСТОРИЮ — текст поверх размытого фото; вокруг курсора фото в фокусе ============ -->
     <section class="focus section" aria-labelledby="focus-title" hidden>
