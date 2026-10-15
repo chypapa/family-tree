@@ -43,10 +43,11 @@
   --orange: #e7a43c;
   --gold: #af8c4c;
   --green: #9ba089;
-  --text: #3c3c3c;
+  --text: #3c3c3c;            /* заголовки */
+  --text-body: #85857e;       /* основной текст на светлом фоне */
   --dark: #3c3c3c;
   --slate: #3c3c3c;            /* цвет шапки */
-  --muted: rgba(0, 0, 0, .7);
+  --muted: var(--text-body);                          /* второстепенный текст — тем же цветом, что и основной */
   --placeholder: rgba(0, 0, 0, .5);
   --white: #fff;
 
@@ -104,7 +105,7 @@ html.lenis { scroll-behavior: auto; }   /* плавностью управляе
 body {
   margin: 0;
   background: var(--bg);
-  color: var(--text);
+  color: var(--text-body);
   font-family: "Manrope", system-ui, sans-serif;
   font-weight: 400;
   font-size: var(--fs-body);
@@ -156,6 +157,8 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4, .mcard__title {
 }
 /* H1 и H2 — Cormorant (макет 745:1715: Regular 55px, межстрочный 100%, трекинг −1%); H3/H4 — Manrope Medium, как названия карточек в макете */
 h1, .h1, h2, .h2, .mcard__title, .lead__title { font-family: "Cormorant", Georgia, serif; }
+h1, h2, h3, h4, .h1, .h2, .h3, .h4 { color: var(--text); }
+.focus__title, .collage__title { color: inherit; }  /* заголовок на фото и в карточке коллажа — цвет своего блока */
 h1, .h1 { font-size: var(--fs-h1); font-weight: 500; line-height: 1.05; letter-spacing: -.01em; }
 h2, .h2, .mcard__title { font-size: var(--fs-h2); font-weight: 400; line-height: 1; letter-spacing: -.01em; }
 h3, .h3 { font-size: var(--fs-h3); font-weight: 500; line-height: 1.25; letter-spacing: -.005em; }
@@ -769,7 +772,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 }
 .svc__heading,
 .blog:not(.blog--cards) .section-head .h2 { max-width: 650px; }
-.svc__lead { max-width: 632px; margin: 0; color: var(--text); }
+.svc__lead { max-width: 632px; margin: 0; color: var(--text-body); }
 
 /* круг-курсор (span.cursor-bubble): красный круг 161px с подписью, центр — в точке курсора.
    Сейчас используется лентой этапов (.stages__bubble); виден только у мыши */
@@ -1013,7 +1016,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .tcard__media { aspect-ratio: auto; height: clamp(140px, calc(100svh - 560px), 212px); }
   .tcard__tags { top: var(--s-16); left: var(--s-16); right: var(--s-16); }
   .tcard__sub { margin-top: var(--s-8); }
-  .tcard__desc { margin: var(--s-8) 0 var(--s-24); color: var(--text); }
+  .tcard__desc { margin: var(--s-8) 0 var(--s-24); color: var(--text-body); }
   .tcard__btn { align-self: stretch; }
 }
 
@@ -1073,7 +1076,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 
 .dots { --dot: 12px; display: flex; flex-direction: column; gap: var(--s-24); }
 /* точка стоит напротив первой строки пункта, а не посередине абзаца */
-.dots li { display: flex; align-items: flex-start; gap: var(--s-24); color: var(--text); }
+.dots li { display: flex; align-items: flex-start; gap: var(--s-24); color: var(--text-body); }
 .dots li::before {
   content: "";
   flex: none;
@@ -1143,7 +1146,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   background: var(--white);
 }
 .review__stars { width: 98px; height: 20px; margin-left: -2px; }
-.review__text { margin-top: var(--s-24); color: var(--text); }
+.review__text { margin-top: var(--s-24); color: var(--text-body); }
 .review__author { display: flex; align-items: center; gap: var(--s-8); color: var(--muted); }
 .review__author img { width: 22px; height: 22px; }
 
@@ -1698,7 +1701,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .post, .post--side { flex: 0 0 336px; max-width: 84vw; gap: var(--s-16); }
   .post .post__img, .post--main .post__img, .post--side .post__img { aspect-ratio: 336 / 201; }
   .post .post__body, .post--main .post__body, .post--side .post__body { gap: var(--s-16); display: flex; flex-direction: column; }
-  .post .post__desc { color: var(--text); }
+  .post .post__desc { color: var(--text-body); }
   .post .post__link { color: var(--text); }
   .post__btn-mobile {
     display: flex;
@@ -1809,7 +1812,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .dcard__body { flex: 1; gap: var(--s-24); padding: var(--s-16); }
   .dcard__sub { margin-top: var(--s-8); }
   .dcard__tags { margin-top: var(--s-16); }
-  .dcard__desc { color: var(--text); }
+  .dcard__desc { color: var(--text-body); }
   .dcard__bottom { display: flex; flex-direction: column; }
   .dcard__btn { align-self: stretch; margin-top: var(--s-24); }
 }
@@ -1980,7 +1983,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 }
 .voice__author { display: flex; align-items: center; gap: var(--s-8); margin-top: auto; padding-top: var(--s-8); color: var(--muted); }   /* автор — внизу карточки */
 .voice__author img { width: 22px; height: 22px; }
-.voice__text { margin-top: 48px; color: var(--text); }   /* кавычки в углу, под ними текст, затем видео; автор — внизу */
+.voice__text { margin-top: 48px; color: var(--text-body); }   /* кавычки в углу, под ними текст, затем видео; автор — внизу */
 .voice__video { position: relative; width: 100%; aspect-ratio: 233 / 115; overflow: hidden; border-radius: var(--radius); background: #8e98a3; }
 .voice__player { display: block; width: 100%; height: 100%; object-fit: cover; }
 .voice__play {
@@ -2539,17 +2542,35 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .collage__btn:hover { background: #515237; border-color: #515237; color: #e6e3d0; }
 .collage__btn:focus-visible { outline: 2px solid #515237; outline-offset: 3px; }
 
-/* вертикальные экраны (телефон, планшет стоя): фото над и под карточкой, карточка крупнее */
+/* вертикальные экраны (телефон, планшет стоя) — макет Figma 755:89 (кадр 390 × 801): семь фото над и под карточкой,
+   карточка 342px с полями 24px по бокам. --m — сколько экранных px в одном px макета; сцена по центру экрана */
 @media (max-aspect-ratio: 1/1) {
-  .collage {
-    --ux: calc(100vw / 390);
-    --uy: calc(100svh / 844);
-    --u: calc(min(var(--ux), var(--uy)) * .45);       /* размер фото */
-    --cu: min(calc(min(var(--ux), var(--uy)) * .56), calc((100vw - 48px) / 583));
+  .collage { --m: min(calc(100vw / 390), calc(100svh / 801)); }
+  .collage__photo { display: none; }
+  .collage__photo[data-m] {
+    display: block;
+    left: calc(50% + (var(--mx) - 195) * var(--m));
+    top: calc(50% + (var(--my) - 400.5) * var(--m));
+    width: calc(var(--mw) * var(--m));
+    height: calc(var(--mh) * var(--m));
   }
-  .collage__photo { left: calc(var(--mx) * var(--ux)); top: calc(var(--my) * var(--uy)); }
-  .collage__card { left: 50%; top: 50%; }
-  .collage__btn { min-height: 40px; min-width: 200px; font-size: max(14px, calc(24 * var(--cu))); border-width: 1.5px; }
+  .collage__card {
+    left: 50%;
+    top: calc(50% + (222 - 400.5) * var(--m));
+    translate: -50% 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(36 * var(--m));
+    width: calc(342 * var(--m));
+    height: auto;
+    padding: calc(40 * var(--m)) calc(20 * var(--m)) calc(36 * var(--m));
+  }
+  .collage__title, .collage__logo, .collage__text, .collage__btn { position: relative; top: auto; left: auto; translate: none; }
+  .collage__title { width: auto; font-size: calc(36 * var(--m)); line-height: calc(37 * var(--m)); }
+  .collage__logo { flex: none; width: calc(100.65 * var(--m)); height: calc(86.46 * var(--m)); margin-bottom: calc(10.87 * var(--m)); }   /* знак 100 × 86 в поле высотой 97 */
+  .collage__text { width: auto; font-size: calc(24 * var(--m)); }
+  .collage__btn { width: 100%; height: calc(54 * var(--m)); border-width: 1.5px; font-size: calc(18 * var(--m)); }
 }
 
 /* =========================================================
@@ -2597,6 +2618,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .about2 { display: grid; grid-template-columns: 877fr 857fr; gap: 20px; align-items: start; }
 .about2__lead {
   max-width: 731px;
+  text-wrap: wrap;                                    /* как в макете: текст идёт сплошным потоком, без выравнивания строк */
   font-family: "Cormorant", Georgia, serif;
   font-size: 32px;
   font-weight: 500;
@@ -2616,7 +2638,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   color: var(--red);
 }
 .about2__list { display: flex; flex-direction: column; gap: var(--s-16); }
-.about2__list li { display: flex; gap: 14.67px; color: #85857e; line-height: 1.41; }
+.about2__list li { display: flex; gap: 14.67px; color: var(--text-body); line-height: 1.41; }
 .about2__list li::before {                            /* квадратный маркер 8px в поле 18px, по центру первой строки */
   content: "";
   flex: none;
