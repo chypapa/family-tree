@@ -43,6 +43,7 @@
   --orange: #e7a43c;
   --gold: #af8c4c;
   --green: #9ba089;
+  --olive: #515237;                                   /* тёмно-оливковый: блок-коллаж и блок заявки */
   --text: #3c3c3c;            /* заголовки */
   --text-body: #85857e;       /* основной текст на светлом фоне */
   --dark: #3c3c3c;
@@ -296,7 +297,8 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
    прокрутка вверх — возвращается (класс is-hidden ставит main.js). Без will-change: иначе меню внутри шапки
    (position: fixed) встанет относительно шапки */
 .header--sticky { position: sticky; top: var(--hdr-gap); z-index: 50; margin-top: var(--hdr-gap); transition: transform .4s cubic-bezier(.4, 0, .2, 1); }
-.header--sticky.is-hidden { transform: translateY(calc(-100% - var(--hdr-gap) - 8px)); }
+.header--sticky.is-hidden,
+.header--sticky.is-over-collage { transform: translateY(calc(-100% - var(--hdr-gap) - 8px)); }   /* над коллажем шапки нет */
 .is-intro:not(.is-intro-done) .header--sticky { transform: none; }   /* пока идёт заставка, шапка (и знак в ней) не двигается */
 .header--sticky .header__bar, .header--sticky .header__pill,
 .header--sticky .icon-btn { transition: background-color .45s ease; }
@@ -582,13 +584,12 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .mcard--green, .mcard--red, .mcard--orange {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;                        /* зелёная и жёлтая: текст сразу под заголовком */
+  justify-content: flex-start;                        /* во всех карточках основной текст — сразу под заголовком */
   gap: 11px;
-  padding: calc(var(--card-h) * 50 / 634) calc(var(--card-w) * 33 / 634);   /* 50px сверху, 33px по бокам на карточке 634px */
+  padding: calc(var(--card-w) * 50 / 634) calc(var(--card-w) * 33 / 634);   /* 50px сверху, 33px по бокам на карточке 634px */
   color: var(--white);
 }
-.mcard--red { justify-content: space-between; }       /* красная: заголовок сверху, текст прижат к низу */
-.mcard__title { margin: 0; color: #fbf7f1; font-size: calc(var(--card-h) * 64 / 634); font-weight: 500; line-height: 1; }
+.mcard__title { margin: 0; color: #fbf7f1; font-size: calc(var(--card-w) * 64 / 634); font-weight: 500; line-height: 1; }
 .mcard__text { margin: 0; max-width: 554px; line-height: 1.3; }
 .mcard img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -1342,7 +1343,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   padding: var(--s-16);
   overflow: hidden;
   border-radius: var(--radius);
-  background: var(--green);
+  background: var(--olive);
 }
 .lead__map { position: absolute; top: 0; bottom: 0; left: calc(var(--s-16) + (100% - 2 * var(--s-16)) * 920 / 1625); width: auto; max-width: none; height: 100%; pointer-events: none; }   /* карта с фото (PNG с прозрачным фоном) на всю высоту блока, справа от формы; линии уходят за края */
 .lead__curve { display: none; }
@@ -1401,18 +1402,23 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .lead__agree { align-items: flex-start; }
 .lead__agree { color: var(--white); }
 .lead__agree input { margin-top: 0; border: 2px solid var(--white); }
-.lead__agree input:checked { background: var(--white); border-color: var(--white); box-shadow: inset 0 0 0 4px var(--green); }
+.lead__agree input:checked { background: var(--white); border-color: var(--white); box-shadow: inset 0 0 0 4px var(--olive); }
 .lead__agree a { color: var(--white); text-decoration: underline; }
 .lead__submit { width: 100%; min-height: 56px; background: var(--white); color: var(--text); }   /* белая кнопка на красном */
 .lead__submit:hover { background: var(--bg); }
 .lead__note { margin-top: calc(-1 * var(--s-8)); color: var(--white); }
 .lead__note:empty { display: none; }
-/* блок заявки на странице (не во всплывающем окне): зелёный на всю ширину окна, без полей и скругления;
-   форма стоит на той же линии, что и остальной контент (--edge) */
+/* блок заявки на странице (не во всплывающем окне): на всю ширину окна, без полей и скругления, фон #515237.
+   Две половины с промежутком 20px: слева форма (начинается на линии остального контента — --edge), справа фото до края окна */
 .lead.container:not(.lead--modal) { width: 100%; }
-.lead:not(.lead--modal) .lead__inner { padding: var(--s-48) var(--edge); border-radius: 0; }
-.lead:not(.lead--modal) .lead__card { padding-inline: 0; }
-.lead:not(.lead--modal) .lead__map { left: calc(var(--edge) + (100% - 2 * var(--edge)) * 920 / 1625); }
+.lead:not(.lead--modal) .lead__inner { grid-template-columns: 1fr 1fr; column-gap: 20px; padding: 0 0 0 var(--edge); border-radius: 0; background: var(--olive); }
+.lead:not(.lead--modal) .lead__card { padding: var(--s-96) 0; }
+.lead__photo { grid-column: 2; grid-row: 1; width: 100%; height: 100%; min-height: 100%; object-fit: cover; }
+@media (max-width: 1023px) {
+  .lead:not(.lead--modal) .lead__inner { grid-template-columns: 1fr; padding: 0 var(--edge); }
+  .lead:not(.lead--modal) .lead__card { padding: var(--s-64) 0; }
+  .lead__photo { display: none; }
+}
 @media (max-width: 1023px) {
   .lead__inner { grid-template-columns: 1fr; }
   .lead__map { display: none; }
@@ -1437,7 +1443,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .field__input:not(:placeholder-shown) + .field__label { top: 7px; font-size: 12px; }
   .lead__agree { color: var(--white); }
   .lead__agree input { border-color: var(--white); }
-  .lead__agree input:checked { background: var(--white); box-shadow: inset 0 0 0 4px var(--green); }
+  .lead__agree input:checked { background: var(--white); box-shadow: inset 0 0 0 4px var(--olive); }
   .lead__agree a { color: var(--white); }
   .lead__submit { min-height: 50px; background: var(--white); color: var(--text); }
   .lead__submit:hover { background: var(--bg); }
@@ -1683,8 +1689,8 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .link-more { color: var(--red); }
 
   /* лента */
-  .marquee { --gap: var(--s-8); --card-w: 300px; --card-h: 300px; --duration: 68s; }
-  .mcard--green, .mcard--red, .mcard--orange { padding: var(--pad-card); gap: var(--s-8); }
+  .marquee { --gap: var(--s-8); --card-w: 300px; --card-h: 380px; --duration: 68s; }   /* телефон: карточки выше, чтобы текст целиком помещался */
+  .mcard--green, .mcard--red, .mcard--orange { padding: var(--s-24) var(--s-16); gap: var(--s-8); }
   .tags { gap: var(--s-8); }
   .tag { gap: var(--s-8); padding: var(--s-8) var(--s-16); border-radius: 100px; color: var(--text); }
   .tag::before { width: 6px; height: 6px; }
@@ -1770,7 +1776,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 }
 
 @media (min-width: 420px) and (max-width: 767px) {
-  .marquee { --card-w: 330px; --card-h: 330px; }
+  .marquee { --card-w: 330px; --card-h: 400px; }
 }
 
 /* невысокие окна десктопа: блог компактнее, чтобы влезал под шапку */
@@ -2623,26 +2629,15 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
    подзаголовок Cormorant Italic 32px и три пункта основным текстом с квадратными маркерами 8px
    ========================================================= */
 .about2 { display: grid; grid-template-columns: 877fr 857fr; gap: 20px; align-items: start; }
-.about2__lead {
-  max-width: 731px;
-  text-wrap: wrap;                                    /* как в макете: текст идёт сплошным потоком, без выравнивания строк */
-  font-family: "Cormorant", Georgia, serif;
-  font-size: 32px;
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: -.01em;
-  color: var(--text);
-}
-.about2__lead em { font-style: italic; font-weight: 400; color: var(--red); }
+.about2__lead { max-width: 760px; color: var(--red); }   /* стиль H2 (как заголовки блоков), красным — по скриншоту */
 .about2__how { display: flex; flex-direction: column; gap: 17px; }
 .about2__subtitle {
   font-family: "Cormorant", Georgia, serif;
   font-size: 32px;
-  font-style: italic;
   font-weight: 400;
   line-height: 1.2;
   letter-spacing: -.01em;
-  color: var(--red);
+  color: var(--text);
 }
 .about2__list { display: flex; flex-direction: column; gap: var(--s-16); }
 .about2__list li { display: flex; gap: 14.67px; color: var(--text-body); line-height: 1.41; }
@@ -2660,7 +2655,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .dirs { gap: 40px; }
   .dir-card__name { font-size: 28px; }
   .dir-card__arrow { width: 46px; height: 46px; }
-  .about2__lead, .about2__subtitle { font-size: 28px; }
+  .about2__subtitle { font-size: 28px; }
 }
 @media (max-width: 1199px) {
   .dir-card__name { font-size: 22px; }
@@ -2668,7 +2663,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 }
 @media (max-width: 1023px) {
   .about2 { grid-template-columns: 1fr; gap: 40px; }
-  .about2__lead { max-width: 640px; font-size: 26px; }
+  .about2__lead { max-width: 640px; }
   .about2__subtitle { font-size: 26px; }
 }
 @media (max-width: 899px) {
@@ -2685,6 +2680,5 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .dir-card__name { font-size: 22px; }
   .dir-card__arrow { width: 40px; height: 40px; }
   .about2 { gap: 32px; }
-  .about2__lead { font-size: 24px; }
   .about2__subtitle { font-size: 24px; }
 }

@@ -142,6 +142,7 @@
      Первый экран при прокрутке: фото чуть приближается, текст уходит вверх и гаснет ---------- */
   var topHeader = document.querySelector('.header--sticky');
   var opening = document.querySelector('.opening');
+  var collageBlock = document.querySelector('.collage');
   if (topHeader) {
     var openingMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var topTicking = false;
@@ -162,6 +163,12 @@
       } else if (Math.abs(y - lastY) > 6) {
         topHeader.classList.toggle('is-hidden', y > lastY);
         lastY = y;
+      }
+      // над блоком-коллажем (полноэкранный, тёмный) шапки нет: она уезжает, пока коллаж под ней, и возвращается после
+      if (collageBlock) {
+        var cr = collageBlock.getBoundingClientRect();
+        var hh = topHeader.offsetHeight;
+        topHeader.classList.toggle('is-over-collage', !rootCls.contains('is-menu-open') && cr.top < hh && cr.bottom > hh);
       }
       if (opening && openingMotion) {
         opening.style.setProperty('--hp', Math.min(1, Math.max(0, y / window.innerHeight)).toFixed(3));
