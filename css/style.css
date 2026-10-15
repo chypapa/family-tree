@@ -2672,50 +2672,15 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .collage__btn:hover { background: #515237; border-color: #515237; color: #e6e3d0; }
 .collage__btn:focus-visible { outline: 2px solid #515237; outline-offset: 3px; }
 
-/* вертикальные экраны (телефон, планшет стоя): карточка по центру, по три фото ровным рядом над ней и под ней,
-   остальные фото скрыты; поле до краёв экрана — 16px, текст в 1,5 раза крупнее, чем при простом уменьшении макета */
+/* вертикальные экраны (телефон, планшет стоя): фото над и под карточкой, карточка крупнее */
 @media (max-aspect-ratio: 1/1) {
-  .collage { --cu: calc(min(100vw / 390, 100svh / 844) * .56); }
-  .collage__stage {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: minmax(0, 1fr) auto minmax(0, 1fr);
-    gap: 12px;
-    width: min(100%, 600px);
-    margin-inline: auto;
-    padding: 16px;
+  .collage {
+    --ux: calc(100vw / 390);
+    --uy: calc(100svh / 844);
+    --u: calc(min(var(--ux), var(--uy)) * .45);       /* размер фото */
+    --cu: min(calc(min(var(--ux), var(--uy)) * .56), calc((100vw - 48px) / 583));
   }
-  .collage__photo { display: none; position: relative; left: auto; top: auto; width: auto; height: 100%; max-height: 150px; }
-  .collage__photo[data-m] { display: block; }
-  .collage__photo[data-m="1"], .collage__photo[data-m="2"], .collage__photo[data-m="3"] { grid-row: 1; align-self: end; }
-  .collage__photo[data-m="4"], .collage__photo[data-m="5"], .collage__photo[data-m="6"] { grid-row: 3; align-self: start; }
-  .collage__photo img { top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; object-fit: cover; }
-  .collage__photo[data-m="6"] img { transform: scale(1.16); }   /* у фото солдат светлая рамка по краю — прячем её */
-  .collage__card {
-    position: relative;
-    left: auto;
-    top: auto;
-    grid-row: 2;
-    grid-column: 1 / -1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: auto;
-    height: auto;
-    padding: calc(80 * var(--cu)) 20px;
-    translate: none;
-  }
-  .collage__title, .collage__logo, .collage__text, .collage__btn { position: relative; top: auto; left: auto; translate: none; }
-  .collage__title { width: auto; font-size: min(calc(56 * 1.5 * var(--cu)), 12.2vw); }
-  .collage__logo { flex: none; margin-top: calc(80 * var(--cu)); }
-  .collage__text { width: auto; margin-top: calc(110 * var(--cu)); font-size: calc(32 * 1.5 * var(--cu)); }
-  .collage__btn {
-    width: 100%;
-    height: auto;
-    margin-top: calc(46 * var(--cu));
-    padding: 24px 16px;                               /* втрое больше прежнего внутреннего отступа */
-    border-width: 1.5px;
-    font-size: calc(24 * 1.5 * var(--cu));
-    line-height: 1.2;
-  }
+  .collage__photo { left: calc(var(--mx) * var(--ux)); top: calc(var(--my) * var(--uy)); }
+  .collage__card { left: 50%; top: 50%; }
+  .collage__btn { min-height: 40px; min-width: 200px; font-size: max(14px, calc(24 * var(--cu))); border-width: 1.5px; }
 }
