@@ -95,7 +95,7 @@
       }
       var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
       var place = function (dx) { logo.style.transform = 'translate(' + (dx - cx) + 'px,' + (vh / 2 - cy) + 'px) scale(' + s + ')'; };
-      logo.style.color = '#515237';
+      logo.style.color = getComputedStyle(document.documentElement).getPropertyValue('--red').trim() || '#515237';
       place(vw / 2);
       void logo.offsetWidth;
       logo.querySelector('.mark').classList.add('play');     // 1. рисуется контур, затем заливка (около 1,1 с)

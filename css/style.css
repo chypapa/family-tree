@@ -3042,3 +3042,24 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .review--video .review__stars, .review--video .review__author { position: relative; z-index: 2; pointer-events: none; }
 .review--video .review__author { color: var(--white); opacity: 1; }
 .review--video .review__author img { filter: brightness(0) invert(1); }
+
+/* =========================================================
+   ДВЕ ВЕРСИИ ГЛАВНОЙ: index.html (коллаж первым экраном, зелёный акцент) и index-2.html (лента первым экраном,
+   красный акцент — класс theme-red у <html>). Кнопка в шапке справа переключает между ними
+   ========================================================= */
+.header__alt { margin-left: var(--sp-12); padding: var(--s-8) var(--s-24); border: 1px solid rgba(255, 255, 255, .7); background: transparent; color: var(--white); }
+.header__alt:hover { background: rgba(255, 255, 255, .12); box-shadow: none; }
+.mobile-menu__alt { display: block; margin-top: var(--sp-20); color: inherit; text-align: center; text-decoration: underline; text-underline-offset: 4px; }
+.theme-red { --red: #a53625; --red-hover: #8f2d1f; }
+.theme-red .stack__btn { background: var(--red); }
+.theme-red .stack__btn:hover { background: var(--red-hover); }
+@media (max-width: 1199px) {
+  .header__alt, .header__cta { padding-inline: var(--s-16); }
+  .nav { gap: var(--sp-12); }
+}
+@media (min-width: 1024px) and (max-width: 1099px) {
+  .header__left { gap: var(--sp-20); }
+  .header__alt { margin-left: var(--sp-8); }
+  .header__alt, .header__cta { padding-inline: var(--sp-12); }
+  .header__bar { padding-inline: var(--sp-32); }
+}

@@ -6,7 +6,7 @@
   <title>Генеалогическое исследование и родословная книга — Древо предков</title>
   <meta name="description" content="Исследуем историю семьи по архивам России, Украины и Беларуси: метрические книги, ревизские сказки и другие документы. Родословная книга или архивный свиток. Начните с консультации.">
   <link rel="icon" href="img/favicon.ico" sizes="any">
-  <link rel="stylesheet" href="css/style.css?v=20261016h">
+  <link rel="stylesheet" href="css/style.css?v=20261016i">
   <script>document.documentElement.classList.add('is-intro'); if (!('onpagereveal' in window)) document.documentElement.classList.add('fade-nav');</script>
 </head>
 <body>
@@ -62,6 +62,8 @@
       <div class="header__right">
         <!-- на главной кнопка ведёт к последнему блоку с формой -->
         <a class="btn btn--white header__cta" href="#contact">Получить консультацию</a>
+        <!-- две версии главной: кнопка ведёт на другую (index.html ⇄ index-2.html) -->
+        <a class="btn header__alt" href="index-2.html">Другая версия</a>
       </div>
     </div>
 
@@ -100,70 +102,13 @@
         <a href="#contact">Контакты</a>
       </nav>
       <a class="btn mobile-menu__cta" href="#contact">Получить консультацию</a>
+      <a class="mobile-menu__alt" href="index-2.html">Посмотреть другую версию</a>
     </div>
   </header>
 
   <main id="top">
 
-    <!-- ============ ПЕРВЫЙ ЭКРАН — по макету Figma (plat-fam, узел 230:178): фото на весь экран,
-         затемнение снизу слева, текст и кнопка поверх фото. Шапка над ним прозрачная ============ -->
-    <section class="opening" aria-labelledby="opening-title">
-      <div class="opening__media" aria-hidden="true">
-        <!-- видео на фоне первого экрана: без звука, по кругу; на телефоне — облегчённая версия 960px -->
-        <video class="opening__img opening__video" autoplay muted loop playsinline preload="auto" poster="img/hero-video-poster.jpg" width="1764" height="1172">
-          <source src="video/hero-960.mp4" type="video/mp4" media="(max-width: 767px)">
-          <source src="video/hero.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="opening__content">
-        <h1 class="opening__title" id="opening-title">
-          <span class="line"><span>История вашей семьи</span></span>
-          <span class="line"><span>по&nbsp;архивным документам</span></span>
-        </h1>
-        <p class="opening__text">Проводим генеалогическое исследование: находим записи о&nbsp;ваших предках в&nbsp;метрических книгах, ревизских сказках и&nbsp;других архивных источниках и&nbsp;оформляем результат в&nbsp;родословную книгу или&nbsp;архивный свиток.</p>
-        <div class="opening__cta"><a class="btn opening__btn" href="#contact">Обсудить историю семьи</a></div>
-      </div>
-    </section>
 
-    <!-- ============ ЛЕНТА (макет Figma plat-fam, узел 56:995): цветные карточки и архивные фото едут справа налево,
-         ленту можно тянуть мышью или пальцем — она ускоряется и затем возвращается к обычной скорости (js/main.js) ============ -->
-    <section class="hero4" aria-label="Коротко о нас">
-      <div class="marquee">
-        <div class="marquee__track">
-          <article class="mcard mcard--green">
-            <p class="mcard__title">Мы возвращаем семьям их историю</p>
-            <p class="mcard__text">Проводим генеалогические исследования по архивным документам и восстанавливаем родословную вашей семьи на 100+ лет. За именами и датами в архивах стоят реальные судьбы — мы помогаем их найти и сохранить.</p>
-          </article>
-          <figure class="mcard mcard--photo"><img src="img/strip-family.jpg" width="624" height="634" alt="Семья у дома, архивная фотография" loading="eager" decoding="async"></figure>
-          <article class="mcard mcard--red">
-            <p class="mcard__title">Подарок, который не забудется</p>
-            <p class="mcard__text">Родословная книга — не вещь, а история семьи, которую невозможно купить готовой. Мы оформляем найденное в родословную книгу с историческим контекстом и дизайном фамильного древа — подарок, который останется в семье на поколения, а не потеряется через месяц.</p>
-          </article>
-          <figure class="mcard mcard--photo"><img src="img/strip-elders.jpg" width="624" height="626" alt="Сельские жители у крыльца, архивная фотография" loading="eager" decoding="async"></figure>
-          <article class="mcard mcard--orange">
-            <p class="mcard__title">Десятки довольных клиентов по всей России</p>
-            <p class="mcard__text">С нами уже работали семьи из Москвы и регионов — и продолжают возвращаться с новыми запросами и рекомендовать нас близким. Ценим доверие и работаем так, чтобы каждый клиент остался доволен результатом.</p>
-          </article>
-          <figure class="mcard mcard--photo"><img src="img/strip-plough.jpg" width="632" height="634" alt="Крестьянин пашет поле на лошадях" loading="eager" decoding="async"></figure>
-          <!-- копия набора — для бесшовного круга -->
-          <article class="mcard mcard--green" aria-hidden="true">
-            <p class="mcard__title">Мы возвращаем семьям их историю</p>
-            <p class="mcard__text">Проводим генеалогические исследования по архивным документам и восстанавливаем родословную вашей семьи на 100+ лет. За именами и датами в архивах стоят реальные судьбы — мы помогаем их найти и сохранить.</p>
-          </article>
-          <figure class="mcard mcard--photo" aria-hidden="true"><img src="img/strip-family.jpg" width="624" height="634" alt="" loading="eager" decoding="async"></figure>
-          <article class="mcard mcard--red" aria-hidden="true">
-            <p class="mcard__title">Подарок, который не забудется</p>
-            <p class="mcard__text">Родословная книга — не вещь, а история семьи, которую невозможно купить готовой. Мы оформляем найденное в родословную книгу с историческим контекстом и дизайном фамильного древа — подарок, который останется в семье на поколения, а не потеряется через месяц.</p>
-          </article>
-          <figure class="mcard mcard--photo" aria-hidden="true"><img src="img/strip-elders.jpg" width="624" height="626" alt="" loading="eager" decoding="async"></figure>
-          <article class="mcard mcard--orange" aria-hidden="true">
-            <p class="mcard__title">Десятки довольных клиентов по всей России</p>
-            <p class="mcard__text">С нами уже работали семьи из Москвы и регионов — и продолжают возвращаться с новыми запросами и рекомендовать нас близким. Ценим доверие и работаем так, чтобы каждый клиент остался доволен результатом.</p>
-          </article>
-          <figure class="mcard mcard--photo" aria-hidden="true"><img src="img/strip-plough.jpg" width="632" height="634" alt="" loading="eager" decoding="async"></figure>
-        </div>
-      </div>
-    </section>
 
     <!-- ============ КОЛЛАЖ — по макету Figma (plat-fam, узел 743:1524): архивные фото вокруг карточки.
          Фото (кроме карточки) чуть уходят от курсора, на телефоне — от наклона устройства (js/main.js) ============ -->
@@ -549,7 +494,7 @@
          поднимаются вверх; справа — мессенджеры, сверху справа — декоративная кривая (img/lead-curve.png) ============ -->
     <section class="lead container section" id="contact" aria-labelledby="lead-title">
     <div class="lead__inner">
-      <img class="lead__map" src="img/lead-map-olive.png" width="1032" height="1006" alt="" aria-hidden="true" loading="lazy" decoding="async">
+      <img class="lead__map" src="img/lead-photo.webp" width="1032" height="1006" alt="" aria-hidden="true" loading="lazy" decoding="async">
       <form class="lead__card" action="#" method="post" novalidate>
         <div class="lead__head">
           <h2 class="lead__title" id="lead-title">Начните с&nbsp;консультации</h2>
@@ -661,6 +606,6 @@
 
 </div>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="js/main.js?v=20261016h"></script>
+<script src="js/main.js?v=20261016i"></script>
 </body>
 </html>
