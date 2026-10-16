@@ -28,7 +28,7 @@
 @font-face { font-family: "Manrope"; src: url("../font/Manrope-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "Manrope"; src: url("../font/Manrope-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
 @font-face { font-family: "Manrope"; src: url("../font/Manrope-SemiBold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
-/* Cormorant — заголовки (макет 745:1715). Вариативный шрифт: одна пара файлов на все начертания 300–700 */
+/* Cormorant — только для карточки в блоке-коллаже (третий блок главной). Вариативный шрифт: одна пара файлов на все начертания 300–700 */
 @font-face { font-family: "Cormorant"; src: url("../font/Cormorant-cyr.woff2") format("woff2"); font-weight: 300 700; font-style: normal; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
 @font-face { font-family: "Cormorant"; src: url("../font/Cormorant-lat.woff2") format("woff2"); font-weight: 300 700; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 @font-face { font-family: "Cormorant"; src: url("../font/Cormorant-Italic-cyr.woff2") format("woff2"); font-weight: 300 700; font-style: italic; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
@@ -90,14 +90,21 @@
   --fit: calc(100svh - var(--hdr-h) - var(--hdr-gap) - 32px);  /* с учётом закреплённой шапки и отступа над ней */
 
   /* размеры текста: плавно меняются между шириной окна 375px (телефон) и 1440px (компьютер) */
-  --fs-h1: clamp(40px, 30.29px + 2.589vw, 80px);      /* Cormorant: 40 → 80 (375 → 1920px) */
-  --fs-h2: clamp(32px, 26.42px + 1.489vw, 55px);      /* Cormorant: 32 → 55 (375 → 1920px), макет 745:1715 */
-  --fs-h3: clamp(22px, 19.57px + .647vw, 32px);       /* 22 → 32 (375 → 1920px) */
-  --fs-h4: clamp(18px, 16.54px + .388vw, 24px);       /* 18 → 24 (375 → 1920px) */
-  --fs-body: 18px;                                    /* основной текст: 18px на компьютере; на меньших экранах — в @media ниже (без clamp) */
+  /* пять стилей текста на весь сайт (Manrope), размеры — ступенями по ширине окна (без clamp):
+                 ≥1440   1200–1439   768–1199   <768
+     H1          56      50          44         34     первый экран и баннеры страниц
+     H2          40      36          32         28     заголовки блоков, карточки ленты, сумма калькулятора
+     H3          32      28          26         22     названия карточек, подзаголовки
+     H4          24      22          20         18     заголовки постов, этапов, вопросов калькулятора
+     текст       18      17          16         16     весь основной текст, кнопки, подписи */
+  --fs-h1: 56px;
+  --fs-h2: 40px;
+  --fs-h3: 32px;
+  --fs-h4: 24px;
+  --fs-body: 18px;
 }
 /* основной текст и поля страницы по ступеням ширины окна */
-@media (max-width: 1439px) { :root { --gut: 56px; --fs-body: 17px; } }
+@media (max-width: 1439px) { :root { --gut: 56px; --fs-h1: 50px; --fs-h2: 36px; --fs-h3: 28px; --fs-h4: 22px; --fs-body: 17px; } }
 
 /* ---------- База ---------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -156,12 +163,10 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4, .mcard__title {
   font-family: "Manrope", system-ui, sans-serif;
   text-wrap: balance;                                 /* ровные строки, без одного слова на последней */
 }
-/* H1 и H2 — Cormorant (макет 745:1715: Regular 55px, межстрочный 100%, трекинг −1%); H3/H4 — Manrope Medium, как названия карточек в макете */
-h1, .h1, h2, .h2, .mcard__title, .lead__title { font-family: "Cormorant", Georgia, serif; }
 h1, h2, h3, h4, .h1, .h2, .h3, .h4 { color: var(--text); }
 .focus__title, .collage__title { color: inherit; }  /* заголовок на фото и в карточке коллажа — цвет своего блока */
-h1, .h1 { font-size: var(--fs-h1); font-weight: 500; line-height: 1.05; letter-spacing: -.01em; }
-h2, .h2, .mcard__title { font-size: var(--fs-h2); font-weight: 400; line-height: 1; letter-spacing: -.01em; }
+h1, .h1 { font-size: var(--fs-h1); font-weight: 600; line-height: 1.15; letter-spacing: -.01em; }
+h2, .h2, .mcard__title { font-size: var(--fs-h2); font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
 h3, .h3 { font-size: var(--fs-h3); font-weight: 500; line-height: 1.25; letter-spacing: -.005em; }
 h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-spacing: -.005em; }
 /* ---------- Заголовки H2 появляются построчно (классы ставит js/main.js; без JS всё видно сразу):
@@ -585,11 +590,11 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   display: flex;
   flex-direction: column;
   justify-content: flex-start;                        /* во всех карточках основной текст — сразу под заголовком */
-  gap: 11px;
+  gap: var(--s-24);                                   /* заголовок → текст заметно больше просвета между строками заголовка */
   padding: calc(var(--card-w) * 50 / 634) calc(var(--card-w) * 33 / 634);   /* 50px сверху, 33px по бокам на карточке 634px */
   color: var(--white);
 }
-.mcard__title { margin: 0; color: #fbf7f1; font-size: calc(var(--card-w) * 64 / 634); font-weight: 500; line-height: 1; }
+.mcard__title { margin: 0; color: #fbf7f1; }                    /* стиль H2 */
 .mcard__text { margin: 0; max-width: 554px; line-height: 1.3; }
 .mcard img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -1358,7 +1363,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   padding: var(--s-48) var(--s-56) var(--s-32);   /* под кнопкой — меньше */
   color: var(--white);
 }
-.lead__title { color: var(--white); font-size: var(--fs-h2); font-weight: 400; line-height: 1; letter-spacing: -.01em; }   /* стиль H2 */
+.lead__title { color: var(--white); font-size: var(--fs-h2); font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }   /* стиль H2 */
 .lead__head p { max-width: 640px; margin-top: var(--gap-text, 24px); }   /* основной текст сайта */
 .lead__chips { display: flex; flex-wrap: wrap; gap: var(--s-16); margin: 0; padding: 0; list-style: none; }
 .lead__chips li { padding: var(--s-8) var(--s-24); border: 1px solid rgba(255, 255, 255, .8); border-radius: 999px; line-height: 1.5; }
@@ -1587,7 +1592,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
    ПЛАНШЕТ 768–1199
    ========================================================= */
 @media (max-width: 1199px) {
-  :root { --gut: 40px; --fs-body: 16px; }
+  :root { --gut: 40px; --fs-h1: 44px; --fs-h2: 32px; --fs-h3: 26px; --fs-h4: 20px; --fs-body: 16px; }
 
   /* отзывы на главной — лента с прокруткой вбок до краёв экрана (место под тень карточек — лента её не обрезает) */
   .reviews__list {
@@ -1688,6 +1693,10 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
     --gut: var(--s-16);                               /* поля по краям — 16px */
     --section-pad: var(--s-64);
     --pad-card: var(--s-24);
+    --fs-h1: 34px;
+    --fs-h2: 28px;
+    --fs-h3: 22px;
+    --fs-h4: 18px;
     --fs-body: 16px;                                  /* основной текст на телефоне — 16px */
   }
 
@@ -1701,7 +1710,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 
   /* лента */
   .marquee { --gap: var(--s-8); --card-w: 300px; --card-h: 380px; --duration: 68s; }   /* телефон: карточки выше, чтобы текст целиком помещался */
-  .mcard--green, .mcard--red, .mcard--orange { padding: var(--s-24) var(--s-16); gap: 20px; }   /* заголовок → текст — 20px, как в карточках блога */
+  .mcard--green, .mcard--red, .mcard--orange { padding: var(--s-24) var(--s-16); gap: 20px; }   /* заголовок → текст 20px — больше просвета между строками заголовка (≈6px) */
   .tags { gap: var(--s-8); }
   .tag { gap: var(--s-8); padding: var(--s-8) var(--s-16); border-radius: 100px; color: var(--text); }
   .tag::before { width: 6px; height: 6px; }
@@ -2598,7 +2607,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 }
 
 /* =========================================================
-   НАПРАВЛЕНИЯ УСЛУГ (макет Figma plat-fam, узел 745:1714): заголовок H2 (Cormorant 55px),
+   НАПРАВЛЕНИЯ УСЛУГ (макет Figma plat-fam, узел 745:1714): заголовок H2,
    три квадратные карточки 582 × 582 на 1920 с промежутком 20px. Фото с затемнением снизу,
    внизу — название (Manrope Medium 34px) и белая круглая стрелка. Скругление карточек — по размеру (js/main.js)
    ========================================================= */
@@ -2628,7 +2637,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   justify-content: space-between;
   gap: var(--s-16);
 }
-.dir-card__name { font-size: 34px; font-weight: 500; line-height: 1.18; }
+.dir-card__name { font-size: var(--fs-h3); font-weight: 500; line-height: 1.25; }   /* стиль H3 */
 .dir-card__arrow { flex: none; width: 35px; height: 35px; transition: transform .3s ease; }
 .dir-card:hover .dir-card__img { transform: scale(1.04); }
 .dir-card:hover .dir-card__arrow { transform: translateX(4px); }
@@ -2636,20 +2645,13 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 
 /* =========================================================
    О ПРОЕКТЕ — две колонки (макет Figma plat-fam, узел 743:1558, ширина колонок 877 и 857 на 1920, промежуток 20px).
-   Слева — крупный текст Cormorant 32px (первая фраза — красным курсивом), справа — «Как мы работаем»:
-   подзаголовок Cormorant Italic 32px и три пункта основным текстом с квадратными маркерами 8px
+   Слева — заголовок H2 красным, справа — «Как мы работаем»:
+   подзаголовок H3 и три пункта основным текстом с квадратными маркерами 8px
    ========================================================= */
 .about2 { display: grid; grid-template-columns: 877fr 857fr; gap: 20px; align-items: start; }
 .about2__lead { max-width: 760px; color: var(--red); }   /* стиль H2 (как заголовки блоков), красным — по скриншоту */
 .about2__how { display: flex; flex-direction: column; gap: 17px; }
-.about2__subtitle {
-  font-family: "Cormorant", Georgia, serif;
-  font-size: 32px;
-  font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -.01em;
-  color: var(--text);
-}
+.about2__subtitle { color: var(--text); }           /* стиль H3 */
 .about2__list { display: flex; flex-direction: column; gap: var(--s-16); }
 .about2__list li { display: flex; gap: 14.67px; color: var(--text-body); line-height: 1.41; }
 .about2__list li::before {                            /* квадратный маркер 8px в поле 18px, по центру первой строки */
@@ -2664,60 +2666,44 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 /* ступени размеров (без clamp) */
 @media (max-width: 1439px) {
   .dirs { gap: 40px; }
-  .dir-card__name { font-size: 28px; }
   .dir-card__arrow { width: 31px; height: 31px; }
-  .about2__subtitle { font-size: 28px; }
 }
 @media (max-width: 1199px) {
-  .dir-card__name { font-size: 22px; }
   .dir-card__arrow { width: 27px; height: 27px; }
 }
 @media (max-width: 1023px) {
   .about2 { grid-template-columns: 1fr; gap: 40px; }
   .about2__lead { max-width: 640px; }
-  .about2__subtitle { font-size: 26px; }
 }
 @media (max-width: 899px) {
   .dirs__list { grid-template-columns: 1fr; gap: var(--s-16); }
   .dir-card { aspect-ratio: 3 / 2; }
   .dir-card__bar { left: var(--s-24); right: var(--s-24); bottom: var(--s-24); }
-  .dir-card__name { font-size: 26px; }
   .dir-card__arrow { width: 29px; height: 29px; }
 }
 @media (max-width: 767px) {
   .dirs { gap: 28px; }
   .dir-card { aspect-ratio: 4 / 3; }
   .dir-card__bar { left: 20px; right: 20px; bottom: 20px; }
-  .dir-card__name { font-size: 22px; }
   .dir-card__arrow { width: 27px; height: 27px; }
   .about2 { gap: 32px; }
-  .about2__subtitle { font-size: 24px; }
 }
 
 /* =========================================================
    РОДОСЛОВНАЯ КНИГА — страница по макету Figma (plat-fam, узел 690:550).
    Сетка, поля, размеры текста и скругления — общие с главной
    ========================================================= */
-/* баннер: 355px под шапкой на 1920, затемнение слева снизу, название Cormorant 56px */
+/* баннер: 355px под шапкой на 1920, затемнение слева снизу, название — стиль H1 */
 .opening--banner { height: calc(355px + var(--hdr-h) + var(--hdr-gap)); min-height: 0; }
 .opening--banner .opening__img { object-position: 50% 55%; }
 .opening--banner .opening__media::after { background: linear-gradient(68.3deg, rgba(0, 0, 0, .55) .7%, rgba(0, 0, 0, 0) 55.7%); }
 .opening--banner .opening__content { bottom: 49px; }
-.opening--banner .opening__title { font-size: 56px; font-weight: 400; line-height: 1.1; }
 
-/* о книге: та же сетка, что «О проекте» на главной; слева крупный текст (Cormorant 32px, первая фраза — красным курсивом) и кнопка-«таблетка» */
+
+/* о книге: та же сетка, что «О проекте» на главной; слева крупный текст стилем H3 (первая фраза — красным) и кнопка-«таблетка» */
 .about2__intro { display: flex; flex-direction: column; align-items: flex-start; gap: 30px; }
-.book-lead {
-  max-width: 733px;
-  font-family: "Cormorant", Georgia, serif;
-  font-size: 32px;
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: -.01em;
-  text-wrap: wrap;
-  color: var(--text);
-}
-.book-lead em { font-style: italic; font-weight: 400; color: var(--red); }
+.book-lead { max-width: 733px; font-size: var(--fs-h3); font-weight: 500; line-height: 1.25; letter-spacing: -.005em; text-wrap: wrap; color: var(--text); }   /* стиль H3 */
+.book-lead em { font-style: normal; color: var(--red); }
 .btn--pill { padding: 12px 27px; border-radius: 999px; font-weight: 700; }
 
 /* примеры: два фото рядом (889 × 478 на 1920), промежуток 20px, подпись под первым */
@@ -2794,8 +2780,6 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 
 @media (max-width: 1439px) {
   .opening--banner { height: calc(300px + var(--hdr-h) + var(--hdr-gap)); }
-  .opening--banner .opening__title { font-size: 48px; }
-  .book-lead { font-size: 28px; }
   .why2__photo { min-height: 640px; }
   .why2__card { min-height: 310px; padding: 28px; }
   .voices--side .voice { min-height: 400px; padding: 28px; }
@@ -2810,14 +2794,11 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .calc--photo .calc__panel { grid-column: 1 / -1; padding: 40px; }
 }
 @media (max-width: 1023px) {
-  .book-lead { font-size: 26px; }
   .voices--side .voice { min-height: 380px; }
 }
 @media (max-width: 767px) {
   .opening--banner { height: calc(220px + var(--hdr-h) + var(--hdr-gap)); }
   .opening--banner .opening__content { bottom: 28px; }
-  .opening--banner .opening__title { font-size: 40px; }
-  .book-lead { font-size: 24px; }
   .btn--pill { width: auto; }
   .gallery--pair .gallery__grid { grid-template-columns: 1fr; gap: var(--s-16); }
   .gallery--pair .gallery__note { margin-top: var(--s-8); }
@@ -2835,7 +2816,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 
 /* лента карточек на планшете: заголовок → текст 20px, как на телефоне и в карточках блога */
 @media (max-width: 1199px) {
-  .mcard--green, .mcard--red, .mcard--orange { gap: 20px; }
+  .mcard--green, .mcard--red, .mcard--orange { gap: var(--s-24); }
 }
 /* блог: когда карточки встают в один ряд (лента до 1199px), «Читать полностью» у всех — на одной линии, у нижнего края карточки */
 @media (max-width: 1199px) {
