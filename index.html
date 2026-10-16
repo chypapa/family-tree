@@ -182,7 +182,7 @@
             <span class="collage__leaf collage__leaf--br"><img src="img/collage/leaf-bot-r.svg" alt=""></span>
             <span class="collage__stem"><img src="img/collage/stem.svg" alt=""></span>
           </div>
-          <p class="collage__text">Найдите своих предков.<br> Сохраните память</p>
+          <p class="collage__text">Найдём ваших предков.<br> Сохраним память</p>
           <a class="collage__btn" href="#contact">Заказать услугу</a>
         </div>
         <div data-small class="collage__photo collage__photo--cover" style="--x:1485.64;--y:283.69;--w:134.61;--h:138.71"><img src="img/collage/photo-05.webp" alt="" loading="lazy" decoding="async"></div>
@@ -260,40 +260,81 @@
       </div>
     </section>
 
-    <!-- ============ НАШ ПОДХОД — как блок «From the moment you walk in…» на generaldental.ca/about.
-         Три колонки: заголовок посередине, пункты 01 и 03 слева, 02 справа, горизонтальное фото — под средней и правой колонкой.
-         Всё «прилипает» к верху окна (sticky), пока следующий элемент не вытолкнет: 03 выталкивает 01,
-         фото выталкивает заголовок и 02. В какой-то момент в кадре заголовок и все три пункта.
-         На планшете и телефоне — одной колонкой ============ -->
-    <section class="approach container section" aria-labelledby="approach-title">
-      <div class="approach__head">
-        <h2 class="approach__title" id="approach-title">Мы&nbsp;облекаем историю вашей семьи в&nbsp;слова&nbsp;— чтобы имена предков снова зазвучали, а&nbsp;память о&nbsp;них передавалась дальше</h2>
+    <!-- ============ УСЛУГИ СТОПКОЙ: четыре карточки по очереди «прилипают» к верху окна и наезжают друг на друга;
+         когда приходит четвёртая, все вместе уезжают вверх (CSS sticky) ============ -->
+    <section class="stack container section" aria-label="Услуги">
+      <div class="stack__list">
+        <article class="stack__card" style="--i:0">
+          <div class="stack__text">
+            <div>
+              <h3 class="stack__title">Родословная книга</h3>
+              <p class="stack__sub">Книга с&nbsp;историей вашей семьи</p>
+            </div>
+            <div class="stack__about">
+              <h4 class="stack__lead">Что это такое?</h4>
+              <p>Исследование по&nbsp;архивам и&nbsp;книга о&nbsp;вашем роде: имена и&nbsp;судьбы предков, копии документов с&nbsp;расшифровкой и&nbsp;родословное древо. Электронная версия&nbsp;— сразу, печатное издание&nbsp;— по&nbsp;предоплате.</p>
+              <a class="btn stack__btn" href="rodoslovnaya-kniga.html">Узнать подробнее</a>
+            </div>
+          </div>
+          <div class="stack__media">
+            <img src="img/dir/dir-kniga.webp" width="1164" height="1164" alt="Родословная книга «Древо предков» в руках" loading="lazy" decoding="async">
+            <ul class="stack__chips" aria-label="Коротко"><li>от&nbsp;1&nbsp;месяца</li><li>от&nbsp;60&nbsp;000&nbsp;₽</li></ul>
+          </div>
+        </article>
+        <article class="stack__card" style="--i:1">
+          <div class="stack__text">
+            <div>
+              <h3 class="stack__title">Архивный свиток</h3>
+              <p class="stack__sub">Исследование рода в&nbsp;цифровом отчёте</p>
+            </div>
+            <div class="stack__about">
+              <h4 class="stack__lead">Что это такое?</h4>
+              <p>Тот&nbsp;же поиск по&nbsp;архивам без&nbsp;печатного издания: фотокопии документов с&nbsp;расшифровкой и&nbsp;поколенная роспись в&nbsp;подробном электронном отчёте.</p>
+              <a class="btn stack__btn" href="issledovanie.html">Узнать подробнее</a>
+            </div>
+          </div>
+          <div class="stack__media">
+            <img src="img/dir/dir-istoriya.webp" width="1164" height="1164" alt="Старые документы и семейная фотография на столе" loading="lazy" decoding="async">
+            <ul class="stack__chips" aria-label="Коротко"><li>от&nbsp;1&nbsp;месяца</li><li>от&nbsp;30&nbsp;000&nbsp;₽</li></ul>
+          </div>
+        </article>
+        <article class="stack__card" style="--i:2">
+          <div class="stack__text">
+            <div>
+              <h3 class="stack__title">Точечные исследования</h3>
+              <p class="stack__sub">Ответ на&nbsp;один важный вопрос</p>
+            </div>
+            <div class="stack__about">
+              <h4 class="stack__lead">Что это такое?</h4>
+              <p>Когда нужно найти конкретного человека или&nbsp;документ: запись о&nbsp;рождении, венчании, службе, место жительства семьи. Работаем с&nbsp;нужным архивом и&nbsp;присылаем найденное с&nbsp;расшифровкой.</p>
+              <a class="btn stack__btn" href="tochechnye-issledovaniya.html">Узнать подробнее</a>
+            </div>
+          </div>
+          <div class="stack__media">
+            <img src="img/dir/dir-tochechnye.webp" width="1164" height="1164" alt="Советский паспорт на столе" loading="lazy" decoding="async">
+            <ul class="stack__chips" aria-label="Коротко"><li>Один запрос</li><li>Один архив</li></ul>
+          </div>
+        </article>
+        <article class="stack__card" style="--i:3">
+          <div class="stack__text">
+            <div>
+              <h3 class="stack__title">Бесплатная консультация</h3>
+              <p class="stack__sub">С&nbsp;чего начать поиск</p>
+            </div>
+            <div class="stack__about">
+              <h4 class="stack__lead">Как это работает?</h4>
+              <p>Расскажите, что уже известно о&nbsp;вашей семье,&nbsp;— подскажем, какие архивы могут хранить сведения о&nbsp;предках и&nbsp;какой формат исследования вам подойдёт.</p>
+              <a class="btn stack__btn" href="#contact">Записаться</a>
+            </div>
+          </div>
+          <div class="stack__media">
+            <img src="img/hero-album.jpg" width="1168" height="768" alt="Руки листают семейный фотоальбом" loading="lazy" decoding="async">
+            <ul class="stack__chips" aria-label="Коротко"><li>Онлайн</li><li>Бесплатно</li></ul>
+          </div>
+        </article>
       </div>
-      <ol class="approach__list">
-        <li class="approach__item approach__item--1">
-          <div class="approach__card">
-            <span class="approach__num" aria-hidden="true">01</span>
-            <h3 class="approach__name">Профессиональный подход</h3>
-            <p>Работаем с&nbsp;архивами напрямую&nbsp;— государственными, областными, церковными. Знаем, где искать метрические книги и&nbsp;ревизские сказки и&nbsp;как найти документ, если он&nbsp;«потерялся» между фондами.</p>
-          </div>
-        </li>
-        <li class="approach__item approach__item--2">
-          <div class="approach__card">
-            <span class="approach__num" aria-hidden="true">02</span>
-            <h3 class="approach__name">Только первоисточники</h3>
-            <p>Каждое имя и&nbsp;каждая дата в&nbsp;древе подтверждены документом. Читаем дореволюционные рукописи, разбираем старинный почерк и&nbsp;сверяем записи из&nbsp;разных источников.</p>
-          </div>
-        </li>
-        <li class="approach__item approach__item--3">
-          <div class="approach__card">
-            <span class="approach__num" aria-hidden="true">03</span>
-            <h3 class="approach__name">История, а&nbsp;не&nbsp;таблица</h3>
-            <p>Превращаем найденное в&nbsp;рассказ о&nbsp;людях и&nbsp;их&nbsp;времени: где жили, чем занимались, через что прошли. Результат&nbsp;— книга, архивный свиток или&nbsp;ответ на&nbsp;один важный вопрос.</p>
-          </div>
-        </li>
-      </ol>
-      <img class="approach__photo" src="img/approach-hands.webp" width="1800" height="1200" alt="Руки пожилого человека, чёрно-белая фотография" loading="lazy" decoding="async">
     </section>
+
     <template id="about-v1">
     <section class="russia section" id="about" aria-labelledby="russia-title">
       <div class="russia__decor" aria-hidden="true">
@@ -514,6 +555,112 @@
           </div>
           <p class="review__author"><img src="img/person.svg" width="26" height="26" alt="">Валентина, Рязань</p>
         </article>
+      </div>
+    </section>
+
+    <!-- ============ ОТЗЫВЫ — ВАРИАНТ 2 (для сравнения): плоские карточки вразброс по высоте, лента медленно едет влево ============ -->
+    <section class="fly section" aria-labelledby="fly-title">
+      <h2 class="fly__title container" id="fly-title">Что о&nbsp;нас говорят заказчики</h2>
+      <div class="fly__viewport">
+        <div class="fly__track">
+          <article class="fcard">
+            <h3 class="fcard__title">Быстро и&nbsp;по&nbsp;приятной цене</h3>
+            <p class="fcard__text">Работа сделана очень быстро, качественно, по&nbsp;приятной цене, вежливый и&nbsp;честный человек, приятно с&nbsp;такими сотрудничать. Максимально довольна результатом, спасибо большое!!!</p>
+            <p class="fcard__author"><img src="img/person.svg" width="22" height="22" alt="">Юлия, Калуга</p>
+          </article>
+          <article class="fcard">
+            <h3 class="fcard__title">Столько новых имён</h3>
+            <p class="fcard__text">Знакомство с&nbsp;Глебом было предопределено кем‑то свыше, не&nbsp;иначе!)) Столько новых имён удалось узнать с&nbsp;его помощью&nbsp;— просто не&nbsp;перечесть!</p>
+            <p class="fcard__author"><img src="img/person.svg" width="22" height="22" alt="">Ирина, Москва</p>
+          </article>
+          <article class="fcard">
+            <h3 class="fcard__title">Всегда был на&nbsp;связи</h3>
+            <p class="fcard__text">Глеб всё равно выслал мне документ, который удалось найти, за&nbsp;что я&nbsp;ему безумно благодарна. Всегда был на&nbsp;связи и&nbsp;по&nbsp;максимуму отвечал на&nbsp;все вопросы. Обязательно посоветую друзьям и&nbsp;знакомым.</p>
+            <p class="fcard__author"><img src="img/person.svg" width="22" height="22" alt="">Юлия, Москва</p>
+          </article>
+          <article class="fcard">
+            <h3 class="fcard__title">Юбиляр прослезился</h3>
+            <p class="fcard__text">Спасибо за&nbsp;проделанную работу!! Генеалогическое древо очень понравилось!! Юбиляр прослезился, получив такой подарок!! В&nbsp;процессе работы замучила правками, спасибо за&nbsp;терпение!!</p>
+            <p class="fcard__author"><img src="img/person.svg" width="22" height="22" alt="">Валентина, Рязань</p>
+          </article>
+          <article class="fcard">
+            <h3 class="fcard__title">Подарок к&nbsp;юбилею</h3>
+            <p class="fcard__text">Генеалогическое древо очень понравилось! Спасибо за&nbsp;терпение и&nbsp;внимание к&nbsp;деталям&nbsp;— подарок получился таким, каким мы&nbsp;его задумывали.</p>
+            <p class="fcard__author"><img src="img/person.svg" width="22" height="22" alt="">Наталья, Рязань</p>
+          </article>
+          <article class="fcard">
+            <h3 class="fcard__title">Помог там, где я&nbsp;не&nbsp;знала, как подступиться</h3>
+            <p class="fcard__text">Там, куда я&nbsp;не&nbsp;знала, как подступиться, Глеб нашёл записи и&nbsp;объяснил, что они значат. Теперь у&nbsp;нас есть история семьи, которую можно передать детям.</p>
+            <p class="fcard__author"><img src="img/person.svg" width="22" height="22" alt="">Ирина, Москва</p>
+          </article>
+          <article class="fcard" aria-hidden="true">
+            <h3 class="fcard__title">Быстро и&nbsp;по&nbsp;приятной цене</h3>
+            <p class="fcard__text">Работа сделана очень быстро, качественно, по&nbsp;приятной цене, вежливый и&nbsp;честный человек, приятно с&nbsp;такими сотрудничать. Максимально довольна результатом, спасибо большое!!!</p>
+            <p class="fcard__author"><img src="img/person.svg" width="22" height="22" alt="">Юлия, Калуга</p>
+          </article>
+          <article class="fcard" aria-hidden="true">
+            <h3 class="fcard__title">Столько новых имён</h3>
+            <p class="fcard__text">Знакомство с&nbsp;Глебом было предопределено кем‑то свыше, не&nbsp;иначе!)) Столько новых имён удалось узнать с&nbsp;его помощью&nbsp;— просто не&nbsp;перечесть!</p>
+            <p class="fcard__author"><img src="img/person.svg" width="22" height="22" alt="">Ирина, Москва</p>
+          </article>
+          <article class="fcard" aria-hidden="true">
+            <h3 class="fcard__title">Всегда был на&nbsp;связи</h3>
+            <p class="fcard__text">Глеб всё равно выслал мне документ, который удалось найти, за&nbsp;что я&nbsp;ему безумно благодарна. Всегда был на&nbsp;связи и&nbsp;по&nbsp;максимуму отвечал на&nbsp;все вопросы. Обязательно посоветую друзьям и&nbsp;знакомым.</p>
+            <p class="fcard__author"><img src="img/person.svg" width="22" height="22" alt="">Юлия, Москва</p>
+          </article>
+          <article class="fcard" aria-hidden="true">
+            <h3 class="fcard__title">Юбиляр прослезился</h3>
+            <p class="fcard__text">Спасибо за&nbsp;проделанную работу!! Генеалогическое древо очень понравилось!! Юбиляр прослезился, получив такой подарок!! В&nbsp;процессе работы замучила правками, спасибо за&nbsp;терпение!!</p>
+            <p class="fcard__author"><img src="img/person.svg" width="22" height="22" alt="">Валентина, Рязань</p>
+          </article>
+          <article class="fcard" aria-hidden="true">
+            <h3 class="fcard__title">Подарок к&nbsp;юбилею</h3>
+            <p class="fcard__text">Генеалогическое древо очень понравилось! Спасибо за&nbsp;терпение и&nbsp;внимание к&nbsp;деталям&nbsp;— подарок получился таким, каким мы&nbsp;его задумывали.</p>
+            <p class="fcard__author"><img src="img/person.svg" width="22" height="22" alt="">Наталья, Рязань</p>
+          </article>
+          <article class="fcard" aria-hidden="true">
+            <h3 class="fcard__title">Помог там, где я&nbsp;не&nbsp;знала, как подступиться</h3>
+            <p class="fcard__text">Там, куда я&nbsp;не&nbsp;знала, как подступиться, Глеб нашёл записи и&nbsp;объяснил, что они значат. Теперь у&nbsp;нас есть история семьи, которую можно передать детям.</p>
+            <p class="fcard__author"><img src="img/person.svg" width="22" height="22" alt="">Ирина, Москва</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ОТЗЫВЫ — ВАРИАНТ 3 (для сравнения): карточки в один ряд, как на планшете; листаются вбок (колесом, пальцем или мышью) ============ -->
+    <section class="frow container section" aria-labelledby="frow-title">
+      <h2 class="fly__title" id="frow-title">Что о&nbsp;нас говорят заказчики</h2>
+      <div class="frow__list">
+          <article class="fcard">
+            <h3 class="fcard__title">Быстро и&nbsp;по&nbsp;приятной цене</h3>
+            <p class="fcard__text">Работа сделана очень быстро, качественно, по&nbsp;приятной цене, вежливый и&nbsp;честный человек, приятно с&nbsp;такими сотрудничать. Максимально довольна результатом, спасибо большое!!!</p>
+            <p class="fcard__author"><img src="img/person.svg" width="22" height="22" alt="">Юлия, Калуга</p>
+          </article>
+          <article class="fcard">
+            <h3 class="fcard__title">Столько новых имён</h3>
+            <p class="fcard__text">Знакомство с&nbsp;Глебом было предопределено кем‑то свыше, не&nbsp;иначе!)) Столько новых имён удалось узнать с&nbsp;его помощью&nbsp;— просто не&nbsp;перечесть!</p>
+            <p class="fcard__author"><img src="img/person.svg" width="22" height="22" alt="">Ирина, Москва</p>
+          </article>
+          <article class="fcard">
+            <h3 class="fcard__title">Всегда был на&nbsp;связи</h3>
+            <p class="fcard__text">Глеб всё равно выслал мне документ, который удалось найти, за&nbsp;что я&nbsp;ему безумно благодарна. Всегда был на&nbsp;связи и&nbsp;по&nbsp;максимуму отвечал на&nbsp;все вопросы. Обязательно посоветую друзьям и&nbsp;знакомым.</p>
+            <p class="fcard__author"><img src="img/person.svg" width="22" height="22" alt="">Юлия, Москва</p>
+          </article>
+          <article class="fcard">
+            <h3 class="fcard__title">Юбиляр прослезился</h3>
+            <p class="fcard__text">Спасибо за&nbsp;проделанную работу!! Генеалогическое древо очень понравилось!! Юбиляр прослезился, получив такой подарок!! В&nbsp;процессе работы замучила правками, спасибо за&nbsp;терпение!!</p>
+            <p class="fcard__author"><img src="img/person.svg" width="22" height="22" alt="">Валентина, Рязань</p>
+          </article>
+          <article class="fcard">
+            <h3 class="fcard__title">Подарок к&nbsp;юбилею</h3>
+            <p class="fcard__text">Генеалогическое древо очень понравилось! Спасибо за&nbsp;терпение и&nbsp;внимание к&nbsp;деталям&nbsp;— подарок получился таким, каким мы&nbsp;его задумывали.</p>
+            <p class="fcard__author"><img src="img/person.svg" width="22" height="22" alt="">Наталья, Рязань</p>
+          </article>
+          <article class="fcard">
+            <h3 class="fcard__title">Помог там, где я&nbsp;не&nbsp;знала, как подступиться</h3>
+            <p class="fcard__text">Там, куда я&nbsp;не&nbsp;знала, как подступиться, Глеб нашёл записи и&nbsp;объяснил, что они значат. Теперь у&nbsp;нас есть история семьи, которую можно передать детям.</p>
+            <p class="fcard__author"><img src="img/person.svg" width="22" height="22" alt="">Ирина, Москва</p>
+          </article>
       </div>
     </section>
 

@@ -487,8 +487,7 @@
     var targets = [];
     document.querySelectorAll('h2').forEach(function (h) {
       if (h.closest('[hidden], .opening, .overlay') || h.classList.contains('about-svc__chip')) return;
-      if (h.querySelector('em, strong, a')) return;
-      if (h.classList.contains('approach__title')) return;     // у заголовка «Наш подход» своя анимация (ниже)            // с выделением внутри (курсив, ссылка) — без построчной разметки, иначе выделение теряется
+      if (h.querySelector('em, strong, a')) return;            // с выделением внутри (курсив, ссылка) — без построчной разметки, иначе выделение теряется
       var parts = h.querySelectorAll(':scope > span');
       if (parts.length) parts.forEach(function (p) { targets.push({ el: p, root: h }); });
       else targets.push({ el: h, root: h });
@@ -777,18 +776,17 @@
       form.reset();
     });
   });
-  /* ---------- «Наш подход»: прилипание — на CSS (sticky); здесь только появление:
-     пункты 01–03 и фото поднимаются и проявляются, когда доходят до экрана ---------- */
-  (function () {
-    var sec = document.querySelector('.approach');
-    if (!sec || window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
-    var parts = sec.querySelectorAll('.approach__card, .approach__photo');
-    sec.classList.add('is-anim');
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
-    }, { rootMargin: '0px 0px -12% 0px' });
-    parts.forEach(function (el) { io.observe(el); });
-  })();
+  /* ---------- Отзывы, вариант 3: ленту можно тянуть мышью ---------- */
+  document.querySelectorAll('.frow__list').forEach(function (list) {
+    var down = false, startX = 0, startLeft = 0;
+    list.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      down = true; startX = e.clientX; startLeft = list.scrollLeft;
+      list.classList.add('is-dragging');
+    });
+    window.addEventListener('pointermove', function (e) { if (down) list.scrollLeft = startLeft - (e.clientX - startX); });
+    window.addEventListener('pointerup', function () { if (down) { down = false; list.classList.remove('is-dragging'); } });
+  });
 
   /* ---------- Скругление карточек и контейнеров — по их размеру на экране ----------
      Эталон: 582 × 582 → 32px. radius = 32 × min(ширина, высота) / 582, не больше 32px, округление до 2px
