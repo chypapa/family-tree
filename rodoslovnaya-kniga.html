@@ -6,7 +6,7 @@
   <title>Родословная книга на заказ — история семьи в одном издании | Древо предков</title>
   <meta name="description" content="Генеалогическое исследование по архивам: ищем и расшифровываем документы о ваших предках и оформляем результат в родословную книгу с родословным древом. Рассчитайте стоимость онлайн.">
   <link rel="icon" href="img/favicon.ico" sizes="any">
-  <link rel="stylesheet" href="css/style.css?v=20261016g">
+  <link rel="stylesheet" href="css/style.css?v=20261016h">
   <script>if (!('onpagereveal' in window)) document.documentElement.classList.add('fade-nav');</script>
 </head>
 <body>
@@ -285,7 +285,7 @@
 
     <!-- ============ КАЛЬКУЛЯТОР: заголовок и текст по центру, под ними анкета; по бокам — ветви родословного древа.
          Базовая цена — 100 000 ₽ (атрибут data-base). Логика — js/calculator.js ============ -->
-    <section class="calc calc--center calc--photo container section" id="calc" aria-labelledby="calc-title" data-base="100000">
+    <section class="calc calc--center calc--photo calc--split container section" id="calc" aria-labelledby="calc-title" data-base="100000">
 
       <div class="calc__stage">
         <div class="calc__panel">
@@ -321,38 +321,57 @@
             <button class="calc-line__remove" type="button"><img src="icons/delete.svg" width="18" height="19" alt=""><span class="calc-line__remove-text">Удалить</span></button>
           </div>
 
-          <fieldset class="calc-q" data-q="years">
-            <legend class="calc-q__title">За сколько лет вести исследование?</legend>
-            <p class="calc-q__hint">Это период от&nbsp;последнего известного вам предка вглубь истории. Например, если предок родился в&nbsp;1920&nbsp;году, исследование на&nbsp;100&nbsp;лет приведёт нас примерно к&nbsp;началу XIX&nbsp;века. Если не&nbsp;уверены&nbsp;— выбирайте 100&nbsp;лет, это самый частый запрос.</p>
-            <div class="calc-q__options">
-              <label class="radio"><input type="radio" name="years" value="100"><span>100</span></label>
-              <label class="radio"><input type="radio" name="years" value="200"><span>200</span></label>
-              <label class="radio"><input type="radio" name="years" value="300"><span>300</span></label>
-              <label class="radio radio--custom"><input type="radio" name="years" value="custom"><span>Свой вариант:</span>
-                <input class="input calc-q__custom" type="number" inputmode="numeric" min="1" max="1000" step="1" aria-label="Свой вариант, лет"></label>
-            </div>
-            <p class="calc-q__error">Выберите срок или впишите свой</p>
-          </fieldset>
+          <div class="calc-row">
+            <fieldset class="calc-q" data-q="years">
+              <legend class="calc-q__title">За сколько лет вести исследование?</legend>
+              <div class="calc-q__options">
+                <label class="radio"><input type="radio" name="years" value="100"><span>100</span></label>
+                <label class="radio"><input type="radio" name="years" value="200"><span>200</span></label>
+                <label class="radio"><input type="radio" name="years" value="300"><span>300</span></label>
+                <label class="radio radio--custom"><input type="radio" name="years" value="custom"><span>Свой вариант:</span>
+                  <input class="input calc-q__custom" type="number" inputmode="numeric" min="1" max="1000" step="1" aria-label="Свой вариант, лет"></label>
+              </div>
+              <p class="calc-q__error">Выберите срок или впишите свой</p>
+            </fieldset>
+            <aside class="calc-q__help">
+              <p class="calc-q__help-title">Как выбрать период?</p>
+              <p>Это глубина поиска от&nbsp;последнего известного вам предка вглубь истории. Если прадед родился в&nbsp;1920&nbsp;году, исследование на&nbsp;100&nbsp;лет приведёт нас к&nbsp;1820-м, на&nbsp;200&nbsp;лет&nbsp;— к&nbsp;началу XVIII&nbsp;века.</p>
+              <p>Не&nbsp;уверены&nbsp;— выбирайте 100&nbsp;лет: это самый частый запрос, за&nbsp;такой срок обычно находится 4–5&nbsp;поколений. Продолжить поиск глубже можно и&nbsp;потом.</p>
+              <p>Записи раньше начала XVIII&nbsp;века сохранились не&nbsp;везде, поэтому глубину больше 300&nbsp;лет обсудим на&nbsp;консультации.</p>
+            </aside>
+          </div>
 
-          <fieldset class="calc-q" data-q="before1917">
-            <legend class="calc-q__title">Родился ли&nbsp;последний известный предок до&nbsp;революции (1917&nbsp;года)?</legend>
-            <p class="calc-q__hint">Это важно, потому что после 1917&nbsp;года записи о&nbsp;рождении, браке и&nbsp;смерти велись в&nbsp;ЗАГСах, а&nbsp;до&nbsp;этого&nbsp;— в&nbsp;церковных метрических книгах. Архивы и&nbsp;методы поиска в&nbsp;этих двух случаях разные.</p>
-            <div class="calc-q__options">
-              <label class="radio"><input type="radio" name="before1917" value="yes"><span>Да</span></label>
-              <label class="radio"><input type="radio" name="before1917" value="no"><span>Нет</span></label>
-            </div>
-            <p class="calc-q__error">Выберите ответ</p>
-          </fieldset>
+          <div class="calc-row">
+            <fieldset class="calc-q" data-q="before1917">
+              <legend class="calc-q__title">Родился ли&nbsp;последний известный предок до&nbsp;революции (1917&nbsp;года)?</legend>
+              <div class="calc-q__options">
+                <label class="radio"><input type="radio" name="before1917" value="yes"><span>Да</span></label>
+                <label class="radio"><input type="radio" name="before1917" value="no"><span>Нет</span></label>
+              </div>
+              <p class="calc-q__error">Выберите ответ</p>
+            </fieldset>
+            <aside class="calc-q__help">
+              <p class="calc-q__help-title">Почему это важно?</p>
+              <p>До&nbsp;1917&nbsp;года рождения, браки и&nbsp;смерти записывали в&nbsp;церковные метрические книги, после&nbsp;— в&nbsp;ЗАГСах. Это разные архивы и&nbsp;разные способы поиска.</p>
+              <p>Не&nbsp;знаете точной даты? Если в&nbsp;1930-е годы у&nbsp;предка уже были дети, он почти наверняка родился до&nbsp;революции.</p>
+            </aside>
+          </div>
 
-          <div class="calc-q" data-q="region">
-            <label class="calc-q__title" for="region">В&nbsp;каком регионе жил этот род?</label>
-            <p class="calc-q__hint">Регион определяет, в&nbsp;каком архиве вести поиск&nbsp;— это может повлиять на&nbsp;сроки и&nbsp;стоимость исследования.</p>
-            <div class="combo">
-              <input class="input combo__input" id="region" type="text" autocomplete="off" placeholder="Москва"
-                     role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="region-list">
-              <ul class="combo__list" id="region-list" role="listbox" hidden></ul>
+          <div class="calc-row">
+            <div class="calc-q" data-q="region">
+              <label class="calc-q__title" for="region">В&nbsp;каком регионе жил этот род?</label>
+              <div class="combo">
+                <input class="input combo__input" id="region" type="text" autocomplete="off" placeholder="Москва"
+                       role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="region-list">
+                <ul class="combo__list" id="region-list" role="listbox" hidden></ul>
+              </div>
+              <p class="calc-q__error">Впишите регион</p>
             </div>
-            <p class="calc-q__error">Впишите регион</p>
+            <aside class="calc-q__help">
+              <p class="calc-q__help-title">Если семья переезжала</p>
+              <p>Регион подсказывает, в&nbsp;каком архиве искать,&nbsp;— от&nbsp;этого зависят сроки и&nbsp;стоимость. Укажите место, где род жил дольше всего или откуда он, по&nbsp;семейным рассказам, родом.</p>
+              <p>Границы губерний с&nbsp;тех пор менялись&nbsp;— пишите современное название, а&nbsp;к&nbsp;какой губернии место относилось, мы&nbsp;найдём сами. Хватит и&nbsp;города, где родились бабушка или дед.</p>
+            </aside>
           </div>
         </fieldset>
       </template>
@@ -460,7 +479,7 @@
 </div>
 
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="js/main.js?v=20261016g"></script>
-<script src="js/calculator.js?v=20261016g"></script>
+<script src="js/main.js?v=20261016h"></script>
+<script src="js/calculator.js?v=20261016h"></script>
 </body>
 </html>

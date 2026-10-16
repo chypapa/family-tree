@@ -2833,6 +2833,23 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 }
 .page:has(.calc--photo) .footer { margin-top: 0; }   /* фото поля доходит до подвала */
 
+/* анкета в две колонки (страница «Родословная книга»): слева вопрос и варианты ответа, справа — пояснение,
+   что выбрать, если сомневаетесь; вопросы разделены тонкой линией. Вся анкета — 8 колонок из 12 */
+.calc--split .calc-line { gap: 0; }
+.calc-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s-48); padding: var(--s-48) 0; border-top: 1px solid rgba(60, 60, 60, .14); }
+.calc-line__head + .calc-row { padding-top: var(--sp-32); border-top: 0; }
+.calc-line:not(.calc-line--extra) .calc-row:nth-child(2) { padding-top: var(--sp-20); }   /* первый вопрос — сразу под вводным текстом */
+.calc-row:last-child { padding-bottom: 0; }
+.calc--split .calc-line--extra { padding-top: var(--s-48); border-top: 1px solid rgba(60, 60, 60, .14); }
+.calc-q__help { display: flex; flex-direction: column; gap: var(--sp-12); padding-top: 6px; color: var(--muted); }
+.calc-q__help-title { color: var(--text); font-weight: 500; }
+.calc--split .combo { max-width: 320px; }
+@media (max-width: 767px) {
+  .calc-row { grid-template-columns: 1fr; row-gap: var(--sp-20); padding: var(--sp-32) 0; }
+  .calc--split .calc-line--extra { padding-top: var(--sp-32); }
+  .calc--split .combo { max-width: none; }
+}
+
 /* лента карточек на планшете: заголовок → текст 20px, как на телефоне и в карточках блога */
 @media (max-width: 1199px) {
   .mcard--green, .mcard--red, .mcard--orange { gap: var(--sp-20); }
