@@ -2579,7 +2579,9 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   text-decoration: none;
   transition: background-color .25s ease, color .25s ease, border-color .25s ease;
 }
-.collage__btn:hover { background: #515237; border-color: #515237; color: #e6e3d0; }
+@media (hover: hover) and (pointer: fine) {
+  .collage__btn:hover { background: #515237; border-color: #515237; color: #e6e3d0; }   /* заливка — только под мышью: на телефоне после касания не «залипает» */
+}
 .collage__btn:focus-visible { outline: 2px solid #515237; outline-offset: 3px; }
 
 /* вертикальные экраны (телефон, планшет стоя) — макет Figma 755:89 (кадр 390 × 801): семь фото над и под карточкой,
@@ -2588,6 +2590,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   /* масштаб — только по ширине экрана, как в макете: карточка всегда в 24px от краёв; блок не ниже кадра макета */
   .collage { --m: calc(100vw / 390); height: max(100svh, calc(801 * var(--m))); }
   .collage__photo { display: none; }
+  .collage__photo[data-m]:has(img[src$="photo-02.webp"]) { z-index: 1; }   /* мама с ребёнком — поверх соседнего фото, как в макете */
   .collage__photo[data-m] {
     display: block;
     left: calc(50% + (var(--mx) - 195) * var(--m));
