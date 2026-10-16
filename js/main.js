@@ -612,6 +612,27 @@
     window.addEventListener('scroll', function () { if (over) place(); }, { passive: true });
   });
 
+  /* ---------- Услуги стопкой: тень у карточки плавно появляется, только пока она наезжает на предыдущую;
+     когда под карточкой других не видно — тени нет ---------- */
+  var stackCards = Array.prototype.slice.call(document.querySelectorAll('.stack__card'));
+  if (stackCards.length > 1) {
+    var stackTick = false;
+    var updateStack = function () {
+      stackTick = false;
+      for (var i = 1; i < stackCards.length; i++) {
+        var prev = stackCards[i - 1].getBoundingClientRect();
+        var cur = stackCards[i].getBoundingClientRect();
+        var over = Math.max(0, Math.min(1, (prev.bottom - cur.top) / 160));   // на сколько карточка уже закрыла предыдущую
+        stackCards[i].style.setProperty('--sh', over.toFixed(3));
+      }
+    };
+    window.addEventListener('scroll', function () {
+      if (!stackTick) { stackTick = true; requestAnimationFrame(updateStack); }
+    }, { passive: true });
+    window.addEventListener('resize', updateStack);
+    updateStack();
+  }
+
   /* ---------- Видео на первом экране: при «уменьшить движение» не крутим, показываем первый кадр ---------- */
   document.querySelectorAll('.opening__video').forEach(function (v) {
     var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
