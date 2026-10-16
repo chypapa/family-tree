@@ -789,11 +789,10 @@
   });
 
   /* ---------- Скругление карточек и контейнеров — по их размеру на экране ----------
-     Эталон: 582 × 582 → 32px. radius = 32 × min(ширина, высота) / 582, не больше 32px, округление до 2px
+     Эталон: 582 × 582 → 16px (вдвое меньше прежних 32). radius = 16 × min(ширина, высота) / 582, не больше 16px
      (858 × 517 → 28, 431 × 328 → 18, 276 × 218 → 12). Скругляются только те углы, что скруглены в CSS.
      Не трогаем: кнопки, поля, плашки-«таблетки» и круги, а также мелкие элементы (меньше 64px) — это не карточки */
   (function () {
-    return;   // скругления на сайте пока отключены (border-radius закомментированы в css/style.css)
     var SKIP = 'button, input, select, textarea, label, svg, svg *, video, .btn, .tag, [class*="btn"], [class*="chip"], .cursor-bubble';
     var CORNERS = ['borderTopLeftRadius', 'borderTopRightRadius', 'borderBottomRightRadius', 'borderBottomLeftRadius'];
     var items = [];
@@ -812,7 +811,7 @@
     var apply = function (it) {
       var w = it.el.offsetWidth, h = it.el.offsetHeight, m = Math.min(w, h);
       if (!m || m < 64 || it.orig >= m / 2) return;                                   // мелкое, скрытое или «таблетка» по размеру
-      var r = Math.min(32, Math.round(32 * m / 582 / 2) * 2) + 'px';
+      var r = Math.min(16, Math.round(16 * m / 582)) + 'px';   // вдвое меньше: эталон 582 → 16px, округление до 1px
       CORNERS.forEach(function (c, i) { if (it.mask[i]) it.el.style[c] = r; });
     };
     var ro = new ResizeObserver(function (entries) {
