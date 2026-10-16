@@ -103,14 +103,15 @@
      H3          32      28          26         22     названия карточек, подзаголовки
      H4          24      22          20         18     заголовки постов, этапов, вопросов калькулятора
      текст       18      17          16         16     весь основной текст, кнопки, подписи */
-  --fs-h1: 56px;
-  --fs-h2: 40px;
+  --fs-h1: 80px;                                      /* H1, H2 — Cormorant (как в макете 745:1715) */
+  --fs-h2: 55px;
+  --fs-strip: 40px;                                   /* заголовки карточек ленты (второй блок) — Manrope, как сейчас */
   --fs-h3: 32px;
   --fs-h4: 24px;
   --fs-body: 18px;
 }
 /* основной текст и поля страницы по ступеням ширины окна */
-@media (max-width: 1439px) { :root { --section-gap: 96px; --gut: 56px; --fs-h1: 50px; --fs-h2: 36px; --fs-h3: 28px; --fs-h4: 22px; --fs-body: 17px; } }
+@media (max-width: 1439px) { :root { --section-gap: 96px; --gut: 56px; --fs-h1: 68px; --fs-h2: 48px; --fs-strip: 36px; --fs-h3: 28px; --fs-h4: 22px; --fs-body: 17px; } }
 
 /* ---------- База ---------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -171,8 +172,10 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4, .mcard__title {
 }
 h1, h2, h3, h4, .h1, .h2, .h3, .h4 { color: var(--text); }
 .focus__title, .collage__title { color: inherit; }  /* заголовок на фото и в карточке коллажа — цвет своего блока */
-h1, .h1 { font-size: var(--fs-h1); font-weight: 600; line-height: 1.15; letter-spacing: -.01em; }
-h2, .h2, .mcard__title { font-size: var(--fs-h2); font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
+h1, .h1, h2, .h2, .lead__title, .about2__subtitle, .book-lead { font-family: "Cormorant", Georgia, serif; }   /* заголовки — Cormorant; H3/H4 (названия карточек) — Manrope */
+h1, .h1 { font-size: var(--fs-h1); font-weight: 500; line-height: 1.05; letter-spacing: -.01em; }
+h2, .h2 { font-size: var(--fs-h2); font-weight: 400; line-height: 1; letter-spacing: -.01em; }
+.mcard__title { font-family: "Manrope", system-ui, sans-serif; font-size: var(--fs-strip); font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }   /* лента — Manrope */
 h3, .h3 { font-size: var(--fs-h3); font-weight: 500; line-height: 1.25; letter-spacing: -.005em; }
 h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-spacing: -.005em; }
 /* ---------- Заголовки H2 появляются построчно (классы ставит js/main.js; без JS всё видно сразу):
@@ -1369,7 +1372,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   padding: var(--s-48) var(--s-56) var(--s-32);   /* под кнопкой — меньше */
   color: var(--white);
 }
-.lead__title { color: var(--white); font-size: var(--fs-h2); font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }   /* стиль H2 */
+.lead__title { color: var(--white); font-size: var(--fs-h2); font-weight: 400; line-height: 1; letter-spacing: -.01em; }   /* стиль H2 */
 .lead__head p { max-width: 640px; margin-top: var(--sp-20); }   /* основной текст сайта */
 .lead__chips { display: flex; flex-wrap: wrap; gap: var(--sp-20); margin: 0; padding: 0; list-style: none; }
 .lead__chips li { padding: var(--s-8) var(--s-24); border: 1px solid rgba(255, 255, 255, .8); border-radius: 999px; line-height: 1.5; }
@@ -1598,7 +1601,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
    ПЛАНШЕТ 768–1199
    ========================================================= */
 @media (max-width: 1199px) {
-  :root { --section-gap: 80px; --gap-head: 40px; --gut: 40px; --fs-h1: 44px; --fs-h2: 32px; --fs-h3: 26px; --fs-h4: 20px; --fs-body: 16px; }
+  :root { --section-gap: 80px; --gap-head: 40px; --gut: 40px; --fs-h1: 56px; --fs-h2: 40px; --fs-strip: 32px; --fs-h3: 26px; --fs-h4: 20px; --fs-body: 16px; }
 
   /* отзывы на главной — лента с прокруткой вбок до краёв экрана (место под тень карточек — лента её не обрезает) */
   .reviews__list {
@@ -1701,8 +1704,9 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
     --pad-card: var(--s-24);
     --section-gap: 64px;
     --gap-head: 32px;
-    --fs-h1: 34px;
-    --fs-h2: 28px;
+    --fs-h1: 40px;
+    --fs-h2: 32px;
+    --fs-strip: 28px;
     --fs-h3: 22px;
     --fs-h4: 18px;
     --fs-body: 16px;                                  /* основной текст на телефоне — 16px */
@@ -2662,7 +2666,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .about2 { display: grid; grid-template-columns: 877fr 857fr; gap: var(--sp-20); align-items: start; }
 .about2__lead { max-width: 760px; color: var(--red); }   /* стиль H2 (как заголовки блоков), красным — по скриншоту */
 .about2__how { display: flex; flex-direction: column; gap: var(--sp-20); }
-.about2__subtitle { color: var(--text); }           /* стиль H3 */
+.about2__subtitle { font-size: 32px; font-weight: 400; line-height: 1.2; color: var(--text); }
 .about2__list { display: flex; flex-direction: column; gap: var(--sp-20); }
 .about2__list li { display: flex; gap: var(--sp-12); color: var(--text-body); line-height: 1.41; }
 .about2__list li::before {                            /* квадратный маркер 8px в поле 18px, по центру первой строки */
@@ -2713,8 +2717,8 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 
 /* о книге: та же сетка, что «О проекте» на главной; слева крупный текст стилем H3 (первая фраза — красным) и кнопка-«таблетка» */
 .about2__intro { display: flex; flex-direction: column; align-items: flex-start; gap: var(--sp-32); }
-.book-lead { max-width: 733px; font-size: var(--fs-h3); font-weight: 500; line-height: 1.25; letter-spacing: -.005em; text-wrap: wrap; color: var(--text); }   /* стиль H3 */
-.book-lead em { font-style: normal; color: var(--red); }
+.book-lead { max-width: 733px; font-size: 32px; font-weight: 500; line-height: 1; letter-spacing: -.01em; text-wrap: wrap; color: var(--text); }
+.book-lead em { font-style: italic; font-weight: 400; color: var(--red); }
 .btn--pill { padding: 12px 27px; border-radius: 999px; font-weight: 700; }
 
 /* примеры: два фото рядом (889 × 478 на 1920), промежуток 20px, подпись под первым */
@@ -2881,17 +2885,9 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .collage__text { font-size: 22px; }
 }
 
-/* телефон: заголовки — снова Cormorant, как было до перехода на Manrope (H1 40px, H2 32px);
-   карточки ленты (второй блок, .mcard__title) остаются Manrope */
-@media (max-width: 767px) {
-  h1, .h1, h2, .h2, .lead__title, .about2__subtitle, .book-lead { font-family: "Cormorant", Georgia, serif; }
-  h1, .h1 { font-size: 40px; font-weight: 500; line-height: 1.05; }
-  h2, .h2, .lead__title { font-size: 32px; font-weight: 400; line-height: 1; }
-  .about2__subtitle { font-size: 24px; font-weight: 400; line-height: 1.2; }
-  .book-lead { font-size: 24px; line-height: 1; }
-  .book-lead em { font-style: italic; font-weight: 400; }
-  .mcard__title { font-family: "Manrope", system-ui, sans-serif; }
-}
+/* Cormorant-подзаголовки на меньших экранах */
+@media (max-width: 1439px) { .about2__subtitle, .book-lead { font-size: 28px; } }
+@media (max-width: 767px) { .about2__subtitle, .book-lead { font-size: 24px; } }
 
 /* =========================================================
    НАШ ПОДХОД — после «Направлений услуг» (по образцу generaldental.ca/about):
@@ -2900,7 +2896,16 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
    ========================================================= */
 .approach__title { max-width: calc((100% - 11 * var(--col-gap)) / 12 * 9 + 8 * var(--col-gap)); }
 .approach__list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--col-gap); margin: var(--gap-head) 0 0; padding: 0; list-style: none; }
-.approach__item { display: flex; flex-direction: column; padding-top: var(--sp-20); border-top: 1px solid rgba(60, 60, 60, .25); }
+.approach__item { position: relative; display: flex; flex-direction: column; padding-top: var(--sp-20); }
+.approach__item::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: rgba(60, 60, 60, .25); transform-origin: left; }
+
+/* анимация при прокрутке (js/main.js): слова заголовка проявляются из бледного по мере прокрутки;
+   линия над пунктом прочерчивается слева направо, затем номер, название и текст поднимаются — пункты по очереди */
+.approach__title .aw { opacity: calc(.18 + .82 * var(--w, 1)); transition: opacity .15s linear; }
+.approach.is-anim .approach__item::before { transform: scaleX(0); transition: transform 1s cubic-bezier(.65, 0, .35, 1) calc(var(--i) * .18s); }
+.approach.is-anim .approach__item > * { opacity: 0; transform: translateY(24px); transition: opacity .7s ease calc(var(--i) * .18s + .35s), transform .8s cubic-bezier(.2, .7, .2, 1) calc(var(--i) * .18s + .35s); }
+.approach.is-anim .approach__item.is-in::before { transform: none; }
+.approach.is-anim .approach__item.is-in > * { opacity: 1; transform: none; }
 .approach__num { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; color: var(--red); }
 .approach__name { margin-top: var(--sp-32); }
 .approach__item p { margin-top: var(--sp-20); max-width: 520px; }

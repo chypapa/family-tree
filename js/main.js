@@ -487,7 +487,8 @@
     var targets = [];
     document.querySelectorAll('h2').forEach(function (h) {
       if (h.closest('[hidden], .opening, .overlay') || h.classList.contains('about-svc__chip')) return;
-      if (h.querySelector('em, strong, a')) return;            // с выделением внутри (курсив, ссылка) — без построчной разметки, иначе выделение теряется
+      if (h.querySelector('em, strong, a')) return;
+      if (h.classList.contains('approach__title')) return;     // у заголовка «Наш подход» своя анимация (ниже)            // с выделением внутри (курсив, ссылка) — без построчной разметки, иначе выделение теряется
       var parts = h.querySelectorAll(':scope > span');
       if (parts.length) parts.forEach(function (p) { targets.push({ el: p, root: h }); });
       else targets.push({ el: h, root: h });
@@ -776,6 +777,49 @@
       form.reset();
     });
   });
+  /* ---------- «Наш подход» (после «Направлений услуг»): слова заголовка проявляются по мере прокрутки,
+     пункты 01–03 появляются по очереди: линия прочерчивается, затем текст поднимается ---------- */
+  (function () {
+    var sec = document.querySelector('.approach');
+    if (!sec || window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+    var title = sec.querySelector('.approach__title');
+    var words = [];
+    [].slice.call(title.childNodes).forEach(function (node) {
+      if (node.nodeType !== 3) return;
+      var frag = document.createDocumentFragment();
+      node.nodeValue.split(/( +)/).forEach(function (part) {
+        if (!part) return;
+        if (/^ +$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+        var w = document.createElement('span');
+        w.className = 'aw';
+        w.textContent = part;
+        frag.appendChild(w);
+        words.push(w);
+      });
+      title.replaceChild(frag, node);
+    });
+    var ticking = false;
+    var paint = function () {
+      ticking = false;
+      var r = title.getBoundingClientRect(), vh = window.innerHeight;
+      // 0 — верх заголовка у нижнего края окна (85%), 1 — заголовок поднялся до 35% высоты окна
+      var p = Math.max(0, Math.min(1, (vh * .85 - r.top) / (vh * .5)));
+      var n = words.length;
+      words.forEach(function (w, i) { w.style.setProperty('--w', Math.max(0, Math.min(1, p * (n + 2) - i)).toFixed(3)); });
+    };
+    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(paint); } }, { passive: true });
+    window.addEventListener('resize', paint);
+    paint();
+
+    var items = sec.querySelectorAll('.approach__item');
+    items.forEach(function (it, i) { it.style.setProperty('--i', i); });
+    sec.classList.add('is-anim');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -15% 0px' });
+    items.forEach(function (it) { io.observe(it); });
+  })();
+
   /* ---------- Скругление карточек и контейнеров — по их размеру на экране ----------
      Эталон: 582 × 582 → 32px. radius = 32 × min(ширина, высота) / 582, не больше 32px, округление до 2px
      (858 × 517 → 28, 431 × 328 → 18, 276 × 218 → 12). Скругляются только те углы, что скруглены в CSS.
