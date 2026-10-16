@@ -777,47 +777,17 @@
       form.reset();
     });
   });
-  /* ---------- «Наш подход» (после «Направлений услуг»): слова заголовка проявляются по мере прокрутки,
-     пункты 01–03 появляются по очереди: линия прочерчивается, затем текст поднимается ---------- */
+  /* ---------- «Наш подход»: заголовок прилипает к верху (CSS sticky), пункты 01–03 и фото
+     поднимаются и проявляются, когда доходят до экрана ---------- */
   (function () {
     var sec = document.querySelector('.approach');
     if (!sec || window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
-    var title = sec.querySelector('.approach__title');
-    var words = [];
-    [].slice.call(title.childNodes).forEach(function (node) {
-      if (node.nodeType !== 3) return;
-      var frag = document.createDocumentFragment();
-      node.nodeValue.split(/( +)/).forEach(function (part) {
-        if (!part) return;
-        if (/^ +$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
-        var w = document.createElement('span');
-        w.className = 'aw';
-        w.textContent = part;
-        frag.appendChild(w);
-        words.push(w);
-      });
-      title.replaceChild(frag, node);
-    });
-    var ticking = false;
-    var paint = function () {
-      ticking = false;
-      var r = title.getBoundingClientRect(), vh = window.innerHeight;
-      // 0 — верх заголовка у нижнего края окна (85%), 1 — заголовок поднялся до 35% высоты окна
-      var p = Math.max(0, Math.min(1, (vh * .85 - r.top) / (vh * .5)));
-      var n = words.length;
-      words.forEach(function (w, i) { w.style.setProperty('--w', Math.max(0, Math.min(1, p * (n + 2) - i)).toFixed(3)); });
-    };
-    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(paint); } }, { passive: true });
-    window.addEventListener('resize', paint);
-    paint();
-
-    var items = sec.querySelectorAll('.approach__item');
-    items.forEach(function (it, i) { it.style.setProperty('--i', i); });
+    var parts = sec.querySelectorAll('.approach__item, .approach__photo');
     sec.classList.add('is-anim');
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
-    }, { rootMargin: '0px 0px -15% 0px' });
-    items.forEach(function (it) { io.observe(it); });
+    }, { rootMargin: '0px 0px -12% 0px' });
+    parts.forEach(function (el) { io.observe(el); });
   })();
 
   /* ---------- Скругление карточек и контейнеров — по их размеру на экране ----------
