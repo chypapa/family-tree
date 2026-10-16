@@ -2944,7 +2944,6 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .fly__title { margin-bottom: var(--gap-head); }
 .fly__viewport { overflow: hidden; padding-bottom: 160px; }
 .fly__track { display: flex; align-items: flex-start; gap: var(--col-gap); width: max-content; padding-left: var(--edge); animation: fly-left 90s linear infinite; }
-.fly__viewport:hover .fly__track { animation-play-state: paused; }
 @keyframes fly-left { to { transform: translateX(-50%); } }
 .fcard {
   flex: none;
@@ -2995,7 +2994,11 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .fly .fly__title { max-width: none; }                 /* заголовок — на линии остального контента */
 
 /* отзывы, вариант 2: карточки как в блоке «Отзывы клиентов» (звёзды, полный текст), промежуток в 5 раз больше (100px) */
-.fly__track { gap: calc(var(--col-gap) * 5); }
+.fly { --fly-gap: 500px; }                           /* промежуток между карточками — в 5 раз больше прежних 100px */
+@media (max-width: 767px) { .fly { --fly-gap: 200px; } }
+/* бесшовный круг: набор карточек повторён дважды, после каждой карточки (и последней) — промежуток, поэтому половина ленты = ровно один набор */
+.fly__viewport { padding-left: var(--edge); }
+.fly__track { gap: var(--fly-gap); padding-left: 0; padding-right: var(--fly-gap); animation-duration: 100s; }
 .fly .review { min-height: 328px; }
 .fly .fly__track > .fcard:nth-child(4n+1) { transform: translateY(100px); }
 .fly .fly__track > .fcard:nth-child(4n+2) { transform: translateY(0); }
@@ -3007,3 +3010,4 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 @media (min-width: 1440px) and (min-aspect-ratio: 1/1) {
   .collage__text { width: calc(583 * var(--cu) - 40px); font-size: var(--fs-quote); }
 }
+.fly .review__author { opacity: .5; }                /* имя и значок — прозрачность 50% */
