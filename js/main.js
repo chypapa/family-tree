@@ -777,12 +777,12 @@
       form.reset();
     });
   });
-  /* ---------- «Наш подход»: заголовок прилипает к верху (CSS sticky), пункты 01–03 и фото
-     поднимаются и проявляются, когда доходят до экрана ---------- */
+  /* ---------- «Наш подход»: прилипание — на CSS (sticky); здесь только появление:
+     пункты 01–03 и фото поднимаются и проявляются, когда доходят до экрана ---------- */
   (function () {
     var sec = document.querySelector('.approach');
     if (!sec || window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
-    var parts = sec.querySelectorAll('.approach__item, .approach__photo');
+    var parts = sec.querySelectorAll('.approach__card, .approach__photo');
     sec.classList.add('is-anim');
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
