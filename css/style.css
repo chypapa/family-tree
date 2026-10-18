@@ -3213,7 +3213,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .v1-about__list strong { font-weight: 600; color: var(--white); }
 
 /* блог — как был, но по сетке и цветам версии 1: заголовок Manrope, карточки постов светлые */
-.theme-v1 .blog.section { margin-top: calc(var(--gap-head) / 2); }   /* над заголовком — вдвое меньше, чем под ним */
+.theme-v1 .blog.section { margin-top: var(--section-gap); }   /* от блока «О нас» — 200px на большом экране*/
 .theme-v1 .blog .section-head { margin-bottom: var(--gap-head); }            /* под заголовком — 70px на 1920 */
 .theme-v1 .blog .quote-title { max-width: none; font-size: var(--v1-h2); font-style: normal; font-weight: 600; line-height: 1.2; letter-spacing: -.01em; color: var(--text); }
 .theme-v1 .blog .link-more { color: var(--text); }
