@@ -3094,18 +3094,20 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   --v1-h2: 44px;
   --v1-h3: 32px;
   --v1-h4: 24px;
+  --v1-pad: 60px;                                     /* внутренний отступ первого экрана и оливковых блоков */
+  --v1-near: 30px;                                    /* первый экран → карточки, форма → подвал */
   --v1-r: 26px;                                       /* скругление карточек */
   --v1-r-lg: 32px;                                    /* большие блоки */
   --fs-body: 18px;
 }
 @media (max-width: 1439px) {
-  .theme-v1 { --gut: 24px; --hdr-gap: 24px; --section-gap: 160px; --gap-head: 56px; --v1-h1: 48px; --v1-h2: 38px; --v1-h3: 28px; --v1-h4: 22px; --fs-body: 17px; }
+  .theme-v1 { --gut: 24px; --hdr-gap: 24px; --section-gap: 160px; --gap-head: 56px; --v1-h1: 48px; --v1-h2: 38px; --v1-h3: 28px; --v1-h4: 22px; --fs-body: 17px; --v1-pad: 48px; }
 }
 @media (max-width: 1199px) {
-  .theme-v1 { --gut: 20px; --hdr-gap: 20px; --section-gap: 120px; --gap-head: 48px; --v1-h1: 44px; --v1-h2: 34px; --v1-h3: 26px; --v1-h4: 20px; --v1-r: 22px; --v1-r-lg: 26px; --fs-body: 16px; }
+  .theme-v1 { --gut: 20px; --hdr-gap: 20px; --section-gap: 120px; --gap-head: 48px; --v1-h1: 44px; --v1-h2: 34px; --v1-h3: 26px; --v1-h4: 20px; --v1-pad: 32px; --v1-near: 24px; --v1-r: 22px; --v1-r-lg: 26px; --fs-body: 16px; }
 }
 @media (max-width: 767px) {
-  .theme-v1 { --gut: 12px; --hdr-gap: 12px; --section-gap: 80px; --gap-head: 32px; --v1-h1: 32px; --v1-h2: 28px; --v1-h3: 22px; --v1-h4: 18px; --v1-r: 18px; --v1-r-lg: 20px; --fs-body: 16px; }
+  .theme-v1 { --gut: 12px; --hdr-gap: 12px; --section-gap: 80px; --gap-head: 32px; --v1-h1: 32px; --v1-h2: 28px; --v1-h3: 22px; --v1-h4: 18px; --v1-pad: 20px; --v1-near: 12px; --v1-r: 18px; --v1-r-lg: 20px; --fs-body: 16px; }
 }
 .theme-v1 body { background: var(--bg); color: var(--text-body); }
 .theme-v1 h1, .theme-v1 .h1, .theme-v1 h2, .theme-v1 .h2, .theme-v1 .lead__title { font-family: "Manrope", system-ui, sans-serif; }
@@ -3137,12 +3139,12 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   mask-image: linear-gradient(180deg, transparent 20%, #000 60%);
 }
 .v1-hero::after { inset: 0 0 auto; height: 22%; background: linear-gradient(180deg, rgba(226, 213, 194, .8), rgba(226, 213, 194, 0)); }
-.v1-hero__text { position: absolute; left: 60px; right: 60px; bottom: 72px; display: flex; flex-direction: column; gap: var(--s-32); color: var(--white); text-shadow: 0 1px 24px rgba(80, 66, 50, .25); }
+.v1-hero__text { position: absolute; left: var(--v1-pad); right: var(--v1-pad); bottom: var(--v1-pad); display: flex; flex-direction: column; gap: var(--s-32); color: var(--white); text-shadow: 0 1px 24px rgba(80, 66, 50, .25); }
 .v1-hero__title { max-width: 980px; font-size: var(--v1-h1); font-weight: 600; line-height: 1.2; letter-spacing: -.01em; color: var(--white); }
 .v1-hero__lead { max-width: 625px; font-size: var(--fs-body); line-height: 1.36; text-wrap: balance; }
 
 /* четыре белые карточки */
-.v1-features { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--col-gap); margin-top: 30px; padding: 0; list-style: none; }
+.v1-features { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--col-gap); margin-top: var(--v1-near); padding: 0; list-style: none; }
 .v1-feature { display: flex; flex-direction: column; justify-content: space-between; gap: var(--s-32); min-height: 234px; padding: var(--s-32); border-radius: var(--v1-r); background: var(--white); }
 .v1-feature__title { font-family: "Manrope", system-ui, sans-serif; font-size: var(--v1-h4); font-weight: 500; line-height: 1.2; letter-spacing: -.01em; color: var(--text); text-wrap: balance; }
 .v1-feature__text { line-height: 1.2; color: var(--text-body); text-wrap: balance; }
@@ -3195,7 +3197,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   grid-template-columns: minmax(0, 705fr) minmax(0, 800fr);
   column-gap: 178px;
   margin-top: var(--section-gap);
-  padding: 54px 34px;
+  padding: var(--v1-pad);
   border-radius: var(--v1-r-lg);
   background: var(--red);
   color: var(--white);
@@ -3223,14 +3225,14 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 
 /* блок заявки — оливковая плашка с полями от краёв окна и скруглением, как «О нас» */
 .theme-v1 .lead.container:not(.lead--modal) { width: min(var(--container), 100% - 2 * var(--gut)); margin-top: var(--section-gap); }
-.theme-v1 .lead:not(.lead--modal) .lead__inner { padding: 0 34px; border-radius: var(--v1-r-lg); background: var(--red); }
-.theme-v1 .lead:not(.lead--modal) .lead__card { padding: 54px 0; }
+.theme-v1 .lead:not(.lead--modal) .lead__inner { padding: 0 var(--v1-pad); border-radius: var(--v1-r-lg); background: var(--red); }
+.theme-v1 .lead:not(.lead--modal) .lead__card { padding: var(--v1-pad) 0; }
 .theme-v1 .lead__title { font-size: var(--v1-h2); font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
 .theme-v1 .lead__submit { color: var(--text); }
 .theme-v1 .lead__agree input:checked { box-shadow: inset 0 0 0 4px var(--red); }
 
 /* подвал — тёмная плашка с полями от краёв, под формой — промежуток 12px */
-.theme-v1 .page:has(.lead:not(.lead--modal)) .footer, .theme-v1 .footer { width: auto; margin: var(--col-gap) var(--gut) var(--gut); border-radius: 20px; background: #5f5c58; }
+.theme-v1 .page:has(.lead:not(.lead--modal)) .footer, .theme-v1 .footer { width: auto; margin: var(--v1-near) var(--gut) var(--gut); border-radius: 20px; background: #5f5c58; }
 .theme-v1 .footer__inner { height: 72px; padding-inline: var(--s-24); }
 .theme-v1 .footer__logo { background: transparent; }
 .theme-v1 .footer__policy { font-size: 15px; }
@@ -3238,16 +3240,15 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 /* ноутбук */
 @media (max-width: 1439px) {
   .v1-hero { height: 600px; }
-  .v1-hero__text { left: 48px; right: 48px; bottom: 56px; }
   .v1-feature { min-height: 220px; padding: var(--s-24); }
   .v1-review { min-height: 320px; padding: var(--s-24); }
   .v1-svc__card { padding: 22px 24px; }
-  .v1-about { column-gap: 96px; padding: 48px 32px; }
+  .v1-about { column-gap: 96px; }
 }
 /* планшет */
 @media (max-width: 1199px) {
   .v1-hero { height: 560px; }
-  .v1-hero__text { left: 32px; right: 32px; bottom: 40px; gap: var(--s-24); }
+  .v1-hero__text { gap: var(--s-24); }
   .v1-features { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .v1-feature { min-height: 0; }
   .v1-svc__list { gap: var(--col-gap); }
@@ -3255,14 +3256,12 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .v1-reviews__list { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-inline: calc(-1 * var(--gut)); padding-inline: var(--gut); scroll-padding-inline: var(--gut); }
   .v1-reviews__list::-webkit-scrollbar { display: none; }
   .v1-review { flex: 0 0 min(360px, 70vw); scroll-snap-align: start; }
-  .v1-about { grid-template-columns: 1fr; row-gap: var(--s-48); padding: 40px 32px; }
-  .theme-v1 .lead:not(.lead--modal) .lead__inner { padding: 0 32px; }
-  .theme-v1 .lead:not(.lead--modal) .lead__card { padding: 48px 0; }
+  .v1-about { grid-template-columns: 1fr; row-gap: var(--s-48); }
 }
 /* телефон */
 @media (max-width: 767px) {
   .v1-hero { height: 520px; }
-  .v1-hero__text { left: 20px; right: 20px; bottom: 28px; gap: var(--s-16); }
+  .v1-hero__text { gap: var(--s-16); }
   .v1-features { grid-template-columns: 1fr; }
   .v1-feature { gap: var(--s-16); padding: var(--s-24) 20px; }
   .v1-svc__list { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-inline: 0; padding-inline: var(--gut); scroll-padding-inline: var(--gut); width: 100%; }
@@ -3270,11 +3269,14 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .v1-svc__card { flex: 0 0 78vw; scroll-snap-align: start; padding: 20px; }
   .v1-svc__arrow { width: 40px; height: 40px; }
   .v1-review { flex-basis: 82vw; min-height: 300px; padding: 20px; }
-  .v1-about { padding: 32px 20px; }
   .theme-v1 .lead.container:not(.lead--modal) { width: calc(100% - 2 * var(--gut)); }
-  .theme-v1 .lead:not(.lead--modal) .lead__inner { padding: 32px 20px; border-radius: var(--v1-r-lg); }
+  .theme-v1 .lead:not(.lead--modal) .lead__inner { padding: var(--v1-pad); border-radius: var(--v1-r-lg); }
   .theme-v1 .lead:not(.lead--modal) .lead__card { padding: 0; }
   .theme-v1 .header { margin-inline: var(--gut); }
   .theme-v1 .header__bar { border-radius: 16px; }
   .theme-v1 .footer__inner { height: auto; padding: var(--s-24) 20px; }
+}
+/* картинка в блоке заявки не задаёт высоту блока: высота — по форме с отступами, картинка вписывается в неё */
+@media (min-width: 1024px) {
+  .theme-v1 .lead:not(.lead--modal) .lead__map { align-self: stretch; height: 0; min-height: 100%; max-height: none; padding-block: var(--v1-pad); box-sizing: border-box; }
 }
