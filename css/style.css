@@ -3280,3 +3280,29 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 @media (min-width: 1024px) {
   .theme-v1 .lead:not(.lead--modal) .lead__map { align-self: stretch; height: 0; min-height: 100%; max-height: none; padding-block: 0; box-sizing: border-box; transform: scale(1.12); }   /* картинка чуть крупнее */
 }
+
+/* =========================================================
+   ВЕСЬ САЙТ: только Manrope, межстрочный интервал 1.2 везде,
+   все кнопки — «таблетки» как «Заказать книгу» (скругление 999px, отступы 12 / 26.667, Bold)
+   ========================================================= */
+body, body *:not(svg):not(svg *) { font-family: "Manrope", system-ui, sans-serif !important; line-height: 1.2 !important; }
+.btn, .v1-about__btn, .calc__submit, .lead__submit, .header__cta, .header__alt, .mobile-menu__cta, .stack__btn, .collage__btn, .policy__back {
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 12px 26.667px !important;
+  border-radius: 999px !important;
+  font-weight: 700 !important;
+}
+/* кнопки на оливковом фоне — контурные белые, как «Заказать книгу» */
+.lead__submit, .v1-about__btn { border: 1px solid var(--white) !important; background: transparent !important; color: var(--white) !important; }
+.lead__submit:hover, .v1-about__btn:hover { background: var(--white) !important; color: var(--text) !important; }
+.lead:not(.lead--modal) .lead__submit, .lead__submit { width: auto !important; align-self: flex-start; }
+/* галочка согласия — по центру первой строки текста */
+.check { align-items: flex-start !important; }
+.check input { margin-top: calc((1.2em - 20.5px) / 2) !important; }
+.lead__agree input { margin-top: calc((1.2em - 20.5px) / 2) !important; }
+/* телефон: в «Как мы работаем» без точек */
+@media (max-width: 767px) {
+  .v1-about__list li { padding-left: 0; }
+  .v1-about__list li::before { display: none; }
+}
