@@ -157,7 +157,12 @@
       var rootCls = document.documentElement.classList;
       var introRunning = rootCls.contains('is-intro') && !rootCls.contains('is-intro-done');
       // на телефоне и планшете (бургер-меню) шапка не прячется при прокрутке
-      if (y <= 120 || rootCls.contains('is-menu-open') || introRunning || window.innerWidth < 1024) {
+      // главная, версия 1: в самом верху шапки нет; при прокрутке вниз она тоже спрятана, появляется при прокрутке вверх
+      if (rootCls.contains('theme-v1') && !rootCls.contains('is-menu-open')) {
+        if (y <= 40) topHeader.classList.add('is-hidden');
+        else if (Math.abs(y - lastY) > 6) topHeader.classList.toggle('is-hidden', y > lastY);
+        if (y <= 40 || Math.abs(y - lastY) > 6) lastY = y;
+      } else if (y <= 120 || rootCls.contains('is-menu-open') || introRunning || window.innerWidth < 1024) {
         topHeader.classList.remove('is-hidden');
         lastY = y;
       } else if (Math.abs(y - lastY) > 6) {

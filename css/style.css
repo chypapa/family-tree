@@ -3087,7 +3087,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   --container: 100vw;
   --gut: 30px;
   --col-gap: 12px;
-  --section-gap: 100px;
+  --section-gap: 200px;                               /* между разделами — 200px */
   --gap-head: 70px;
   --hdr-gap: 30px;
   --v1-h1: 56px;
@@ -3099,19 +3099,21 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   --fs-body: 18px;
 }
 @media (max-width: 1439px) {
-  .theme-v1 { --gut: 24px; --hdr-gap: 24px; --section-gap: 88px; --gap-head: 56px; --v1-h1: 48px; --v1-h2: 38px; --v1-h3: 28px; --v1-h4: 22px; --fs-body: 17px; }
+  .theme-v1 { --gut: 24px; --hdr-gap: 24px; --section-gap: 160px; --gap-head: 56px; --v1-h1: 48px; --v1-h2: 38px; --v1-h3: 28px; --v1-h4: 22px; --fs-body: 17px; }
 }
 @media (max-width: 1199px) {
-  .theme-v1 { --gut: 20px; --hdr-gap: 20px; --section-gap: 72px; --gap-head: 48px; --v1-h1: 44px; --v1-h2: 34px; --v1-h3: 26px; --v1-h4: 20px; --v1-r: 22px; --v1-r-lg: 26px; --fs-body: 16px; }
+  .theme-v1 { --gut: 20px; --hdr-gap: 20px; --section-gap: 120px; --gap-head: 48px; --v1-h1: 44px; --v1-h2: 34px; --v1-h3: 26px; --v1-h4: 20px; --v1-r: 22px; --v1-r-lg: 26px; --fs-body: 16px; }
 }
 @media (max-width: 767px) {
-  .theme-v1 { --gut: 12px; --hdr-gap: 12px; --section-gap: 56px; --gap-head: 32px; --v1-h1: 32px; --v1-h2: 28px; --v1-h3: 22px; --v1-h4: 18px; --v1-r: 18px; --v1-r-lg: 20px; --fs-body: 16px; }
+  .theme-v1 { --gut: 12px; --hdr-gap: 12px; --section-gap: 80px; --gap-head: 32px; --v1-h1: 32px; --v1-h2: 28px; --v1-h3: 22px; --v1-h4: 18px; --v1-r: 18px; --v1-r-lg: 20px; --fs-body: 16px; }
 }
 .theme-v1 body { background: var(--bg); color: var(--text-body); }
 .theme-v1 h1, .theme-v1 .h1, .theme-v1 h2, .theme-v1 .h2, .theme-v1 .lead__title { font-family: "Manrope", system-ui, sans-serif; }
 
 /* шапка — оливковая плашка с полями от краёв окна, как остальные блоки */
 .theme-v1 .header { width: auto; margin-inline: var(--gut); }
+/* шапка не занимает места в потоке: появляется поверх страницы при прокрутке вверх (js/main.js) */
+.theme-v1 .header--sticky { position: fixed; top: var(--hdr-gap); left: 0; right: 0; margin-top: 0; }
 .theme-v1 .header__bar { padding-inline: var(--s-24); border-radius: 20px; background: var(--red); }
 .theme-v1 .header__cta { color: var(--text); }
 
@@ -3119,7 +3121,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .v1-hero {
   position: relative;
   height: 746px;
-  margin-top: var(--col-gap);
+  margin-top: var(--gut);
   overflow: hidden;
   border-radius: var(--v1-r);
   background: #e2d5c2;
@@ -3213,7 +3215,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .theme-v1 .blog .section-head { margin-bottom: var(--s-32); }
 .theme-v1 .blog .quote-title { max-width: none; font-size: var(--v1-h2); font-style: normal; font-weight: 600; line-height: 1.2; letter-spacing: -.01em; color: var(--text); }
 .theme-v1 .blog .link-more { color: var(--text); }
-.theme-v1 .blog .post { padding: var(--s-16); border-radius: var(--v1-r); background: #e8e6e1; }
+.theme-v1 .blog .post { padding: 0; border-radius: 0; background: none; }
 .theme-v1 .blog .post__img { border-radius: 16px; }
 .theme-v1 .blog .post__title { font-weight: 500; color: var(--text); }
 .theme-v1 .blog .post__desc, .theme-v1 .blog .post__btn-mobile { color: var(--text-body); }
@@ -3272,7 +3274,6 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .theme-v1 .lead.container:not(.lead--modal) { width: calc(100% - 2 * var(--gut)); }
   .theme-v1 .lead:not(.lead--modal) .lead__inner { padding: 32px 20px; border-radius: var(--v1-r-lg); }
   .theme-v1 .lead:not(.lead--modal) .lead__card { padding: 0; }
-  .theme-v1 .blog .post { padding: var(--s-12, 12px); }
   .theme-v1 .header { margin-inline: var(--gut); }
   .theme-v1 .header__bar { border-radius: 16px; }
   .theme-v1 .footer__inner { height: auto; padding: var(--s-24) 20px; }
