@@ -3306,3 +3306,19 @@ body, body *:not(svg):not(svg *) { font-family: "Manrope", system-ui, sans-serif
   .v1-about__list li { padding-left: 0; }
   .v1-about__list li::before { display: none; }
 }
+
+/* ГЛАВНАЯ, ВЕРСИЯ 1 — телефон по макету Figma (узел 37:676, iPhone 17): поля 8px, первый экран — с 20px от верха,
+   высота до 746px, заголовок вверху, текст внизу; карточки через 8px; заголовки всех блоков — 24px, текст — 15px */
+@media (max-width: 767px) {
+  .theme-v1 { --gut: 8px; --hdr-gap: 8px; --v1-near: 8px; --v1-h1: 32px; --v1-h2: 24px; --v1-h4: 18px; --v1-r: 27px; --v1-r-lg: 27px; --fs-body: 15px; }
+  .v1-hero { height: min(746px, calc(100svh - 40px)); min-height: 560px; margin-top: 20px; }
+  .v1-hero__img { object-position: 66% 100%; }
+  .v1-hero::before { -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 45%); mask-image: linear-gradient(180deg, #000 0%, transparent 45%); }
+  .v1-hero__text { inset: 40px 21px 28px; justify-content: space-between; }
+  .v1-hero__lead { font-size: 15px; }
+  .v1-features { gap: 8px; }
+  .v1-feature { gap: 16px; padding: 20px; }
+  .v1-feature__title { font-size: 18px; }
+  .v1-feature__text { font-size: 15px; }
+  .v1-svc__head { align-items: flex-start; text-align: left; }
+}
