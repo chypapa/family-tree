@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" class="theme-v1">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Генеалогическое исследование и родословная книга — Древо предков</title>
   <meta name="description" content="Исследуем историю семьи по архивам России, Украины и Беларуси: метрические книги, ревизские сказки и другие документы. Родословная книга или архивный свиток. Начните с консультации.">
   <link rel="icon" href="img/favicon.ico" sizes="any">
-  <link rel="stylesheet" href="css/style.css?v=20261016i">
+  <link rel="stylesheet" href="css/style.css?v=20261018a">
   <script>document.documentElement.classList.add('is-intro'); if (!('onpagereveal' in window)) document.documentElement.classList.add('fade-nav');</script>
 </head>
 <body>
@@ -110,287 +110,118 @@
 
 
 
-    <!-- ============ КОЛЛАЖ — по макету Figma (plat-fam, узел 743:1524): архивные фото вокруг карточки.
-         Фото (кроме карточки) чуть уходят от курсора, на телефоне — от наклона устройства (js/main.js) ============ -->
-    <section class="collage" aria-labelledby="collage-title">
-      <div class="collage__stage">
-        <div class="collage__photo collage__photo--crop" style="--x:1041.18;--y:10.91;--w:165.88;--h:186.58"><img src="img/collage/photo-01.webp" alt="" loading="lazy" decoding="async" style="height:113.55%;top:-0.92%"></div>
-        <div data-m class="collage__photo collage__photo--cover" style="--x:1195.72;--y:243.68;--w:205.46;--h:261.86;--mx:-1.65;--my:-7.38;--mw:153.84;--mh:195.6"><img src="img/collage/photo-02.webp" alt="" loading="lazy" decoding="async"></div>
-        <div class="collage__photo collage__photo--crop" style="--x:401.7;--y:878.34;--w:290.11;--h:186.64"><img src="img/collage/photo-03.webp" alt="" loading="lazy" decoding="async" style="height:103.56%;top:-1.06%"></div>
-        <div class="collage__photo collage__photo--crop" style="--x:646.3;--y:43.64;--w:243.53;--h:259.58"><img src="img/collage/photo-04.webp" alt="" loading="lazy" decoding="async" style="height:138.74%;left:-2.13%;top:-20.11%;width:104.27%"></div>
-        <div class="collage__card">
-          <h2 class="collage__title" id="collage-title">Генеалогические исследования</h2>
-          <div class="collage__logo" aria-hidden="true">
-            <span class="collage__leaf collage__leaf--tl"><img src="img/collage/leaf-top-l.svg" alt=""></span>
-            <span class="collage__leaf collage__leaf--bl"><img src="img/collage/leaf-bot-l.svg" alt=""></span>
-            <span class="collage__leaf collage__leaf--tr"><img src="img/collage/leaf-top-r.svg" alt=""></span>
-            <span class="collage__leaf collage__leaf--br"><img src="img/collage/leaf-bot-r.svg" alt=""></span>
-            <span class="collage__stem"><img src="img/collage/stem.svg" alt=""></span>
-          </div>
-          <p class="collage__text">Найдём ваших предков.<br> Сохраним память</p>
-          <a class="collage__btn" href="#contact">Заказать услугу</a>
-        </div>
-        <div data-small class="collage__photo collage__photo--cover" style="--x:1485.64;--y:283.69;--w:134.61;--h:138.71"><img src="img/collage/photo-05.webp" alt="" loading="lazy" decoding="async"></div>
-        <div data-m data-small class="collage__photo collage__photo--fill" style="--x:1750.59;--y:396.43;--w:123.53;--h:130.93;--mx:136.48;--my:99.28;--mw:164.4;--mh:174.25"><img src="img/collage/photo-06.webp" alt="" loading="lazy" decoding="async"></div>
-        <div class="collage__photo collage__photo--fill" style="--x:1351.73;--y:760.13;--w:194.12;--h:298.23"><img src="img/collage/photo-07.webp" alt="" loading="lazy" decoding="async"></div>
-        <div data-m class="collage__photo collage__photo--crop" style="--x:1510.55;--y:549.19;--w:222.35;--h:290.96;--mx:233.56;--my:672.16;--mw:159.56;--mh:208.05"><img src="img/collage/photo-08.webp" alt="" loading="lazy" decoding="async" style="height:112.89%;left:-23.86%;top:-12.89%;width:147.72%"></div>
-        <div class="collage__photo collage__photo--fill" style="--x:62.1;--y:751.21;--w:183.53;--h:276.41"><img src="img/collage/photo-09.webp" alt="" loading="lazy" decoding="async"></div>
-        <div class="collage__photo collage__photo--crop" style="--x:217.76;--y:468.24;--w:296.86;--h:214.13"><img src="img/collage/photo-10.webp" alt="" loading="lazy" decoding="async" style="height:167.3%;left:-26.37%;top:-13.48%;width:154.47%"></div>
-        <div data-small class="collage__photo collage__photo--cover" style="--x:370.59;--y:109.11;--w:137.7;--h:155.76"><img src="img/collage/photo-11.webp" alt="" loading="lazy" decoding="async"></div>
-        <div data-m class="collage__photo collage__photo--crop" style="--x:1637.65;--y:76.14;--w:208.24;--h:247.32;--mx:315.47;--my:-15.62;--mw:120.04;--mh:143.18"><img src="img/collage/photo-12.webp" alt="" loading="lazy" decoding="async" style="height:124.86%;top:-1.56%"></div>
-        <div data-m class="collage__photo collage__photo--fill" style="--x:38.82;--y:29.1;--w:218.82;--h:283.69;--mx:-8.64;--my:588.13;--mw:125.1;--mh:162.92"><img src="img/collage/photo-13.webp" alt="" loading="lazy" decoding="async"></div>
+    <!-- ============ ГЛАВНАЯ, ВЕРСИЯ 1 — по макету Figma (Untitled, узел 3:18): светлый фон #f2f2f1, поля 30px от краёв окна,
+         всё набрано Manrope; акцентный цвет — оливковый #8e8868 ============ -->
+
+    <!-- первый экран: фото на всю карточку, поверх — светлая дымка слева и сверху, заголовок и текст белым -->
+    <section class="v1-hero container" aria-labelledby="v1-hero-title">
+      <img class="v1-hero__img" src="img/v1/hero.webp" width="1678" height="937" alt="" fetchpriority="high" decoding="async">
+      <div class="v1-hero__text">
+        <h1 class="v1-hero__title" id="v1-hero-title">Генеалогические исследования по&nbsp;архивным документам</h1>
+        <p class="v1-hero__lead">Восстанавливаем историю вашей семьи по&nbsp;метрическим книгам, ревизским сказкам и&nbsp;другим архивным источникам&nbsp;— и&nbsp;оформляем результат в&nbsp;родословную книгу или архивный свиток.</p>
       </div>
     </section>
 
+    <!-- четыре белые карточки: чем мы отличаемся -->
+    <ul class="v1-features container" aria-label="Почему «Древо предков»">
+      <li class="v1-feature">
+        <h2 class="v1-feature__title">Глубокий поиск</h2>
+        <p class="v1-feature__text">Мы не&nbsp;ограничиваемся тем, что лежит на&nbsp;поверхности, и&nbsp;идём вглубь веков, документ за&nbsp;документом.</p>
+      </li>
+      <li class="v1-feature">
+        <h2 class="v1-feature__title">История, а&nbsp;не&nbsp;список имён</h2>
+        <p class="v1-feature__text">Вы&nbsp;узнаете, кем были ваши предки, где они жили и&nbsp;чем занимались.</p>
+      </li>
+      <li class="v1-feature">
+        <h2 class="v1-feature__title">Экспертная работа с&nbsp;источниками</h2>
+        <p class="v1-feature__text">Мы&nbsp;читаем дореволюционные документы и&nbsp;рукописи, которые без специальной подготовки разобрать почти невозможно.</p>
+      </li>
+      <li class="v1-feature">
+        <h2 class="v1-feature__title">Индивидуальный подход</h2>
+        <p class="v1-feature__text">Каждое исследование мы&nbsp;выстраиваем вокруг вашей семьи: того, что уже известно, и&nbsp;того, что хочется узнать.</p>
+      </li>
+    </ul>
 
-    <!-- ============ НАЙДЁМ ИСТОРИЮ — текст поверх размытого фото; вокруг курсора фото в фокусе ============ -->
-    <section class="focus section" aria-labelledby="focus-title" hidden>
-      <div class="focus__card">
-        <!-- три слоя одного фото: сильно размытый, чуть размытый и чёткий; два верхних видны только вокруг курсора -->
-        <div class="focus__media" aria-hidden="true">
-          <img class="focus__img focus__img--blur" src="img/hero-2.jpg" srcset="img/hero-2-800.jpg 800w, img/hero-2.jpg 1734w" sizes="(max-width: 767px) 115vw, 100vw" width="1734" height="928" alt="" loading="lazy" decoding="async">
-          <img class="focus__img focus__img--mid" src="img/hero-2.jpg" srcset="img/hero-2-800.jpg 800w, img/hero-2.jpg 1734w" sizes="(max-width: 767px) 115vw, 100vw" width="1734" height="928" alt="" loading="lazy" decoding="async">
-          <img class="focus__img focus__img--sharp" src="img/hero-2.jpg" srcset="img/hero-2-800.jpg 800w, img/hero-2.jpg 1734w" sizes="(max-width: 767px) 115vw, 100vw" width="1734" height="928" alt="" loading="lazy" decoding="async">
-        </div>
-        <div class="focus__content">
-          <div class="focus__texts">
-            <h2 class="focus__title" id="focus-title">Найдём историю семьи<br> в&nbsp;архивах и&nbsp;составим<br> родословную книгу</h2>
-            <p class="focus__text">Изучаем метрические книги, ревизские сказки и&nbsp;другие документы, чтобы восстановить ваш род на&nbsp;300+ лет и&nbsp;оформить его в&nbsp;семейную реликвию с&nbsp;фамильным древом.</p>
-          </div>
-          <a class="btn focus__btn" href="#contact">Оформить заказ →</a>
-        </div>
+    <!-- услуги: три большие карточки-фото, внизу название и круглая стрелка -->
+    <section class="v1-svc" id="svc" aria-labelledby="v1-svc-title">
+      <div class="v1-svc__head container">
+        <p class="v1-eyebrow">Услуги</p>
+        <h2 class="v1-h2" id="v1-svc-title">Проводим профессиональные генеалогические исследования</h2>
+      </div>
+      <div class="v1-svc__list container">
+        <a class="v1-svc__card" href="rodoslovnaya-kniga.html">
+          <img src="img/v1/svc-kniga.webp" width="1200" height="1743" alt="" loading="lazy" decoding="async">
+          <span class="v1-svc__name">Родословная книга</span>
+          <img class="v1-svc__arrow" src="img/v1/arrow.svg" width="52.7354" height="52.7354" alt="">
+        </a>
+        <a class="v1-svc__card" href="issledovanie.html">
+          <img src="img/v1/svc-istoriya.webp" width="1376" height="768" alt="" loading="lazy" decoding="async">
+          <span class="v1-svc__name">История семьи</span>
+          <img class="v1-svc__arrow" src="img/v1/arrow.svg" width="52.7354" height="52.7354" alt="">
+        </a>
+        <a class="v1-svc__card" href="tochechnye-issledovaniya.html">
+          <img src="img/v1/svc-tochechnye.webp" width="1024" height="572" alt="" loading="lazy" decoding="async">
+          <span class="v1-svc__name">Точечные исследования</span>
+          <img class="v1-svc__arrow" src="img/v1/arrow.svg" width="52.7354" height="52.7354" alt="">
+        </a>
       </div>
     </section>
 
-    <!-- ============ О ПРОЕКТЕ — две колонки по макету Figma (plat-fam, узел 743:1558): слева крупный текст Cormorant 32px
-         (первая фраза — красным курсивом), справа «Как мы работаем» — три пункта с квадратными маркерами ============ -->
-    <section class="about2 container section" id="about" aria-labelledby="about2-title">
-      <h2 class="h2 about2__lead" id="about2-title">«Древо Предков» проводит профессиональные генеалогические исследования</h2>
-      <div class="about2__how">
-        <h3 class="about2__subtitle">Как мы работаем</h3>
-        <ul class="about2__list">
-          <li>Каждое исследование начинается с&nbsp;разговора с&nbsp;заказчиком. Мы&nbsp;знакомимся с&nbsp;историей семьи, собираем известные сведения, изучаем семейные документы и&nbsp;фотографии, определяем цели и&nbsp;направления поиска. На&nbsp;основе этой информации формируется план исследования, а&nbsp;стоимость рассчитывается индивидуально&nbsp;— с&nbsp;учётом сложности задачи, глубины поиска и&nbsp;объёма предстоящей работы.</li>
-          <li>Затем начинается работа с&nbsp;архивами и&nbsp;историческими источниками. Мы&nbsp;ищем документальные свидетельства, сопоставляем сведения из&nbsp;разных источников, проверяем факты и&nbsp;прослеживаем судьбы предков в&nbsp;контексте эпохи. Это кропотливая работа, в&nbsp;которой отдельные записи, даты и&nbsp;имена складываются в&nbsp;более полную картину истории рода.</li>
-          <li>Результат зависит от&nbsp;вашей задачи: это может быть поиск конкретного предка, восстановление родственных связей, родословное дерево, подборка архивных документов или семейная книга с&nbsp;историческими очерками и&nbsp;рассказами о&nbsp;жизни предыдущих поколений. Мы&nbsp;подбираем формат исследования индивидуально, чтобы вы&nbsp;получили именно те&nbsp;сведения и&nbsp;материалы, которые важны для&nbsp;вас и&nbsp;вашей семьи.</li>
+    <!-- отзывы: заголовок слева, четыре белые карточки в ряд -->
+    <section class="v1-reviews container" id="reviews" aria-labelledby="v1-reviews-title">
+      <h2 class="v1-h2 v1-reviews__title" id="v1-reviews-title">«Древо Предков» проводит профессиональные генеалогические исследования.</h2>
+      <div class="v1-reviews__list scroller">
+        <article class="v1-review">
+          <div class="v1-review__top">
+            <img class="v1-review__stars" src="img/v1/stars.svg" width="116.484" height="23.297" alt="Оценка 5 из 5">
+            <p class="v1-review__text">Работа сделана очень быстро, качественно, по&nbsp;приятной цене, вежливый и&nbsp;честный человек, приятно с&nbsp;такими сотрудничать. Максимально довольна результатом, спасибо большое!!!</p>
+          </div>
+          <p class="v1-review__author"><img src="img/v1/person.svg" width="26" height="26" alt="">Юлия, Калуга</p>
+        </article>
+        <article class="v1-review">
+          <div class="v1-review__top">
+            <img class="v1-review__stars" src="img/v1/stars.svg" width="116.484" height="23.297" alt="Оценка 5 из 5">
+            <p class="v1-review__text">Знакомство с&nbsp;Глебом было предопределено кем‑то свыше, не&nbsp;иначе!)) Столько новых имен удалось узнать с&nbsp;его помощью&nbsp;— просто не&nbsp;перечесть! Там, куда я&nbsp;не&nbsp;знала как подступиться,</p>
+          </div>
+          <p class="v1-review__author"><img src="img/v1/person.svg" width="26" height="26" alt="">Ирина, Москва</p>
+        </article>
+        <article class="v1-review">
+          <div class="v1-review__top">
+            <img class="v1-review__stars" src="img/v1/stars.svg" width="116.484" height="23.297" alt="Оценка 5 из 5">
+            <p class="v1-review__text">Огромное спасибо вашей команде за&nbsp;такой кропотливый труд! Даже при беглом прочтении родовой книги становится ясно, сколько было проведено поисков. Особенно ценно то, что сухие факты переплетаются с&nbsp;художественным повествованием и&nbsp;отсылкой к&nbsp;историческим событиям&nbsp;— это важно для понимания хода времени.</p>
+          </div>
+          <p class="v1-review__author"><img src="img/v1/person.svg" width="26" height="26" alt="">Ирина, Москва</p>
+        </article>
+        <article class="v1-review">
+          <div class="v1-review__top">
+            <img class="v1-review__stars" src="img/v1/stars.svg" width="116.484" height="23.297" alt="Оценка 5 из 5">
+            <p class="v1-review__text">Спасибо за&nbsp;проделанную работу!! Генеалогическое древо очень понравилось!! Юбиляр прослезился, получив такой подарок!! В&nbsp;процессе работы замучила правками, спасибо за&nbsp;терпение!!</p>
+          </div>
+          <p class="v1-review__author"><img src="img/v1/person.svg" width="26" height="26" alt="">Валентина, Рязань</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- о нас: оливковый блок — слева кто мы и кнопка, справа «Как мы работаем» -->
+    <section class="v1-about container" id="about" aria-labelledby="v1-about-title">
+      <div class="v1-about__intro">
+        <p class="v1-about__lead" id="v1-about-title">«Древо Предков» проводит профессиональные генеалогические исследования. Мы&nbsp;восстанавливаем историю рода по&nbsp;архивным документам и&nbsp;оформляем результат в&nbsp;родословное древо и&nbsp;семейную книгу.</p>
+        <a class="v1-about__btn" href="#contact">Заказать книгу</a>
+      </div>
+      <div class="v1-about__how">
+        <h2 class="v1-about__title">Как мы&nbsp;работаем</h2>
+        <ul class="v1-about__list">
+          <li><strong>Каждое исследование начинается с&nbsp;разговора с&nbsp;заказчиком.</strong> Мы&nbsp;знакомимся с&nbsp;историей семьи, собираем известные сведения, изучаем семейные документы и&nbsp;фотографии, определяем цели и&nbsp;направления поиска. На&nbsp;основе этой информации формируется план исследования, а&nbsp;стоимость рассчитывается индивидуально&nbsp;— с&nbsp;учётом сложности задачи, глубины поиска и&nbsp;объёма предстоящей работы.</li>
+          <li><strong>Затем начинается работа с&nbsp;архивами и&nbsp;историческими источниками.</strong> Мы&nbsp;ищем документальные свидетельства, сопоставляем сведения из&nbsp;разных источников, проверяем факты и&nbsp;прослеживаем судьбы предков в&nbsp;контексте эпохи. Это кропотливая работа, в&nbsp;которой отдельные записи, даты и&nbsp;имена складываются в&nbsp;более полную картину истории рода.</li>
+          <li><strong>Результат зависит от&nbsp;вашей задачи:</strong> это может быть поиск конкретного предка, восстановление родственных связей, родословное дерево, подборка архивных документов или семейная книга с&nbsp;историческими очерками и&nbsp;рассказами о&nbsp;жизни предыдущих поколений. Мы&nbsp;подбираем формат исследования индивидуально, чтобы вы&nbsp;получили именно те&nbsp;сведения и&nbsp;материалы, которые важны для вас и&nbsp;вашей семьи.</li>
         </ul>
-      </div>
-    </section>
-
-    <!-- ============ НАПРАВЛЕНИЯ УСЛУГ — по макету Figma (plat-fam, узел 745:1714): заголовок Cormorant 55px,
-         три квадратные карточки-фото с затемнением снизу, название и круглая стрелка ============ -->
-    <section class="dirs container section" hidden id="svc" aria-labelledby="svc-title">
-      <h2 class="h2 dirs__title" id="svc-title">Направления услуг</h2>
-      <div class="dirs__list">
-        <a class="dir-card" href="rodoslovnaya-kniga.html">
-          <img class="dir-card__img" src="img/dir/dir-kniga.webp" width="1164" height="1164" alt="Раскрытая родословная книга «Древо предков» в руках" loading="lazy" decoding="async">
-          <span class="dir-card__bar">
-            <span class="dir-card__name">Родословная книга</span>
-            <img class="dir-card__arrow" src="img/dir/arrow.svg" width="53" height="53" alt="" aria-hidden="true">
-          </span>
-        </a>
-        <a class="dir-card" href="issledovanie.html">
-          <img class="dir-card__img" src="img/dir/dir-istoriya.webp" width="1164" height="1164" alt="Старые документы и семейная фотография на столе" loading="lazy" decoding="async">
-          <span class="dir-card__bar">
-            <span class="dir-card__name">История семьи</span>
-            <img class="dir-card__arrow" src="img/dir/arrow.svg" width="53" height="53" alt="" aria-hidden="true">
-          </span>
-        </a>
-        <a class="dir-card" href="tochechnye-issledovaniya.html">
-          <img class="dir-card__img" src="img/dir/dir-tochechnye.webp" width="1164" height="1164" alt="Советский паспорт на столе" loading="lazy" decoding="async">
-          <span class="dir-card__bar">
-            <span class="dir-card__name">Точечные исследования</span>
-            <img class="dir-card__arrow" src="img/dir/arrow.svg" width="53" height="53" alt="" aria-hidden="true">
-          </span>
-        </a>
-      </div>
-    </section>
-
-    <!-- ============ УСЛУГИ СТОПКОЙ: четыре карточки по очереди «прилипают» к верху окна и наезжают друг на друга;
-         когда приходит четвёртая, все вместе уезжают вверх (CSS sticky) ============ -->
-    <section class="stack container section" aria-label="Услуги">
-      <div class="stack__list">
-        <article class="stack__card" style="--i:0">
-          <div class="stack__text">
-            <div>
-              <h3 class="stack__title">Родословная книга</h3>
-              <p class="stack__sub">Книга с&nbsp;историей вашей семьи</p>
-            </div>
-            <div class="stack__about">
-              <h4 class="stack__lead">Что это такое?</h4>
-              <p>Исследование по&nbsp;архивам и&nbsp;книга о&nbsp;вашем роде: имена и&nbsp;судьбы предков, копии документов с&nbsp;расшифровкой и&nbsp;родословное древо. Электронная версия&nbsp;— сразу, печатное издание&nbsp;— по&nbsp;предоплате.</p>
-              <a class="btn stack__btn" href="rodoslovnaya-kniga.html">Узнать подробнее</a>
-            </div>
-          </div>
-          <div class="stack__media">
-            <img src="img/dir/dir-kniga.webp" width="1164" height="1164" alt="Родословная книга «Древо предков» в руках" loading="lazy" decoding="async">
-            <ul class="stack__chips" aria-label="Коротко"><li>от&nbsp;1&nbsp;месяца</li><li>от&nbsp;60&nbsp;000&nbsp;₽</li></ul>
-          </div>
-        </article>
-        <article class="stack__card" style="--i:1">
-          <div class="stack__text">
-            <div>
-              <h3 class="stack__title">Архивный свиток</h3>
-              <p class="stack__sub">Документы и&nbsp;поколенная роспись вашего рода</p>
-            </div>
-            <div class="stack__about">
-              <h4 class="stack__lead">Что это такое?</h4>
-              <p>Поиск по&nbsp;архивам без&nbsp;большого рассказа о&nbsp;роде: фотокопии найденных документов с&nbsp;расшифровкой и&nbsp;поколенная роспись&nbsp;— кто, когда и&nbsp;где жил в&nbsp;каждом поколении.</p>
-              <a class="btn stack__btn" href="issledovanie.html">Узнать подробнее</a>
-            </div>
-          </div>
-          <div class="stack__media">
-            <img src="img/dir/dir-istoriya.webp" width="1164" height="1164" alt="Старые документы и семейная фотография на столе" loading="lazy" decoding="async">
-            <ul class="stack__chips" aria-label="Коротко"><li>от&nbsp;1&nbsp;месяца</li><li>от&nbsp;30&nbsp;000&nbsp;₽</li></ul>
-          </div>
-        </article>
-        <article class="stack__card" style="--i:2">
-          <div class="stack__text">
-            <div>
-              <h3 class="stack__title">Точечные исследования</h3>
-              <p class="stack__sub">Ответ на&nbsp;один важный вопрос</p>
-            </div>
-            <div class="stack__about">
-              <h4 class="stack__lead">Что это такое?</h4>
-              <p>Когда нужно найти конкретного человека или&nbsp;документ: запись о&nbsp;рождении, венчании, службе, место жительства семьи. Работаем с&nbsp;нужным архивом и&nbsp;присылаем найденное с&nbsp;расшифровкой.</p>
-              <a class="btn stack__btn" href="tochechnye-issledovaniya.html">Узнать подробнее</a>
-            </div>
-          </div>
-          <div class="stack__media">
-            <img src="img/dir/dir-tochechnye.webp" width="1164" height="1164" alt="Советский паспорт на столе" loading="lazy" decoding="async">
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <template id="about-v1">
-    <section class="russia section" id="about" aria-labelledby="russia-title">
-      <div class="russia__decor" aria-hidden="true">
-        <picture>
-          <source media="(max-width: 559px)" srcset="img/about/sec-3-mobile.png" width="402" height="507">
-          <source media="(max-width: 1199px)" srcset="img/about/sec-3-tablet.png" width="1001" height="763">
-          <img class="russia__map" src="img/about/sec-3-desktop.png" width="965" height="936" alt="" loading="lazy" decoding="async">
-        </picture>
-      </div>
-      <img class="russia__lines" src="img/about/lines-right.png" width="293" height="936" alt="" aria-hidden="true" loading="lazy" decoding="async">
-
-      <div class="russia__content">
-        <div class="russia__intro">
-          <h2 class="russia__title" id="russia-title">О&nbsp;нас</h2>
-          <div class="russia__text">
-            <p>Мы&nbsp;занимаемся генеалогическими исследованиями и&nbsp;составлением родословных. Работаем с&nbsp;архивами России, Украины и&nbsp;Беларуси: находим метрические книги, ревизские сказки и&nbsp;другие записи, по&nbsp;которым можно проследить историю рода.</p>
-            <p>Каждое исследование начинается с&nbsp;того немногого, что&nbsp;известно семье,&nbsp;— имени, примерной даты, места рождения. От&nbsp;этой точки мы&nbsp;шаг за&nbsp;шагом продвигаемся вглубь: направляем запросы в&nbsp;архивы и&nbsp;ЗАГСы, расшифровываем рукописи и&nbsp;сверяем найденные сведения между собой.</p>
-          </div>
-        </div>
-        <div class="russia__why">
-          <h3 class="russia__subtitle">Почему нам доверяют</h3>
-          <ul class="russia__list">
-            <li>Работаем с&nbsp;архивами напрямую, а&nbsp;не&nbsp;только с&nbsp;открытыми базами в&nbsp;интернете</li>
-            <li>Объясняем не&nbsp;только факты, но&nbsp;и&nbsp;контекст: почему семья переезжала, где венчались, как&nbsp;жили</li>
-            <li>Сообщаем о&nbsp;ключевых находках по&nbsp;ходу работы&nbsp;— вы&nbsp;видите, как&nbsp;продвигается поиск</li>
-            <li>Бережно относимся к&nbsp;сведениям о&nbsp;вашей семье и&nbsp;используем их&nbsp;только для&nbsp;исследования</li>
-            <li>Держим цены в&nbsp;доступном сегменте&nbsp;— качественная генеалогия не&nbsp;обязана быть роскошью</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-    </template>
-
-    <!-- ============ НАПРАВЛЕНИЯ И УСЛУГИ ============ -->
-    <!-- <section class="directions container section" id="directions" aria-labelledby="directions-title" hidden>
-      <div class="section-head">
-        <h2 class="h2" id="directions-title">Направления и&nbsp;услуги</h2>
-        <p class="section-head__text">Проводим генеалогические исследования по&nbsp;архивным документам и&nbsp;оформляем результат в&nbsp;удобном для вас формате</p>
-      </div>
-
-      <div class="directions__list">
-        <article class="dcard">
-          <div class="dcard__body">
-            <div class="dcard__top">
-              <h3 class="h4 dcard__title">Родословная книга</h3>
-              <p class="dcard__sub">генеалогический поиск + исследование + дизайн</p>
-              <ul class="tags dcard__tags">
-                <li class="tag">от 1 месяца</li>
-                <li class="tag">От 60 000 ₽</li>
-              </ul>
-            </div>
-            <div class="dcard__bottom">
-              <p class="dcard__desc">Семейная реликвия для детей и&nbsp;внуков. Проводим архивное исследование, находим документы о&nbsp;ваших предках и&nbsp;раскрываем их через исторический контекст. Результат оформляем в&nbsp;родословную книгу.</p>
-              <a class="btn dcard__btn" href="#contact">Узнать подробнее →</a>
-            </div>
-          </div>
-          <div class="dcard__media">
-            <img src="img/dir-book.jpg" width="464" height="500" alt="Страницы старинной книги крупным планом" loading="lazy">
-          </div>
-        </article>
-
-        <article class="dcard">
-          <div class="dcard__body">
-            <div class="dcard__top">
-              <h3 class="h4 dcard__title">Архивный свиток</h3>
-              <p class="dcard__sub">генеалогический поиск</p>
-              <ul class="tags dcard__tags">
-                <li class="tag">от 1 месяца</li>
-                <li class="tag">От 30 000 ₽</li>
-              </ul>
-            </div>
-            <div class="dcard__bottom">
-              <p class="dcard__desc">Находим архивные документы о&nbsp;ваших предках и&nbsp;оформляем в&nbsp;подробный отчёт&nbsp;— фотокопии документов с&nbsp;расшифровкой и&nbsp;поколенная роспись.</p>
-              <a class="btn dcard__btn" href="#contact">Узнать подробнее →</a>
-            </div>
-          </div>
-          <div class="dcard__media dcard__media--archive">
-            <img src="img/dir-archive.jpg" width="464" height="500" alt="Стеллажи архивохранилища с номерами фондов" loading="lazy">
-          </div>
-        </article>
-      </div>
-    </section> -->
-
-    <!-- ============ НАПРАВЛЕНИЯ — вариант с фото сверху: две карточки рядом, сроки и цена на фото ============ -->
-    <section class="tours container section" aria-labelledby="tours-title" hidden>
-      <div class="section-head">
-        <h2 class="h2" id="tours-title">Направления и&nbsp;услуги</h2>
-        <p class="section-head__text">Проводим генеалогические исследования по&nbsp;архивным документам и&nbsp;оформляем результат в&nbsp;удобном для вас формате</p>
-      </div>
-
-      <div class="tours__list">
-        <article class="tcard">
-          <div class="tcard__media">
-            <img src="img/service-book.jpg" width="914" height="481" alt="Родословная книга с семейным древом в руках" loading="lazy">
-            <ul class="tags tcard__tags" aria-label="Сроки и стоимость">
-              <li class="tag">от&nbsp;1&nbsp;месяца</li>
-              <li class="tag">от&nbsp;60&nbsp;000&nbsp;₽</li>
-            </ul>
-          </div>
-          <div class="tcard__body">
-            <h3 class="h4 tcard__title">Родословная книга</h3>
-            <p class="tcard__sub">генеалогический поиск + исследование + дизайн</p>
-            <p class="tcard__desc">Семейная реликвия для детей и&nbsp;внуков. Проводим архивное исследование, находим документы о&nbsp;ваших предках и&nbsp;раскрываем их через исторический контекст. Результат оформляем в&nbsp;родословную книгу.</p>
-            <a class="btn tcard__btn" href="#contact">Узнать подробнее →</a>
-          </div>
-        </article>
-
-        <article class="tcard">
-          <div class="tcard__media">
-            <img src="img/service-archive.jpg" width="914" height="481" alt="Старые семейные фотографии в руках" loading="lazy">
-            <ul class="tags tcard__tags" aria-label="Сроки и стоимость">
-              <li class="tag">от&nbsp;1&nbsp;месяца</li>
-              <li class="tag">от&nbsp;30&nbsp;000&nbsp;₽</li>
-            </ul>
-          </div>
-          <div class="tcard__body">
-            <h3 class="h4 tcard__title">Архивный свиток</h3>
-            <p class="tcard__sub">генеалогический поиск</p>
-            <p class="tcard__desc">Находим архивные документы о&nbsp;ваших предках и&nbsp;оформляем в&nbsp;подробный отчёт&nbsp;— фотокопии документов с&nbsp;расшифровкой и&nbsp;поколенная роспись.</p>
-            <a class="btn tcard__btn" href="#contact">Узнать подробнее →</a>
-          </div>
-        </article>
       </div>
     </section>
 
     <!-- ============ БЛОГ ============ -->
     <section class="blog container section" id="blog">
       <div class="section-head">
-        <h2 class="h2 quote-title">Блог о&nbsp;поиске предков</h2>
+        <h2 class="h2 quote-title">Присоединяйтесь к&nbsp;нашему сообществу</h2>
         <a class="link-more" href="https://vk.ru/russiagenealogy" target="_blank" rel="noopener">Читать блог во&nbsp;ВКонтакте&nbsp;→</a>
       </div>
       <!-- Посты из группы ВК. Здесь — снимок последних постов на 28.09.2026:
@@ -447,43 +278,6 @@
       </div>
     </section>
 
-    <!-- ============ ОТЗЫВЫ ============ -->
-    <section class="reviews container section" id="reviews">
-      <div class="section-head">
-        <h2 class="h2 reviews__heading quote-title">Что о&nbsp;нас говорят заказчики</h2>
-        <a class="link-more" href="https://www.avito.ru/moskva/predlozheniya_uslug/rodoslovnayagenealogiyadizayn_dreva_4729921847" target="_blank" rel="noopener">Читать все на&nbsp;Авито&nbsp;→</a>
-      </div>
-      <div class="reviews__list scroller">
-        <article class="review">
-          <div>
-            <img class="review__stars" src="img/stars.svg" width="117" height="24" alt="Оценка 5 из 5">
-            <p class="review__text">Работа сделана очень быстро, качественно, по&nbsp;приятной цене, вежливый и&nbsp;честный человек, приятно с&nbsp;такими сотрудничать. Максимально довольна результатом, спасибо большое!!!</p>
-          </div>
-          <p class="review__author"><img src="img/person.svg" width="26" height="26" alt="">Юлия, Калуга</p>
-        </article>
-        <article class="review">
-          <div>
-            <img class="review__stars" src="img/stars.svg" width="117" height="24" alt="Оценка 5 из 5">
-            <p class="review__text">Знакомство с&nbsp;Глебом было предопределено кем‑то свыше, не&nbsp;иначе!)) Столько новых имен удалось узнать с&nbsp;его помощью&nbsp;— просто не&nbsp;перечесть! Там, куда я&nbsp;не&nbsp;знала как подступиться,</p>
-          </div>
-          <p class="review__author"><img src="img/person.svg" width="26" height="26" alt="">Ирина, Москва</p>
-        </article>
-        <article class="review">
-          <div>
-            <img class="review__stars" src="img/stars.svg" width="117" height="24" alt="Оценка 5 из 5">
-            <p class="review__text">Знакомство с&nbsp;Глебом было предопределено кем‑то свыше, не&nbsp;иначе!)) Столько новых имен удалось узнать с&nbsp;его помощью&nbsp;— просто не&nbsp;перечесть! Там, куда я&nbsp;не&nbsp;знала как подступиться...</p>
-          </div>
-          <p class="review__author"><img src="img/person.svg" width="26" height="26" alt="">Ирина, Москва</p>
-        </article>
-        <article class="review">
-          <div>
-            <img class="review__stars" src="img/stars.svg" width="117" height="24" alt="Оценка 5 из 5">
-            <p class="review__text">Спасибо за&nbsp;проделанную работу!! Генеалогическое древо очень понравилось!! Юбиляр прослезился, получив такой подарок!! В&nbsp;процессе работы замучила правками, спасибо за&nbsp;терпение!!</p>
-          </div>
-          <p class="review__author"><img src="img/person.svg" width="26" height="26" alt="">Валентина, Рязань</p>
-        </article>
-      </div>
-    </section>
 
 
 
@@ -606,6 +400,6 @@
 
 </div>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="js/main.js?v=20261016i"></script>
+<script src="js/main.js?v=20261018a"></script>
 </body>
 </html>

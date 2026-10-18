@@ -814,6 +814,7 @@
      (858 × 517 → 28, 431 × 328 → 18, 276 × 218 → 12). Скругляются только те углы, что скруглены в CSS.
      Не трогаем: кнопки, поля, плашки-«таблетки» и круги, а также мелкие элементы (меньше 64px) — это не карточки */
   (function () {
+    if (document.documentElement.classList.contains('theme-v1')) return;   // главная, версия 1: скругления заданы макетом
     var SKIP = 'button, input, select, textarea, label, svg, svg *, video, .btn, .tag, [class*="btn"], [class*="chip"], .cursor-bubble';
     var CORNERS = ['borderTopLeftRadius', 'borderTopRightRadius', 'borderBottomRightRadius', 'borderBottomLeftRadius'];
     var items = [];
