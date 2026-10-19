@@ -3322,3 +3322,26 @@ body, body *:not(svg):not(svg *) { font-family: "Manrope", system-ui, sans-serif
   .v1-feature__text { font-size: 15px; }
   .v1-svc__head { align-items: flex-start; text-align: left; }
 }
+/* галочка: 1.2em считаем от размера текста подписи, а не от шрифта самого поля */
+.check input, .lead__agree input { font-size: inherit !important; }
+
+/* =========================================================
+   СИСТЕМА ОТСТУПОВ: внутри контейнера связанные элементы ближе друг к другу, чем содержимое — к краям контейнера.
+   Поле контейнера (--v1-pad) ≥ промежуток между группами ≥ промежуток внутри группы
+   ========================================================= */
+.v1-about__list { gap: var(--s-16); }
+.theme-v1 .lead__card { gap: var(--s-16); }
+.theme-v1 .lead__fields { margin-top: var(--s-8); gap: var(--s-8); }
+.theme-v1 .lead__chips { gap: var(--s-8); }
+@media (max-width: 767px) {
+  .theme-v1 { --v1-pad: 24px; }
+  .v1-hero__text { inset: var(--v1-pad); }
+  .v1-about { row-gap: var(--v1-pad); }
+  .v1-about__how { gap: var(--s-16); }
+  .v1-about__list { gap: var(--sp-12); }
+  .theme-v1 .lead__card { gap: var(--s-16); }
+  .theme-v1 .lead__fields { margin-top: 0; }
+  /* кнопки на телефоне — во всю ширину */
+  .btn, .lead__submit, .calc__submit, .stack__btn, .collage__btn { width: 100% !important; align-self: stretch !important; }
+}
+.theme-v1 .lead__agree { gap: var(--sp-12) !important; }
