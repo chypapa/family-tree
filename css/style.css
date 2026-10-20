@@ -3392,3 +3392,17 @@ body, body *:not(svg):not(svg *) { font-family: "Manrope", system-ui, sans-serif
 .v1-svc__body { display: flex; flex-direction: column; gap: var(--s-8); min-width: 0; }
 .v1-svc__desc { max-width: 420px; font-size: var(--fs-body); color: rgba(255, 255, 255, .9); text-wrap: pretty; }
 .v1-svc__card::after { background: linear-gradient(180deg, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, .7) 100%); }
+
+/* «О компании» — крупный абзац во всю ширину, без заголовка; первая строка с отступом в 3 колонки,
+   вторая фраза светлее. Шрифт легче (400), чем заголовок следующего блока (600), — текст не спорит с ним */
+.v1-intro { display: block; }
+.v1-intro__text {
+  font-size: var(--v1-h2);
+  font-weight: 400;
+  letter-spacing: -.015em;
+  text-indent: calc((100% - 11 * var(--col-gap)) / 12 * 3 + 3 * var(--col-gap));
+  text-wrap: pretty;
+}
+.v1-intro__text span { color: #8c8984; }
+.v1-intro + .v1-svc .v1-h2 { font-weight: 600; }
+@media (max-width: 767px) { .v1-intro__text { font-size: 24px; text-indent: 0; } }
