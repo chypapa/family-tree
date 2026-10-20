@@ -3372,3 +3372,23 @@ body, body *:not(svg):not(svg *) { font-family: "Manrope", system-ui, sans-serif
   .v1-hero__text { justify-content: flex-start; }
   .v1-hero__lead { margin-top: auto; }               /* текст и кнопка — вместе внизу, заголовок — вверху */
 }
+
+/* шапка версии 1 — во всю ширину окна, прижата к верху, без скругления */
+.theme-v1 .header, .theme-v1 .header--sticky { margin: 0 !important; }
+.theme-v1 .header--sticky { top: 0; }
+.theme-v1 .header__bar { border-radius: 0 !important; padding-inline: var(--gut); }
+.theme-v1 .header--sticky.is-hidden { transform: translateY(-100%); }
+@media (max-width: 1023px) { .theme-v1 .header__mobile { padding: var(--s-8) var(--gut); background: var(--red); } }
+
+/* «Чем мы занимаемся»: подпись — колонки 1–3, текст — 4–12, крупно; вторая фраза — приглушённым цветом */
+.v1-intro { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); margin-top: var(--section-gap); }
+.v1-intro__label { grid-column: 1 / 4; padding-top: .55em; color: var(--text-body); }
+.v1-intro__text { grid-column: 4 / 13; font-size: var(--v1-h3); font-weight: 500; letter-spacing: -.01em; color: var(--text); text-wrap: pretty; }
+.v1-intro__text span { color: var(--text-body); }
+@media (max-width: 1199px) { .v1-intro__label { grid-column: 1 / -1; padding: 0 0 var(--s-16); } .v1-intro__text { grid-column: 1 / -1; } }
+@media (max-width: 767px) { .v1-intro__text { font-size: 22px; } }
+
+/* карточки услуг: название и описание слева внизу, стрелка справа */
+.v1-svc__body { display: flex; flex-direction: column; gap: var(--s-8); min-width: 0; }
+.v1-svc__desc { max-width: 420px; font-size: var(--fs-body); color: rgba(255, 255, 255, .9); text-wrap: pretty; }
+.v1-svc__card::after { background: linear-gradient(180deg, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, .7) 100%); }
