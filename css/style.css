@@ -3345,3 +3345,30 @@ body, body *:not(svg):not(svg *) { font-family: "Manrope", system-ui, sans-serif
   .btn, .lead__submit, .calc__submit, .stack__btn, .collage__btn { width: 100% !important; align-self: stretch !important; }
 }
 .theme-v1 .lead__agree { gap: var(--sp-12) !important; }
+
+/* =========================================================
+   ИСПРАВЛЕНИЯ ПО АУДИТУ (главная, версия 1)
+   ========================================================= */
+/* контраст: второстепенный текст — 4.7:1 на фоне страницы; оливковый темнее — белый текст на нём 5.2:1 */
+.theme-v1 { --text-body: #6e6b67; --muted: #6e6b67; --red: #736d4e; --red-hover: #5f5a40; --olive: #736d4e; }
+.v1-feature__text, .v1-review__author { color: var(--text-body); }
+.v1-about__list li { color: var(--white); }
+/* первый экран: снизу тёмная подложка под белый текст и кнопка «Получить консультацию» */
+.v1-hero::before { -webkit-mask-image: none; mask-image: none; background: linear-gradient(0deg, rgba(38, 32, 24, .62) 0%, rgba(38, 32, 24, .28) 45%, rgba(38, 32, 24, 0) 70%); }
+.v1-hero__text { text-shadow: none; }
+.v1-hero__btn { align-self: flex-start; background: var(--white) !important; color: var(--text) !important; border: 0 !important; }
+.v1-hero__btn:hover { background: var(--bg) !important; }
+/* карточки преимуществ: текст сразу под заголовком, без пустоты посередине */
+.v1-feature { justify-content: flex-start; gap: var(--s-16); min-height: 0; }
+/* отзывы: три карточки, ссылка на Авито справа от заголовка */
+.v1-reviews__head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--s-24); flex-wrap: wrap; }
+.v1-reviews__head .link-more { color: var(--text); }
+@media (min-width: 1200px) { .v1-reviews__list { grid-template-columns: repeat(3, minmax(0, 1fr)); } .v1-review { min-height: 300px; } }
+@media (max-width: 767px) {
+  .v1-hero::before { background: linear-gradient(180deg, rgba(38, 32, 24, .5) 0%, rgba(38, 32, 24, 0) 40%, rgba(38, 32, 24, 0) 55%, rgba(38, 32, 24, .6) 100%); }
+  .v1-hero__btn { align-self: stretch; }
+}
+@media (max-width: 767px) {
+  .v1-hero__text { justify-content: flex-start; }
+  .v1-hero__lead { margin-top: auto; }               /* текст и кнопка — вместе внизу, заголовок — вверху */
+}
