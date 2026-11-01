@@ -4,7 +4,7 @@
 
    ТИПОГРАФИКА — 5 стилей, шаг 1.25 с последовательным округлением.
    Desktop: 19 / 24 / 30 / 38 / 48px. Mobile: 16 / 20 / 25 / 31 / 39px.
-   H1–H3: 600, остальные: 400. Наборный: 120%, остальные: 130%.
+   H1–H4: 700, наборный: 500. Наборный: 120%, остальные: 130%.
 
    ОТСТУПЫ — шкала с шагом 8px: 8 · 16 · 24 · 32 · 48 · 56 · 64 · 72 · 96 · 128 · 160 (токены --s-8 … --s-160).
    Между соседними элементами — один отступ (у блоков только margin-top, без сложения с нижним отступом).
@@ -22,6 +22,7 @@
 @font-face { font-family: "Manrope"; src: url("../font/Manrope-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "Manrope"; src: url("../font/Manrope-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
 @font-face { font-family: "Manrope"; src: url("../font/Manrope-SemiBold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Manrope"; src: url("../font/Manrope-Bold-variable.ttf") format("truetype"); font-weight: 700; font-display: swap; }
 
 /* ---------- Токены ---------- */
 :root {
@@ -84,6 +85,7 @@
   /* Пять общих стилей текста */
   --fs-body: 19px;
   --fw-body: 500;
+  --fw-heading: 700;
   --fs-h4: 24px;
   --fs-h3: 30px;
   --fs-h2: 38px;
@@ -93,7 +95,7 @@
   --button-padding: 16px 24px;
   --button-radius: 12px;
   --button-font-size: var(--fs-body);
-  --button-font-weight: 400;
+  --button-font-weight: 700;
   --button-line-height: var(--lh-heading);
   --button-min-height: 56px;
 }
@@ -155,10 +157,10 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4, .mcard__title {
   font-family: "Manrope", system-ui, sans-serif;
   text-wrap: balance;                                 /* ровные строки, без одного слова на последней */
 }
-h1, .h1 { font-size: var(--fs-h1); font-weight: 400; line-height: var(--lh-heading); letter-spacing: normal; }
-h2, .h2, .mcard__title { font-size: var(--fs-h2); font-weight: 400; line-height: var(--lh-heading); letter-spacing: normal; }
-h3, .h3 { font-size: var(--fs-h3); font-weight: 600; line-height: var(--lh-heading); letter-spacing: normal; }
-h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-heading); letter-spacing: normal; }
+h1, .h1 { font-size: var(--fs-h1); font-weight: var(--fw-heading); line-height: var(--lh-heading); letter-spacing: normal; }
+h2, .h2, .mcard__title { font-size: var(--fs-h2); font-weight: var(--fw-heading); line-height: var(--lh-heading); letter-spacing: normal; }
+h3, .h3 { font-size: var(--fs-h3); font-weight: var(--fw-heading); line-height: var(--lh-heading); letter-spacing: normal; }
+h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: var(--lh-heading); letter-spacing: normal; }
 /* ---------- Заголовки H2 появляются построчно (классы ставит js/main.js; без JS всё видно сразу):
    каждая строка выезжает снизу из-под своей нижней границы, строки — одна за другой (.tl > .tl__in) */
 .text-lines .tl {
@@ -264,7 +266,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
   text-decoration: none;
 }
 .header__pill img { width: 25px; height: 28px; }
-.header__pill span { width: 72px; font-weight: 400; line-height: var(--lh-heading); }
+.header__pill span { width: 72px; font-weight: var(--fw-body); line-height: var(--lh-heading); }
 .header__buttons { display: flex; gap: var(--s-8); }
 .icon-btn {
   display: block;
@@ -361,7 +363,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
   text-decoration: none;
 }
 .mobile-menu__mark { flex: none; width: 26px; height: 28px; }
-.mobile-menu__logo-text { width: 72px; font-weight: 400; line-height: var(--lh-heading); }
+.mobile-menu__logo-text { width: 72px; font-weight: var(--fw-body); line-height: var(--lh-heading); }
 .mobile-menu__nav { display: flex; flex-direction: column; gap: var(--s-24); margin-top: var(--s-48); }
 .mobile-menu__nav a { color: var(--white); text-decoration: none; }
 .mobile-menu__nav a:hover { opacity: .75; }
@@ -467,7 +469,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
   position: absolute;
   left: 0;
   top: 0;
-  font-weight: 400;
+  font-weight: var(--fw-body);
   line-height: var(--lh-heading);
   letter-spacing: normal;
   white-space: nowrap;
@@ -843,7 +845,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
 
 .svc-card__btn-mobile { display: none; }
 /* блог: под текстом поста — «Читать полностью ↗» (на всех экранах); нажатие на карточку открывает пост */
-.post__btn-mobile { display: flex; align-items: center; gap: var(--s-8); margin-top: auto; color: var(--red); font-weight: 400; }
+.post__btn-mobile { display: flex; align-items: center; gap: var(--s-8); margin-top: auto; color: var(--red); font-weight: var(--fw-body); }
 .post__btn-icon { flex: none; }
 .post__btn-icon path { stroke-width: calc(1 / 1.5); }
 
@@ -1429,7 +1431,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
   padding: var(--s-48) var(--s-56);   /* одинаковые поля сверху и снизу */
   color: var(--white);
 }
-.lead__title { color: var(--white); font-size: var(--fs-h2); font-weight: 400; line-height: var(--lh-heading); letter-spacing: normal; }   /* стиль H2 */
+.lead__title { color: var(--white); font-size: var(--fs-h2); font-weight: var(--fw-heading); line-height: var(--lh-heading); letter-spacing: normal; }   /* стиль H2 */
 .lead__head p { max-width: 640px; margin-top: var(--gap-text, 24px); }   /* основной текст сайта */
 .lead__chips { display: flex; flex-wrap: wrap; gap: var(--s-16); margin: 0; padding: 0; list-style: none; }
 .lead__chips li { padding: var(--s-8) var(--s-24); border: 1px solid rgba(255, 255, 255, .8); border-radius: 999px; line-height: var(--lh-heading); }
@@ -1599,7 +1601,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
 .policy { margin-top: var(--s-72); }
 .policy__text { max-width: 680px; }
 .policy__text h1 + h2 { margin-top: var(--s-72); }    /* H1 → первый раздел — 72px */
-.policy__text h2 { margin: var(--s-56) 0 var(--s-24); font-size: var(--fs-h3); font-weight: 400; line-height: var(--lh-heading); }   /* разделы политики — стилем H3 */   /* последний абзац → заголовок — 56px, заголовок → текст — 24px */
+.policy__text h2 { margin: var(--s-56) 0 var(--s-24); font-size: var(--fs-h3); font-weight: var(--fw-heading); line-height: var(--lh-heading); }   /* разделы политики — стилем H3 */   /* последний абзац → заголовок — 56px, заголовок → текст — 24px */
 .policy__text p + p { margin-top: var(--s-16); }
 .policy__text .policy__date { margin-top: var(--s-56); }
 .policy .placeholder { color: var(--red); font-weight: var(--fw-body); }   /* места, которые нужно заполнить */
@@ -1782,7 +1784,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
     gap: var(--s-8);
     color: var(--red);
     text-decoration: none;
-    font-weight: 400;
+    font-weight: var(--fw-body);
     cursor: pointer;
     margin-top: auto;
   }
@@ -2159,7 +2161,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
   width: 100%;
   padding: 0;
   font-size: var(--fs-h4);                            /* вопрос анкеты — как заголовок карточки (H4) */
-  font-weight: 400;
+  font-weight: var(--fw-heading);
   letter-spacing: normal;
   line-height: var(--lh-heading);
   color: var(--text);
@@ -2258,7 +2260,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
   outline: none;
 }
 .calc__result-label { color: var(--text); }   /* стиль H3 — класс h3 в разметке */
-.calc__result-sum { margin-top: var(--s-16); font-size: var(--fs-h2); font-weight: 400; letter-spacing: normal; line-height: var(--lh-heading); color: var(--red); }   /* сумма — размером H2 */
+.calc__result-sum { margin-top: var(--s-16); font-size: var(--fs-h2); font-weight: var(--fw-heading); letter-spacing: normal; line-height: var(--lh-heading); color: var(--red); }   /* сумма — размером H2 */
 .calc__result-note { max-width: 640px; margin-top: var(--s-32); color: var(--muted); }
 .calc__again {
   margin-top: var(--s-24);
@@ -2424,7 +2426,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
   padding: var(--s-48);
   overflow: hidden;
   border-radius: var(--radius);
-  background: #3a3833 url("../img/tochechnye-hero.jpg") 50% 40% / cover no-repeat;
+  background: #3a3833 url("../img/family-tree-parchment.webp") 50% 50% / cover no-repeat;
   color: var(--white);
 }
 .promo::before {                                      /* затемнение слева, под текстом */
@@ -2462,7 +2464,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
 /* главная: «Как проходит исследование» — четыре шага в ряд */
 .process__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--col-gap); margin: 0; padding: 0; list-style: none; counter-reset: step; }
 .process__item { display: flex; flex-direction: column; gap: var(--s-16); padding-top: var(--s-24); border-top: 1px solid rgba(60, 60, 60, .2); counter-increment: step; }
-.process__item::before { content: "0" counter(step); color: var(--red); font-weight: 400; }
+.process__item::before { content: "0" counter(step); color: var(--red); font-weight: var(--fw-body); }
 .process__note { max-width: 760px; margin-top: var(--s-48); }
 
 @media (max-width: 1199px) {
@@ -2557,16 +2559,16 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
   color: var(--white);
 }
 .why-card::after { content: ""; position: absolute; top: var(--s-16); right: var(--s-16); width: 12px; height: 12px; border-radius: 50%; background: var(--white); }   /* белая точка, как у карточек этапов */
-.why-card__title { padding-right: var(--s-24); font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-heading); color: var(--white); }
+.why-card__title { padding-right: var(--s-24); font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: var(--lh-heading); color: var(--white); }
 .why-cards__list { gap: var(--s-16); }
 @media (max-width: 1199px) { .why-cards__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } .why-card { min-height: 220px; } }
 @media (max-width: 767px) { .why-cards { margin-top: var(--s-32); } .why-cards__list { grid-template-columns: 1fr; gap: var(--s-8, 8px); } .why-card { min-height: 0; padding: var(--s-16) var(--s-16) var(--s-24); } }
 
 /* Shared type roles. Body copy inherits the 120% leading. */
-h1, .h1, .opening__title { font-size: var(--fs-h1); font-weight: 600; line-height: var(--lh-heading); }
-h2, .h2, .focus__title, .lead__title { font-size: var(--fs-h2); font-weight: 600; line-height: var(--lh-heading); }
-h3, .h3 { font-size: var(--fs-h3); font-weight: 600; line-height: var(--lh-heading); }
-h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-heading); }
+h1, .h1, .opening__title { font-size: var(--fs-h1); font-weight: var(--fw-heading); line-height: var(--lh-heading); }
+h2, .h2, .focus__title, .lead__title { font-size: var(--fs-h2); font-weight: var(--fw-heading); line-height: var(--lh-heading); }
+h3, .h3 { font-size: var(--fs-h3); font-weight: var(--fw-heading); line-height: var(--lh-heading); }
+h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: var(--lh-heading); }
 p, li, label, input, textarea { line-height: var(--lh-body); }
 :where(h1, h2, h3, h4, p) { overflow-wrap: break-word; }
 /* CTA geometry and typography are defined once; variants only choose color. */
@@ -2600,7 +2602,7 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 
 
 
-.preloader__name { font-size: var(--fs-h1) !important; font-weight: 400; line-height: var(--lh-heading); }
+.preloader__name { font-size: var(--fs-h1) !important; font-weight: var(--fw-heading); line-height: var(--lh-heading); }
 
 /* Service covers keep their original photographic composition. */
 .opening:not(.opening--mosaic) {
@@ -2700,7 +2702,10 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 .svc-card__placeholder .svc-card__bar { position: absolute; top: var(--s-16); left: var(--s-16); right: var(--s-16); }
 
 .opening__tile-visual { position: absolute; inset: 0; background: var(--tile-color, transparent); }
-.svc-card__image { display: block; width: 100%; height: 100%; object-fit: cover; }
+.svc-card__image { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); transition: filter .3s ease; }
+@media (hover: hover) and (pointer: fine) { .svc-card:hover .svc-card__image { filter: grayscale(0); } }
+.svc-card:focus-visible .svc-card__image { filter: grayscale(0); }
+@media (prefers-reduced-motion: reduce) { .svc-card__image { transition: none; } }
 .btn.lead__submit { border: 1px solid var(--white); background: transparent; color: var(--white); }
 @media (hover: hover) and (pointer: fine) {
   .btn.lead__submit:hover { background: var(--white); color: var(--text); }
