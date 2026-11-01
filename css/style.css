@@ -2465,3 +2465,103 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 @media (max-width: 767px) {
   .book-page { --book-body-size: 18px; }
 }
+
+/* Homepage mosaic: grid cells reserve space for every image and the copy. */
+.home-page .opening--mosaic {
+  display: grid; grid-template-columns: repeat(8,minmax(0,1fr)); gap: 8px;
+  height: auto; min-height: 0; margin-top: 16px; padding: 0;
+  border-radius: 0; overflow: visible; background: none; color: var(--text);
+  --ease-out: cubic-bezier(.2,.75,.15,1);
+}
+.mosaic-tile { min-width: 0; aspect-ratio: 1; align-self: start; overflow: hidden; border-radius: 12px; }
+.mosaic-tile img { width: 100%; height: 100%; object-fit: cover; }
+.mosaic-tile--family { grid-area: 1 / 1; }
+.mosaic-tile--soldiers { grid-area: 1 / 3; }
+.mosaic-tile--terra { grid-area: 1 / 4; background: var(--terra); }
+.mosaic-tile--portrait { grid-area: 1 / 5; }
+.mosaic-tile--family-two { grid-area: 1 / 7; }
+.mosaic-tile--sage { grid-area: 1 / 8; background: var(--green); }
+.mosaic-tile--gold { grid-area: 2 / 1; background: var(--orange); }
+.mosaic-tile--plough { grid-area: 2 / 2; }
+.mosaic-tile--elders { grid-area: 2 / 4; }
+.mosaic-tile--family-three { grid-area: 2 / 6; }
+.mosaic-tile--red { grid-area: 2 / 7; background: var(--red); }
+.mosaic-tile--couple { grid-area: 2 / 8; }
+.mosaic-tile--elders-two { grid-area: 3 / 5; }
+.mosaic-tile--terra-two { grid-area: 3 / 6; background: var(--terra); }
+.mosaic-tile--gold-two { grid-area: 3 / 8; background: var(--orange); }
+.mosaic-tile--red-two { grid-area: 4 / 5; background: var(--red); }
+.mosaic-tile--soldiers-two { grid-area: 4 / 6; }
+.mosaic-tile--sage-two { grid-area: 4 / 7; background: var(--green); }
+.mosaic-tile--plough-two { grid-area: 4 / 8; }
+.mosaic-tile--soldiers img, .mosaic-tile--soldiers-two img { object-position: 50% 75%; }
+.mosaic-tile--family-two img, .mosaic-tile--couple img { object-position: 50% 60%; }
+.home-page .opening--mosaic .opening__content {
+  position: static; grid-area: 3 / 1 / 5 / 5; align-self: end;
+  min-width: 0; max-width: none; padding: 24px 24px 0 0;
+  opacity: 1; transform: none;
+}
+.home-page .opening--mosaic .opening__title { font-size: 48px; line-height: 1; color: var(--text); text-wrap: balance; }
+.home-page .opening--mosaic .opening__title .line { overflow: visible; padding: 0; }
+.home-page .opening--mosaic .opening__text { margin-top: 24px; color: var(--text); font-size: 16px; line-height: 24px; text-wrap: pretty; }
+.home-page .opening--mosaic .opening__cta { margin-top: 24px; }
+.home-page .opening--mosaic .opening__btn { background: var(--red); color: var(--white); }
+.home-page .svc__list { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.home-page .svc-card__media { aspect-ratio: 4 / 3; }
+.home-page .svc-card__desc { text-wrap: pretty; }
+@media (max-width: 1439px) {
+  .home-page .opening--mosaic { grid-template-columns: repeat(6,minmax(0,1fr)); }
+  .mosaic-tile--family { display: none; }
+  .mosaic-tile--soldiers { grid-area: 1 / 1; }
+  .mosaic-tile--terra { grid-area: 1 / 2; }
+  .mosaic-tile--portrait { grid-area: 1 / 3; }
+  .mosaic-tile--family-two { grid-area: 1 / 5; }
+  .mosaic-tile--sage { grid-area: 1 / 6; }
+  .mosaic-tile--gold { grid-area: 3 / 6; }
+  .mosaic-tile--plough { grid-area: 4 / 2; }
+  .mosaic-tile--elders { grid-area: 2 / 2; }
+  .mosaic-tile--family-three { grid-area: 2 / 4; }
+  .mosaic-tile--red { grid-area: 2 / 5; }
+  .mosaic-tile--couple { grid-area: 2 / 6; }
+  .mosaic-tile--elders-two { grid-area: 3 / 3; }
+  .mosaic-tile--terra-two { grid-area: 3 / 4; }
+  .mosaic-tile--gold-two { grid-area: 5 / 3; }
+  .mosaic-tile--red-two { grid-area: 3 / 1; }
+  .mosaic-tile--soldiers-two { grid-area: 4 / 4; }
+  .mosaic-tile--sage-two { grid-area: 4 / 5; }
+  .mosaic-tile--plough-two { grid-area: 4 / 6; }
+  .home-page .opening--mosaic .opening__content { grid-area: 6 / 1 / 7 / -1; padding: 24px 0 0; max-width: 960px; }
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  .home-page .svc__list { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .home-page .svc-card:last-child { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; }
+  .home-page .svc-card:last-child .svc-card__media { aspect-ratio: auto; min-height: 320px; }
+}
+@media (max-width: 767px) {
+  .home-page .opening--mosaic { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 8px; margin-top: 16px; }
+  .mosaic-tile { border-radius: 8px; }
+  .mosaic-tile--family,.mosaic-tile--terra,.mosaic-tile--portrait,.mosaic-tile--sage,.mosaic-tile--elders,.mosaic-tile--terra-two,.mosaic-tile--plough-two { display: none; }
+  .mosaic-tile--gold { grid-area: 1 / 1; }
+  .mosaic-tile--family-three { grid-area: 1 / 2; }
+  .mosaic-tile--red { grid-area: 1 / 3; }
+  .mosaic-tile--couple { grid-area: 1 / 4; }
+  .mosaic-tile--sage-two { grid-area: 2 / 2; }
+  .mosaic-tile--elders-two { grid-area: 2 / 3; }
+  .mosaic-tile--gold-two { grid-area: 2 / 4; }
+  .mosaic-tile--red-two { grid-area: 3 / 1; }
+  .mosaic-tile--soldiers-two { grid-area: 3 / 2; }
+  .mosaic-tile--family-two { grid-area: 3 / 4; }
+  .mosaic-tile--plough { grid-area: 4 / 1; }
+  .mosaic-tile--soldiers { grid-area: 4 / 3; }
+  .home-page .opening--mosaic .opening__content { grid-area: 5 / 1 / 6 / -1; padding-top: 24px; }
+  .home-page .opening--mosaic .opening__title { font-size: 30px; line-height: 36px; }
+  .home-page .opening--mosaic .opening__cta { margin-top: 32px; }
+  .home-page .svc__list { grid-template-columns: 1fr; }
+}
+/* Intro symbol and wordmark share flex alignment; no separate word coordinates. */
+.preloader__lockup { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 32px; padding: 24px; }
+.preloader__symbol { display: block; flex: none; width: min(20vh,169px); aspect-ratio: 370 / 395; color: var(--red); }
+.preloader .preloader__name { position: static; font-size: min(7vh,64px); line-height: 1.1; }
+.is-intro:not(.is-intro-done) .header .logo-mark { visibility: hidden; }
+@media (max-width: 767px) { .preloader__lockup { gap: 24px; } .preloader__symbol { width: 80px; } .preloader .preloader__name { font-size: 36px; } }
+@media (prefers-reduced-motion: reduce) { .preloader__name { transition: none; } }

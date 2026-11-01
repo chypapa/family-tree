@@ -6,10 +6,10 @@
   <title>Генеалогическое исследование и родословная книга — Древо предков</title>
   <meta name="description" content="Исследуем историю семьи по архивам России, Украины и Беларуси: метрические книги, ревизские сказки и другие документы. Родословная книга или цифровой архивный свиток. Начните с консультации.">
   <link rel="icon" href="img/favicon.ico" sizes="any">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=home-mosaic-1">
   <script>document.documentElement.classList.add('is-intro'); if (!('onpagereveal' in window)) document.documentElement.classList.add('fade-nav');</script>
 </head>
-<body>
+<body class="home-page">
 <div class="page">
 
   <!-- экран загрузки: на нём рисуется знак, рядом с ним выезжает название; потом знак уезжает в шапку,
@@ -107,15 +107,27 @@
 
     <!-- ============ ПЕРВЫЙ ЭКРАН — по макету Figma (plat-fam, узел 230:178): фото на весь экран,
          затемнение снизу слева, текст и кнопка поверх фото. Шапка над ним прозрачная ============ -->
-    <section class="opening" aria-labelledby="opening-title">
-      <div class="opening__media" aria-hidden="true">
-        <!-- видео на фоне первого экрана: без звука, по кругу; на телефоне — облегчённая версия 960px -->
-        <video class="opening__img opening__video" autoplay muted loop playsinline preload="auto" poster="img/hero-video-poster.jpg" width="1764" height="1172">
-          <source src="video/hero-960.mp4" type="video/mp4" media="(max-width: 767px)">
-          <source src="video/hero.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="opening__content">
+    <section class="opening opening--mosaic container" aria-labelledby="opening-title">
+<div class="mosaic-tile mosaic-tile--family" aria-hidden="true"><img src="img/strip-family.jpg" alt="" width="640" height="640" decoding="async"></div>
+<div class="mosaic-tile mosaic-tile--soldiers" aria-hidden="true"><img src="img/mosaic-soldiers.jpg" alt="" width="640" height="640" decoding="async"></div>
+<div class="mosaic-tile mosaic-tile--terra" aria-hidden="true"></div>
+<div class="mosaic-tile mosaic-tile--portrait" aria-hidden="true"><img src="img/strip-elders.jpg" alt="" width="640" height="640" decoding="async"></div>
+<div class="mosaic-tile mosaic-tile--family-two" aria-hidden="true"><img src="img/mosaic-family.jpg" alt="" width="640" height="640" decoding="async"></div>
+<div class="mosaic-tile mosaic-tile--sage" aria-hidden="true"></div>
+<div class="mosaic-tile mosaic-tile--gold" aria-hidden="true"></div>
+<div class="mosaic-tile mosaic-tile--plough" aria-hidden="true"><img src="img/mosaic-plough.jpg" alt="" width="640" height="640" decoding="async"></div>
+<div class="mosaic-tile mosaic-tile--elders" aria-hidden="true"><img src="img/strip-elders.jpg" alt="" width="640" height="640" decoding="async"></div>
+<div class="mosaic-tile mosaic-tile--family-three" aria-hidden="true"><img src="img/strip-family.jpg" alt="" width="640" height="640" decoding="async"></div>
+<div class="mosaic-tile mosaic-tile--red" aria-hidden="true"></div>
+<div class="mosaic-tile mosaic-tile--couple" aria-hidden="true"><img src="img/mosaic-family.jpg" alt="" width="640" height="640" decoding="async"></div>
+<div class="mosaic-tile mosaic-tile--elders-two" aria-hidden="true"><img src="img/strip-elders.jpg" alt="" width="640" height="640" decoding="async"></div>
+<div class="mosaic-tile mosaic-tile--terra-two" aria-hidden="true"></div>
+<div class="mosaic-tile mosaic-tile--gold-two" aria-hidden="true"></div>
+<div class="mosaic-tile mosaic-tile--red-two" aria-hidden="true"></div>
+<div class="mosaic-tile mosaic-tile--soldiers-two" aria-hidden="true"><img src="img/mosaic-soldiers.jpg" alt="" width="640" height="640" decoding="async"></div>
+<div class="mosaic-tile mosaic-tile--sage-two" aria-hidden="true"></div>
+<div class="mosaic-tile mosaic-tile--plough-two" aria-hidden="true"><img src="img/strip-plough.jpg" alt="" width="640" height="640" decoding="async"></div>
+<div class="opening__content">
         <h1 class="opening__title" id="opening-title">
           <span class="line"><span>История вашей семьи</span></span>
           <span class="line"><span>по&nbsp;архивным документам</span></span>
@@ -123,7 +135,7 @@
         <p class="opening__text">Проводим генеалогическое исследование: находим записи о&nbsp;ваших предках в&nbsp;метрических книгах, ревизских сказках и&nbsp;других архивных источниках и&nbsp;оформляем результат в&nbsp;родословную книгу или&nbsp;цифровой архивный свиток.</p>
         <div class="opening__cta"><a class="btn opening__btn" href="#contact">Обсудить историю семьи</a></div>
       </div>
-    </section>
+</section>
 
     <!-- ============ HERO (бегущая лента карточек) ============ -->
     <section class="hero4" aria-label="Первый экран" hidden>
@@ -194,7 +206,7 @@
       <div class="svc__list">
         <a class="svc-card has-cursor" href="rodoslovnaya-kniga.html">
           <div class="svc-card__media">
-            <img src="img/kniga-why.jpg" width="902" height="886" alt="Родословная книга «Ваша уникальная история в одной книге» в руках" loading="lazy" decoding="async">
+            <img src="img/book-archive-hero.jpg" width="1909" height="1009" alt="Разворот родословной книги с архивными записями" loading="lazy" decoding="async">
             <div class="svc-card__bar">
               <ul class="tags svc-card__tags" aria-label="Сроки и стоимость">
                 <li class="tag">от&nbsp;1&nbsp;месяца</li>
@@ -231,6 +243,27 @@
               <h3 class="h3 svc-card__title">Архивный свиток</h3>
             </div>
             <p class="svc-card__desc">Тот же&nbsp;поиск по&nbsp;архивам без&nbsp;печатного издания: фотокопии документов с&nbsp;расшифровкой и&nbsp;поколенная роспись в&nbsp;подробном электронном отчёте.</p>
+            <span class="svc-card__btn-mobile">Узнать подробнее</span>
+          </div>
+          <span class="cursor-bubble" aria-hidden="true">Узнать подробнее</span>
+        </a>
+
+<a class="svc-card has-cursor" href="tochechnye-issledovaniya.html">
+          <div class="svc-card__media">
+            <img src="img/svc-targeted.jpg" width="1400" height="933" alt="Коллекция старых фотографий" loading="lazy" decoding="async">
+            <div class="svc-card__bar">
+              <ul class="tags svc-card__tags" aria-label="Сроки и стоимость">
+                <li class="tag">срок и цена — под задачу</li>
+              </ul>
+              <img class="svc-card__arrow" src="icons/svc-arrow.svg" width="33" height="33" alt="">
+            </div>
+          </div>
+          <div class="svc-card__body">
+            <div class="svc-card__titles">
+              <p class="svc-card__sub">поиск документа + проверка сведений</p>
+              <h3 class="h3 svc-card__title">Точечные исследования</h3>
+            </div>
+            <p class="svc-card__desc">Ответ на один конкретный вопрос о предке, а не история всего рода. Найдём запись о рождении, венчании или службе, подтвердим родство для наследства, суда или гражданства по происхождению, проверим семейную легенду. Вы получите копии найденных документов с расшифровкой. А если сведения о семье уже собраны, оформим их в дизайн родословного древа.</p>
             <span class="svc-card__btn-mobile">Узнать подробнее</span>
           </div>
           <span class="cursor-bubble" aria-hidden="true">Узнать подробнее</span>
@@ -545,6 +578,6 @@
 
 </div>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="js/main.js"></script>
+<script src="js/main.js?v=home-mosaic-1"></script>
 </body>
 </html>

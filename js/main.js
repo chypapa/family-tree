@@ -41,90 +41,62 @@
     window.addEventListener('pageshow', function () { document.documentElement.classList.remove('is-leaving'); });
   }
 
-  /* ---------- Вступление: на светлом экране (шапки не видно) рисуется знак, рядом с ним выезжает название
-     «Древо предков» — знак сдвигается влево, и вместе с названием они стоят по центру экрана. Потом знак переезжает
-     на своё место в шапке, а название растворяется вместе со светлым экраном; появляются меню и первый экран.
-     Когда знак встал на место, появляется заливка шапки (если страница прокручена) ---------- */
+
+  /* Intro lockup uses shared flex layout, independent of font-loading timing. */
   (function () {
     var root = document.documentElement;
     var pre = document.querySelector('.preloader');
-    var word = pre && pre.querySelector('.preloader__name');
-    var marks = Array.prototype.slice.call(document.querySelectorAll('.logo-mark'));
+    var logo = Array.prototype.find.call(document.querySelectorAll('.header .logo-mark'), function (m) { return m.offsetParent !== null; });
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var ready = function () {
-      marks.forEach(function (m) {
-        var svg = m.querySelector('.mark');
-        svg.classList.remove('play');
-        svg.classList.add('done');
-      });
-      root.classList.add('is-ready');
+    var done = false, flight;
+    function finish() {
+      if (done) return;
+      done = true;
+      if (symbol) symbol.style.visibility = 'hidden';
+      if (flight) flight.cancel();
+      document.querySelectorAll('.header .mark').forEach(function (m) { m.classList.remove('play'); m.classList.add('done'); });
+      root.classList.add('is-ready', 'is-intro-done');
+      window.removeEventListener('resize', finish);
+      window.removeEventListener('scroll', finish);
       setTimeout(function () { if (pre) pre.remove(); }, 980);
-    };
-    var finish = function () { root.classList.add('is-intro-done'); };   // знак на месте: заливка шапки
-    var logo = marks.filter(function (m) { return m.offsetParent !== null; })[0];   // видимый знак: в шапке или в мобильной плашке
-    // без вступления (на телефоне знака в шапке нет): заливка кнопок шапки появляется, когда растворится экран загрузки
-    if (reduce || !pre || !logo || !window.Promise) { ready(); setTimeout(finish, reduce || !pre ? 0 : 500); return; }
-    // название меряем только когда загрузился Manrope: иначе его размер берётся от запасного шрифта
-    // и знак встаёт не на одну линию с названием
-    var start = function () { if (start.done) return; start.done = true; run(); };
-    if (word && document.fonts && document.fonts.load) {
-      document.fonts.load('500 40px Manrope', word.textContent).then(start, start);
-      setTimeout(start, 1500);
-    } else start();
-    function run() {
-    try {
-      var vw = window.innerWidth, vh = window.innerHeight;
-      var r = logo.getBoundingClientRect();
-      var size = Math.min(vh * 0.2, 180);                      // высота знака по центру экрана
-      var s = size / r.height;
-      var logoW = r.width * s;
-      var gap = size * 0.28;                                   // знак → название
-      var shift = 0;
-      if (word) {
-        word.style.fontSize = Math.round(size * 0.36) + 'px';
-        var ww = word.offsetWidth, wh = word.offsetHeight;
-        var scaleDown = Math.min(1, (vw - 48) / (logoW + gap + ww));   // узкий экран — всё чуть меньше
-        if (scaleDown < 1) {
-          size *= scaleDown; s = size / r.height; logoW = r.width * s; gap *= scaleDown;
-          word.style.fontSize = Math.round(size * 0.36) + 'px';
-          ww = word.offsetWidth; wh = word.offsetHeight;
-        }
-        shift = (gap + ww) / 2;                                // знак с названием — по центру экрана
-        word.style.left = (vw / 2 - shift + logoW / 2 + gap) + 'px';
-        word.style.top = (vh / 2 - wh / 2) + 'px';
-      }
-      var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-      var place = function (dx) { logo.style.transform = 'translate(' + (dx - cx) + 'px,' + (vh / 2 - cy) + 'px) scale(' + s + ')'; };
-      logo.style.color = '#a53625';
-      place(vw / 2);
-      void logo.offsetWidth;
-      logo.querySelector('.mark').classList.add('play');     // 1. рисуется контур, затем заливка (около 1,1 с)
-      if (word) setTimeout(function () {                       // 2. знак сдвигается влево, рядом выезжает название
-        logo.style.transition = 'transform .6s cubic-bezier(.4, 0, .2, 1)';
-        place(vw / 2 - shift);
-        word.classList.add('is-in');
-      }, 150);
-
-      var drawn = new Promise(function (res) { setTimeout(res, 1180); });
-      var loaded = new Promise(function (res) {
-        if (document.readyState === 'complete') res(); else window.addEventListener('load', res, { once: true });
-        setTimeout(res, 5000);                                // медленный интернет — не ждём дольше 5 с
-      });
-      Promise.all([drawn, loaded]).then(function () {
-        // 3. знак уезжает на своё место в шапке и становится белым, название растворяется вместе с экраном.
-        //    Если страница прокручена (у шапки будет заливка), знак остаётся красным, пока едет, и белеет
-        //    вместе с появлением заливки — на светлом фоне он не пропадает
-        var header = document.querySelector('.header--sticky');
-        var filled = !header || !header.classList.contains('is-top');
-        logo.style.transition = 'transform .58s cubic-bezier(.75, 0, .2, 1), color ' + (filled ? '.3s ease .58s' : '.45s ease .09s');
-        logo.style.transform = '';
-        logo.style.color = '';
-        ready();                                              // экран с названием растворяется, появляются меню и первый экран
-        setTimeout(finish, 600);                              // 4. знак на месте
-        setTimeout(function () { logo.style.transition = ''; }, 900);
-      });
-    } catch (e) { ready(); finish(); }
     }
+    if (!pre || !logo || reduce) { finish(); return; }
+    var word = pre.querySelector('.preloader__name');
+    var lockup = document.createElement('div');
+    lockup.className = 'preloader__lockup';
+    var symbol = document.createElement('span');
+    symbol.className = 'preloader__symbol';
+    // Duplicate SVG IDs must not resolve to a mask in the hidden header.
+    symbol.innerHTML = logo.innerHTML.replace(/mark-behind-1/g, 'intro-mark-behind');
+    lockup.appendChild(symbol);
+    if (word) lockup.appendChild(word);
+    pre.appendChild(lockup);
+    symbol.querySelector('.mark').classList.add('play');
+    requestAnimationFrame(function () { if (word) word.classList.add('is-in'); });
+    window.addEventListener('resize', finish, { once: true });
+    window.addEventListener('scroll', finish, { once: true, passive: true });
+    var drawn = new Promise(function (resolve) { setTimeout(resolve, 1180); });
+    var fontReady = document.fonts ? Promise.race([document.fonts.ready, new Promise(function (r) { setTimeout(r, 1800); })]) : Promise.resolve();
+    Promise.all([drawn, fontReady]).then(function () {
+      if (done) return;
+      var from = symbol.getBoundingClientRect();
+      var to = logo.getBoundingClientRect();
+      if (!from.width || !to.width || !symbol.animate) { finish(); return; }
+      if (word) word.style.opacity = '0';
+      symbol.style.position = 'fixed';
+      symbol.style.left = from.left + 'px';
+      symbol.style.top = from.top + 'px';
+      symbol.style.width = from.width + 'px';
+      symbol.style.height = from.height + 'px';
+      symbol.style.transformOrigin = '0 0';
+      flight = symbol.animate([
+        { transform: 'translate(0,0) scale(1)', opacity: 1 },
+        { transform: 'translate(' + (to.left-from.left) + 'px,' + (to.top-from.top) + 'px) scale(' + (to.width/from.width) + ',' + (to.height/from.height) + ')', opacity: 1 }
+      ], { duration: 580, easing: 'cubic-bezier(.77,0,.175,1)', fill: 'forwards' });
+      flight.finished.then(finish, finish);
+    }).catch(finish);
+    window.addEventListener('pageshow', function (event) { if (event.persisted) finish(); });
+    setTimeout(finish, 6500);
   })();
 
   /* ---------- Шапка без заливки над первым экраном; при прокрутке заливка появляется.
@@ -148,7 +120,7 @@
         topHeader.classList.toggle('is-hidden', y > lastY);
         lastY = y;
       }
-      if (opening && openingMotion) {
+      if (opening && openingMotion && !opening.classList.contains("opening--mosaic")) {
         opening.style.setProperty('--hp', Math.min(1, Math.max(0, y / window.innerHeight)).toFixed(3));
       }
     };
