@@ -42,6 +42,7 @@
   --badge-color: #fff;
   --badge-padding: var(--s-8) var(--s-16);
   --badge-radius: 999px;
+  --badge-blur: 24px;
 
   /* сетка страницы: одно общее поле для всех блоков */
   --container: 1840px;
@@ -2506,40 +2507,39 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
 .blog .post .post__texts, .blog .post--main .post__texts, .blog .post--side .post__texts { display: flex; flex-direction: column; gap: 20px; }
 .blog .post .post__body, .blog .post--main .post__body, .blog .post--side .post__body { gap: 12px; }
 
-/* About: red background, two 15% decorative maps, eight-column text. */
+/* About: copy on the left, supplied family map on the right, benefits below. */
 .intro-text.section {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: var(--section-pad) var(--edge);
-  background: var(--red);
-  color: var(--white);
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--s-64) var(--col-gap);
+  padding: 0 var(--edge);
+  background: var(--bg);
+  color: var(--text);
 }
-.intro-text::before, .intro-text::after {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  background: url("../img/about-regions-red.webp") center / contain no-repeat;
-  opacity: .15;
-  pointer-events: none;
-}
-.intro-text::before { top: 24%; left: 58%; width: 55%; height: 120%; }
-.intro-text::after { top: -52%; left: -35%; width: 60%; height: 120%; transform: rotate(-12deg); }
-.intro-text > * { position: relative; z-index: 1; }
 .intro-text__body {
+  grid-column: 1 / span 6;
   display: flex; flex-direction: column; align-items: flex-start;
-  gap: var(--s-24);
-  width: 100%;
-  margin: 0; text-align: left;
+  gap: var(--s-24); min-width: 0; margin: 0; text-align: left;
 }
-.intro-text__lead, .intro-text__accent { color: var(--white); }
-.intro-text__sub { font-size: var(--fs-h3); font-weight: 600; line-height: var(--lh-heading); opacity: 1; }
-.intro-text .why-cards { margin-top: var(--s-96); }
-@media (max-width: 1199px) { .intro-text__body { width: 100%; max-width: none; } }
+.intro-text__lead, .intro-text__accent { color: var(--text); }
+.intro-text .intro-text__lead, .intro-text .intro-text__sub { width: 100%; }
+.intro-text .intro-text__sub { font-size: var(--fs-body); font-weight: 400; line-height: var(--lh-body); opacity: 1; }
+.intro-text__media { grid-column: 8 / -1; align-self: start; min-width: 0; }
+.intro-text__media img { display: block; width: 100%; max-width: none; height: auto; margin-left: var(--edge); }
+.intro-text .why-cards { grid-column: 1 / -1; margin-top: 0; }
+@media (max-width: 1023px) {
+  .intro-text.section { gap: var(--s-48) var(--col-gap); }
+  .intro-text__body { grid-column: 1 / span 7; }
+  .intro-text__media { grid-column: 9 / -1; }
+}
 @media (max-width: 767px) {
-  .intro-text.section { padding-block: var(--s-48); }
-  .intro-text__body { gap: var(--s-24); }
-  .intro-text .why-cards { margin-top: var(--s-56); }
+  .intro-text__body, .intro-text__media { grid-column: 1 / -1; }
+  .intro-text__media { width: min(100%, 480px); justify-self: end; }
+  .intro-text__media img { width: 100%; max-width: 100%; margin-left: 0; }
+  .intro-text.section { row-gap: var(--s-32); }
 }
 
 /* «Почему нас выбирают?»: подзаголовок (H4) и четыре красные карточки в ряд (по 3 колонки из 12);
@@ -2702,10 +2702,6 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 .svc-card__placeholder { position: relative; }
 .svc-card__placeholder .svc-card__bar { position: absolute; top: var(--s-16); left: var(--s-16); right: var(--s-16); }
 
-/* Both text blocks span eight columns of the common twelve-column grid. */
-.intro-text__lead { width: calc((100% - 11 * var(--col-gap)) / 12 * 8 + 7 * var(--col-gap)); }
-.intro-text .intro-text__sub { width: calc((100% - 11 * var(--col-gap)) / 12 * 8 + 7 * var(--col-gap)); font-weight: 400; }
-@media (max-width: 1023px) { .intro-text__lead, .intro-text .intro-text__sub { width: 100%; } }
 .opening__tile-visual { position: absolute; inset: 0; background: var(--tile-color, transparent); }
 .svc-card__image { display: block; width: 100%; height: 100%; object-fit: cover; }
 .btn.lead__submit { border: 1px solid var(--white); background: transparent; color: var(--white); }
@@ -2724,6 +2720,8 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
   border: 0;
   border-radius: var(--badge-radius);
   background: var(--badge-background);
+  -webkit-backdrop-filter: blur(var(--badge-blur));
+  backdrop-filter: blur(var(--badge-blur));
   color: var(--badge-color);
   font-size: var(--fs-body);
   font-weight: 400;
