@@ -2400,8 +2400,10 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
 /* примеры работ: два фото рядом, под ними подпись */
 .about-svc + .gallery { margin-top: var(--s-96); }   /* фото иллюстрируют «Об услуге»: 96px — ближе, чем обычный отступ между блоками (160px) */
 /* два фото во всю ширину окна, каждое — половина экрана, без промежутков и скруглений */
-.gallery__grid { display: grid; grid-template-columns: 1fr 1fr; margin-inline: calc(50% - var(--vw) / 2); }
-.gallery__grid img { width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; }
+.gallery__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--col-gap); margin-inline: 0; }
+.gallery__item { position: relative; margin: 0; min-width: 0; overflow: hidden; border-radius: var(--radius); aspect-ratio: 4 / 3; }
+.gallery__grid img { width: 100%; height: 100%; object-fit: cover; }
+.gallery__badge { position: absolute; top: var(--s-16); left: var(--s-16); max-width: calc(100% - 2 * var(--s-16)); padding: var(--s-8) var(--s-16); border-radius: var(--radius-sm); background: var(--white); color: var(--text); font-size: var(--fs-body); line-height: var(--lh-heading); }
 .gallery__note { margin-top: var(--s-8); color: var(--muted); }   /* фото → подпись — 8px */
 
 /* «Этапы работы» на страницах книги и свитка — лента (см. «Этапы работы» выше): карточки шириной с карточку отзыва */
