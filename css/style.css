@@ -2739,3 +2739,15 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 .voice--video::after { display: none; }
 .voice--video .voice__video { flex: 1; min-height: 320px; aspect-ratio: auto; }
 .voice__play:focus-visible { outline: 3px solid var(--text); outline-offset: -6px; border-radius: var(--radius); }
+
+/* Family tree design: illustration and copy share the site's two-column grid. */
+.tree-design { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--col-gap); align-items: stretch; }
+.tree-design__media { position: relative; min-width: 0; overflow: hidden; border-radius: var(--radius); background: #dfd0b8; }
+.tree-design__media img { display: block; width: 100%; height: auto; }
+.tree-design__price { position: absolute; top: var(--s-16); left: var(--s-16); }
+.tree-design__copy { display: flex; flex-direction: column; justify-content: space-between; gap: var(--s-48); min-width: 0; }
+.tree-design__intro { display: flex; flex-direction: column; gap: var(--gap-text); }
+@media (max-width: 1023px) {
+  .tree-design { grid-template-columns: 1fr; row-gap: var(--s-32); }
+  .tree-design__copy { gap: var(--gap-text); }
+}
