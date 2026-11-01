@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="css/style.css">
   <script>if (!('onpagereveal' in window)) document.documentElement.classList.add('fade-nav');</script>
 </head>
-<body>
+<body class="book-page">
 <div class="page">
 
   <!-- ============ HEADER ============ -->
@@ -105,7 +105,7 @@
          затемнение-градиент снизу, заголовок и текст поверх ============ -->
     <section class="opening opening--kniga" aria-labelledby="opening-title">
       <div class="opening__media" aria-hidden="true">
-        <img class="opening__img" src="img/kniga-hero.jpg" srcset="img/kniga-hero-960.jpg 960w, img/kniga-hero.jpg 2000w" sizes="100vw" width="2000" height="1333" alt="" fetchpriority="high" decoding="async">
+        <img class="opening__img" src="img/book-archive-hero.jpg" srcset="img/book-archive-hero-960.jpg 960w, img/book-archive-hero.jpg 1909w" sizes="100vw" width="1909" height="1009" alt="" fetchpriority="high" decoding="async">
       </div>
       <div class="opening__content">
         <h1 class="opening__title" id="opening-title">
@@ -117,24 +117,26 @@
     </section>
 
     <!-- ============ ОБ УСЛУГЕ: две колонки — «почему» и «для кого» ============ -->
-    <section class="about-svc container section" aria-labelledby="about-svc-title">
-      <h2 class="about-svc__chip" id="about-svc-title">Об&nbsp;услуге</h2>
+    <section class="about-svc about-svc--book container section" aria-labelledby="about-svc-title">
+      <h2 class="about-svc__chip" id="about-svc-title">Об услуге</h2>
+      <p class="book-intro">От архивной находки<br>к истории вашей семьи</p>
       <div class="about-svc__cols">
         <div class="about-svc__col">
-          <h3 class="h4">Почему стоит заказать родословную книгу?</h3>
+          <h3 class="h4">Исследование, которое становится книгой</h3>
           <div>
-            <p>Семейная память обычно хранит два-три поколения&nbsp;— дальше имена и&nbsp;истории стираются, если их&nbsp;никто не&nbsp;записал. Родословная книга сохраняет то, что&nbsp;сегодня живёт лишь в&nbsp;рассказах старших, и&nbsp;подкрепляет это&nbsp;документами.</p>
-            <p>Это&nbsp;и&nbsp;способ лучше понять себя: откуда в&nbsp;семье те или&nbsp;иные черты, почему предки оказались именно в&nbsp;этих местах, через что&nbsp;им пришлось пройти.</p>
-            <p>А&nbsp;ещё это&nbsp;подарок, который со&nbsp;временем становится только ценнее: через двадцать лет такую книгу будут показывать внукам как&nbsp;семейную реликвию.</p>
+            <p>За каждой главой стоит работа с архивами. Мы ищем документы о ваших предках, расшифровываем записи и сопоставляем найденные сведения. Изучаем судьбы людей в контексте их времени: где они жили, чем занимались и как менялась история семьи.</p>
+            <p>На основе исследования создаём связное повествование с копиями источников, пояснениями и родословным древом. Продумываем структуру, дизайн и вёрстку книги, оформляем древо, чтобы находки было удобно рассматривать и передавать следующим поколениям.</p>
+            <p>Если вы уже собрали документы и воспоминания, поможем изучить и систематизировать их, выстроить историю и оформить её в индивидуальное издание.</p>
           </div>
         </div>
-        <div class="about-svc__col">
-          <h3 class="h4">Для&nbsp;кого эта услуга?</h3>
+        <div class="about-svc__col book-result">
+          <h3 class="h4">Что останется в вашей семье</h3>
+          <p>Вы получите не просто красивое издание, а историю рода, основанную на документах и бережно собранную в книгу на долгую память.</p>
           <ul class="dot-list">
-            <li>Для&nbsp;тех, кто хочет сохранить память о&nbsp;старшем поколении, пока есть возможность расспросить родных</li>
-            <li>Для&nbsp;тех, кто ищет особенный подарок к&nbsp;юбилею, свадьбе или&nbsp;дню рождения</li>
-            <li>Для&nbsp;тех, кто хочет узнать, откуда родом их&nbsp;семья</li>
-            <li>Для&nbsp;тех, кто хочет оставить детям и&nbsp;внукам цельную историю рода, а&nbsp;не&nbsp;разрозненные фотографии</li>
+            <li>История предков с объяснением архивных находок и контекста эпохи</li>
+            <li>Копии документов с расшифровками и ссылками на источники</li>
+            <li>Родословное древо, которое помогает увидеть связи между поколениями</li>
+            <li>Индивидуальный дизайн книги для семейной библиотеки или особенного подарка</li>
           </ul>
         </div>
       </div>
@@ -143,8 +145,8 @@
     <!-- ============ ПРИМЕРЫ РАБОТ: два фото, под ними подпись ============ -->
     <section class="gallery container section" aria-label="Примеры родословных книг">
       <div class="gallery__grid">
-        <img src="img/kniga-why.jpg" width="902" height="886" alt="Родословная книга «Ваша уникальная история в одной книге» в руках" loading="lazy" decoding="async">
-        <img src="img/kniga-example.jpg" width="903" height="885" alt="Разворот родословной книги: метрическая запись о рождении и её расшифровка" loading="lazy" decoding="async">
+        <img src="img/book-digital-example.jpg" width="1800" height="2700" alt="Электронная родословная книга на планшете: история деревни Грязино и карта местности" loading="lazy" decoding="async">
+        <img src="img/book-printed-example.jpg" width="2000" height="1117" alt="Разворот родословной книги: метрическая запись о рождении и её расшифровка" loading="lazy" decoding="async">
       </div>
       <p class="gallery__note">*Примеры выполненных работ. Дизайн каждой книги обсуждается и&nbsp;создаётся индивидуально.</p>
     </section>
@@ -169,7 +171,7 @@
         </article>
         <article class="stage">
           <div class="stage__top">
-            <span class="stage__tag">20–30 дней</span>
+            <span class="stage__tag">14–30 дней</span>
             <h3 class="h4 stage__title">Архивный поиск</h3>
             <div class="stage__text">
               <p>Работаем с&nbsp;государственными и&nbsp;частными архивами, восстанавливаем контекст эпохи. О&nbsp;ключевых находках сообщаем по&nbsp;мере их&nbsp;появления.</p>
@@ -179,7 +181,7 @@
         </article>
         <article class="stage">
           <div class="stage__top">
-            <span class="stage__tag">2–3 дня</span>
+            <span class="stage__tag">14–30 дней</span>
             <h3 class="h4 stage__title">История рода и&nbsp;содержание книги</h3>
             <div class="stage__text">
               <p>Расшифровываем найденные документы, поясняем исторический контекст и&nbsp;согласовываем с&nbsp;вами содержание книги.</p>
@@ -189,7 +191,7 @@
         </article>
         <article class="stage">
           <div class="stage__top">
-            <span class="stage__tag">2–3 дня</span>
+            <span class="stage__tag">7–14 дней</span>
             <h3 class="h4 stage__title">Дизайн и&nbsp;вёрстка</h3>
             <div class="stage__text">
               <p>Оформляем издание: расшифровки документов, исторические справки и&nbsp;векторное древо для&nbsp;печати на&nbsp;холсте.</p>
