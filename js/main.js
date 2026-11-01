@@ -547,9 +547,21 @@
     sync();
     window.addEventListener('resize', sync);
     window.addEventListener('load', sync);
+    var hideCursor = function () {
+      over = false;
+      dir = 0;
+      last = 0;
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0;
+      section.classList.remove('is-cursor');
+    };
+    var pointerInside = function () {
+      var hit = document.elementFromPoint(x, y);
+      return !!hit && strip.contains(hit);
+    };
     var state = function () {
-      if (!sync()) return;
-      if (over) section.classList.add('is-cursor');
+      if (!over || !pointerInside() || !sync()) { hideCursor(); return; }
+      section.classList.add('is-cursor');
       var max = strip.scrollWidth - strip.clientWidth;
       var atStart = strip.scrollLeft <= 1, atEnd = strip.scrollLeft >= max - 1;
       var third = window.innerWidth / 3;
@@ -574,9 +586,15 @@
     };
     strip.addEventListener('pointerenter', function (e) { over = true; x = e.clientX; y = e.clientY; place(); state(); });
     strip.addEventListener('pointermove', function (e) { x = e.clientX; y = e.clientY; place(); state(); });
-    strip.addEventListener('pointerleave', function () { over = false; dir = 0; section.classList.remove('is-cursor'); });
+    strip.addEventListener('pointerleave', hideCursor);
+    strip.addEventListener('pointercancel', hideCursor);
+    window.addEventListener('blur', hideCursor);
+    document.addEventListener('visibilitychange', function () { if (document.hidden) hideCursor(); });
     strip.addEventListener('scroll', function () { if (over) state(); }, { passive: true });
-    window.addEventListener('scroll', function () { if (over) place(); }, { passive: true });
+    window.addEventListener('scroll', function () { if (over) { state(); if (over) place(); } }, { passive: true });
+    document.addEventListener('pointermove', function (e) {
+      if (over && !strip.contains(e.target)) hideCursor();
+    }, { passive: true });
   });
 
   /* ---------- Видео на первом экране: при «уменьшить движение» не крутим, показываем первый кадр ---------- */

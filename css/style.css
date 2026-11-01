@@ -2034,7 +2034,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
 /* ---------- Отзывы: всегда в один ряд — три карточки по 4 колонки из 12, на планшете и телефоне лента (см. ниже).
    Карточки одной высоты: имя и кавычки сверху, текст — по центру оставшейся высоты ---------- */
 .voices__heading { margin-bottom: var(--gap-head); }
-.voices__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--col-gap); }   /* по 4 колонки из 12, все карточки одной высоты */
+.voices__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--col-gap); }
 .voice {
   position: relative;
   display: flex;
@@ -2056,7 +2056,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
 }
 .voice__author { display: flex; align-items: center; gap: var(--s-8); margin-top: auto; padding-top: var(--s-8); color: var(--muted); }   /* автор — внизу карточки */
 .voice__author img { width: 22px; height: 22px; }
-.voice__text { margin-top: 48px; color: var(--text); }   /* кавычки в углу, под ними текст, затем видео; автор — внизу */
+.voice__text { margin-top: 48px; color: var(--text); }   /* кавычки в углу, текст и автор */
 .voice__video { position: relative; width: 100%; aspect-ratio: 233 / 115; overflow: hidden; border-radius: var(--radius); background: #8e98a3; }
 .voice__player { display: block; width: 100%; height: 100%; object-fit: cover; }
 .voice__play {
@@ -2077,7 +2077,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
   height: 48px;
   margin: -24px 0 0 -24px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, .7) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 6.5v11l9-5.5z' fill='%23fff'/%3E%3C/svg%3E") 55% 50% / 26px no-repeat;
+  background: rgba(255, 255, 255, .7) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 3v18l15-9z' fill='%23fff'/%3E%3C/svg%3E") 50% 50% / 32px no-repeat;
   background-color: rgba(255, 255, 255, .55);
   transition: transform .2s ease, background-color .2s ease;
 }
@@ -2730,4 +2730,7 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 .lead__chips li::before, .lead__chips li::after { content: none; display: none; }
 
 .review__author, .voice__author { opacity: .5; }
-.voice__video-caption { font-size: var(--fs-body); line-height: var(--lh-body); color: var(--text); }
+.voice--video { padding: 0; overflow: hidden; }
+.voice--video::after { display: none; }
+.voice--video .voice__video { flex: 1; min-height: 320px; aspect-ratio: auto; }
+.voice__play:focus-visible { outline: 3px solid var(--text); outline-offset: -6px; border-radius: var(--radius); }
