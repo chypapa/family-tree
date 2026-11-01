@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="css/style.css">
   <script>document.documentElement.classList.add('is-intro'); if (!('onpagereveal' in window)) document.documentElement.classList.add('fade-nav');</script>
 </head>
-<body>
+<body class="home-page">
 <div class="page">
 
   <!-- экран загрузки: на нём рисуется знак, рядом с ним выезжает название; потом знак уезжает в шапку,
@@ -17,7 +17,7 @@
   <div class="preloader" aria-hidden="true"><span class="preloader__name">Древо<br>предков</span></div>
 
   <!-- ============ HEADER ============ -->
-  <header class="header header--sticky header--dark is-top">
+  <header class="header header--sticky header--dark is-before-hero-threshold">
     <div class="header__bar">
       <div class="header__left">
         <a class="header__logo" href="#top" aria-label="Древо предков — на главную">
@@ -106,26 +106,26 @@
   <main id="top">
 
     <!-- ============ ПЕРВЫЙ ЭКРАН — мозаика семейных фотографий ============ -->
-    <section class="opening opening--mosaic container" aria-labelledby="opening-title">
-      <div class="opening__tile" style="--x:1;--y:1;--tx:1;--ty:1;--mx:1;--my:1;--tile-color:var(--orange)" aria-hidden="true"></div>
-      <div class="opening__tile" style="--x:3;--y:1;--tx:2;--ty:1;--mx:2;--my:1" aria-hidden="true"><img src="img/strip-family.jpg" alt="" decoding="async"></div>
-      <div class="opening__tile" style="--x:4;--y:1;--tx:3;--ty:1;--mx:3;--my:1;--tile-color:var(--red)" aria-hidden="true"></div>
-      <div class="opening__tile" style="--x:5;--y:1;--tx:5;--ty:1;--mx:4;--my:1" aria-hidden="true"><img src="img/strip-elders.jpg" alt="" decoding="async"></div>
-      <div class="opening__tile" style="--x:7;--y:1;--tx:6;--ty:1;--mx:2;--my:2;--tile-color:var(--green)" aria-hidden="true"></div>
-      <div class="opening__tile" style="--x:8;--y:1;--tx:2;--ty:2;--mx:3;--my:2" aria-hidden="true"><img src="img/strip-elders.jpg" alt="" decoding="async"></div>
-      <div class="opening__tile" style="--x:1;--y:2;--tx:4;--ty:2;--mx:4;--my:2;--tile-color:var(--orange)" aria-hidden="true"></div>
-      <div class="opening__tile" style="--x:2;--y:2;--tx:5;--ty:2;--mx:1;--my:3;--tile-color:var(--red)" aria-hidden="true"></div>
-      <div class="opening__tile" style="--x:4;--y:2;--tx:6;--ty:2;--mx:2;--my:3" aria-hidden="true"><img src="img/strip-family.jpg" alt="" decoding="async"></div>
-      <div class="opening__tile" style="--x:6;--y:2;--tx:1;--ty:3;--mx:4;--my:3" aria-hidden="true"><img src="img/strip-elders.jpg" alt="" decoding="async"></div>
-      <div class="opening__tile" style="--x:7;--y:2;--tx:3;--ty:3;--mx:1;--my:4" aria-hidden="true"><img src="img/strip-plough.jpg" alt="" decoding="async"></div>
-      <div class="opening__tile" style="--x:8;--y:2;--tx:4;--ty:3;--mx:3;--my:4;--tile-color:var(--green)" aria-hidden="true"></div>
-      <div class="opening__tile" style="--x:5;--y:3;--tx:6;--ty:3;--mx:1;--my:1" aria-hidden="true"><img src="img/strip-elders.jpg" alt="" decoding="async"></div>
-      <div class="opening__tile" style="--x:6;--y:3;--tx:2;--ty:4;--mx:1;--my:1;--tile-color:var(--terra)" aria-hidden="true"></div>
-      <div class="opening__tile" style="--x:8;--y:3;--tx:4;--ty:4;--mx:1;--my:1;--tile-color:var(--orange)" aria-hidden="true"></div>
-      <div class="opening__tile" style="--x:5;--y:4;--tx:5;--ty:4;--mx:1;--my:1;--tile-color:var(--red)" aria-hidden="true"></div>
-      <div class="opening__tile" style="--x:6;--y:4;--tx:6;--ty:4;--mx:1;--my:1" aria-hidden="true"><img src="img/strip-plough.jpg" alt="" decoding="async"></div>
-      <div class="opening__tile" style="--x:7;--y:4;--tx:3;--ty:5;--mx:1;--my:1;--tile-color:var(--green)" aria-hidden="true"></div>
-      <div class="opening__tile" style="--x:8;--y:4;--tx:5;--ty:5;--mx:1;--my:1" aria-hidden="true"><img src="img/strip-family.jpg" alt="" decoding="async"></div>
+    <section class="opening opening--mosaic" aria-labelledby="opening-title">
+      <div class="opening__tile" style="--x:1;--y:1;--tx:1;--ty:1;--mx:1;--my:1;--tile-color:var(--green)" aria-hidden="true"></div>
+      <div class="opening__tile" style="--x:2;--y:1;--tx:2;--ty:1;--mx:2;--my:1" aria-hidden="true"><img src="img/mosaic-man.webp" alt="" decoding="async"></div>
+      <div class="opening__tile" style="--x:4;--y:1;--tx:4;--ty:1;--mx:4;--my:1" aria-hidden="true"><img src="img/mosaic-young-woman.webp" alt="" decoding="async"></div>
+      <div class="opening__tile" style="--x:5;--y:1;--tx:5;--ty:1;--mx:3;--my:1;--tile-color:var(--terra)" aria-hidden="true"></div>
+      <div class="opening__tile" style="--x:6;--y:1;--tx:6;--ty:1;--mx:1;--my:2" aria-hidden="true"><img src="img/mosaic-seated-men.webp" alt="" decoding="async"></div>
+      <div class="opening__tile" style="--x:8;--y:1;--tx:6;--ty:2;--mx:4;--my:2" aria-hidden="true"><img src="img/mosaic-mother-child.webp" alt="" decoding="async"></div>
+      <div class="opening__tile" style="--x:1;--y:2;--tx:1;--ty:2;--mx:2;--my:2" aria-hidden="true"><img src="img/mosaic-child.webp" alt="" decoding="async"></div>
+      <div class="opening__tile" style="--x:2;--y:2;--tx:2;--ty:2;--mx:3;--my:2;--tile-color:var(--red)" aria-hidden="true"></div>
+      <div class="opening__tile" style="--x:3;--y:2;--tx:3;--ty:2;--mx:1;--my:3" aria-hidden="true"><img src="img/mosaic-woman-front.webp" alt="" decoding="async"></div>
+      <div class="opening__tile" style="--x:5;--y:2;--tx:4;--ty:2;--mx:2;--my:3" aria-hidden="true"><img src="img/mosaic-father-child.webp" alt="" decoding="async"></div>
+      <div class="opening__tile" style="--x:7;--y:2;--tx:5;--ty:2;--mx:3;--my:3" aria-hidden="true"><img src="img/mosaic-woman-profile.webp" alt="" decoding="async"></div>
+      <div class="opening__tile" style="--x:8;--y:2;--tx:6;--ty:3;--mx:4;--my:3;--tile-color:var(--orange)" aria-hidden="true"></div>
+      <div class="opening__tile" style="--x:1;--y:3;--tx:1;--ty:3;--mx:1;--my:4;--tile-color:var(--orange)" aria-hidden="true"></div>
+      <div class="opening__tile" style="--x:3;--y:3;--tx:3;--ty:3;--mx:2;--my:4;--tile-color:var(--terra)" aria-hidden="true"></div>
+      <div class="opening__tile" style="--x:4;--y:3;--tx:4;--ty:3;--mx:3;--my:4" aria-hidden="true"><img src="img/mosaic-portrait.webp" alt="" decoding="async"></div>
+      <div class="opening__tile" style="--x:1;--y:4;--tx:1;--ty:4;--mx:4;--my:4" aria-hidden="true"><img src="img/mosaic-elder-woman.webp" alt="" decoding="async"></div>
+      <div class="opening__tile" style="--x:2;--y:4;--tx:2;--ty:4;--mx:1;--my:1;--tile-color:var(--green)" aria-hidden="true"></div>
+      <div class="opening__tile" style="--x:3;--y:4;--tx:3;--ty:4;--mx:1;--my:1" aria-hidden="true"><img src="img/mosaic-soldiers.webp" alt="" decoding="async"></div>
+      <div class="opening__tile" style="--x:4;--y:4;--tx:4;--ty:4;--mx:1;--my:1;--tile-color:var(--red)" aria-hidden="true"></div>
       <div class="opening__content">
         <h1 class="opening__title" id="opening-title">
           <span class="line"><span>История вашей семьи</span></span>
@@ -507,7 +507,7 @@
       </div>
     </section>
 
-  
+
 
     <!-- ============ КОНТАКТЫ ============ -->
     <!-- ============ ЗАЯВКА: красный блок; слева светлая карточка — заголовок, текст, плашки, поля с подписями, которые при вводе

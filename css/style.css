@@ -374,41 +374,44 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 400; line-height: var(--lh-headi
    поверх — заголовок (Manrope 64px), текст и кнопка. Шапка лежит поверх фото.
    При прокрутке фото чуть приближается, а текст уходит вверх и гаснет (--hp ставит main.js)
    ========================================================= */
-/* Mosaic uses the same container and gutters as the rest of the page. */
+/* Full-bleed mosaic: eight square columns, matching the supplied reference. */
 .opening--mosaic {
   --ease-out: cubic-bezier(.2, .75, .15, 1);
   display: grid;
-  height: max-content;
-  align-content: start;
+  width: 100%;
+  margin: 0;
   grid-template-columns: repeat(8, minmax(0, 1fr));
-  grid-template-rows: repeat(2, auto) auto;
-  gap: 4px;
-  margin-top: var(--s-16);
+  grid-template-rows: repeat(4, calc(var(--vw) / 8));
+  gap: 0;
   color: var(--text);
 }
-.opening--mosaic .opening__tile { position: relative; min-height: 0; align-self: start; grid-column: var(--x); grid-row: var(--y); aspect-ratio: 1; border-radius: 8px; overflow: hidden; background: var(--tile-color, transparent); }
+.opening--mosaic .opening__tile { position: relative; min-width: 0; min-height: 0; grid-column: var(--x); grid-row: var(--y); overflow: hidden; border-radius: 0; background: var(--tile-color, transparent); }
 .opening--mosaic .opening__tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
-.opening--mosaic .opening__content { grid-column: 1 / 5; grid-row: 3 / 5; align-self: end; padding: var(--s-24) var(--s-24) 0 0; min-width: 0; }
+.opening--mosaic .opening__content { grid-column: 5 / 9; grid-row: 3 / 5; align-self: center; padding: var(--s-56); min-width: 0; }
 .opening--mosaic .opening__title { color: var(--text); }
 .opening--mosaic .opening__title .line, .opening--mosaic .opening__title .line > span { display: inline; }
 .opening--mosaic .opening__text { margin-top: var(--s-24); color: var(--text); }
 .opening--mosaic .opening__cta { margin-top: var(--s-24); }
-@media (min-width: 1200px) {
-  .opening--mosaic { grid-template-rows: repeat(2, auto) 1fr 1fr; }
+@media (min-width: 1400px) and (max-width: 1599px) {
+  .opening--mosaic { grid-template-rows: repeat(4, calc(var(--vw) / 8)) var(--s-96); }
+  .opening--mosaic .opening__content { grid-row: 3 / 6; padding: var(--s-24); }
 }
-@media (max-width: 1199px) {
-  .opening--mosaic { grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(5, auto) auto; }
+@media (max-width: 1399px) {
+  .opening--mosaic { grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(4, calc(var(--vw) / 6)) auto; }
   .opening--mosaic .opening__tile { grid-column: var(--tx); grid-row: var(--ty); }
-  .opening--mosaic .opening__content { align-self: start; grid-column: 1 / -1; grid-row: 6; padding: var(--s-32) 0 0; }
-  .opening--mosaic .opening__text { max-width: 65ch; }
+  .opening--mosaic .opening__content { grid-column: 1 / -1; grid-row: 5; padding: var(--s-48) var(--gut); }
 }
 @media (max-width: 767px) {
-  .opening--mosaic { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(4, auto) auto; }
+  .opening--mosaic { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(4, calc(var(--vw) / 4)) auto; }
   .opening--mosaic .opening__tile { grid-column: var(--mx); grid-row: var(--my); }
-  .opening--mosaic .opening__tile:nth-child(n+13) { display: none; }
-  .opening--mosaic .opening__content { grid-row: 5; padding-top: var(--s-24); }
+  .opening--mosaic .opening__tile:nth-child(n+17) { display: none; }
+  .opening--mosaic .opening__content { padding: var(--s-32) var(--gut) var(--s-48); }
   .opening--mosaic .opening__cta .btn { width: 100%; }
 }
+/* The homepage header occupies no space and becomes available after 70vh of scrolling. */
+.home-page .header--sticky { position: fixed; top: 0; left: 0; right: 0; margin: 0; }
+.home-page .header--sticky.is-before-hero-threshold { visibility: hidden; pointer-events: none; transform: translateY(-110%); }
+.home-page.is-menu-open .header--sticky { visibility: visible; }
 
 /* ---------- Вступление: светлый экран, на нём рисуется знак (контур снизу вверх → заливка),
    потом знак переезжает в шапку, экран растворяется и появляется первый экран.
@@ -2564,12 +2567,8 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
   :root { --fs-body: 16px; --fs-h4: 20px; --fs-h3: 25px; --fs-h2: 31px; --fs-h1: 39px; }
 }
 
-@media (max-width: 1199px) {
-  .opening--mosaic { grid-template-rows: repeat(5, calc((var(--vw) - 2 * var(--gut) - 20px) / 6)) auto; }
-}
-@media (max-width: 767px) {
-  .opening--mosaic { grid-template-rows: repeat(4, calc((var(--vw) - 2 * var(--gut) - 12px) / 4)) auto; }
-}
+
+
 
 .preloader__name { font-size: var(--fs-h1) !important; font-weight: 400; line-height: var(--lh-heading); }
 

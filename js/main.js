@@ -63,7 +63,7 @@
     var finish = function () { root.classList.add('is-intro-done'); };   // знак на месте: заливка шапки
     var logo = marks.filter(function (m) { return m.offsetParent !== null; })[0];   // видимый знак: в шапке или в мобильной плашке
     // без вступления (на телефоне знака в шапке нет): заливка кнопок шапки появляется, когда растворится экран загрузки
-    if (reduce || !pre || !logo || !window.Promise) { ready(); setTimeout(finish, reduce || !pre ? 0 : 500); return; }
+    if (reduce || !pre || !logo || !window.Promise || document.body.classList.contains('home-page')) { ready(); setTimeout(finish, reduce || !pre ? 0 : 500); return; }
     // название меряем только когда загрузился Manrope: иначе его размер берётся от запасного шрифта
     // и знак встаёт не на одну линию с названием
     var start = function () { if (start.done) return; start.done = true; run(); };
@@ -149,7 +149,16 @@
     var updateTop = function () {
       topTicking = false;
       var y = window.scrollY;
-      topHeader.classList.toggle('is-top', !!opening && opening.classList.contains('opening--mosaic') && y <= 40);
+      var mosaicHome = !!opening && opening.classList.contains('opening--mosaic');
+      topHeader.classList.remove('is-top');
+      if (mosaicHome) {
+        var beforeThreshold = y <= window.innerHeight * 0.7;
+        topHeader.classList.toggle('is-before-hero-threshold', beforeThreshold);
+        topHeader.classList.remove('is-hidden');
+        topHeader.inert = beforeThreshold;
+        lastY = y;
+        return;
+      }
       // в самом верху, при открытом меню и пока идёт заставка шапка всегда видна; мелкие подёргивания (до 6px) не считаем.
       // Заставка: знак сидит в шапке — если шапка уедет (страница открыта по ссылке на блок, например «О нас»,
       // и прокручивается к нему), знак уедет вместе с ней и встанет выше названия
