@@ -149,7 +149,7 @@
     var updateTop = function () {
       topTicking = false;
       var y = window.scrollY;
-      topHeader.classList.toggle('is-top', !!opening && y <= 40);
+      topHeader.classList.toggle('is-top', !!opening && opening.classList.contains('opening--mosaic') && y <= 40);
       // в самом верху, при открытом меню и пока идёт заставка шапка всегда видна; мелкие подёргивания (до 6px) не считаем.
       // Заставка: знак сидит в шапке — если шапка уедет (страница открыта по ссылке на блок, например «О нас»,
       // и прокручивается к нему), знак уедет вместе с ней и встанет выше названия
@@ -636,9 +636,11 @@
         var title = card.querySelector('.post__title');
         var desc = card.querySelector('.post__desc');
         var link = card.querySelector('.post__link');
-        img.src = isMain ? post.image : (post.image_small || post.image);
-        img.alt = post.title;
-        img.referrerPolicy = 'no-referrer';
+        if (!img.hasAttribute('data-static-image')) {
+          img.src = isMain ? post.image : (post.image_small || post.image);
+          img.alt = post.title;
+          img.referrerPolicy = 'no-referrer';
+        }
         title.textContent = post.title;
         desc.textContent = post.text || '';
         desc.hidden = !post.text;

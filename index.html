@@ -106,7 +106,7 @@
   <main id="top">
 
     <!-- ============ ПЕРВЫЙ ЭКРАН — мозаика семейных фотографий ============ -->
-    <section class="opening container" aria-labelledby="opening-title">
+    <section class="opening opening--mosaic container" aria-labelledby="opening-title">
       <div class="opening__tile" style="--x:1;--y:1;--tx:1;--ty:1;--mx:1;--my:1;--tile-color:var(--orange)" aria-hidden="true"></div>
       <div class="opening__tile" style="--x:3;--y:1;--tx:2;--ty:1;--mx:2;--my:1" aria-hidden="true"><img src="img/strip-family.jpg" alt="" decoding="async"></div>
       <div class="opening__tile" style="--x:4;--y:1;--tx:3;--ty:1;--mx:3;--my:1;--tile-color:var(--red)" aria-hidden="true"></div>
@@ -202,6 +202,7 @@
 
       <div class="svc__list">
         <a class="svc-card" href="rodoslovnaya-kniga.html">
+          <div class="svc-card__placeholder" aria-hidden="true"></div>
           <div class="svc-card__body">
             <div class="svc-card__titles">
               <p class="svc-card__sub">генеалогическое исследование + дизайн + печать</p>
@@ -219,6 +220,7 @@
         </a>
 
         <a class="svc-card" href="issledovanie.html">
+          <div class="svc-card__placeholder" aria-hidden="true"></div>
           <div class="svc-card__body">
             <div class="svc-card__titles">
               <p class="svc-card__sub">генеалогическое исследование + цифровой отчёт</p>
@@ -236,6 +238,7 @@
         </a>
 
         <a class="svc-card" href="tochechnye-issledovaniya.html">
+          <div class="svc-card__placeholder" aria-hidden="true"></div>
           <div class="svc-card__body">
             <div class="svc-card__titles">
               <h3 class="h3 svc-card__title">Точечное исследование</h3>
@@ -418,7 +421,7 @@
            следующие три — справа сверху вниз). -->
       <div class="blog__grid scroller" data-vk-blog="api/vk-posts.php">
         <article class="post post--main">
-          <img class="post__img" src="https://sun9-57.vkuserphoto.ru/s/v1/ig2/vi1DBRthe_U-Eu406gLm0ZncodinImf2RdQdP_9PGj3OyPxVohfhkEpY28KJeD5R9xbN90BLUhEDaSgGPvS2iVWW.jpg?quality=95&amp;as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960,1440x1080&amp;from=bu&amp;u=MSmhdUww6Kh-TCCy1Ifwu7X7OXn09U9IX2xeTPh0aKM&amp;cs=1280x0" alt="Илья Репин (1844-1930)" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='img/blog-main.jpg'">
+          <img src="img/community-artists.webp" data-static-image class="post__img" alt="Илья Репин (1844-1930)" loading="lazy">
           <div class="post__body">
             <div class="post__texts">
               <h3 class="h4 post__title">Илья Репин (1844-1930)</h3>
@@ -430,7 +433,7 @@
         </article>
         <div class="blog__side">
           <article class="post post--side">
-            <img class="post__img" src="https://sun9-69.vkuserphoto.ru/s/v1/ig2/Y83wlDrvDAXhMMU_mG9PfY61jc-lctqte6tW2oxXUb-gIvLJqyfv0q-Rb9XVL3dJK7wE7ivwzG76tDXUY0aJ8l7K.jpg?quality=95&amp;as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960&amp;from=bu&amp;u=DBxXhdE_h_3-DjdANFr7Sgux7iU9BUq6dSL_967d4kE&amp;cs=640x0" alt="Бор, Боровичи, Борок, Боровая, Боровня…" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='img/blog-1.jpg'">
+            <img src="img/community-novgorod.webp" data-static-image class="post__img" alt="Бор, Боровичи, Борок, Боровая, Боровня…" loading="lazy">
             <div class="post__body">
               <div class="post__texts">
                 <h3 class="h4 post__title">Бор, Боровичи, Борок, Боровая, Боровня…</h3>
@@ -441,7 +444,7 @@
             </div>
           </article>
           <article class="post post--side">
-            <img class="post__img" src="https://sun9-13.vkuserphoto.ru/s/v1/ig2/TPhrwy9MR9Lus3qjxW_uJn6TqqkPaYybKADGPD8QEbB53gL-CzmnXpfdkepqUJHa0PXphmEpMydofq89Kxh3ZwW8.jpg?quality=95&amp;as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960,1440x1080&amp;from=bu&amp;u=vhwEHnwDRJWmstTHI713038aU4GB949NU6roz5zqOYI&amp;cs=640x0" alt="Когда держишь в руках старинный документ, первое чувство — трепет. Метрическая книга XVIII века, ревизская сказка, исповедная ведомость… Бумага пожелтела, чернила выцвели, а буквы — ну точно пляшут как хотят. И возникает вопрос: как это вообще читать? Мы в проекте «Древо Предков» расшифровываем такие рукописи каждый день. И сегодня покажем вам несколько секретов, которые помогут самостоятельно разобрать текст XVIII–XIX века. Поехали!" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='img/blog-2.jpg'">
+            <img src="img/community-handwriting.webp" data-static-image class="post__img" alt="Когда держишь в руках старинный документ, первое чувство — трепет. Метрическая книга XVIII века, ревизская сказка, исповедная ведомость… Бумага пожелтела, чернила выцвели, а буквы — ну точно пляшут как хотят. И возникает вопрос: как это вообще читать? Мы в проекте «Древо Предков» расшифровываем такие рукописи каждый день. И сегодня покажем вам несколько секретов, которые помогут самостоятельно разобрать текст XVIII–XIX века. Поехали!" loading="lazy">
             <div class="post__body">
               <div class="post__texts">
                 <h3 class="h4 post__title">Когда держишь в руках старинный документ, первое чувство — трепет. Метрическая книга XVIII века, ревизская сказка, исповедная ведомость… Бумага пожелтела, чернила выцвели, а буквы — ну точно пляшут как хотят. И возникает вопрос: как это вообще читать? Мы в проекте «Древо Предков» расшифровываем такие рукописи каждый день. И сегодня покажем вам несколько секретов, которые помогут самостоятельно разобрать текст XVIII–XIX века. Поехали!</h3>
@@ -452,7 +455,7 @@
             </div>
           </article>
           <article class="post post--side">
-            <img class="post__img" src="https://sun9-23.vkuserphoto.ru/s/v1/ig2/YWb3jC3WW3fZ70lcfDXVkipRxDRTKxERm_Io78vdp7DJU8pCMaiEVVm5M_qMs9lwxqyMTyOw386jStXNfG2NsLfv.jpg?quality=95&amp;as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960,1440x1080&amp;from=bu&amp;u=yVFAjkIFJ0VKnxijMuq-SH07NiXx2-yMan15Vcvuvig&amp;cs=640x0" alt="Продолжаем изучать места, где жили наши предки." loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='img/blog-3.jpg'">
+            <img src="img/community-toponyms.webp" data-static-image class="post__img" alt="Продолжаем изучать места, где жили наши предки." loading="lazy">
             <div class="post__body">
               <div class="post__texts">
                 <h3 class="h4 post__title">Продолжаем изучать места, где жили наши предки.</h3>

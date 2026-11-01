@@ -375,7 +375,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 400; line-height: var(--lh-headi
    При прокрутке фото чуть приближается, а текст уходит вверх и гаснет (--hp ставит main.js)
    ========================================================= */
 /* Mosaic uses the same container and gutters as the rest of the page. */
-.opening {
+.opening--mosaic {
   --ease-out: cubic-bezier(.2, .75, .15, 1);
   display: grid;
   height: max-content;
@@ -386,28 +386,28 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 400; line-height: var(--lh-headi
   margin-top: var(--s-16);
   color: var(--text);
 }
-.opening__tile { position: relative; min-height: 0; align-self: start; grid-column: var(--x); grid-row: var(--y); aspect-ratio: 1; border-radius: 8px; overflow: hidden; background: var(--tile-color, transparent); }
-.opening__tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
-.opening__content { grid-column: 1 / 5; grid-row: 3 / 5; align-self: end; padding: var(--s-24) var(--s-24) 0 0; min-width: 0; }
-.opening__title { color: var(--text); }
-.opening__title .line, .opening__title .line > span { display: inline; }
-.opening__text { margin-top: var(--s-24); color: var(--text); }
-.opening__cta { margin-top: var(--s-24); }
+.opening--mosaic .opening__tile { position: relative; min-height: 0; align-self: start; grid-column: var(--x); grid-row: var(--y); aspect-ratio: 1; border-radius: 8px; overflow: hidden; background: var(--tile-color, transparent); }
+.opening--mosaic .opening__tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
+.opening--mosaic .opening__content { grid-column: 1 / 5; grid-row: 3 / 5; align-self: end; padding: var(--s-24) var(--s-24) 0 0; min-width: 0; }
+.opening--mosaic .opening__title { color: var(--text); }
+.opening--mosaic .opening__title .line, .opening--mosaic .opening__title .line > span { display: inline; }
+.opening--mosaic .opening__text { margin-top: var(--s-24); color: var(--text); }
+.opening--mosaic .opening__cta { margin-top: var(--s-24); }
 @media (min-width: 1200px) {
-  .opening { grid-template-rows: repeat(2, auto) 1fr 1fr; }
+  .opening--mosaic { grid-template-rows: repeat(2, auto) 1fr 1fr; }
 }
 @media (max-width: 1199px) {
-  .opening { grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(5, auto) auto; }
-  .opening__tile { grid-column: var(--tx); grid-row: var(--ty); }
-  .opening__content { align-self: start; grid-column: 1 / -1; grid-row: 6; padding: var(--s-32) 0 0; }
-  .opening__text { max-width: 65ch; }
+  .opening--mosaic { grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(5, auto) auto; }
+  .opening--mosaic .opening__tile { grid-column: var(--tx); grid-row: var(--ty); }
+  .opening--mosaic .opening__content { align-self: start; grid-column: 1 / -1; grid-row: 6; padding: var(--s-32) 0 0; }
+  .opening--mosaic .opening__text { max-width: 65ch; }
 }
 @media (max-width: 767px) {
-  .opening { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(4, auto) auto; }
-  .opening__tile { grid-column: var(--mx); grid-row: var(--my); }
-  .opening__tile:nth-child(n+13) { display: none; }
-  .opening__content { grid-row: 5; padding-top: var(--s-24); }
-  .opening__cta .btn { width: 100%; }
+  .opening--mosaic { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(4, auto) auto; }
+  .opening--mosaic .opening__tile { grid-column: var(--mx); grid-row: var(--my); }
+  .opening--mosaic .opening__tile:nth-child(n+13) { display: none; }
+  .opening--mosaic .opening__content { grid-row: 5; padding-top: var(--s-24); }
+  .opening--mosaic .opening__cta .btn { width: 100%; }
 }
 
 /* ---------- Вступление: светлый экран, на нём рисуется знак (контур снизу вверх → заливка),
@@ -1416,7 +1416,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 400; line-height: var(--lh-headi
   display: flex;
   flex-direction: column;
   gap: var(--s-24);
-  padding: var(--s-48) var(--s-56) var(--s-32);   /* под кнопкой — меньше */
+  padding: var(--s-48) var(--s-56);   /* одинаковые поля сверху и снизу */
   color: var(--white);
 }
 .lead__title { color: var(--white); font-size: var(--fs-h2); font-weight: 400; line-height: var(--lh-heading); letter-spacing: normal; }   /* стиль H2 */
@@ -1730,7 +1730,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 400; line-height: var(--lh-headi
     --fs-body: 15px;                                  /* основной текст на телефоне — 15px */
   }
 
-  .opening { height: 98vh; height: 98svh; }           /* первый экран — 98% высоты экрана */
+  .opening:not(.opening--mosaic) { height: 98vh; height: 98svh; }           /* первый экран — 98% высоты экрана */
   .btn { min-height: 50px; padding-block: 13px; }     /* кнопки — высотой с кнопку бургер-меню (50px) */
   /* поля ввода — 16px: при более мелком шрифте iPhone увеличивает страницу, когда нажимаешь на поле */
   input:not([type="checkbox"]):not([type="radio"]), textarea, select { font-size: var(--fs-body); }
@@ -2565,10 +2565,71 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 }
 
 @media (max-width: 1199px) {
-  .opening { grid-template-rows: repeat(5, calc((var(--vw) - 2 * var(--gut) - 20px) / 6)) auto; }
+  .opening--mosaic { grid-template-rows: repeat(5, calc((var(--vw) - 2 * var(--gut) - 20px) / 6)) auto; }
 }
 @media (max-width: 767px) {
-  .opening { grid-template-rows: repeat(4, calc((var(--vw) - 2 * var(--gut) - 12px) / 4)) auto; }
+  .opening--mosaic { grid-template-rows: repeat(4, calc((var(--vw) - 2 * var(--gut) - 12px) / 4)) auto; }
 }
 
 .preloader__name { font-size: var(--fs-h1) !important; font-weight: 400; line-height: var(--lh-heading); }
+
+/* Service covers keep their original photographic composition. */
+.opening:not(.opening--mosaic) {
+  --ease-out: cubic-bezier(.2, .75, .15, 1);
+  position: relative;
+  height: 95vh;                                       /* 95% высоты окна, нижние углы скруглены */
+  height: 95svh;
+  min-height: 560px;
+  border-radius: 0 0 var(--radius) var(--radius);
+  margin-top: calc(-1 * (var(--hdr-h) + var(--hdr-gap)));   /* блок начинается от верха окна, под шапкой */
+  overflow: hidden;
+  background: #3a3833;
+  color: var(--white);
+}
+.opening:not(.opening--mosaic) .opening__media { position: absolute; inset: 0; overflow: hidden; }
+.opening:not(.opening--mosaic) .opening__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 69%;                           /* кадр как в макете: рука и альбом */
+  transform: scale(calc(1 + var(--hp, 0) * .08));
+}
+/* затемнение под текстом: градиент снизу вверх, чуть наклонённый вправо — внизу слева, где текст, темнее всего
+   (как в макете Figma, plat-fam, узел 450:1176) */
+.opening:not(.opening--mosaic) .opening__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(190.95deg, rgba(0, 0, 0, 0) 14.76%, rgba(0, 0, 0, .87) 75.86%);
+  pointer-events: none;
+}
+.opening:not(.opening--mosaic) .opening__content {
+  position: absolute;
+  left: var(--edge);
+  right: var(--edge);
+  bottom: var(--section-pad);                         /* внутренний отступ блока снизу */
+  z-index: 1;
+  max-width: 792px;
+
+
+}
+.opening:not(.opening--mosaic) .opening__title { max-width: 775px; color: var(--white); }   /* стиль H1 */
+.opening:not(.opening--mosaic) .opening__title .line { display: block; overflow: hidden; padding-bottom: .08em; }
+.opening:not(.opening--mosaic) .opening__title .line > span { display: block; }
+.opening:not(.opening--mosaic) .opening__text { max-width: 724px; margin-top: var(--s-32); color: var(--white); }   /* H1 → вводный текст — 32px */
+.opening:not(.opening--mosaic) .opening__cta { margin-top: var(--s-24); }   /* текст → кнопка — 24px */
+
+@media (max-width: 767px) {
+  .opening:not(.opening--mosaic) .opening__cta .btn { width: 100%; }                /* как остальные кнопки на телефоне */
+}
+
+
+/* Neutral image areas remain in all three service cards. */
+.svc-card__placeholder { width: 100%; aspect-ratio: 16 / 9; flex: none; background: #d4d1cd; }
+.footer .footer__socials img, .footer.footer--socials .footer__socials img { width: 48px; height: 48px; }
+.footer__socials a { flex: none; }
+@media (max-width: 767px) {
+  .footer__socials, .footer--socials .footer__socials { gap: var(--s-24); }
+}
