@@ -2507,40 +2507,36 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
 .blog .post .post__texts, .blog .post--main .post__texts, .blog .post--side .post__texts { display: flex; flex-direction: column; gap: 20px; }
 .blog .post .post__body, .blog .post--main .post__body, .blog .post--side .post__body { gap: 12px; }
 
-/* About: copy on the left, supplied family map on the right, benefits below. */
+/* About: archive photographs on the left, copy on the right, benefits below. */
 .intro-text.section {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--s-64) var(--col-gap);
+  gap: var(--s-96) var(--col-gap);
   padding: 0 var(--edge);
   background: var(--bg);
   color: var(--text);
 }
 .intro-text__body {
-  grid-column: 1 / span 6;
+  grid-column: 7 / -1;
+  grid-row: 1;
   display: flex; flex-direction: column; align-items: flex-start;
   gap: var(--s-24); min-width: 0; margin: 0; text-align: left;
 }
 .intro-text__lead, .intro-text__accent { color: var(--text); }
 .intro-text .intro-text__lead, .intro-text .intro-text__sub { width: 100%; }
 .intro-text .intro-text__sub { font-size: var(--fs-body); font-weight: 400; line-height: var(--lh-body); opacity: 1; }
-.intro-text__media { grid-column: 8 / -1; align-self: start; min-width: 0; }
-.intro-text__media img { display: block; width: 100%; max-width: none; height: auto; margin-left: var(--edge); }
+.intro-text__media { grid-column: 1 / span 6; grid-row: 1; position: relative; align-self: stretch; min-width: 0; min-height: 360px; overflow: hidden; border-radius: var(--radius); }
+.intro-text__media img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
 .intro-text .why-cards { grid-column: 1 / -1; margin-top: 0; }
 @media (max-width: 1023px) {
   .intro-text.section { gap: var(--s-48) var(--col-gap); }
-  .intro-text__body { grid-column: 1 / span 7; }
-  .intro-text__media { grid-column: 9 / -1; }
+  .intro-text__body { grid-column: 1 / -1; grid-row: 2; }
+  .intro-text__media { grid-column: 1 / -1; grid-row: 1; aspect-ratio: 16 / 9; min-height: 0; }
 }
-@media (max-width: 767px) {
-  .intro-text__body, .intro-text__media { grid-column: 1 / -1; }
-  .intro-text__media { width: min(100%, 480px); justify-self: end; }
-  .intro-text__media img { width: 100%; max-width: 100%; margin-left: 0; }
-  .intro-text.section { row-gap: var(--s-32); }
-}
+@media (max-width: 767px) { .intro-text.section { row-gap: var(--s-32); } }
 
 /* «Почему нас выбирают?»: подзаголовок (H4) и четыре красные карточки в ряд (по 3 колонки из 12);
    на планшете — по две в ряд, на телефоне — одна под другой. В карточке — заголовок стилем H3 и основной текст, белым */
@@ -2697,7 +2693,7 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 
 .intro-text .why-card { background: var(--white); color: var(--text); }
 .intro-text .why-card__title { color: var(--text); }
-.intro-text .why-card::after { background: var(--green); }
+.intro-text .why-card::after { background: var(--text); }
 
 .svc-card__placeholder { position: relative; }
 .svc-card__placeholder .svc-card__bar { position: absolute; top: var(--s-16); left: var(--s-16); right: var(--s-16); }
@@ -2731,3 +2727,6 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 .tag::before, .tag::after, .stage__tag::before, .stage__tag::after,
 .gallery__badge::before, .gallery__badge::after,
 .lead__chips li::before, .lead__chips li::after { content: none; display: none; }
+
+.review__author, .voice__author { opacity: .5; }
+.voice__video-caption { font-size: var(--fs-body); line-height: var(--lh-body); color: var(--text); }
