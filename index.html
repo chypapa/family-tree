@@ -105,16 +105,27 @@
 
   <main id="top">
 
-    <!-- ============ ПЕРВЫЙ ЭКРАН — по макету Figma (plat-fam, узел 230:178): фото на весь экран,
-         затемнение снизу слева, текст и кнопка поверх фото. Шапка над ним прозрачная ============ -->
-    <section class="opening" aria-labelledby="opening-title">
-      <div class="opening__media" aria-hidden="true">
-        <!-- видео на фоне первого экрана: без звука, по кругу; на телефоне — облегчённая версия 960px -->
-        <video class="opening__img opening__video" autoplay muted loop playsinline preload="auto" poster="img/hero-video-poster.jpg" width="1764" height="1172">
-          <source src="video/hero-960.mp4" type="video/mp4" media="(max-width: 767px)">
-          <source src="video/hero.mp4" type="video/mp4">
-        </video>
-      </div>
+    <!-- ============ ПЕРВЫЙ ЭКРАН — мозаика семейных фотографий ============ -->
+    <section class="opening container" aria-labelledby="opening-title">
+      <div class="opening__tile" style="--x:1;--y:1;--tx:1;--ty:1;--mx:1;--my:1;--tile-color:var(--orange)" aria-hidden="true"></div>
+      <div class="opening__tile" style="--x:3;--y:1;--tx:2;--ty:1;--mx:2;--my:1" aria-hidden="true"><img src="img/strip-family.jpg" alt="" decoding="async"></div>
+      <div class="opening__tile" style="--x:4;--y:1;--tx:3;--ty:1;--mx:3;--my:1;--tile-color:var(--red)" aria-hidden="true"></div>
+      <div class="opening__tile" style="--x:5;--y:1;--tx:5;--ty:1;--mx:4;--my:1" aria-hidden="true"><img src="img/strip-elders.jpg" alt="" decoding="async"></div>
+      <div class="opening__tile" style="--x:7;--y:1;--tx:6;--ty:1;--mx:2;--my:2;--tile-color:var(--green)" aria-hidden="true"></div>
+      <div class="opening__tile" style="--x:8;--y:1;--tx:2;--ty:2;--mx:3;--my:2" aria-hidden="true"><img src="img/strip-elders.jpg" alt="" decoding="async"></div>
+      <div class="opening__tile" style="--x:1;--y:2;--tx:4;--ty:2;--mx:4;--my:2;--tile-color:var(--orange)" aria-hidden="true"></div>
+      <div class="opening__tile" style="--x:2;--y:2;--tx:5;--ty:2;--mx:1;--my:3;--tile-color:var(--red)" aria-hidden="true"></div>
+      <div class="opening__tile" style="--x:4;--y:2;--tx:6;--ty:2;--mx:2;--my:3" aria-hidden="true"><img src="img/strip-family.jpg" alt="" decoding="async"></div>
+      <div class="opening__tile" style="--x:6;--y:2;--tx:1;--ty:3;--mx:4;--my:3" aria-hidden="true"><img src="img/strip-elders.jpg" alt="" decoding="async"></div>
+      <div class="opening__tile" style="--x:7;--y:2;--tx:3;--ty:3;--mx:1;--my:4" aria-hidden="true"><img src="img/strip-plough.jpg" alt="" decoding="async"></div>
+      <div class="opening__tile" style="--x:8;--y:2;--tx:4;--ty:3;--mx:3;--my:4;--tile-color:var(--green)" aria-hidden="true"></div>
+      <div class="opening__tile" style="--x:5;--y:3;--tx:6;--ty:3;--mx:1;--my:1" aria-hidden="true"><img src="img/strip-elders.jpg" alt="" decoding="async"></div>
+      <div class="opening__tile" style="--x:6;--y:3;--tx:2;--ty:4;--mx:1;--my:1;--tile-color:var(--terra)" aria-hidden="true"></div>
+      <div class="opening__tile" style="--x:8;--y:3;--tx:4;--ty:4;--mx:1;--my:1;--tile-color:var(--orange)" aria-hidden="true"></div>
+      <div class="opening__tile" style="--x:5;--y:4;--tx:5;--ty:4;--mx:1;--my:1;--tile-color:var(--red)" aria-hidden="true"></div>
+      <div class="opening__tile" style="--x:6;--y:4;--tx:6;--ty:4;--mx:1;--my:1" aria-hidden="true"><img src="img/strip-plough.jpg" alt="" decoding="async"></div>
+      <div class="opening__tile" style="--x:7;--y:4;--tx:3;--ty:5;--mx:1;--my:1;--tile-color:var(--green)" aria-hidden="true"></div>
+      <div class="opening__tile" style="--x:8;--y:4;--tx:5;--ty:5;--mx:1;--my:1" aria-hidden="true"><img src="img/strip-family.jpg" alt="" decoding="async"></div>
       <div class="opening__content">
         <h1 class="opening__title" id="opening-title">
           <span class="line"><span>История вашей семьи</span></span>
@@ -183,9 +194,7 @@
       </div>
     </section>
 
-    <!-- ============ НАПРАВЛЕНИЯ — вариант по макету Figma (plat-fam, 228:146): белые карточки, фото сверху,
-         плашки и стрелка на фото. Вместо кнопки — вся карточка-ссылка; над карточкой курсор
-         превращается в красный круг «Узнать подробнее» (js/main.js) ============ -->
+    <!-- ============ НАПРАВЛЕНИЯ — текстовые карточки услуг ============ -->
     <section class="svc container section" id="svc" aria-labelledby="svc-title">
       <div class="svc__head">
         <h2 class="h2 svc__heading" id="svc-title">Направления и&nbsp;услуги</h2>
@@ -193,41 +202,45 @@
 
       <div class="svc__list">
         <a class="svc-card" href="rodoslovnaya-kniga.html">
-          <div class="svc-card__media">
-            <img src="img/kniga-why.jpg" width="1200" height="1200" alt="Родословная книга «Ваша уникальная история в одной книге» в руках" loading="lazy" decoding="async">
-            <div class="svc-card__bar">
-              <ul class="tags svc-card__tags" aria-label="Сроки и стоимость">
-                <li class="tag">от&nbsp;1&nbsp;месяца</li>
-                <li class="tag">от&nbsp;60&nbsp;000&nbsp;₽</li>
-              </ul>
-            </div>
-          </div>
           <div class="svc-card__body">
             <div class="svc-card__titles">
               <p class="svc-card__sub">генеалогическое исследование + дизайн + печать</p>
               <h3 class="h3 svc-card__title">Родословная книга</h3>
             </div>
             <p class="svc-card__desc">Результаты поиска, оформленные в&nbsp;книгу: история рода, копии документов с&nbsp;расшифровкой и&nbsp;родословное древо. Издание, которое можно хранить и&nbsp;передавать детям и&nbsp;внукам.</p>
+            <div class="svc-card__bar">
+              <ul class="tags svc-card__tags" aria-label="Сроки и стоимость">
+                <li class="tag">от&nbsp;1&nbsp;месяца</li>
+                <li class="tag">от&nbsp;60&nbsp;000&nbsp;₽</li>
+              </ul>
+            </div>
             <span class="svc-card__btn-mobile">Узнать подробнее</span>
           </div>
         </a>
 
         <a class="svc-card" href="issledovanie.html">
-          <div class="svc-card__media">
-            <img src="img/issledovanie-about.jpg" width="867" height="608" alt="Старые фотографии и письма предков" loading="lazy" decoding="async">
-            <div class="svc-card__bar">
-              <ul class="tags svc-card__tags" aria-label="Сроки и стоимость">
-                <li class="tag">от&nbsp;1&nbsp;месяца</li>
-                <li class="tag">от&nbsp;30&nbsp;000&nbsp;₽</li>
-              </ul>
-            </div>
-          </div>
           <div class="svc-card__body">
             <div class="svc-card__titles">
               <p class="svc-card__sub">генеалогическое исследование + цифровой отчёт</p>
               <h3 class="h3 svc-card__title">Архивный свиток</h3>
             </div>
             <p class="svc-card__desc">Тот же&nbsp;поиск по&nbsp;архивам без&nbsp;печатного издания: фотокопии документов с&nbsp;расшифровкой и&nbsp;поколенная роспись в&nbsp;подробном электронном отчёте.</p>
+            <div class="svc-card__bar">
+              <ul class="tags svc-card__tags" aria-label="Сроки и стоимость">
+                <li class="tag">от&nbsp;1&nbsp;месяца</li>
+                <li class="tag">от&nbsp;30&nbsp;000&nbsp;₽</li>
+              </ul>
+            </div>
+            <span class="svc-card__btn-mobile">Узнать подробнее</span>
+          </div>
+        </a>
+
+        <a class="svc-card" href="tochechnye-issledovaniya.html">
+          <div class="svc-card__body">
+            <div class="svc-card__titles">
+              <h3 class="h3 svc-card__title">Точечное исследование</h3>
+            </div>
+            <p class="svc-card__desc">Если вам не нужно исследование всей родословной, можно заказать отдельный поиск: установить личность предка, найти сведения о родственнике, проверить конкретную родственную связь или изучить одну ветвь рода.</p>
             <span class="svc-card__btn-mobile">Узнать подробнее</span>
           </div>
         </a>

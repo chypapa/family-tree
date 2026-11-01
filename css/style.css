@@ -2,15 +2,9 @@
    Древо предков — сайт
    Брейкпоинты: десктоп ≥ 1200 · планшет 768–1199 · мобильный < 768
 
-   ТИПОГРАФИКА — одна система на весь сайт, только Manrope, без размеров «по месту».
-                 размер (телефон)   начертание     межстрочный   трекинг
-   H1 — заголовок страницы     56 (36)   Medium 500     120%   −1%
-   H2 — заголовок раздела      40 (28)   Medium 500     120%   −1%
-   H3 — подраздел              32 (22)   Medium 500     125%   −0,5%
-   H4 — заголовок карточки     24 (18)   Medium 500     130%   −0,5%
-   P  — текст                  16        Regular 400    150%   0
-   Выделение в тексте — Medium 500 того же размера. Уровень заголовка (тег) — по смыслу (H1 → H2 → H3 → H4),
-   вид заголовка карточки — класс .h4.
+   ТИПОГРАФИКА — 5 стилей, шаг 1.25 с последовательным округлением.
+   Desktop: 19 / 24 / 30 / 38 / 48px. Mobile: 16 / 20 / 25 / 31 / 39px.
+   H1–H3: 600, остальные: 400. Наборный: 120%, остальные: 130%.
 
    ОТСТУПЫ — шкала с шагом 8px: 8 · 16 · 24 · 32 · 48 · 56 · 64 · 72 · 96 · 128 · 160 (токены --s-8 … --s-160).
    Между соседними элементами — один отступ (у блоков только margin-top, без сложения с нижним отступом).
@@ -38,7 +32,7 @@
   --orange: #e7a43c;
   --gold: #af8c4c;
   --green: #9ba089;
-  --text: #3c3c3c;
+  --text: #605A55;
   --dark: #3c3c3c;
   --slate: #3c3c3c;            /* цвет шапки */
   --muted: rgba(0, 0, 0, .7);
@@ -82,12 +76,20 @@
   /* секция не выше видимой части окна под шапкой (с небольшим «воздухом») */
   --fit: calc(100svh - var(--hdr-h) - var(--hdr-gap) - 32px);  /* с учётом закреплённой шапки и отступа над ней */
 
-  /* размеры текста: плавно меняются между шириной окна 375px (телефон) и 1440px (компьютер) */
-  --fs-h1: clamp(30px, 20.85px + 2.44vw, 56px);       /* 30 → 56 */
-  --fs-h2: clamp(28px, 25.09px + .777vw, 40px);       /* 28 → 40 (375 → 1920px) */
-  --fs-h3: clamp(22px, 19.57px + .647vw, 32px);       /* 22 → 32 (375 → 1920px) */
-  --fs-h4: clamp(18px, 16.54px + .388vw, 24px);       /* 18 → 24 (375 → 1920px) */
-  --fs-body: 16px;
+  /* Пять общих стилей текста */
+  --fs-body: 19px;
+  --fs-h4: 24px;
+  --fs-h3: 30px;
+  --fs-h2: 38px;
+  --fs-h1: 48px;
+  --lh-body: 1.2;
+  --lh-heading: 1.3;
+  --button-padding: 16px 24px;
+  --button-radius: 12px;
+  --button-font-size: var(--fs-body);
+  --button-font-weight: 400;
+  --button-line-height: var(--lh-heading);
+  --button-min-height: 56px;
 }
 
 /* ---------- База ---------- */
@@ -101,7 +103,7 @@ body {
   font-family: "Manrope", system-ui, sans-serif;
   font-weight: 400;
   font-size: var(--fs-body);
-  line-height: 1.5;
+  line-height: var(--lh-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -109,7 +111,7 @@ body {
 img { max-width: 100%; display: block; }
 a { color: inherit; }
 h1, h2, h3, h4, p, ul { margin: 0; }
-strong, b { font-weight: 500; }                       /* выделение в тексте — Medium */
+strong, b { font-weight: 400; }                       /* выделение в тексте — Medium */
 ul { padding: 0; list-style: none; }
 button, input, textarea { font: inherit; }
 :focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
@@ -147,10 +149,10 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4, .mcard__title {
   font-family: "Manrope", system-ui, sans-serif;
   text-wrap: balance;                                 /* ровные строки, без одного слова на последней */
 }
-h1, .h1 { font-size: var(--fs-h1); font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
-h2, .h2, .mcard__title { font-size: var(--fs-h2); font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
-h3, .h3 { font-size: var(--fs-h3); font-weight: 500; line-height: 1.25; letter-spacing: -.005em; }
-h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-spacing: -.005em; }
+h1, .h1 { font-size: var(--fs-h1); font-weight: 400; line-height: var(--lh-heading); letter-spacing: normal; }
+h2, .h2, .mcard__title { font-size: var(--fs-h2); font-weight: 400; line-height: var(--lh-heading); letter-spacing: normal; }
+h3, .h3 { font-size: var(--fs-h3); font-weight: 400; line-height: var(--lh-heading); letter-spacing: normal; }
+h4, .h4 { font-size: var(--fs-h4); font-weight: 400; line-height: var(--lh-heading); letter-spacing: normal; }
 /* ---------- Заголовки H2 появляются построчно (классы ставит js/main.js; без JS всё видно сразу):
    каждая строка выезжает снизу из-под своей нижней границы, строки — одна за другой (.tl > .tl__in) */
 .text-lines .tl {
@@ -185,7 +187,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   background: var(--red);
   color: var(--white);
   font-size: var(--fs-body);
-  line-height: 24px;
+  line-height: var(--lh-heading);
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
@@ -228,7 +230,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .nav { display: flex; gap: var(--s-32); }
 .nav a {
   color: var(--white);
-  line-height: 1;
+  line-height: var(--lh-heading);
   text-decoration: none;
   white-space: nowrap;
   transition: opacity .2s ease;
@@ -256,7 +258,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   text-decoration: none;
 }
 .header__pill img { width: 25px; height: 28px; }
-.header__pill span { width: 72px; font-weight: 200; line-height: 1; }
+.header__pill span { width: 72px; font-weight: 400; line-height: var(--lh-heading); }
 .header__buttons { display: flex; gap: var(--s-8); }
 .icon-btn {
   display: block;
@@ -353,7 +355,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   text-decoration: none;
 }
 .mobile-menu__mark { flex: none; width: 26px; height: 28px; }
-.mobile-menu__logo-text { width: 72px; font-weight: 200; line-height: 1; }
+.mobile-menu__logo-text { width: 72px; font-weight: 400; line-height: var(--lh-heading); }
 .mobile-menu__nav { display: flex; flex-direction: column; gap: var(--s-24); margin-top: var(--s-48); }
 .mobile-menu__nav a { color: var(--white); text-decoration: none; }
 .mobile-menu__nav a:hover { opacity: .75; }
@@ -372,55 +374,40 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
    поверх — заголовок (Manrope 64px), текст и кнопка. Шапка лежит поверх фото.
    При прокрутке фото чуть приближается, а текст уходит вверх и гаснет (--hp ставит main.js)
    ========================================================= */
+/* Mosaic uses the same container and gutters as the rest of the page. */
 .opening {
   --ease-out: cubic-bezier(.2, .75, .15, 1);
-  position: relative;
-  height: 95vh;                                       /* 95% высоты окна, нижние углы скруглены */
-  height: 95svh;
-  min-height: 560px;
-  border-radius: 0 0 var(--radius) var(--radius);
-  margin-top: calc(-1 * (var(--hdr-h) + var(--hdr-gap)));   /* блок начинается от верха окна, под шапкой */
-  overflow: hidden;
-  background: #3a3833;
-  color: var(--white);
+  display: grid;
+  height: max-content;
+  align-content: start;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-template-rows: repeat(2, auto) auto;
+  gap: 4px;
+  margin-top: var(--s-16);
+  color: var(--text);
 }
-.opening__media { position: absolute; inset: 0; overflow: hidden; }
-.opening__img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 69%;                           /* кадр как в макете: рука и альбом */
-  transform: scale(calc(1 + var(--hp, 0) * .08));
+.opening__tile { position: relative; min-height: 0; align-self: start; grid-column: var(--x); grid-row: var(--y); aspect-ratio: 1; border-radius: 8px; overflow: hidden; background: var(--tile-color, transparent); }
+.opening__tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
+.opening__content { grid-column: 1 / 5; grid-row: 3 / 5; align-self: end; padding: var(--s-24) var(--s-24) 0 0; min-width: 0; }
+.opening__title { color: var(--text); }
+.opening__title .line, .opening__title .line > span { display: inline; }
+.opening__text { margin-top: var(--s-24); color: var(--text); }
+.opening__cta { margin-top: var(--s-24); }
+@media (min-width: 1200px) {
+  .opening { grid-template-rows: repeat(2, auto) 1fr 1fr; }
 }
-/* затемнение под текстом: градиент снизу вверх, чуть наклонённый вправо — внизу слева, где текст, темнее всего
-   (как в макете Figma, plat-fam, узел 450:1176) */
-.opening__media::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(190.95deg, rgba(0, 0, 0, 0) 14.76%, rgba(0, 0, 0, .87) 75.86%);
-  pointer-events: none;
+@media (max-width: 1199px) {
+  .opening { grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(5, auto) auto; }
+  .opening__tile { grid-column: var(--tx); grid-row: var(--ty); }
+  .opening__content { align-self: start; grid-column: 1 / -1; grid-row: 6; padding: var(--s-32) 0 0; }
+  .opening__text { max-width: 65ch; }
 }
-.opening__content {
-  position: absolute;
-  left: var(--edge);
-  right: var(--edge);
-  bottom: var(--section-pad);                         /* внутренний отступ блока снизу */
-  z-index: 1;
-  max-width: 792px;
-  opacity: calc(1 - var(--hp, 0) * 1.3);
-  transform: translateY(calc(var(--hp, 0) * -60px));
-}
-.opening__title { max-width: 775px; color: var(--white); }   /* стиль H1 */
-.opening__title .line { display: block; overflow: hidden; padding-bottom: .08em; }
-.opening__title .line > span { display: block; }
-.opening__text { max-width: 724px; margin-top: var(--s-32); color: var(--white); }   /* H1 → вводный текст — 32px */
-.opening__cta { margin-top: var(--s-24); }   /* текст → кнопка — 24px */
-
 @media (max-width: 767px) {
-  .opening__cta .btn { width: 100%; }                /* как остальные кнопки на телефоне */
+  .opening { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(4, auto) auto; }
+  .opening__tile { grid-column: var(--mx); grid-row: var(--my); }
+  .opening__tile:nth-child(n+13) { display: none; }
+  .opening__content { grid-row: 5; padding-top: var(--s-24); }
+  .opening__cta .btn { width: 100%; }
 }
 
 /* ---------- Вступление: светлый экран, на нём рисуется знак (контур снизу вверх → заливка),
@@ -470,9 +457,9 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   position: absolute;
   left: 0;
   top: 0;
-  font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -.01em;
+  font-weight: 400;
+  line-height: var(--lh-heading);
+  letter-spacing: normal;
   white-space: nowrap;
   color: var(--red);
   opacity: 0;
@@ -764,7 +751,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 
 .svc__list {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--col-gap);
 }
 .svc-card {
@@ -776,27 +763,10 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   border-radius: var(--radius);
   color: var(--text);
   text-decoration: none;
+  background: var(--white);
   transition: background-color .3s ease, color .3s ease;
 }
 .svc-card:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
-.svc-card__media {
-  position: relative;
-  aspect-ratio: 16 / 9;                               /* фото выше: 16:9 */
-  padding: var(--s-16);
-  overflow: hidden;
-  border-radius: var(--radius);                       /* скругление у фото; карточка без заливки, при наведении — красная */
-  background: #c9c3bc;
-}
-.svc-card__media > img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform .6s cubic-bezier(.2, .7, .2, 1);
-}
-.svc-card:hover .svc-card__media > img { transform: scale(1.03); }
-/* плашки на фото: сроки и цена */
 .svc-card__bar {
   position: relative;
   display: flex;
@@ -811,7 +781,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   padding: 0 var(--s-16);
   border-radius: 999px;
   background: #f5f4f2;
-  line-height: 1.2;
+  line-height: var(--lh-heading);
 }
 
 .svc-card__body {
@@ -819,15 +789,15 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   display: flex;
   flex-direction: column;
   gap: var(--s-16);                                   /* название → текст — 16px */
-  padding: var(--s-24) var(--radius) 0;               /* текст начинается там, где кончается скругление фото (16px) */
+  padding: var(--s-24);
 }
 .svc-card__titles { display: flex; flex-direction: column; gap: var(--s-8); }
-.svc-card__sub { margin: 0; font-size: 14px; line-height: 1.3; opacity: .7; }   /* состав услуги — мелкой строкой над названием */
+.svc-card__sub { margin: 0; font-size: var(--fs-body); line-height: var(--lh-heading); opacity: .7; }   /* состав услуги — мелкой строкой над названием */
 .svc-card__desc { max-width: 631px; margin: 0; }
+.svc-card__body > .svc-card__bar { margin-top: auto; }
 
 /* компьютер с мышью: карточка с внутренним полем; при наведении — красная подложка, текст белый */
 @media (hover: hover) and (pointer: fine) and (min-width: 1200px) {
-  .svc-card { padding-bottom: var(--s-24); }        /* фото во всю ширину карточки, красная подложка — только под текстом */
   .svc-card:hover { background: var(--red); color: var(--white); }
   .svc-card:hover .svc-card__title { color: var(--white); }
 }
@@ -852,7 +822,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
     background: var(--red);
     color: var(--white);
     font-size: var(--fs-body);
-    line-height: 1.3;
+    line-height: var(--lh-heading);
     white-space: nowrap;
     pointer-events: none;
     transform: scale(0);
@@ -863,13 +833,14 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 
 .svc-card__btn-mobile { display: none; }
 /* блог: под текстом поста — «Читать полностью ↗» (на всех экранах); нажатие на карточку открывает пост */
-.post__btn-mobile { display: flex; align-items: center; gap: var(--s-8); margin-top: auto; color: var(--red); font-weight: 500; }
+.post__btn-mobile { display: flex; align-items: center; gap: var(--s-8); margin-top: auto; color: var(--red); font-weight: 400; }
 .post__btn-icon { flex: none; }
 .post__btn-icon path { stroke-width: calc(1 / 1.5); }
 
 /* узкий планшет: подзаголовок секции под заголовком */
 @media (max-width: 899px) {
   .svc__head { grid-template-columns: 1fr; }
+  .svc__list { grid-template-columns: 1fr; }
 }
 /* планшет и телефон: показываем кнопку вместо cursor эффекта */
 @media (max-width: 1199px) {
@@ -884,7 +855,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
     background: var(--red);
     color: var(--white);
     font-size: var(--fs-body);
-    line-height: 24px;
+    line-height: var(--lh-heading);
     text-decoration: none;
     cursor: pointer;
     transition: background-color .2s ease, box-shadow .2s ease, transform .2s ease;
@@ -898,7 +869,6 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .svc__list { grid-template-columns: 1fr; }
   /* телефон: под текстом появляется белая подложка — карточка целиком, скругление у всей карточки */
   .svc-card { border-radius: var(--radius); background: var(--white); }
-  .svc-card__media { aspect-ratio: 16 / 10; padding: 12px; border-radius: var(--radius) var(--radius) 0 0; }
   .svc-card__body { gap: 12px; padding: 20px 18px 18px; }
   .svc-card__bar { padding: 0; }
   .svc-card__tags { gap: var(--s-8); }
@@ -1075,7 +1045,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   padding: var(--pad-card);                           /* текст под фото — с отступом от краёв карточки */
 }
 .tcard__title { color: var(--text); }               /* стиль H3 */
-.tcard__sub { margin-top: var(--s-8); font-weight: 600; color: var(--text); }
+.tcard__sub { margin-top: var(--s-8); font-weight: 400; color: var(--text); }
 .tcard__desc { max-width: 640px; margin: var(--s-16) 0 var(--s-32); color: var(--muted); }
 .tcard__btn { min-width: 230px; margin-top: auto; }   /* кнопка не на всю ширину, прижата к низу карточки */
 
@@ -1137,7 +1107,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   border-radius: 25px;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.3;
+  line-height: var(--lh-heading);
   white-space: nowrap;
 }
 .tag::before {
@@ -1449,10 +1419,10 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   padding: var(--s-48) var(--s-56) var(--s-32);   /* под кнопкой — меньше */
   color: var(--white);
 }
-.lead__title { color: var(--white); font-size: var(--fs-h2); font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }   /* стиль H2 */
+.lead__title { color: var(--white); font-size: var(--fs-h2); font-weight: 400; line-height: var(--lh-heading); letter-spacing: normal; }   /* стиль H2 */
 .lead__head p { max-width: 640px; margin-top: var(--gap-text, 24px); }   /* основной текст сайта */
 .lead__chips { display: flex; flex-wrap: wrap; gap: var(--s-16); margin: 0; padding: 0; list-style: none; }
-.lead__chips li { padding: var(--s-8) var(--s-24); border: 1px solid rgba(255, 255, 255, .8); border-radius: 999px; line-height: 1.5; }
+.lead__chips li { padding: var(--s-8) var(--s-24); border: 1px solid rgba(255, 255, 255, .8); border-radius: 999px; line-height: var(--lh-heading); }
 .lead__fields { display: flex; flex-direction: column; gap: 12px; margin-top: var(--s-16); }   /* над полями — больше воздуха */
 .field { position: relative; }
 .field__input {
@@ -1465,7 +1435,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   background: var(--white);
   color: var(--text);
   font-size: var(--fs-body);
-  line-height: 1.3;
+  line-height: var(--lh-heading);
   outline: none;
   transition: border-color .2s ease, box-shadow .2s ease;
 }
@@ -1480,7 +1450,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   overflow: hidden;
   color: var(--placeholder);
   font-size: var(--fs-body);
-  line-height: 1.2;
+  line-height: var(--lh-heading);
   white-space: nowrap;
   text-overflow: ellipsis;
   pointer-events: none;
@@ -1489,7 +1459,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 }
 .field--area .field__label { top: 22px; transform: none; white-space: normal; }
 .field__input:focus + .field__label,
-.field__input:not(:placeholder-shown) + .field__label { top: 8px; font-size: 13px; transform: none; }
+.field__input:not(:placeholder-shown) + .field__label { top: 8px; font-size: var(--fs-body); transform: none; }
 .lead__agree { align-items: flex-start; }
 .lead__agree { color: var(--white); }
 .lead__agree input { margin-top: 0; border: 2px solid var(--white); }
@@ -1513,14 +1483,14 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .lead__title { color: var(--white); }
   .lead__chips { gap: var(--s-8); }
   .lead__chips li { border-color: rgba(255, 255, 255, .8); padding: 6px var(--s-16); }
-  .field__input { font-size: 16px; }   /* 16px: иначе iPhone увеличивает страницу при вводе */
+  .field__input { font-size: var(--fs-body); }   /* 16px: иначе iPhone увеличивает страницу при вводе */
   .field__input { height: 56px; padding: 24px 16px 6px; }
   .field--area .field__input { height: 112px; padding-top: 28px; }
   .field__label { top: 28px; left: 17px; right: 17px; }
   .field--area .field__label { top: 18px; }
   .field__input:focus, .field__input.is-invalid { border-color: var(--white); box-shadow: 0 0 0 3px rgba(255, 255, 255, .35); }
   .field__input:focus + .field__label,
-  .field__input:not(:placeholder-shown) + .field__label { top: 7px; font-size: 12px; }
+  .field__input:not(:placeholder-shown) + .field__label { top: 7px; font-size: var(--fs-body); }
   .lead__agree { color: var(--white); }
   .lead__agree input { border-color: var(--white); }
   .lead__agree input:checked { background: var(--white); box-shadow: inset 0 0 0 4px var(--red); }
@@ -1619,10 +1589,10 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 .policy { margin-top: var(--s-72); }
 .policy__text { max-width: 680px; }
 .policy__text h1 + h2 { margin-top: var(--s-72); }    /* H1 → первый раздел — 72px */
-.policy__text h2 { margin: var(--s-56) 0 var(--s-24); font-size: var(--fs-h3); font-weight: 500; line-height: 1.25; }   /* разделы политики — стилем H3 */   /* последний абзац → заголовок — 56px, заголовок → текст — 24px */
+.policy__text h2 { margin: var(--s-56) 0 var(--s-24); font-size: var(--fs-h3); font-weight: 400; line-height: var(--lh-heading); }   /* разделы политики — стилем H3 */   /* последний абзац → заголовок — 56px, заголовок → текст — 24px */
 .policy__text p + p { margin-top: var(--s-16); }
 .policy__text .policy__date { margin-top: var(--s-56); }
-.policy .placeholder { color: var(--red); font-weight: 500; }   /* места, которые нужно заполнить */
+.policy .placeholder { color: var(--red); font-weight: 400; }   /* места, которые нужно заполнить */
 .policy__br { display: none; }
 @media (min-width: 1200px) {
   /* колонка шириной с заголовок в две строки: остальные блоки не влияют на её ширину (width: 0; min-width: 100%) */
@@ -1763,7 +1733,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .opening { height: 98vh; height: 98svh; }           /* первый экран — 98% высоты экрана */
   .btn { min-height: 50px; padding-block: 13px; }     /* кнопки — высотой с кнопку бургер-меню (50px) */
   /* поля ввода — 16px: при более мелком шрифте iPhone увеличивает страницу, когда нажимаешь на поле */
-  input:not([type="checkbox"]):not([type="radio"]), textarea, select { font-size: 16px; }
+  input:not([type="checkbox"]):not([type="radio"]), textarea, select { font-size: var(--fs-body); }
 
   .section-head__text { color: var(--muted); }
   .link-more { color: var(--red); }
@@ -1802,7 +1772,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
     gap: var(--s-8);
     color: var(--red);
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 400;
     cursor: pointer;
     margin-top: auto;
   }
@@ -2042,12 +2012,12 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   background: var(--white);
 }
 .stage__top { display: flex; flex-direction: column; align-items: flex-start; }
-.stage__tag { padding: var(--s-8) var(--s-16); border-radius: 25px; background: rgba(255, 255, 255, .25); line-height: 1.2; }
+.stage__tag { padding: var(--s-8) var(--s-16); border-radius: 25px; background: rgba(255, 255, 255, .25); line-height: var(--lh-heading); }
 .stage__title { max-width: 576px; margin-top: var(--s-32); color: var(--white); }
 .stage__text { max-width: 576px; margin-top: var(--s-16); }   /* H4 → текст — 16px */
 .stage__text p + p { margin-top: var(--s-16); }
 .stage__bottom { display: flex; align-items: center; justify-content: space-between; gap: var(--s-16); }
-.stage__num { font-weight: 600; }
+.stage__num { font-weight: 400; }
 .stage__link { color: var(--white); text-decoration: none; }
 .stage__link:hover { text-decoration: underline; }
 
@@ -2162,7 +2132,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   background: none;
   color: var(--red);
   font: inherit;
-  line-height: 1.5;
+  line-height: var(--lh-heading);
   cursor: pointer;
   transition: background-color .2s ease;
 }
@@ -2179,9 +2149,9 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   width: 100%;
   padding: 0;
   font-size: var(--fs-h4);                            /* вопрос анкеты — как заголовок карточки (H4) */
-  font-weight: 500;
-  letter-spacing: -.005em;
-  line-height: 1.3;
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: var(--lh-heading);
   color: var(--text);
 }
 .calc-q__hint { clear: both; max-width: 850px; color: var(--muted); }
@@ -2278,7 +2248,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   outline: none;
 }
 .calc__result-label { color: var(--text); }   /* стиль H3 — класс h3 в разметке */
-.calc__result-sum { margin-top: var(--s-16); font-size: var(--fs-h2); font-weight: 500; letter-spacing: -.01em; line-height: 1.2; color: var(--red); }   /* сумма — размером H2 */
+.calc__result-sum { margin-top: var(--s-16); font-size: var(--fs-h2); font-weight: 400; letter-spacing: normal; line-height: var(--lh-heading); color: var(--red); }   /* сумма — размером H2 */
 .calc__result-note { max-width: 640px; margin-top: var(--s-32); color: var(--muted); }
 .calc__again {
   margin-top: var(--s-24);
@@ -2335,7 +2305,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   .page:has(.contact) .footer { margin-top: 0; }
   .contact__inner { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
 }
-.calc__contact { color: var(--red); font-weight: 600; text-decoration: none; }
+.calc__contact { color: var(--red); font-weight: 400; text-decoration: none; }
 .calc__contact:hover { text-decoration: underline; }
 
 /* =========================================================
@@ -2406,11 +2376,11 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
    ========================================================= */
 .opening--issl .opening__img { object-position: 50% 40%; }
 .opening--tochno .opening__img { object-position: 50% 30%; }
-.link-red { color: var(--red); font-weight: 500; text-decoration: none; }   /* ссылка в тексте */
+.link-red { color: var(--red); font-weight: 400; text-decoration: none; }   /* ссылка в тексте */
 .link-red:hover { text-decoration: underline; }
 
 /* «Об услуге»: заголовок раздела, под ним две колонки — «почему» (текст) и «для кого» (список) */
-.about-svc__chip { display: inline-block; padding: 12px 24px; border-radius: 999px; background: var(--white); color: var(--text); font-size: var(--fs-body); font-weight: 400; line-height: 1.5; }   /* «Об услуге» — плашка, а не крупный заголовок */
+.about-svc__chip { display: inline-block; padding: 12px 24px; border-radius: 999px; background: var(--white); color: var(--text); font-size: var(--fs-body); font-weight: 400; line-height: var(--lh-heading); }   /* «Об услуге» — плашка, а не крупный заголовок */
 .about-svc__cols { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--s-48) var(--col-gap); margin-top: var(--gap-head); align-items: start; }
 @media (min-width: 768px) { .about-svc__cols { margin-top: 60px; } }   /* H2 → колонки — 60px */
 .about-svc__col { grid-column: 1 / span 5; }   /* текст — по 5 колонок из 12 */
@@ -2481,7 +2451,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 /* главная: «Как проходит исследование» — четыре шага в ряд */
 .process__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--col-gap); margin: 0; padding: 0; list-style: none; counter-reset: step; }
 .process__item { display: flex; flex-direction: column; gap: var(--s-16); padding-top: var(--s-24); border-top: 1px solid rgba(60, 60, 60, .2); counter-increment: step; }
-.process__item::before { content: "0" counter(step); color: var(--red); font-weight: 600; }
+.process__item::before { content: "0" counter(step); color: var(--red); font-weight: 400; }
 .process__note { max-width: 760px; margin-top: var(--s-48); }
 
 @media (max-width: 1199px) {
@@ -2530,7 +2500,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
 /* ---------- Главная: «О нас» — текстовый блок (Figma 528:242). Текст — Manrope Medium 32px / 1.3 на компьютере,
    плавно до 20px на телефоне; первая фраза красная; ширина текста ~ 9,5 колонок из 12 (1216px при контенте 1296px) ---------- */
 .intro-text__body { display: flex; flex-direction: column; align-items: center; gap: var(--s-32); max-width: 1016px; margin: 0 auto; text-align: center; }   /* заголовок H2 и текст по центру */
-.intro-text__sub { max-width: 1000px; font-size: var(--fs-body-l, 20px); font-weight: 400; line-height: 1.5; }
+.intro-text__sub { max-width: 1000px; font-size: var(--fs-body); font-weight: 400; line-height: var(--lh-heading); }
 .intro-text__accent { color: var(--red); }
 @media (max-width: 767px) {
   .intro-text__body { gap: var(--s-16); }
@@ -2554,7 +2524,51 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 500; line-height: 1.3; letter-sp
   color: var(--white);
 }
 .why-card::after { content: ""; position: absolute; top: var(--s-16); right: var(--s-16); width: 12px; height: 12px; border-radius: 50%; background: var(--white); }   /* белая точка, как у карточек этапов */
-.why-card__title { padding-right: var(--s-24); font-size: 24px; font-weight: 400; line-height: 1.25; color: var(--white); }
+.why-card__title { padding-right: var(--s-24); font-size: var(--fs-h4); font-weight: 400; line-height: var(--lh-heading); color: var(--white); }
 .why-cards__list { gap: var(--s-16); }
 @media (max-width: 1199px) { .why-cards__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } .why-card { min-height: 220px; } }
 @media (max-width: 767px) { .why-cards { margin-top: var(--s-32); } .why-cards__list { grid-template-columns: 1fr; gap: var(--s-8, 8px); } .why-card { min-height: 0; padding: var(--s-16) var(--s-16) var(--s-24); } }
+
+/* Shared type roles. Body copy inherits the 120% leading. */
+h1, .h1, .opening__title { font-size: var(--fs-h1); font-weight: 600; line-height: var(--lh-heading); }
+h2, .h2, .focus__title, .lead__title { font-size: var(--fs-h2); font-weight: 600; line-height: var(--lh-heading); }
+h3, .h3 { font-size: var(--fs-h3); font-weight: 600; line-height: var(--lh-heading); }
+h4, .h4 { font-size: var(--fs-h4); font-weight: 400; line-height: var(--lh-heading); }
+p, li, label, input, textarea { line-height: var(--lh-body); }
+:where(h1, h2, h3, h4, p) { overflow-wrap: break-word; }
+/* CTA geometry and typography are defined once; variants only choose color. */
+:is(.btn, .svc-card__btn-mobile, .tcard__btn, .dcard__btn, .calc__next, .calc__prev, .calc__add, .calc__again) {
+  padding: var(--button-padding) !important;
+  border-radius: var(--button-radius) !important;
+  font-size: var(--button-font-size) !important;
+  font-weight: var(--button-font-weight) !important;
+  line-height: var(--button-line-height) !important;
+  min-height: var(--button-min-height);
+  height: auto;
+  white-space: normal;
+  text-align: center;
+  letter-spacing: normal;
+}
+.header--sticky.is-top :is(.nav a, .header__pill, .header__pill-text, .logo-mark, .header__burger) { color: var(--text); }
+.header--sticky.is-top .btn--white { color: var(--text); }
+.is-menu-open .header--sticky.is-top .header__burger { color: var(--white); }
+.header__pill span, .mobile-menu__logo-text { width: auto; }
+.header__pill .logo-mark { flex: none; }
+/* Keep a full-size label above the input when focused or filled. */
+.field { display: flex; flex-direction: column-reverse; }
+.field__input:focus + .field__label,
+.field__input:not(:placeholder-shown) + .field__label { position: static; display: block; transform: none; margin-bottom: var(--s-8); color: inherit; }
+.field__input { padding: 16px 24px; }
+@media (max-width: 767px) { .field__input { padding: 16px; } }
+@media (max-width: 767px) {
+  :root { --fs-body: 16px; --fs-h4: 20px; --fs-h3: 25px; --fs-h2: 31px; --fs-h1: 39px; }
+}
+
+@media (max-width: 1199px) {
+  .opening { grid-template-rows: repeat(5, calc((var(--vw) - 2 * var(--gut) - 20px) / 6)) auto; }
+}
+@media (max-width: 767px) {
+  .opening { grid-template-rows: repeat(4, calc((var(--vw) - 2 * var(--gut) - 12px) / 4)) auto; }
+}
+
+.preloader__name { font-size: var(--fs-h1) !important; font-weight: 400; line-height: var(--lh-heading); }
