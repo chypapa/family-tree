@@ -9,6 +9,18 @@
   setScrollbar();
   window.addEventListener('resize', setScrollbar);
 
+  // Reserve the header's actual height, including wrapped navigation.
+  var measuredHeader = document.querySelector('.header--sticky');
+  if (measuredHeader) {
+    var measureHeaderHeight = function () {
+      document.documentElement.style.setProperty('--header-height', measuredHeader.getBoundingClientRect().height + 'px');
+    };
+    measureHeaderHeight();
+    window.addEventListener('resize', measureHeaderHeight);
+    if (window.ResizeObserver) new ResizeObserver(measureHeaderHeight).observe(measuredHeader);
+  }
+
+
   /* плавная прокрутка колесом мыши и по якорям (Lenis); на телефоне и при «уменьшении движения» — обычная */
   if (window.Lenis && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     var lenis = new window.Lenis({ duration: 1.1, anchors: { offset: -88 }, smoothWheel: true });
@@ -21,6 +33,30 @@
       var locked = rootEl.classList.contains('is-menu-open') || rootEl.classList.contains('is-overlay-open');
       if (locked) lenis.stop(); else lenis.start();
     }).observe(rootEl, { attributes: true, attributeFilter: ['class'] });
+  }
+
+
+  // Native scrolling remains available for capped sections in short windows.
+  var fitSections = Array.prototype.slice.call(document.querySelectorAll('main > section:not([hidden])'));
+  var updateSectionOverflow = function () {
+    var desktop = window.matchMedia('(min-width: 1200px)').matches;
+    fitSections.forEach(function (section) {
+      var scrolls = desktop && section.scrollHeight > section.clientHeight + 1;
+      if (scrolls) {
+        section.setAttribute('data-viewport-scroll', '');
+        section.setAttribute('data-lenis-prevent', '');
+      } else if (section.hasAttribute('data-viewport-scroll')) {
+        section.removeAttribute('data-viewport-scroll');
+        section.removeAttribute('data-lenis-prevent');
+      }
+    });
+  };
+  updateSectionOverflow();
+  window.addEventListener('resize', updateSectionOverflow);
+  window.addEventListener('load', updateSectionOverflow, { once: true });
+  if (window.ResizeObserver) {
+    var sectionSizeObserver = new ResizeObserver(updateSectionOverflow);
+    fitSections.forEach(function (section) { sectionSizeObserver.observe(section); });
   }
 
   /* переходы между страницами: браузеры с View Transitions сами плавно сменяют страницы (@view-transition в CSS);
