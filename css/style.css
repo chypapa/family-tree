@@ -2503,29 +2503,25 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
 .blog .post .post__texts, .blog .post--main .post__texts, .blog .post--side .post__texts { display: flex; flex-direction: column; gap: 20px; }
 .blog .post .post__body, .blog .post--main .post__body, .blog .post--side .post__body { gap: 12px; }
 
-/* ---------- Главная: «О нас» — текстовый блок (Figma 528:242). Текст — Manrope Medium 32px / 1.3 на компьютере,
-   плавно до 20px на телефоне; первая фраза красная; ширина текста ~ 9,5 колонок из 12 (1216px при контенте 1296px) ---------- */
-/* About: seven columns of the common twelve-column content grid. */
+/* About: red background, two 15% decorative maps, eight-column text. */
 .intro-text.section {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   padding: var(--section-pad) var(--edge);
-  background: var(--bg);
-  color: var(--text);
+  background: var(--red);
+  color: var(--white);
 }
-.intro-text::before {
+.intro-text::before, .intro-text::after {
   content: "";
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 68%;
-  width: 64%;
   z-index: 0;
-  background: url("../img/about-regions.webp") left center / contain no-repeat;
-  opacity: 1; /* The supplied PNG already contains a 5% alpha layer. */
+  background: url("../img/about-regions-red.webp") center / contain no-repeat;
+  opacity: .15;
   pointer-events: none;
 }
+.intro-text::before { top: 24%; left: 58%; width: 55%; height: 120%; }
+.intro-text::after { top: -52%; left: -35%; width: 60%; height: 120%; transform: rotate(-12deg); }
 .intro-text > * { position: relative; z-index: 1; }
 .intro-text__body {
   display: flex; flex-direction: column; align-items: flex-start;
@@ -2533,10 +2529,10 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
   width: 100%;
   margin: 0; text-align: left;
 }
-.intro-text__lead, .intro-text__accent { color: var(--text); }
-.intro-text__sub { font-size: var(--fs-h3); font-weight: 600; line-height: var(--lh-heading); opacity: .5; }
+.intro-text__lead, .intro-text__accent { color: var(--white); }
+.intro-text__sub { font-size: var(--fs-h3); font-weight: 600; line-height: var(--lh-heading); opacity: 1; }
 .intro-text .why-cards { margin-top: var(--s-96); }
-@media (max-width: 1199px) { .intro-text__body { width: 100%; max-width: 1016px; } }
+@media (max-width: 1199px) { .intro-text__body { width: 100%; max-width: none; } }
 @media (max-width: 767px) {
   .intro-text.section { padding-block: var(--s-48); }
   .intro-text__body { gap: var(--s-24); }
@@ -2703,10 +2699,10 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 .svc-card__placeholder { position: relative; }
 .svc-card__placeholder .svc-card__bar { position: absolute; top: var(--s-16); left: var(--s-16); right: var(--s-16); }
 
-/* Heading spans seven grid columns; the lighter H3 paragraph spans eight. */
-.intro-text__lead { width: calc((100% - 11 * var(--col-gap)) / 12 * 7 + 6 * var(--col-gap)); }
+/* Both text blocks span eight columns of the common twelve-column grid. */
+.intro-text__lead { width: calc((100% - 11 * var(--col-gap)) / 12 * 8 + 7 * var(--col-gap)); }
 .intro-text .intro-text__sub { width: calc((100% - 11 * var(--col-gap)) / 12 * 8 + 7 * var(--col-gap)); font-weight: 400; }
-@media (max-width: 1199px) { .intro-text__lead, .intro-text .intro-text__sub { width: 100%; } }
+@media (max-width: 1023px) { .intro-text__lead, .intro-text .intro-text__sub { width: 100%; } }
 .opening__tile-visual { position: absolute; inset: 0; background: var(--tile-color, transparent); }
 .svc-card__image { display: block; width: 100%; height: 100%; object-fit: cover; }
 .btn.lead__submit { border: 1px solid var(--white); background: transparent; color: var(--white); }
