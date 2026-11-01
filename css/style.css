@@ -83,6 +83,7 @@
 
   /* Пять общих стилей текста */
   --fs-body: 19px;
+  --fw-body: 500;
   --fs-h4: 24px;
   --fs-h3: 30px;
   --fs-h2: 38px;
@@ -106,7 +107,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: "Manrope", system-ui, sans-serif;
-  font-weight: 400;
+  font-weight: var(--fw-body);
   font-size: var(--fs-body);
   line-height: var(--lh-body);
   -webkit-font-smoothing: antialiased;
@@ -116,7 +117,7 @@ body {
 img { max-width: 100%; display: block; }
 a { color: inherit; }
 h1, h2, h3, h4, p, ul { margin: 0; }
-strong, b { font-weight: 400; }                       /* выделение в тексте — Medium */
+strong, b { font-weight: var(--fw-body); }                       /* выделение в тексте — Medium */
 ul { padding: 0; list-style: none; }
 button, input, textarea { font: inherit; }
 :focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
@@ -1054,7 +1055,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
   padding: var(--pad-card);                           /* текст под фото — с отступом от краёв карточки */
 }
 .tcard__title { color: var(--text); }               /* стиль H3 */
-.tcard__sub { margin-top: var(--s-8); font-weight: 400; color: var(--text); }
+.tcard__sub { margin-top: var(--s-8); font-weight: var(--fw-body); color: var(--text); }
 .tcard__desc { max-width: 640px; margin: var(--s-16) 0 var(--s-32); color: var(--muted); }
 .tcard__btn { min-width: 230px; margin-top: auto; }   /* кнопка не на всю ширину, прижата к низу карточки */
 
@@ -1346,7 +1347,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
 }
 .contact__info { flex: 1; min-width: 0; color: var(--white); }
 .contact__title { max-width: 760px; color: var(--white); }
-.contact__text { margin-top: var(--gap-text); font-weight: 400; }
+.contact__text { margin-top: var(--gap-text); font-weight: var(--fw-body); }
 .socials { display: flex; flex-wrap: wrap; gap: var(--s-24) var(--s-32); margin-top: var(--s-24); }
 .socials a { display: block; flex: none; transition: opacity .2s ease; }
 .socials a:hover { opacity: .75; }
@@ -1601,7 +1602,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
 .policy__text h2 { margin: var(--s-56) 0 var(--s-24); font-size: var(--fs-h3); font-weight: 400; line-height: var(--lh-heading); }   /* разделы политики — стилем H3 */   /* последний абзац → заголовок — 56px, заголовок → текст — 24px */
 .policy__text p + p { margin-top: var(--s-16); }
 .policy__text .policy__date { margin-top: var(--s-56); }
-.policy .placeholder { color: var(--red); font-weight: 400; }   /* места, которые нужно заполнить */
+.policy .placeholder { color: var(--red); font-weight: var(--fw-body); }   /* места, которые нужно заполнить */
 .policy__br { display: none; }
 @media (min-width: 1200px) {
   /* колонка шириной с заголовок в две строки: остальные блоки не влияют на её ширину (width: 0; min-width: 100%) */
@@ -2026,7 +2027,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
 .stage__text { max-width: 576px; margin-top: var(--s-16); }   /* H4 → текст — 16px */
 .stage__text p + p { margin-top: var(--s-16); }
 .stage__bottom { display: flex; align-items: center; justify-content: space-between; gap: var(--s-16); }
-.stage__num { font-weight: 400; }
+.stage__num { font-weight: var(--fw-body); }
 .stage__link { color: var(--white); text-decoration: none; }
 .stage__link:hover { text-decoration: underline; }
 
@@ -2314,7 +2315,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
   .page:has(.contact) .footer { margin-top: 0; }
   .contact__inner { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
 }
-.calc__contact { color: var(--red); font-weight: 400; text-decoration: none; }
+.calc__contact { color: var(--red); font-weight: var(--fw-body); text-decoration: none; }
 .calc__contact:hover { text-decoration: underline; }
 
 /* =========================================================
@@ -2385,7 +2386,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
    ========================================================= */
 .opening--issl .opening__img { object-position: 50% 40%; }
 .opening--tochno .opening__img { object-position: 50% 30%; }
-.link-red { color: var(--red); font-weight: 400; text-decoration: none; }   /* ссылка в тексте */
+.link-red { color: var(--red); font-weight: var(--fw-body); text-decoration: none; }   /* ссылка в тексте */
 .link-red:hover { text-decoration: underline; }
 
 /* «Об услуге»: заголовок раздела, под ним две колонки — «почему» (текст) и «для кого» (список) */
@@ -2527,7 +2528,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
 }
 .intro-text__lead, .intro-text__accent { color: var(--text); }
 .intro-text .intro-text__lead, .intro-text .intro-text__sub { width: 100%; }
-.intro-text .intro-text__sub { font-size: var(--fs-body); font-weight: 400; line-height: var(--lh-body); opacity: 1; }
+.intro-text .intro-text__sub { font-size: var(--fs-body); font-weight: var(--fw-body); line-height: var(--lh-body); opacity: 1; }
 .intro-text__media { grid-column: 1 / span 6; grid-row: 1; position: relative; align-self: stretch; min-width: 0; min-height: 360px; overflow: hidden; border-radius: var(--radius); }
 .intro-text__media img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
 .intro-text .why-cards { grid-column: 1 / -1; margin-top: 0; }
@@ -2720,7 +2721,7 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
   backdrop-filter: blur(var(--badge-blur));
   color: var(--badge-color);
   font-size: var(--fs-body);
-  font-weight: 400;
+  font-weight: var(--fw-body);
   line-height: var(--lh-heading);
   white-space: normal;
 }
