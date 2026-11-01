@@ -387,7 +387,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
   gap: 0;
   color: var(--text);
 }
-.opening--mosaic .opening__tile { position: relative; min-width: 0; min-height: 0; grid-column: var(--x); grid-row: var(--y); overflow: hidden; border-radius: 0; background: var(--tile-color, transparent); }
+.opening--mosaic .opening__tile { position: relative; min-width: 0; min-height: 0; grid-column: var(--x); grid-row: var(--y); overflow: hidden; border-radius: 0; background: transparent; }
 .opening--mosaic .opening__tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
 .opening--mosaic .opening__content { grid-column: 5 / 9; grid-row: 3 / 5; align-self: center; padding: var(--s-56); min-width: 0; }
 .opening--mosaic .opening__title { color: var(--text); }
@@ -2528,7 +2528,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
 .intro-text__body {
   display: flex; flex-direction: column; align-items: flex-start;
   gap: var(--s-24);
-  width: calc((100% - 11 * var(--col-gap)) / 12 * 7 + 6 * var(--col-gap));
+  width: 100%;
   margin: 0; text-align: left;
 }
 .intro-text__lead, .intro-text__accent { color: var(--text); }
@@ -2665,34 +2665,34 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
   .footer__socials, .footer--socials .footer__socials { gap: var(--s-24); }
 }
 
-/* Repeatable homepage entrance: 300ms shuffled stagger + 200ms fade = 500ms total. */
+/* Repeatable entrance: 600ms shuffled stagger + 400ms fade = 1000ms total. */
 .home-page .preloader { display: none; }
 .home-page .opening__content :is(.opening__text, .opening__cta) { opacity: 1; transform: none; transition: none; animation: none; }
 @keyframes mosaic-reveal { from { opacity: 0; } to { opacity: 1; } }
 @media (prefers-reduced-motion: no-preference) {
   .opening--mosaic.is-revealing .opening__tile {
-    animation: mosaic-reveal 200ms var(--ease-out) var(--reveal-delay, 0ms) both;
+    animation: mosaic-reveal 400ms var(--ease-out) var(--reveal-delay, 0ms) both;
   }
 }
-.opening--mosaic .opening__tile:nth-child(1) { --reveal-delay: 50.000ms; }
-.opening--mosaic .opening__tile:nth-child(2) { --reveal-delay: 183.333ms; }
-.opening--mosaic .opening__tile:nth-child(3) { --reveal-delay: 16.667ms; }
-.opening--mosaic .opening__tile:nth-child(4) { --reveal-delay: 233.333ms; }
-.opening--mosaic .opening__tile:nth-child(5) { --reveal-delay: 100.000ms; }
-.opening--mosaic .opening__tile:nth-child(6) { --reveal-delay: 283.333ms; }
-.opening--mosaic .opening__tile:nth-child(7) { --reveal-delay: 150.000ms; }
+.opening--mosaic .opening__tile:nth-child(1) { --reveal-delay: 100.000ms; }
+.opening--mosaic .opening__tile:nth-child(2) { --reveal-delay: 366.666ms; }
+.opening--mosaic .opening__tile:nth-child(3) { --reveal-delay: 33.334ms; }
+.opening--mosaic .opening__tile:nth-child(4) { --reveal-delay: 466.666ms; }
+.opening--mosaic .opening__tile:nth-child(5) { --reveal-delay: 200.000ms; }
+.opening--mosaic .opening__tile:nth-child(6) { --reveal-delay: 566.666ms; }
+.opening--mosaic .opening__tile:nth-child(7) { --reveal-delay: 300.000ms; }
 .opening--mosaic .opening__tile:nth-child(8) { --reveal-delay: 0.000ms; }
-.opening--mosaic .opening__tile:nth-child(9) { --reveal-delay: 266.667ms; }
-.opening--mosaic .opening__tile:nth-child(10) { --reveal-delay: 83.333ms; }
-.opening--mosaic .opening__tile:nth-child(11) { --reveal-delay: 200.000ms; }
-.opening--mosaic .opening__tile:nth-child(12) { --reveal-delay: 133.333ms; }
-.opening--mosaic .opening__tile:nth-child(13) { --reveal-delay: 300.000ms; }
-.opening--mosaic .opening__tile:nth-child(14) { --reveal-delay: 33.333ms; }
-.opening--mosaic .opening__tile:nth-child(15) { --reveal-delay: 166.667ms; }
-.opening--mosaic .opening__tile:nth-child(16) { --reveal-delay: 250.000ms; }
-.opening--mosaic .opening__tile:nth-child(17) { --reveal-delay: 66.667ms; }
-.opening--mosaic .opening__tile:nth-child(18) { --reveal-delay: 216.667ms; }
-.opening--mosaic .opening__tile:nth-child(19) { --reveal-delay: 116.667ms; }
+.opening--mosaic .opening__tile:nth-child(9) { --reveal-delay: 533.334ms; }
+.opening--mosaic .opening__tile:nth-child(10) { --reveal-delay: 166.666ms; }
+.opening--mosaic .opening__tile:nth-child(11) { --reveal-delay: 400.000ms; }
+.opening--mosaic .opening__tile:nth-child(12) { --reveal-delay: 266.666ms; }
+.opening--mosaic .opening__tile:nth-child(13) { --reveal-delay: 600.000ms; }
+.opening--mosaic .opening__tile:nth-child(14) { --reveal-delay: 66.666ms; }
+.opening--mosaic .opening__tile:nth-child(15) { --reveal-delay: 333.334ms; }
+.opening--mosaic .opening__tile:nth-child(16) { --reveal-delay: 500.000ms; }
+.opening--mosaic .opening__tile:nth-child(17) { --reveal-delay: 133.334ms; }
+.opening--mosaic .opening__tile:nth-child(18) { --reveal-delay: 433.334ms; }
+.opening--mosaic .opening__tile:nth-child(19) { --reveal-delay: 233.334ms; }
 
 .intro-text .why-card { background: var(--white); color: var(--text); }
 .intro-text .why-card__title { color: var(--text); }
@@ -2700,3 +2700,15 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 
 .svc-card__placeholder { position: relative; }
 .svc-card__placeholder .svc-card__bar { position: absolute; top: var(--s-16); left: var(--s-16); right: var(--s-16); }
+
+/* Heading spans seven grid columns; the lighter H3 paragraph spans eight. */
+.intro-text__lead { width: calc((100% - 11 * var(--col-gap)) / 12 * 7 + 6 * var(--col-gap)); }
+.intro-text .intro-text__sub { width: calc((100% - 11 * var(--col-gap)) / 12 * 8 + 7 * var(--col-gap)); font-weight: 400; }
+@media (max-width: 1199px) { .intro-text__lead, .intro-text .intro-text__sub { width: 100%; } }
+.opening__tile-visual { position: absolute; inset: 0; background: var(--tile-color, transparent); }
+.svc-card__image { display: block; width: 100%; height: 100%; object-fit: cover; }
+.btn.lead__submit { border: 1px solid var(--white); background: transparent; color: var(--white); }
+@media (hover: hover) and (pointer: fine) {
+  .btn.lead__submit:hover { background: var(--white); color: var(--text); }
+}
+.btn.lead__submit:focus-visible { background: var(--white); color: var(--text); }

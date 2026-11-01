@@ -184,7 +184,7 @@
     updateTop();
   }
 
-  /* Replay the 500ms mosaic reveal whenever the hero re-enters the viewport. */
+  /* Replay the 1000ms mosaic reveal whenever the hero re-enters the viewport. */
   var mosaic = document.querySelector('.opening--mosaic');
   if (mosaic) {
     if ('IntersectionObserver' in window) {
@@ -197,6 +197,32 @@
     } else {
       mosaic.classList.add('is-revealing');
     }
+  }
+
+  /* Scroll fades the visual layer, independently of the entrance animation. */
+  if (mosaic) {
+    var mosaicMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var mosaicTiles = Array.prototype.map.call(mosaic.querySelectorAll('.opening__tile'), function (tile, i) {
+      return { visual: tile.querySelector('.opening__tile-visual'), keep: i % 4 === 0,
+        start: 0.03 + parseFloat(getComputedStyle(tile).getPropertyValue('--reveal-delay')) / 600 * 0.62 };
+    });
+    var mosaicScrollPending = false;
+    var updateMosaicScroll = function () {
+      mosaicScrollPending = false;
+      var bounds = mosaic.getBoundingClientRect();
+      var progress = mosaicMotion.matches ? 0 : Math.max(0, Math.min(1, -bounds.top / bounds.height));
+      mosaicTiles.forEach(function (tile) {
+        var fade = tile.keep ? 0 : Math.max(0, Math.min(1, (progress - tile.start) / 0.22));
+        tile.visual.style.opacity = String(1 - fade);
+      });
+    };
+    var queueMosaicScroll = function () {
+      if (!mosaicScrollPending) { mosaicScrollPending = true; requestAnimationFrame(updateMosaicScroll); }
+    };
+    window.addEventListener('scroll', queueMosaicScroll, { passive: true });
+    window.addEventListener('resize', queueMosaicScroll);
+    if (mosaicMotion.addEventListener) mosaicMotion.addEventListener('change', queueMosaicScroll);
+    updateMosaicScroll();
   }
 
   /* ---------- Мобильное меню: бургер превращается в крестик, панель выезжает справа ---------- */
