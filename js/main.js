@@ -184,6 +184,21 @@
     updateTop();
   }
 
+  /* Replay the 500ms mosaic reveal whenever the hero re-enters the viewport. */
+  var mosaic = document.querySelector('.opening--mosaic');
+  if (mosaic) {
+    if ('IntersectionObserver' in window) {
+      var mosaicObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          mosaic.classList.toggle('is-revealing', entry.isIntersecting && entry.intersectionRatio >= 0.08);
+        });
+      }, { threshold: [0, 0.08] });
+      mosaicObserver.observe(mosaic);
+    } else {
+      mosaic.classList.add('is-revealing');
+    }
+  }
+
   /* ---------- Мобильное меню: бургер превращается в крестик, панель выезжает справа ---------- */
   var burger = document.querySelector('.header__burger');
   var drawer = burger && document.getElementById(burger.getAttribute('aria-controls'));
