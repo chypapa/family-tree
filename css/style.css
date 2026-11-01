@@ -38,6 +38,10 @@
   --muted: rgba(0, 0, 0, .7);
   --placeholder: rgba(0, 0, 0, .5);
   --white: #fff;
+  --badge-background: rgba(255, 255, 255, .5);
+  --badge-color: #fff;
+  --badge-padding: var(--s-8) var(--s-16);
+  --badge-radius: 999px;
 
   /* сетка страницы: одно общее поле для всех блоков */
   --container: 1840px;
@@ -795,7 +799,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
   gap: var(--s-16);                                   /* название → текст — 16px */
   padding: var(--s-24);
 }
-.svc-card__titles { display: flex; flex-direction: column; gap: var(--s-8); }
+.svc-card__titles { display: flex; flex-direction: column; gap: 4px; }
 .svc-card__sub { margin: 0; font-size: var(--fs-body); line-height: var(--lh-heading); opacity: .7; }   /* состав услуги — мелкой строкой над названием */
 .svc-card__desc { max-width: 631px; margin: 0; }
 .svc-card__body > .svc-card__bar { margin-top: auto; }
@@ -2384,9 +2388,8 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 600; line-height: var(--lh-headi
 .link-red:hover { text-decoration: underline; }
 
 /* «Об услуге»: заголовок раздела, под ним две колонки — «почему» (текст) и «для кого» (список) */
-.about-svc__chip { display: inline-block; padding: 12px 24px; border-radius: 999px; background: var(--white); color: var(--text); font-size: var(--fs-body); font-weight: 400; line-height: var(--lh-heading); }   /* «Об услуге» — плашка, а не крупный заголовок */
-.about-svc__cols { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--s-48) var(--col-gap); margin-top: var(--gap-head); align-items: start; }
-@media (min-width: 768px) { .about-svc__cols { margin-top: 60px; } }   /* H2 → колонки — 60px */
+.about-svc__cols { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--s-48) var(--col-gap); margin-top: 0; align-items: start; }
+
 .about-svc__col { grid-column: 1 / span 5; }   /* текст — по 5 колонок из 12 */
 .about-svc__col + .about-svc__col { grid-column: 7 / span 5; }
 .about-svc__col { display: flex; flex-direction: column; gap: var(--s-32); max-width: 880px; }   /* H3 → текст — 32px */
@@ -2656,7 +2659,7 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 
 
 /* Neutral image areas remain in all three service cards. */
-.svc-card__placeholder { width: 100%; aspect-ratio: 16 / 9; flex: none; background: #d4d1cd; }
+.svc-card__placeholder { width: 100%; aspect-ratio: 16 / 10; flex: none; background: #d4d1cd; }
 .footer .footer__socials img, .footer.footer--socials .footer__socials img { width: 48px; height: 48px; }
 .footer__socials a { flex: none; }
 @media (max-width: 767px) {
@@ -2710,3 +2713,23 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
   .btn.lead__submit:hover { background: var(--white); color: var(--text); }
 }
 .btn.lead__submit:focus-visible { background: var(--white); color: var(--text); }
+
+/* One badge style for image captions, durations, prices and consultation conditions. */
+.tag, .svc-card__tags .tag, .tcard__tags .tag,
+.stage__tag, .gallery__badge, .lead__chips li {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--badge-padding);
+  height: auto;
+  border: 0;
+  border-radius: var(--badge-radius);
+  background: var(--badge-background);
+  color: var(--badge-color);
+  font-size: var(--fs-body);
+  font-weight: 400;
+  line-height: var(--lh-heading);
+  white-space: normal;
+}
+.tag::before, .tag::after, .stage__tag::before, .stage__tag::after,
+.gallery__badge::before, .gallery__badge::after,
+.lead__chips li::before, .lead__chips li::after { content: none; display: none; }
