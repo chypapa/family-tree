@@ -2503,11 +2503,31 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: 400; line-height: var(--lh-headi
 
 /* ---------- Главная: «О нас» — текстовый блок (Figma 528:242). Текст — Manrope Medium 32px / 1.3 на компьютере,
    плавно до 20px на телефоне; первая фраза красная; ширина текста ~ 9,5 колонок из 12 (1216px при контенте 1296px) ---------- */
-.intro-text__body { display: flex; flex-direction: column; align-items: center; gap: var(--s-32); max-width: 1016px; margin: 0 auto; text-align: center; }   /* заголовок H2 и текст по центру */
-.intro-text__sub { max-width: 1000px; font-size: var(--fs-body); font-weight: 400; line-height: var(--lh-heading); }
-.intro-text__accent { color: var(--red); }
+/* About the project: green section with a subtle engraved wood texture. */
+.intro-text.section {
+  position: relative;
+  isolation: isolate;
+  padding: var(--section-pad) var(--edge);
+  background: var(--green);
+  color: var(--white);
+}
+.intro-text::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url("../img/about-tree-rings.webp") center / cover no-repeat;
+  mix-blend-mode: color-burn;
+  opacity: .02;
+  pointer-events: none;
+}
+.intro-text > * { position: relative; z-index: 1; }
+.intro-text__body { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s-48); max-width: 1016px; margin: 0; text-align: left; }
+.intro-text__lead, .intro-text__accent { color: var(--white); }
+.intro-text__sub { font-size: var(--fs-body); font-weight: 400; line-height: var(--lh-body); }
 @media (max-width: 767px) {
-  .intro-text__body { gap: var(--s-16); }
+  .intro-text.section { padding-block: var(--s-48); }
+  .intro-text__body { gap: var(--s-24); }
 }
 
 /* «Почему нас выбирают?»: подзаголовок (H4) и четыре красные карточки в ряд (по 3 колонки из 12);
@@ -2662,3 +2682,7 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 .opening--mosaic .opening__tile:nth-child(17) { --reveal-delay: 240ms; }
 .opening--mosaic .opening__tile:nth-child(18) { --reveal-delay: 780ms; }
 .opening--mosaic .opening__tile:nth-child(19) { --reveal-delay: 420ms; }
+
+.intro-text .why-card { background: var(--white); color: var(--text); }
+.intro-text .why-card__title { color: var(--text); }
+.intro-text .why-card::after { background: var(--green); }
