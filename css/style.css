@@ -3,7 +3,7 @@
    Брейкпоинты: десктоп ≥ 1200 · планшет 768–1199 · мобильный < 768
 
    ТИПОГРАФИКА — 5 стилей, шаг 1.25 с последовательным округлением.
-   Desktop: 19 / 24 / 30 / 38 / 48px. Mobile: 16 / 20 / 25 / 31 / 39px.
+   Desktop: 19 / 24 / 30 / 38 / 48px. Mobile: 16 / 20 / 25 / 28 / 30–32px.
    H1–H4: 700, наборный: 500. Наборный: 120%, остальные: 130%.
 
    ОТСТУПЫ — шкала с шагом 8px: 8 · 16 · 24 · 32 · 48 · 56 · 64 · 72 · 96 · 128 · 160 (токены --s-8 … --s-160).
@@ -2597,7 +2597,7 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 .field__input { padding: 16px 24px; }
 @media (max-width: 767px) { .field__input { padding: 16px; } }
 @media (max-width: 767px) {
-  :root { --fs-body: 16px; --fs-h4: 20px; --fs-h3: 25px; --fs-h2: 31px; --fs-h1: 39px; }
+  :root { --fs-body: 16px; --fs-h4: 20px; --fs-h3: 25px; --fs-h2: 28px; --fs-h1: 32px; }
 }
 
 
