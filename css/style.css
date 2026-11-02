@@ -2788,3 +2788,6 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
   .svc-alt__documents { top: auto; bottom: -75px; right: -10%; width: 70%; height: 280px; }
   .svc-alt__book { right: -17%; bottom: -75px; width: 90%; height: 285px; }
 }
+
+/* Crop the light scan border from the young woman portrait. */
+.opening--mosaic .opening__tile img.opening__portrait-crop { transform: scale(1.12); }
