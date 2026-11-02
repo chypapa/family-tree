@@ -2752,3 +2752,35 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
   .tree-design__media, .tree-design__copy { grid-column: 1 / -1; }
   .tree-design__copy { gap: var(--gap-text); }
 }
+
+/* Additional service composition, kept alongside the original service cards. */
+.svc-alt { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--col-gap); }
+.svc-alt__card { position: relative; isolation: isolate; min-width: 0; min-height: 400px; padding: var(--pad-card); overflow: hidden; border-radius: var(--radius); color: var(--white); }
+.svc-alt__card h2 { color: inherit; }
+.svc-alt__card--archive { grid-column: span 2; background: var(--terra); }
+.svc-alt__card--targeted { background: var(--orange); }
+.svc-alt__card--tree { background: var(--green); }
+.svc-alt__card--book { grid-column: span 2; background: var(--red); }
+.svc-alt__copy { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: flex-start; gap: var(--s-24); height: 100%; }
+.svc-alt__card--archive .svc-alt__copy, .svc-alt__card--book .svc-alt__copy { width: 57%; }
+.svc-alt__button { margin-top: auto; }
+.svc-alt__documents { position: absolute; top: 0; bottom: 0; right: -7%; width: 40%; pointer-events: none; }
+.svc-alt__document { position: absolute; display: block; height: auto; box-shadow: 0 6px 16px rgba(45, 28, 15, .2); }
+.svc-alt__document--birth { width: 105%; top: 34%; left: 5%; transform: rotate(24deg); }
+.svc-alt__document--pages { width: 105%; top: -8%; left: 20%; transform: rotate(16deg); }
+.svc-alt__document--passport { width: 60%; top: 59%; left: -4%; transform: rotate(-14deg); }
+.svc-alt__book { position: absolute; right: -35%; bottom: -20%; width: 80%; height: 125%; object-fit: contain; object-position: left top; filter: drop-shadow(-5px 6px 10px rgba(45, 28, 15, .24)); pointer-events: none; }
+@media (max-width: 1023px) {
+  .svc-alt { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .svc-alt__card--book { grid-column: 1 / -1; }
+  .svc-alt__card--tree { grid-column: 2; grid-row: 2; }
+}
+@media (max-width: 767px) {
+  .svc-alt { grid-template-columns: 1fr; }
+  .svc-alt__card { grid-column: 1; grid-row: auto; min-height: 0; padding: var(--s-24); }
+  .svc-alt__copy { height: auto; gap: var(--s-24); }
+  .svc-alt__card--archive .svc-alt__copy, .svc-alt__card--book .svc-alt__copy { width: 100%; }
+  .svc-alt__card--archive, .svc-alt__card--book { padding-bottom: 250px; }
+  .svc-alt__documents { top: auto; bottom: -75px; right: -10%; width: 70%; height: 280px; }
+  .svc-alt__book { right: -17%; bottom: -55px; width: 90%; height: 265px; }
+}
