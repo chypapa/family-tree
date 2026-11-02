@@ -2744,9 +2744,9 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 .voice__play:focus-visible { outline: 3px solid var(--text); outline-offset: -6px; border-radius: var(--radius); }
 
 /* Family tree design: illustration and copy share the site's two-column grid. */
-.tree-design { display: grid; grid-template-columns: minmax(0, calc((100% - 2 * var(--s-16)) * 920 / 1625 + var(--s-16) - var(--s-56))) minmax(0, 1fr) minmax(0, calc((100% - 11 * var(--col-gap)) / 12 * 5 + 4 * var(--col-gap))); gap: var(--col-gap); align-items: stretch; }
-.tree-design__media { grid-column: 1; aspect-ratio: 1.3; align-self: start; position: relative; min-width: 0; overflow: hidden; border-radius: var(--radius); background: #dfd0b8; }
-.tree-design__media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.tree-design { display: grid; grid-template-columns: minmax(0, calc((100% - 2 * var(--s-16)) * 920 / 1625 + var(--s-16) - var(--s-56))) minmax(0, 1fr) minmax(0, calc((100% - 11 * var(--col-gap)) / 12 * 5 + 4 * var(--col-gap))) minmax(0, 1fr); gap: 0; align-items: stretch; }
+.tree-design__media { grid-column: 1; align-self: stretch; position: relative; min-width: 0; overflow: hidden; border-radius: var(--radius); background: #dfd0b8; }
+.tree-design__media img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; }
 .tree-design__price { color: var(--text); background: var(--white); border: 0; }
 .tree-design__heading { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s-16); }
 .tree-design__copy { grid-column: 3; margin-left: 0; display: flex; flex-direction: column; justify-content: flex-start; gap: var(--s-24); min-width: 0; }
@@ -2754,6 +2754,7 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 @media (max-width: 1023px) {
   .tree-design { grid-template-columns: 1fr; row-gap: var(--s-32); }
   .tree-design__media, .tree-design__copy { grid-column: 1 / -1; }
+  .tree-design__media { aspect-ratio: 1.3; }
   .tree-design__copy { margin-left: 0; gap: var(--gap-text); }
 }
 
@@ -2795,8 +2796,30 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 /* The consultation CTA never wraps and yields space to the desktop navigation. */
 .header__bar { gap: var(--s-24); }
 .header__left, .header__right { flex-shrink: 0; }
-.header__right .btn { --button-padding: 16px; white-space: nowrap !important; }
+.header__right .btn { --button-padding: 10px 16px; --button-min-height: 44px; white-space: nowrap !important; }
 .header__right .btn.is-overflow { display: none; }
 @media (max-width: 1023px) {
   .home-page .header--sticky { top: var(--hdr-gap); left: var(--gut); right: var(--gut); width: auto; margin: 0; }
+}
+
+/* Compact adaptive H1 and the phone collage supplied by the client. */
+@media (min-width: 768px) and (max-width: 1199px) { :root { --fs-h1: 40px; } }
+@media (max-width: 767px) { :root { --fs-h1: 32px; } }
+@media (max-width: 479px) { :root { --fs-h1: 30px; } }
+.opening__tile--mobile { display: none; }
+@media (max-width: 767px) {
+  .opening--mosaic { --hero-space: 8px; margin-top: 16px; min-height: 0; }
+  .opening--mosaic .opening__content { padding: 16px 0 24px; }
+  .opening--mosaic .opening__tile { display: none; }
+  .opening--mosaic .opening__tile:nth-child(1) { display: block; grid-column: 3; grid-row: 3; }
+  .opening--mosaic .opening__tile:nth-child(4) { display: block; grid-column: 4; grid-row: 2; }
+  .opening--mosaic .opening__tile:nth-child(6) { display: block; grid-column: 2; grid-row: 1; }
+  .opening--mosaic .opening__tile:nth-child(8) { display: block; grid-column: 2; grid-row: 2; }
+  .opening--mosaic .opening__tile:nth-child(9) { display: block; grid-column: 4; grid-row: 3; }
+  .opening--mosaic .opening__tile:nth-child(11) { display: block; grid-column: 2; grid-row: 3; }
+  .opening--mosaic .opening__tile:nth-child(12) { display: block; grid-column: 3; grid-row: 1; }
+  .opening--mosaic .opening__tile:nth-child(13) { display: block; grid-column: 1; grid-row: 3; }
+  .opening--mosaic .opening__tile:nth-child(16) { display: block; grid-column: 1; grid-row: 4; }
+  .opening--mosaic .opening__tile.opening__tile--mobile { display: block; grid-column: var(--mobile-col); grid-row: var(--mobile-row); }
+  .opening--mosaic::before { content: ''; grid-column: 1; grid-row: 1; background: var(--orange); }
 }

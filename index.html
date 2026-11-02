@@ -6,7 +6,7 @@
   <title>Генеалогическое исследование и родословная книга — Древо предков</title>
   <meta name="description" content="Исследуем историю семьи по архивам России, Украины и Беларуси: метрические книги, ревизские сказки и другие документы. Родословная книга или цифровой архивный свиток. Начните с консультации.">
   <link rel="icon" href="img/favicon.ico" sizes="any">
-  <link rel="stylesheet" href="css/style.css?v=bc7b94d8db27">
+  <link rel="stylesheet" href="css/style.css?v=ae232cd68720">
   <script>document.documentElement.classList.add('is-intro'); if (!('onpagereveal' in window)) document.documentElement.classList.add('fade-nav');</script>
 </head>
 <body class="home-page">
@@ -21,7 +21,7 @@
     <div class="header__bar">
       <div class="header__left">
         <a class="header__logo" href="#top" aria-label="Древо предков — на главную">
-          <!-- знак рисуется при загрузке страницы по центру экрана и переезжает сюда (js/main.js) -->
+          <!-- знак рисуется при загрузке страницы по центру экрана и переезжает сюда (js/main.js?v=4fd24250e65a) -->
           <span class="logo-mark">
             <svg class="mark" viewBox="0 0 370 395" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
               <defs>
@@ -126,6 +126,9 @@
       <div class="opening__tile" style="--x:2;--y:4;--tx:2;--ty:4;--mx:1;--my:1;--tile-color:var(--green)" aria-hidden="true"><div class="opening__tile-visual"></div></div>
       <div class="opening__tile" style="--x:3;--y:4;--tx:3;--ty:4;--mx:1;--my:1" aria-hidden="true"><div class="opening__tile-visual"><img src="img/mosaic-soldiers.webp" alt="" decoding="async"></div></div>
       <div class="opening__tile" style="--x:4;--y:4;--tx:4;--ty:4;--mx:1;--my:1;--tile-color:var(--red)" aria-hidden="true"><div class="opening__tile-visual"></div></div>
+      <div class="opening__tile opening__tile--mobile" style="--mobile-col:1;--mobile-row:2;--reveal-delay:0ms" aria-hidden="true"><div class="opening__tile-visual"><img src="img/mosaic-mother-child.webp" alt="" decoding="async"></div></div>
+      <div class="opening__tile opening__tile--mobile" style="--mobile-col:3;--mobile-row:4;--reveal-delay:180ms" aria-hidden="true"><div class="opening__tile-visual"><img src="img/mosaic-mother-child.webp" alt="" decoding="async"></div></div>
+      <div class="opening__tile opening__tile--mobile" style="--mobile-col:4;--mobile-row:4;--reveal-delay:360ms;--tile-color:var(--orange)" aria-hidden="true"><div class="opening__tile-visual"></div></div>
       <div class="opening__content">
         <h1 class="opening__title" id="opening-title">
           <span class="line"><span>История вашей семьи</span></span>
@@ -194,44 +197,7 @@
       </div>
     </section>
 
-    <section class="svc-alt container section" aria-label="Направления и услуги">
-      <article class="svc-alt__card svc-alt__card--archive">
-        <div class="svc-alt__copy">
-          <h2 class="h3">Архивный свиток</h2>
-          <p>Тот же&nbsp;поиск по&nbsp;архивам без&nbsp;книжного издания: фотокопии документов с&nbsp;расшифровкой и&nbsp;поколенная роспись в&nbsp;подробном электронном отчёте.</p>
-          <a class="btn btn--white svc-alt__button" href="issledovanie.html">Подробнее</a>
-        </div>
-        <div class="svc-alt__documents" aria-hidden="true">
-          <img class="svc-alt__document svc-alt__document--birth" src="img/svc-alt-birth-cutout.webp" width="1000" height="596" alt="" loading="lazy" decoding="async">
-          <img class="svc-alt__document svc-alt__document--pages" src="img/svc-alt-pages.webp" width="1000" height="781" alt="" loading="lazy" decoding="async">
-          <img class="svc-alt__document svc-alt__document--passport" src="img/svc-alt-passport.webp" width="392" height="572" alt="" loading="lazy" decoding="async">
-        </div>
-      </article>
-      <article class="svc-alt__card svc-alt__card--targeted">
-        <div class="svc-alt__copy">
-          <h2 class="h3">Точечные исследования</h2>
-          <p>Если вам не нужно исследование всей родословной, можно заказать отдельный поиск: установить личность предка, найти сведения о родственнике, проверить конкретную родственную связь или изучить одну ветвь рода.</p>
-          <a class="btn btn--white svc-alt__button" href="tochechnye-issledovaniya.html">Подробнее</a>
-        </div>
-      </article>
-      <article class="svc-alt__card svc-alt__card--tree">
-        <div class="svc-alt__copy">
-          <h2 class="h3">Родословное древо</h2>
-          <p>Подберём оформление и&nbsp;выстроим родственные связи по&nbsp;вашим сведениям. Каждое поколение займёт своё место в&nbsp;индивидуальном макете.</p>
-          <a class="btn btn--white svc-alt__button" href="tochechnye-issledovaniya.html#tree-design-title">Подробнее</a>
-        </div>
-      </article>
-      <article class="svc-alt__card svc-alt__card--book">
-        <div class="svc-alt__copy">
-          <h2 class="h3">Родословная книга</h2>
-          <p>Результаты архивного поиска в&nbsp;цифровой родословной книге: история рода, копии документов с&nbsp;расшифровкой и&nbsp;родословное древо. Печатное издание можно заказать отдельно за&nbsp;дополнительную плату.</p>
-          <a class="btn btn--white svc-alt__button" href="rodoslovnaya-kniga.html">Подробнее</a>
-        </div>
-        <img class="svc-alt__book" src="img/svc-alt-book.webp" width="1200" height="896" alt="Раскрытая родословная книга с архивными документами и картой" loading="lazy" decoding="async">
-      </article>
-    </section>
-
-    <!-- ============ НАПРАВЛЕНИЯ — текстовые карточки услуг ============ -->
+<!-- ============ НАПРАВЛЕНИЯ — текстовые карточки услуг ============ -->
     <section class="svc container section" id="svc" aria-labelledby="svc-title">
       <div class="svc__head">
         <h2 class="h2 svc__heading" id="svc-title">Направления и&nbsp;услуги</h2>
@@ -461,7 +427,7 @@
         <a class="link-more" href="https://vk.ru/russiagenealogy" target="_blank" rel="noopener">Читать блог во&nbsp;ВКонтакте&nbsp;→</a>
       </div>
       <!-- Посты из группы ВК. Здесь — снимок последних постов на 28.09.2026:
-           его видно, когда сайт открыт как файл. На хостинге js/main.js заменяет
+           его видно, когда сайт открыт как файл. На хостинге js/main.js?v=4fd24250e65a заменяет
            карточки свежими постами из api/vk-posts.php (последний пост — большая карточка,
            следующие три — справа сверху вниз). -->
       <div class="blog__grid scroller" data-vk-blog="api/vk-posts.php">
