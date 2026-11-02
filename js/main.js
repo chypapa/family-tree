@@ -160,6 +160,24 @@
     updateTop();
   }
 
+  // Keep the desktop CTA only when it fits alongside the navigation.
+  var headerBar = document.querySelector('.header__bar');
+  var headerCta = headerBar && headerBar.querySelector('.header__right .btn');
+  if (headerCta) {
+    var fitHeaderCta = function () {
+      headerCta.classList.remove('is-overflow');
+      if (!headerBar.clientWidth) return;
+      var style = getComputedStyle(headerBar);
+      var available = headerBar.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      var required = headerBar.querySelector('.header__left').scrollWidth + headerCta.offsetWidth + parseFloat(style.columnGap);
+      headerCta.classList.toggle('is-overflow', required > available);
+    };
+    if ('ResizeObserver' in window) new ResizeObserver(fitHeaderCta).observe(headerBar);
+    else window.addEventListener('resize', fitHeaderCta);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitHeaderCta);
+    fitHeaderCta();
+  }
+
   /* Replay the 1000ms mosaic reveal whenever the hero re-enters the viewport. */
   var mosaic = document.querySelector('.opening--mosaic');
   if (mosaic) {

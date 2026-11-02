@@ -387,9 +387,9 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   width: calc(100% - 2 * var(--gut));
   max-width: var(--container);
   --hero-space: var(--s-24);
-  height: calc(100svh - var(--hdr-h) - 2 * var(--hero-space));
-  min-height: calc(100svh - var(--hdr-h) - 2 * var(--hero-space));
-  margin: calc(var(--hdr-h) + var(--hero-space)) auto var(--hero-space);
+  height: calc(100svh - var(--hdr-h) - var(--hdr-gap) - 2 * var(--hero-space));
+  min-height: calc(100svh - var(--hdr-h) - var(--hdr-gap) - 2 * var(--hero-space));
+  margin: calc(var(--hdr-h) + var(--hdr-gap) + var(--hero-space)) auto var(--hero-space);
   grid-template-columns: repeat(8, minmax(0, 1fr));
   grid-template-rows: repeat(4, minmax(0, 1fr));
   gap: 0;
@@ -2745,12 +2745,12 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 
 /* Family tree design: illustration and copy share the site's two-column grid. */
 .tree-design { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--col-gap); align-items: stretch; }
-.tree-design__media { grid-column: 1 / span 6; align-self: start; position: relative; min-width: 0; overflow: hidden; border-radius: var(--radius); background: #dfd0b8; }
-.tree-design__media img { display: block; width: 100%; height: auto; }
+.tree-design__media { grid-column: 1 / span 6; aspect-ratio: 1.3; align-self: start; position: relative; min-width: 0; overflow: hidden; border-radius: var(--radius); background: #dfd0b8; }
+.tree-design__media img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .tree-design__price { color: var(--text); background: var(--white); border: 0; }
 .tree-design__heading { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s-16); }
-.tree-design__copy { grid-column: 7 / -1; margin-left: var(--col-gap); display: flex; flex-direction: column; justify-content: space-between; gap: var(--s-48); min-width: 0; }
-.tree-design__details { display: flex; flex-direction: column; gap: var(--s-16); margin-top: auto; }
+.tree-design__copy { grid-column: 7 / -1; margin-left: var(--col-gap); display: flex; flex-direction: column; justify-content: flex-start; gap: var(--s-24); min-width: 0; }
+.tree-design__details { display: flex; flex-direction: column; gap: var(--s-16); margin-top: 0; }
 @media (max-width: 1023px) {
   .tree-design { grid-template-columns: 1fr; row-gap: var(--s-32); }
   .tree-design__media, .tree-design__copy { grid-column: 1 / -1; }
@@ -2791,3 +2791,12 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 
 /* Crop the light scan border from the young woman portrait. */
 .opening--mosaic .opening__tile img.opening__portrait-crop { transform: scale(1.12); }
+
+/* The consultation CTA never wraps and yields space to the desktop navigation. */
+.header__bar { gap: var(--s-24); }
+.header__left, .header__right { flex-shrink: 0; }
+.header__right .btn { --button-padding: 16px; white-space: nowrap !important; }
+.header__right .btn.is-overflow { display: none; }
+@media (max-width: 1023px) {
+  .home-page .header--sticky { top: var(--hdr-gap); left: var(--gut); right: var(--gut); width: auto; margin: 0; }
+}
