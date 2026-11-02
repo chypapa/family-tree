@@ -137,41 +137,17 @@
     });
   }
 
-  /* ---------- Шапка без заливки над первым экраном; при прокрутке заливка появляется.
-     Прокрутка вниз — шапка уезжает вверх за край окна, прокрутка вверх — возвращается.
-     Первый экран при прокрутке: фото чуть приближается, текст уходит вверх и гаснет ---------- */
+  /* Header remains visible on every page; service cover motion follows scrolling. */
   var topHeader = document.querySelector('.header--sticky');
   var opening = document.querySelector('.opening');
   if (topHeader) {
     var openingMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var topTicking = false;
-    var lastY = window.scrollY;
     var updateTop = function () {
       topTicking = false;
       var y = window.scrollY;
-      var mosaicHome = !!opening && opening.classList.contains('opening--mosaic');
-      topHeader.classList.remove('is-top');
-      if (mosaicHome) {
-        var beforeThreshold = y <= window.innerHeight * 0.7;
-        topHeader.classList.toggle('is-before-hero-threshold', beforeThreshold);
-        topHeader.classList.remove('is-hidden');
-        topHeader.inert = beforeThreshold;
-        lastY = y;
-        return;
-      }
-      // в самом верху, при открытом меню и пока идёт заставка шапка всегда видна; мелкие подёргивания (до 6px) не считаем.
-      // Заставка: знак сидит в шапке — если шапка уедет (страница открыта по ссылке на блок, например «О нас»,
-      // и прокручивается к нему), знак уедет вместе с ней и встанет выше названия
-      var rootCls = document.documentElement.classList;
-      var introRunning = rootCls.contains('is-intro') && !rootCls.contains('is-intro-done');
-      // на телефоне и планшете (бургер-меню) шапка не прячется при прокрутке
-      if (y <= 120 || rootCls.contains('is-menu-open') || introRunning || window.innerWidth < 1024) {
-        topHeader.classList.remove('is-hidden');
-        lastY = y;
-      } else if (Math.abs(y - lastY) > 6) {
-        topHeader.classList.toggle('is-hidden', y > lastY);
-        lastY = y;
-      }
+      topHeader.classList.remove('is-top', 'is-before-hero-threshold', 'is-hidden');
+      topHeader.inert = false;
       if (opening && openingMotion) {
         opening.style.setProperty('--hp', Math.min(1, Math.max(0, y / window.innerHeight)).toFixed(3));
       }

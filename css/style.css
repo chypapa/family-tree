@@ -290,11 +290,9 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
 .header__pill .logo-mark { width: 26px; height: 28px; }
 .mark { display: block; width: 100%; height: 100%; overflow: visible; }
 
-/* шапка закреплена вверху окна, всегда красная. Прокрутка вниз — шапка уезжает вверх за край окна,
-   прокрутка вверх — возвращается (класс is-hidden ставит main.js). Без will-change: иначе меню внутри шапки
-   (position: fixed) встанет относительно шапки */
+/* Header remains pinned and visible. Avoid transforms so fixed menus use the viewport. */
 .header--sticky { position: sticky; top: var(--hdr-gap); z-index: 50; margin-top: var(--hdr-gap); transition: transform .4s cubic-bezier(.4, 0, .2, 1); }
-.header--sticky.is-hidden { transform: translateY(calc(-100% - var(--hdr-gap) - 8px)); }
+.header--sticky.is-hidden { transform: none; }
 .is-intro:not(.is-intro-done) .header--sticky { transform: none; }   /* пока идёт заставка, шапка (и знак в ней) не двигается */
 .header--sticky .header__bar, .header--sticky .header__pill,
 .header--sticky .icon-btn { transition: background-color .45s ease; }
@@ -382,14 +380,15 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
    поверх — заголовок (Manrope 64px), текст и кнопка. Шапка лежит поверх фото.
    При прокрутке фото чуть приближается, а текст уходит вверх и гаснет (--hp ставит main.js)
    ========================================================= */
-/* Full-bleed mosaic: eight square columns, matching the supplied reference. */
+/* Mosaic aligned with the shared content edges. */
 .opening--mosaic {
   --ease-out: cubic-bezier(.2, .75, .15, 1);
   display: grid;
-  width: 100%;
-  height: 100svh;
-  min-height: 100svh;
-  margin: 0;
+  width: calc(100% - 2 * var(--gut));
+  max-width: var(--container);
+  height: calc(100svh - var(--hdr-h));
+  min-height: calc(100svh - var(--hdr-h));
+  margin: var(--hdr-h) auto 0;
   grid-template-columns: repeat(8, minmax(0, 1fr));
   grid-template-rows: repeat(4, minmax(0, 1fr));
   gap: 0;
@@ -406,20 +405,20 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   .opening--mosaic .opening__content { padding: var(--s-24); }
 }
 @media (max-width: 1399px) {
-  .opening--mosaic { height: auto; grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(4, calc(var(--vw) / 6)) auto; }
+  .opening--mosaic { height: auto; grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(4, calc(min(var(--container), var(--vw) - 2 * var(--gut)) / 6)) auto; }
   .opening--mosaic .opening__tile { grid-column: var(--tx); grid-row: var(--ty); }
-  .opening--mosaic .opening__content { grid-column: 1 / -1; grid-row: 5; padding: var(--s-48) var(--gut); }
+  .opening--mosaic .opening__content { grid-column: 1 / -1; grid-row: 5; padding: var(--s-48) 0; }
 }
 @media (max-width: 767px) {
-  .opening--mosaic { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(4, calc(var(--vw) / 4)) auto; }
+  .opening--mosaic { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(4, calc(min(var(--container), var(--vw) - 2 * var(--gut)) / 4)) auto; }
   .opening--mosaic .opening__tile { grid-column: var(--mx); grid-row: var(--my); }
   .opening--mosaic .opening__tile:nth-child(n+17) { display: none; }
-  .opening--mosaic .opening__content { padding: var(--s-32) var(--gut) var(--s-48); }
+  .opening--mosaic .opening__content { padding: var(--s-32) 0 var(--s-48); }
   .opening--mosaic .opening__cta .btn { width: 100%; }
 }
-/* The homepage header occupies no space and becomes available after 70vh of scrolling. */
+/* The homepage header stays visible above the mosaic. */
 .home-page .header--sticky { position: fixed; top: 0; left: 0; right: 0; margin: 0; }
-.home-page .header--sticky.is-before-hero-threshold { visibility: hidden; pointer-events: none; transform: translateY(-110%); }
+
 .home-page.is-menu-open .header--sticky { visibility: visible; }
 
 /* ---------- Вступление: светлый экран, на нём рисуется знак (контур снизу вверх → заливка),
@@ -2737,20 +2736,23 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 .review__author, .voice__author { opacity: .5; }
 .voice--video { padding: 0; overflow: hidden; }
 .voice--video::after { display: none; }
-.voice--video .voice__video { flex: 1; min-height: 320px; aspect-ratio: auto; }
+.voice--video .voice__video { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 0; aspect-ratio: auto; }
+.voice--video .voice__author { position: absolute; left: var(--pad-card); right: var(--pad-card); bottom: var(--pad-card); z-index: 1; margin: 0; padding: 0; color: var(--white); pointer-events: none; }
+.voice--video .voice__author img { filter: brightness(0) invert(1); }
 .voice__play:focus-visible { outline: 3px solid var(--text); outline-offset: -6px; border-radius: var(--radius); }
 
 /* Family tree design: illustration and copy share the site's two-column grid. */
 .tree-design { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--col-gap); align-items: stretch; }
-.tree-design__media { grid-column: 1 / span 6; position: relative; min-width: 0; overflow: hidden; border-radius: var(--radius); background: #dfd0b8; }
+.tree-design__media { grid-column: 1 / span 2; align-self: start; position: relative; min-width: 0; overflow: hidden; border-radius: var(--radius); background: #dfd0b8; }
 .tree-design__media img { display: block; width: 100%; height: auto; }
-.tree-design__price { position: absolute; top: var(--s-16); left: var(--s-16); color: var(--text); border: 1px solid var(--text); }
-.tree-design__copy { grid-column: 8 / -1; display: flex; flex-direction: column; justify-content: space-between; gap: var(--s-48); min-width: 0; }
+.tree-design__price { color: var(--text); background: var(--white); border: 0; }
+.tree-design__heading { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s-16); }
+.tree-design__copy { grid-column: 3 / -1; margin-left: var(--col-gap); display: flex; flex-direction: column; justify-content: space-between; gap: var(--s-48); min-width: 0; }
 .tree-design__details { display: flex; flex-direction: column; gap: var(--s-16); margin-top: auto; }
 @media (max-width: 1023px) {
   .tree-design { grid-template-columns: 1fr; row-gap: var(--s-32); }
   .tree-design__media, .tree-design__copy { grid-column: 1 / -1; }
-  .tree-design__copy { gap: var(--gap-text); }
+  .tree-design__copy { margin-left: 0; gap: var(--gap-text); }
 }
 
 /* Additional service composition, kept alongside the original service cards. */
@@ -2765,11 +2767,11 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 .svc-alt__card--archive .svc-alt__copy, .svc-alt__card--book .svc-alt__copy { width: 57%; }
 .svc-alt__button { margin-top: auto; }
 .svc-alt__documents { position: absolute; top: 0; bottom: 0; right: -7%; width: 40%; pointer-events: none; }
-.svc-alt__document { position: absolute; display: block; height: auto; box-shadow: 0 6px 16px rgba(45, 28, 15, .2); }
+.svc-alt__document { position: absolute; display: block; height: auto; filter: drop-shadow(0 6px 8px rgba(45, 28, 15, .2)); }
 .svc-alt__document--birth { width: 105%; top: 34%; left: 5%; transform: rotate(24deg); }
-.svc-alt__document--pages { width: 105%; top: -8%; left: 20%; transform: rotate(16deg); }
+.svc-alt__document--pages { width: 105%; top: -14%; left: 20%; transform: rotate(7deg); }
 .svc-alt__document--passport { width: 60%; top: 59%; left: -4%; transform: rotate(-14deg); }
-.svc-alt__book { position: absolute; right: -35%; bottom: -20%; width: 80%; height: 125%; object-fit: contain; object-position: left top; filter: drop-shadow(-5px 6px 10px rgba(45, 28, 15, .24)); pointer-events: none; }
+.svc-alt__book { position: absolute; right: -35%; bottom: -28%; width: 80%; height: 132%; object-fit: contain; object-position: left top; filter: drop-shadow(-5px 6px 10px rgba(45, 28, 15, .24)); pointer-events: none; }
 @media (max-width: 1023px) {
   .svc-alt { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .svc-alt__card--book { grid-column: 1 / -1; }
@@ -2782,5 +2784,5 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
   .svc-alt__card--archive .svc-alt__copy, .svc-alt__card--book .svc-alt__copy { width: 100%; }
   .svc-alt__card--archive, .svc-alt__card--book { padding-bottom: 250px; }
   .svc-alt__documents { top: auto; bottom: -75px; right: -10%; width: 70%; height: 280px; }
-  .svc-alt__book { right: -17%; bottom: -55px; width: 90%; height: 265px; }
+  .svc-alt__book { right: -17%; bottom: -75px; width: 90%; height: 285px; }
 }
