@@ -62,8 +62,14 @@
     };
     var finish = function () { root.classList.add('is-intro-done'); };   // знак на месте: заливка шапки
     var logo = marks.filter(function (m) { return m.offsetParent !== null; })[0];   // видимый знак: в шапке или в мобильной плашке
+    if (!logo && pre && marks.length && !reduce) {
+      logo = marks[0].cloneNode(true);
+      logo.classList.add('preloader__mark');
+      pre.appendChild(logo);
+      marks.push(logo);
+    }
     // без вступления (на телефоне знака в шапке нет): заливка кнопок шапки появляется, когда растворится экран загрузки
-    if (reduce || !pre || !logo || !window.Promise || document.body.classList.contains('home-page')) { ready(); setTimeout(finish, reduce || !pre ? 0 : 500); return; }
+    if (reduce || !pre || !logo || !window.Promise) { ready(); setTimeout(finish, reduce || !pre ? 0 : 500); return; }
     // название меряем только когда загрузился Manrope: иначе его размер берётся от запасного шрифта
     // и знак встаёт не на одну линию с названием
     var start = function () { if (start.done) return; start.done = true; run(); };
@@ -184,10 +190,17 @@
     if ('IntersectionObserver' in window) {
       var mosaicObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
-          mosaic.classList.toggle('is-revealing', entry.isIntersecting && entry.intersectionRatio >= 0.08);
+          mosaic.classList.toggle('is-revealing', entry.isIntersecting && entry.intersectionRatio >= 0.08 && document.documentElement.classList.contains('is-ready'));
         });
       }, { threshold: [0, 0.08] });
       mosaicObserver.observe(mosaic);
+      var introReadyObserver = new MutationObserver(function () {
+        if (!document.documentElement.classList.contains('is-ready')) return;
+        var bounds = mosaic.getBoundingClientRect();
+        mosaic.classList.toggle('is-revealing', bounds.bottom > 0 && bounds.top < innerHeight);
+        introReadyObserver.disconnect();
+      });
+      introReadyObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     } else {
       mosaic.classList.add('is-revealing');
     }
@@ -448,7 +461,7 @@
     // у заголовка блока «О нас» два варианта текста (для широкого экрана и для телефона) — размечаем каждый
     var targets = [];
     document.querySelectorAll('h2').forEach(function (h) {
-      if (h.closest('[hidden], .opening, .overlay') || h.classList.contains('about-svc__chip')) return;
+      if (h.closest('[hidden], .opening, .overlay') || h.id === 'intro-text-title' || h.classList.contains('about-svc__chip')) return;
       var parts = h.querySelectorAll(':scope > span');
       if (parts.length) parts.forEach(function (p) { targets.push({ el: p, root: h }); });
       else targets.push({ el: h, root: h });
