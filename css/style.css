@@ -2744,12 +2744,12 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 .voice__play:focus-visible { outline: 3px solid var(--text); outline-offset: -6px; border-radius: var(--radius); }
 
 /* Family tree design: illustration and copy share the site's two-column grid. */
-.tree-design { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--col-gap); align-items: stretch; }
-.tree-design__media { grid-column: 1 / span 6; aspect-ratio: 1.3; align-self: start; position: relative; min-width: 0; overflow: hidden; border-radius: var(--radius); background: #dfd0b8; }
+.tree-design { display: grid; grid-template-columns: minmax(0, calc((100% - 2 * var(--s-16)) * 920 / 1625 + var(--s-16) - var(--s-56))) minmax(0, 1fr) minmax(0, calc((100% - 11 * var(--col-gap)) / 12 * 5 + 4 * var(--col-gap))); gap: var(--col-gap); align-items: stretch; }
+.tree-design__media { grid-column: 1; aspect-ratio: 1.3; align-self: start; position: relative; min-width: 0; overflow: hidden; border-radius: var(--radius); background: #dfd0b8; }
 .tree-design__media img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .tree-design__price { color: var(--text); background: var(--white); border: 0; }
 .tree-design__heading { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s-16); }
-.tree-design__copy { grid-column: 7 / -1; margin-left: var(--col-gap); display: flex; flex-direction: column; justify-content: flex-start; gap: var(--s-24); min-width: 0; }
+.tree-design__copy { grid-column: 3; margin-left: 0; display: flex; flex-direction: column; justify-content: flex-start; gap: var(--s-24); min-width: 0; }
 .tree-design__details { display: flex; flex-direction: column; gap: var(--s-16); margin-top: 0; }
 @media (max-width: 1023px) {
   .tree-design { grid-template-columns: 1fr; row-gap: var(--s-32); }
