@@ -93,6 +93,19 @@
 .service-card--archive { background: #4f1911; }
 .service-card--book { background: #802719; }
 .service-card--tree { background: #a94f39; }
+.service-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.service-card__badges li {
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 27%);
+}
 .service-card p { margin-block: 24px 32px; max-width: 34ch; }
 .service-card--archive p, .service-card--book p { max-width: min(54%, 54ch); }
 .service-card a {
@@ -162,7 +175,20 @@
   .service-index__grid { grid-template-columns: minmax(0, 1fr); grid-auto-rows: 1fr; }
   .service-card { grid-column: 1; min-height: 380px; }
   .service-card--archive, .service-card--book { min-height: 0; }
-  .service-card p { max-width: none; }
+  .service-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.service-card__badges li {
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 27%);
+}
+.service-card p { max-width: none; }
   .service-card a { width: 100%; border-radius: 12px; }
   .service-card--archive p, .service-card--book p { margin-bottom: 8px; }
   .service-card--archive .service-art, .service-card--book .service-art {
