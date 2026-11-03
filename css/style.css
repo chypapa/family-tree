@@ -2529,7 +2529,8 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   display: flex; flex-direction: column; align-items: flex-start;
   gap: var(--s-24); min-width: 0; margin: 0 0 0 var(--col-gap); text-align: left;
 }
-.intro-text__lead, .intro-text__accent { color: var(--text); }
+.intro-text__lead { color: var(--red); }
+.intro-text__accent { color: var(--text); }
 .intro-text .intro-text__lead, .intro-text .intro-text__sub { width: 100%; }
 .intro-text .intro-text__sub { font-size: var(--fs-body); font-weight: var(--fw-body); line-height: var(--lh-body); opacity: 1; }
 .intro-text__media { grid-column: 1 / span 6; grid-row: 1; position: relative; align-self: stretch; min-width: 0; min-height: 360px; overflow: hidden; border-radius: var(--radius); }
@@ -2540,7 +2541,13 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   .intro-text__body { grid-column: 1 / -1; grid-row: 2; margin-left: 0; }
   .intro-text__media { grid-column: 1 / -1; grid-row: 1; aspect-ratio: 16 / 9; min-height: 0; }
 }
-@media (max-width: 767px) { .intro-text.section { row-gap: var(--s-32); } }
+@media (min-width: 1200px) {
+  .intro-text__media { min-height: clamp(460px, 35vw, 560px); }
+}
+@media (max-width: 767px) {
+  .intro-text.section { row-gap: var(--s-32); }
+  .intro-text .intro-text__lead { font-size: var(--fs-h4); }
+}
 
 /* «Почему нас выбирают?»: подзаголовок (H4) и четыре красные карточки в ряд (по 3 колонки из 12);
    на планшете — по две в ряд, на телефоне — одна под другой. В карточке — заголовок стилем H3 и основной текст, белым */
