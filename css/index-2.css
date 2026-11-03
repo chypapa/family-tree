@@ -22,7 +22,7 @@
 .archive-hero {
   display: flex;
   align-items: end;
-  min-height: 100svh;
+  min-height: 98svh;
   padding-top: var(--index-header);
   background: #bbb url("../img/index-2-hero.jpg") right bottom / cover no-repeat;
 }
@@ -172,15 +172,15 @@
     height: clamp(130px, 30vw, 210px);
     margin: 0 -24px -72px;
   }
-  .service-card--archive img:nth-child(1) { width: 58%; right: -10%; top: 28%; bottom: auto; }
-  .service-card--archive img:nth-child(2) { width: 63%; left: 18%; top: 40%; bottom: auto; }
-  .service-card--archive img:nth-child(3) { width: 38%; left: -3%; top: 23%; }
+  .service-card--archive img:nth-child(1) { width: 64%; right: -10%; top: 32%; bottom: auto; }
+  .service-card--archive img:nth-child(2) { width: 69%; left: 18%; top: 45%; bottom: auto; }
+  .service-card--archive img:nth-child(3) { width: 43%; left: -3%; top: 27%; }
   .service-card--book .service-art { transform: scaleX(-1); }
-  .service-card--book img { width: 125%; left: 8%; top: -10%; bottom: auto; transform: rotate(27deg); transform-origin: 20% 15%; }
+  .service-card--book img { width: 125%; left: 8%; top: -10%; bottom: auto; transform: rotate(22deg); transform-origin: 20% 15%; }
   .service-card--tree .service-art {
     container-type: size;
     transform: scaleX(-1);
     mask-image: linear-gradient(to bottom, transparent, #000 65%);
   }
-  .service-card--tree img { width: 100cqh; transform: rotate(90deg) translateX(100%); transform-origin: top right; }
+  .service-card--tree img { width: 100cqh; top: 12px; transform: rotate(90deg) translateX(100%); transform-origin: top right; }
 }
