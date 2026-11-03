@@ -157,7 +157,7 @@
   .archive-hero::before {
     content: "";
     align-self: stretch;
-    background: #bbb url("../img/index-2-hero.jpg") right bottom / cover no-repeat;
+    background: #bbb url("../img/index-2-hero.jpg") right bottom / auto max(125%, 70vw) no-repeat;
   }
   .archive-hero__panel { width: 100%; padding: 20px 20px 24px; }
   .archive-hero__panel::before {
@@ -208,5 +208,5 @@
     transform: scaleX(-1);
     mask-image: linear-gradient(to bottom, transparent, #000 65%);
   }
-  .service-card--tree img { width: 100cqh; top: 12px; transform: rotate(90deg) translateX(100%); transform-origin: top right; }
+  .service-card--tree img { width: 100cqh; top: 36px; transform: rotate(90deg) translateX(100%); transform-origin: top right; }
 }
