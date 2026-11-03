@@ -81,10 +81,10 @@
     try {
       var vw = window.innerWidth, vh = window.innerHeight;
       var r = logo.getBoundingClientRect();
-      var size = Math.min(vh * 0.2, 180);                      // высота знака по центру экрана
+      var size = Math.min(vh * 0.13, 117);                      // высота знака по центру экрана
       var s = size / r.height;
       var logoW = r.width * s;
-      var gap = size * 0.28;                                   // знак → название
+      var gap = size * 0.13;                                   // знак → название
       var shift = 0;
       if (word) {
         word.style.fontSize = Math.round(size * 0.36) + 'px';
