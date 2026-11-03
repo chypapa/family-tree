@@ -9,7 +9,7 @@
   --fw-body: 500;
   --fw-heading: 600;
   font-weight: var(--fw-body);
-  background: #f0ede7;
+  background: #F1EEE9;
 }
 .index-2 .page > .header--sticky { inset: 0 0 auto; width: 100%; margin: 0; background: var(--text); }
 .index-2 .header--sticky .header__bar { height: var(--index-header); background: var(--text); }
@@ -145,7 +145,6 @@
     --fs-h2: clamp(19px, 5.8vw, 27px);
     --fs-h3: clamp(18px, 5.2vw, 24px);
     --fs-h4: clamp(17px, 4.6vw, 19px);
-    background: white;
   }
   .archive-hero {
     display: grid;
