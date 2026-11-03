@@ -1612,7 +1612,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
 .policy__back { margin: var(--s-24) 0 0 var(--edge); padding: var(--s-8) var(--s-24); }
 .policy__back:hover { background: var(--red); color: var(--white); }   /* на светлом фоне белая кнопка при наведении краснеет */
 .policy { margin-top: var(--s-72); }
-.policy__text { max-width: 680px; }
+.policy__text { max-width: max(680px, 50vw); }
 .policy__text h1 + p { margin-top: var(--s-56); }
 .policy__text h2 { margin: var(--s-56) 0 var(--s-24); font-size: var(--fs-h3); font-weight: var(--fw-heading); line-height: var(--lh-heading); }   /* разделы политики — стилем H3 */   /* последний абзац → заголовок — 56px, заголовок → текст — 24px */
 .policy__text p + p { margin-top: var(--s-16); }
