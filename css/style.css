@@ -1477,7 +1477,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   transform: scale(.67);
 }
 @media (prefers-reduced-motion: no-preference) {
-  .field { --field-transition: .16s var(--ease-out); transition: padding-top var(--field-transition); }
+  .field { --field-transition: .3s ease-in-out; transition: padding-top var(--field-transition); }
   .field__label { transition: transform var(--field-transition), color var(--field-transition); }
 }
 .lead__agree { align-items: flex-start; }
@@ -1488,6 +1488,12 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
 .lead__submit:hover { background: var(--bg); }
 .lead__note { margin-top: calc(-1 * var(--s-8)); color: var(--white); }
 .lead__note:empty { display: none; }
+@media (min-width: 1024px) {
+  .lead:not(.lead--modal) .lead__inner {
+    grid-template-columns: calc((100% - var(--col-gap)) / 2 + var(--s-16)) minmax(0, 1fr);
+  }
+  .lead:not(.lead--modal) .lead__card { padding-right: 0; }
+}
 @media (max-width: 1023px) {
   .lead__inner { grid-template-columns: 1fr; }
   .lead__map { display: none; }
