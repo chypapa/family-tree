@@ -2797,8 +2797,10 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
   background: transparent;
   color: white;
 }
+.overlay.video-modal, .review-photos::backdrop {
+  background: rgba(0, 0, 0, .5);
+}
 .review-photos::backdrop {
-  background: rgba(0, 0, 0, .2);
   -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
 }
