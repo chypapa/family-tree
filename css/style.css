@@ -1383,7 +1383,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
 .input--area { height: clamp(120px, calc(100svh - 545px), 252px); resize: none; }
 
 .check { display: flex; align-items: center; gap: var(--s-16); color: var(--text); cursor: pointer; }
-.check a { color: inherit; text-decoration: none; }
+.check a { color: inherit; text-decoration: underline; }
 .check a:hover { text-decoration: underline; }
 .check input {
   flex: none;
