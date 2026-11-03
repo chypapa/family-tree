@@ -1420,7 +1420,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   border-radius: var(--radius);
   background: var(--red);
 }
-.lead__map { position: absolute; top: 0; bottom: 0; left: calc(50% + var(--col-gap) / 2); width: auto; max-width: none; height: 100%; pointer-events: none; }
+.lead__map { position: absolute; top: 0; bottom: 0; left: calc(var(--s-16) + (100% - 2 * var(--s-16)) * 920 / 1625); width: auto; max-width: none; height: 100%; pointer-events: none; }
 .lead__curve { display: none; }
 .lead__card {
   position: relative;
@@ -1474,7 +1474,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
 .field__input:focus + .field__label,
 .field__input:not(:placeholder-shown) + .field__label {
   color: var(--white);
-  transform: scale(.67);
+  transform: scale(.75);
 }
 @media (prefers-reduced-motion: no-preference) {
   .field { --field-transition: .3s ease-in-out; transition: padding-top var(--field-transition); }
@@ -1490,9 +1490,13 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
 .lead__note:empty { display: none; }
 @media (min-width: 1024px) {
   .lead:not(.lead--modal) .lead__inner {
-    grid-template-columns: calc((100% - var(--col-gap)) / 2 + var(--s-16)) minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding-inline: 0;
   }
-  .lead:not(.lead--modal) .lead__card { padding-right: 0; }
+  .lead:not(.lead--modal) .lead__card {
+    padding-left: calc(var(--s-16) + var(--s-56));
+    padding-right: 0;
+  }
 }
 @media (max-width: 1023px) {
   .lead__inner { grid-template-columns: 1fr; }
