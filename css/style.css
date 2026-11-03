@@ -2773,6 +2773,44 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 .voice--video .voice__video { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 0; aspect-ratio: auto; }
 .voice--video .voice__author { position: absolute; left: var(--pad-card); right: var(--pad-card); bottom: var(--pad-card); z-index: 1; margin: 0; padding: 0; color: var(--white); pointer-events: none; }
 .voice--video .voice__author img { filter: brightness(0) invert(1); }
+.voice__cover { position: absolute; inset: 0; width: 100%; padding: 0; border: 0; cursor: zoom-in; }
+.voice__cover img { width: 100%; height: 100%; object-fit: cover; }
+.voice__cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgb(0 0 0 / 70%), transparent); }
+.voice__cover:focus-visible { outline: 2px solid white; outline-offset: -4px; }
+.voice--photos .voice__author { right: auto; left: 12px; bottom: 12px; }
+.review-photos__thumbs { display: flex; justify-content: center; gap: 8px; }
+.voice--photos .review-photos__thumbs { position: absolute; right: 12px; bottom: 12px; z-index: 2; }
+.review-photos__thumbs button { width: 48px; height: 42px; padding: 0; border: 0; border-radius: 6px; overflow: hidden; cursor: pointer; }
+.review-photos__thumbs img { width: 100%; height: 100%; object-fit: cover; }
+.review-photos__thumbs button[aria-current="true"] { outline: 2px solid white; outline-offset: 2px; }
+.review-photos {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 12px;
+  border: 0;
+  background: #171513;
+  color: white;
+}
+.review-photos[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 12px; }
+.review-photos form { justify-self: end; }
+.review-photos__stage { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 4px; }
+.review-photos__image { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.review-photos__close, .review-photos__stage button {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 15%);
+  color: inherit;
+  font-size: 28px;
+  cursor: pointer;
+}
 .voice__play:focus-visible { outline: 3px solid var(--text); outline-offset: -6px; border-radius: var(--radius); }
 
 /* Family tree design: illustration and copy share the site's two-column grid. */

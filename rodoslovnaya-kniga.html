@@ -6,7 +6,7 @@
   <title>Родословная книга на заказ — история семьи в одном издании | Древо предков</title>
   <meta name="description" content="Генеалогическое исследование по архивам: ищем и расшифровываем документы о ваших предках и оформляем результат в родословную книгу с родословным древом. Рассчитайте стоимость онлайн.">
   <link rel="icon" href="img/favicon.ico" sizes="any">
-  <link rel="stylesheet" href="css/style.css?v=faa26451ddb0">
+  <link rel="stylesheet" href="css/style.css?v=photo-review">
   <script>if (!('onpagereveal' in window)) document.documentElement.classList.add('fade-nav');</script>
 </head>
 <body>
@@ -215,9 +215,15 @@
           <p class="voice__text">Работа была выполнена очень быстро, но в процессе поисков я узнала, что информация мне уже неактуальна и написала об этом Глебу. Даже несмотря на это! Глеб все равно выслал мне документ, который удалось найти, за что я ему безумно благодарна. Всегда был на связи и по максимуму отвечал на все вопросы. Обязательно посоветую друзьям и знакомым. Глеб, спасибо еще раз!</p>
           <p class="voice__author"><img src="img/person.svg" width="22" height="22" alt="">Ксения</p>
         </article>
-        <article class="voice">
-          <p class="voice__text">Рекомендую всем, кто хочет узнать больше о своих корнях, обратиться по этому объявлению.<br>Вы получите не только информацию, но и увлекательное путешествие в прошлое!</p>
-          <p class="voice__author"><img src="img/person.svg" width="22" height="22" alt="">Михаил</p>
+        <article class="voice voice--video voice--photos" aria-label="Фотоотзыв Полины">
+          <button class="voice__cover" type="button" data-review-photo="0" aria-label="Открыть фотографии Полины">
+            <img src="img/review-polina-1.jpg" alt="Разворот с проходным свидетельством" loading="lazy">
+          </button>
+          <p class="voice__author"><img src="img/person.svg" width="22" height="22" alt="">Полина</p>
+          <div class="review-photos__thumbs">
+            <button type="button" data-review-photo="1" aria-label="Открыть фотографию 2"><img src="img/review-polina-2.jpg" alt="Разворот с ревизской сказкой" loading="lazy"></button>
+            <button type="button" data-review-photo="2" aria-label="Открыть фотографию 3"><img src="img/review-polina-3.jpg" alt="Разворот с родословным древом" loading="lazy"></button>
+          </div>
         </article>
         <article class="voice">
           <p class="voice__text">Спасибо большое Глебу! Быстро и качественно оформил древо<br>Буду рекомендовать знакомым по надобности</p>
@@ -415,5 +421,15 @@
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 <script src="js/main.js?v=f283a91960e0"></script>
 <script src="js/calculator.js?v=5284936057da"></script>
+<dialog class="review-photos" aria-label="Фотографии Полины">
+  <form method="dialog"><button class="review-photos__close" aria-label="Закрыть фотографии" autofocus>×</button></form>
+  <div class="review-photos__stage">
+    <button type="button" data-photo-step="-1" aria-label="Предыдущая фотография">‹</button>
+    <img class="review-photos__image" alt="">
+    <button type="button" data-photo-step="1" aria-label="Следующая фотография">›</button>
+  </div>
+  <div class="review-photos__thumbs"></div>
+</dialog>
+<script src="js/review-photos.js"></script>
 </body>
 </html>
