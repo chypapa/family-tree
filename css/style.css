@@ -1613,22 +1613,15 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
 .policy__back:hover { background: var(--red); color: var(--white); }   /* на светлом фоне белая кнопка при наведении краснеет */
 .policy { margin-top: var(--s-72); }
 .policy__text { max-width: 680px; }
-.policy__text h1 + h2 { margin-top: var(--s-72); }    /* H1 → первый раздел — 72px */
+.policy__text h1 + p { margin-top: var(--s-56); }
 .policy__text h2 { margin: var(--s-56) 0 var(--s-24); font-size: var(--fs-h3); font-weight: var(--fw-heading); line-height: var(--lh-heading); }   /* разделы политики — стилем H3 */   /* последний абзац → заголовок — 56px, заголовок → текст — 24px */
 .policy__text p + p { margin-top: var(--s-16); }
-.policy__text .policy__date { margin-top: var(--s-56); }
+.policy__text .policy__date { margin-top: var(--s-24); }
 .policy .placeholder { color: var(--red); font-weight: var(--fw-body); }   /* места, которые нужно заполнить */
 .policy__br { display: none; }
-@media (min-width: 1200px) {
-  /* колонка шириной с заголовок в две строки: остальные блоки не влияют на её ширину (width: 0; min-width: 100%) */
-  .policy__text { display: grid; grid-template-columns: max-content; max-width: none; }
-  .policy__text h1 { white-space: nowrap; }
-  .policy__text > :not(h1) { width: 0; min-width: 100%; }
-  .policy__br { display: inline; }
-}
 @media (max-width: 767px) {
   .policy { margin-top: var(--s-48); }
-  .policy__text h1 + h2 { margin-top: var(--s-48); }  /* телефон: H1 → первый раздел — 48px */
+  .policy__text h1 + p:not(.policy__date) { margin-top: 40px; }
   .policy__text h2 { margin-top: 40px; }              /* телефон: последний абзац → заголовок — 40px */
 }
 
