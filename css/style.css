@@ -283,6 +283,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
 .header--sticky.is-top .header__bar,
 .header--sticky.is-top .header__pill,
 .header--sticky.is-top .icon-btn { background-color: rgba(155, 160, 137, 0); }
+.header--sticky:not(.is-top) .header__bar { box-shadow: var(--shadow-card); }
 
 /* знак в шапке — векторный (тот же, что рисуется при загрузке) */
 .header__logo { display: block; }
@@ -1440,8 +1441,9 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
 .field {
   --field-inset: var(--s-24);
   position: relative;
-  padding-top: var(--s-24);
+  padding-top: 0;
 }
+.field:has(.field__input:is(:focus, :not(:placeholder-shown))) { padding-top: var(--s-24); }
 .field__input {
   display: block;
   width: 100%;
@@ -1467,7 +1469,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   line-height: var(--lh-heading);
   pointer-events: none;
   transform-origin: top left;
-  transform: translate(calc(var(--field-inset) + 1px), calc(var(--s-24) + var(--s-16) + 1px));
+  transform: translate(calc(var(--field-inset) + 1px), calc(var(--s-16) + 1px));
 }
 .field__input:focus + .field__label,
 .field__input:not(:placeholder-shown) + .field__label {
@@ -1475,7 +1477,8 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   transform: scale(.67);
 }
 @media (prefers-reduced-motion: no-preference) {
-  .field__label { transition: transform .16s var(--ease-out), color .16s var(--ease-out); }
+  .field { --field-transition: .16s var(--ease-out); transition: padding-top var(--field-transition); }
+  .field__label { transition: transform var(--field-transition), color var(--field-transition); }
 }
 .lead__agree { align-items: flex-start; }
 .lead__agree { color: var(--white); }
