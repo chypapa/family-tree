@@ -757,13 +757,30 @@
       el.addEventListener('change', function () { el.classList.remove('is-invalid'); });
     });
 
-    form.addEventListener('submit', function (e) {
+    var submit = form.querySelector('[type="submit"]');
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      if (submit.disabled) return;
       var msg = '';
       if (agree && !agree.checked) { agree.classList.add('is-invalid'); msg = 'Подтвердите согласие с политикой конфиденциальности.'; }
       if (!contact.value.trim()) { contact.classList.add('is-invalid'); msg = 'Укажите телефон, почту или ник в мессенджере.'; }
       if (name && name.required && !name.value.trim()) { name.classList.add('is-invalid'); msg = 'Напишите, как к вам обращаться.'; }
-      if (msg) e.preventDefault();
-      note.textContent = msg;
+      if (msg) { note.textContent = msg; return; }
+
+      submit.disabled = true;
+      note.textContent = 'Отправляем заявку…';
+      try {
+        var response = await fetch(form.action, { method: 'POST', body: new FormData(form) });
+        if (!response.ok || (await response.json()).sent !== true) {
+          throw new Error('Feedback delivery failed');
+        }
+        form.reset();
+        note.textContent = 'Спасибо! Мы свяжемся с вами в ближайшее время.';
+      } catch (error) {
+        note.textContent = 'Не удалось отправить заявку. Попробуйте позже.';
+      } finally {
+        submit.disabled = false;
+      }
     });
   });
 })();

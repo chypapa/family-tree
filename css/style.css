@@ -1412,13 +1412,14 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
 .lead__inner {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 920fr) minmax(0, 705fr);
+  grid-template-columns: calc((100% - var(--col-gap)) / 2) minmax(0, 1fr);
+  column-gap: var(--col-gap);
   padding: var(--s-16);
   overflow: hidden;
   border-radius: var(--radius);
   background: var(--red);
 }
-.lead__map { position: absolute; top: 0; bottom: 0; left: calc(var(--s-16) + (100% - 2 * var(--s-16)) * 920 / 1625); width: auto; max-width: none; height: 100%; pointer-events: none; }   /* карта с фото (PNG с прозрачным фоном) на всю высоту блока, справа от формы; линии уходят за края */
+.lead__map { position: absolute; top: 0; bottom: 0; left: calc(50% + var(--col-gap) / 2); width: auto; max-width: none; height: 100%; pointer-events: none; }
 .lead__curve { display: none; }
 .lead__card {
   position: relative;
@@ -1436,12 +1437,16 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
 .lead__chips { display: flex; flex-wrap: wrap; gap: var(--s-16); margin: 0; padding: 0; list-style: none; }
 .lead__chips li { padding: var(--s-8) var(--s-24); border: 1px solid rgba(255, 255, 255, .8); border-radius: 999px; line-height: var(--lh-heading); }
 .lead__fields { display: flex; flex-direction: column; gap: 12px; margin-top: var(--s-16); }   /* над полями — больше воздуха */
-.field { position: relative; }
+.field {
+  --field-inset: var(--s-24);
+  position: relative;
+  padding-top: var(--s-24);
+}
 .field__input {
   display: block;
   width: 100%;
   height: 58px;
-  padding: 24px 24px 6px;
+  padding: var(--s-16) var(--field-inset);
   border: 1px solid transparent;
   border-radius: 11px;
   background: var(--white);
@@ -1451,9 +1456,27 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   outline: none;
   transition: border-color .2s ease, box-shadow .2s ease;
 }
-.field--area .field__input { height: 120px; padding-top: 30px; resize: none; }
+.field--area .field__input { height: 120px; padding-top: var(--s-16); text-align: left; resize: none; }
 .field__input:focus, .field__input.is-invalid { border-color: var(--white); box-shadow: 0 0 0 3px rgba(255, 255, 255, .35); }
-.field__label { display: block; margin-bottom: var(--s-8); }
+.field__label {
+  position: absolute;
+  inset: 0 auto auto 0;
+  max-width: 100%;
+  color: var(--placeholder);
+  font-size: var(--fs-body);
+  line-height: var(--lh-heading);
+  pointer-events: none;
+  transform-origin: top left;
+  transform: translate(calc(var(--field-inset) + 1px), calc(var(--s-24) + var(--s-16) + 1px));
+}
+.field__input:focus + .field__label,
+.field__input:not(:placeholder-shown) + .field__label {
+  color: var(--white);
+  transform: scale(.67);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .field__label { transition: transform .16s var(--ease-out), color .16s var(--ease-out); }
+}
 .lead__agree { align-items: flex-start; }
 .lead__agree { color: var(--white); }
 .lead__agree input { margin-top: 0; border: 2px solid var(--white); }
@@ -1477,8 +1500,9 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   .lead__chips { gap: var(--s-8); }
   .lead__chips li { border-color: rgba(255, 255, 255, .8); padding: 6px var(--s-16); }
   .field__input { font-size: var(--fs-body); }   /* 16px: иначе iPhone увеличивает страницу при вводе */
-  .field__input { height: 56px; padding: 24px 16px 6px; }
-  .field--area .field__input { height: 112px; padding-top: 28px; }
+  .field { --field-inset: var(--s-16); }
+  .field__input { height: 56px; }
+  .field--area .field__input { height: 112px; }
   .field__input:focus, .field__input.is-invalid { border-color: var(--white); box-shadow: 0 0 0 3px rgba(255, 255, 255, .35); }
   .lead__agree { color: var(--white); }
   .lead__agree input { border-color: var(--white); }
@@ -2555,7 +2579,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
 p, li, label, input, textarea { line-height: var(--lh-body); }
 :where(h1, h2, h3, h4, p) { overflow-wrap: break-word; }
 /* CTA geometry and typography are defined once; variants only choose color. */
-:is(.btn, .svc-card__btn-mobile, .tcard__btn, .dcard__btn, .calc__next, .calc__prev, .calc__add, .calc__again) {
+:is(.btn, .svc-card__btn-mobile, .tcard__btn, .dcard__btn, .calc__next, .calc__prev, .calc__again) {
   padding: var(--button-padding) !important;
   border-radius: var(--button-radius) !important;
   font-size: var(--button-font-size) !important;
@@ -2572,8 +2596,6 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 .is-menu-open .header--sticky.is-top .header__burger { color: var(--white); }
 .header__pill span, .mobile-menu__logo-text { width: auto; }
 .header__pill .logo-mark { flex: none; }
-.field__input { padding: 16px 24px; }
-@media (max-width: 767px) { .field__input { padding: 16px; } }
 @media (max-width: 767px) {
   :root { --fs-body: 16px; --fs-h4: 19px; --fs-h3: 24px; --fs-h2: 27px; --fs-h1: 32px; }
 }
