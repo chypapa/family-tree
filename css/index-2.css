@@ -24,7 +24,7 @@
   align-items: end;
   min-height: 98svh;
   padding-top: var(--index-header);
-  background: #bbb url("../img/index-2-hero.jpg") right bottom / cover no-repeat;
+  background: #bbb url("../img/index-2-hero.webp") right bottom / cover no-repeat;
 }
 .archive-hero__panel {
   --square: clamp(45px, 5.3vw, 105px);
@@ -156,7 +156,7 @@
   .archive-hero::before {
     content: "";
     align-self: stretch;
-    background: #bbb url("../img/index-2-hero.jpg") right bottom / auto max(125%, 70vw) no-repeat;
+    background: #bbb url("../img/index-2-hero.webp") right bottom / auto max(125%, 70vw) no-repeat;
   }
   .archive-hero__panel { width: 100%; padding: 20px 20px 24px; }
   .archive-hero__panel::before {
@@ -243,4 +243,23 @@
   .service-card--archive { order: 2; }
   .service-card--tree { order: 3; }
   .service-card--search { order: 4; }
+}
+
+@media (max-width: 1199px) {
+  .index-2 .page > .header--sticky {
+    inset: 12px auto auto var(--edge);
+    width: auto;
+    background: transparent;
+    pointer-events: none;
+  }
+  .index-2 .header__mobile { min-height: 0; padding: 0; }
+  .index-2__mobile-logo { display: none; }
+  .index-2 .header--sticky .header__burger {
+    width: 54px;
+    height: 54px;
+    border: 1px solid rgb(255 255 255 / 65%);
+    border-radius: 18px;
+    background: var(--red);
+    pointer-events: auto;
+  }
 }
