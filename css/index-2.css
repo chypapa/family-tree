@@ -222,3 +222,21 @@
 @media (max-width: 767px) {
   .index-2 .intro-text__lead { font-size: var(--fs-h4); }
 }
+
+.index-2 .reviews__list { align-items: flex-start; }
+.index-2 .review--expandable .review__text { overflow: hidden; }
+.index-2 .review__toggle {
+  display: block;
+  margin-top: 12px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--red);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.index-2 .review__toggle[hidden] { display: none; }
+@media (max-width: 767px) {
+  .index-2 #intro-text-title { font-size: var(--fs-h4); font-weight: 500; line-height: 1.2; }
+}
