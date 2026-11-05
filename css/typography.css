@@ -38,7 +38,17 @@ body :is(p, li, input, textarea, select, .stage__tag, .field__label) {
 }
 body .archive-hero h1 { font-size: clamp(20px, 7.15cqi, 46px) !important; }
 body #intro-text-title { font-size: var(--fs-h2) !important; }
-body .opening { border-radius: 0; }
+body .opening:not(.opening--mosaic),
+body .opening .opening__media,
+body .opening .opening__img { border-radius: 0; }
+body .opening__text,
+body .blog .post__btn-mobile {
+  font-size: var(--fs-body) !important;
+  font-weight: 500 !important;
+  line-height: var(--lh-body) !important;
+}
+body .lead__chips li { color: white; }
+body .promo { background-image: linear-gradient(rgb(0 0 0 / 55%), rgb(0 0 0 / 55%)), url("../img/targeted-tree-hero.webp"); }
 .is-intro:not(.is-intro-done) .header--sticky .header__bar { box-shadow: none; }
 .voice__author { padding-top: 0; line-height: 1.2; }
 .voice--photos .voice__author { left: var(--pad-card); bottom: var(--pad-card); }
@@ -55,6 +65,10 @@ body .opening { border-radius: 0; }
     --fs-h4: clamp(17px, 4.6vw, 19px);
   }
   body #intro-text-title { font-size: var(--fs-h4) !important; }
+  body.index-2 .archive-hero { padding-top: 0; }
+  body .lead__card { gap: 16px; }
+  body .lead__head p { margin-top: 16px; }
+  body .lead__fields { margin-top: 8px; }
   .dot-list li { gap: calc(var(--s-16) / 1.5); }
   .dot-list li::before { width: 8px; height: 8px; }
 }

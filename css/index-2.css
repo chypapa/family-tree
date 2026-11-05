@@ -247,7 +247,7 @@
 
 @media (max-width: 1199px) {
   .index-2 .page > .header--sticky {
-    inset: 12px auto auto var(--edge);
+    inset: 12px var(--edge) auto auto;
     width: auto;
     background: transparent;
     pointer-events: none;
