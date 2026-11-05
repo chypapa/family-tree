@@ -239,4 +239,8 @@
 .index-2 .review__toggle[hidden] { display: none; }
 @media (max-width: 767px) {
   .index-2 #intro-text-title { font-size: var(--fs-h4); font-weight: 500; line-height: 1.2; }
+  .service-card--book { order: 1; }
+  .service-card--archive { order: 2; }
+  .service-card--tree { order: 3; }
+  .service-card--search { order: 4; }
 }
