@@ -11,6 +11,7 @@
   --lh-body: 1.2;
 }
 body { font-size: var(--fs-body); font-weight: 500; line-height: 1.2; }
+body.index-2 .header--sticky .header__cta { color: #605a55; }
 body :is(h1, .h1, .opening__title) {
   font-size: var(--fs-h1) !important;
   font-weight: 600 !important;
