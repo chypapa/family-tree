@@ -4,11 +4,14 @@
   --fs-h2: clamp(19px, 2.4vw, 36px);
   --fs-h3: clamp(18px, 2vw, 30px);
   --fs-h4: clamp(17px, 1.5vw, 22px);
-  --fs-body: clamp(16px, 1.2vw, 18px);
+  --fs-body: 18px;
   --fw-heading: 600;
   --fw-body: 500;
   --lh-heading: 1.2;
   --lh-body: 1.2;
+  --button-font-size: var(--fs-body);
+  --button-font-weight: 500;
+  --button-line-height: 1.2;
 }
 body { font-size: var(--fs-body); font-weight: 500; line-height: 1.2; }
 body.index-2 .header--sticky .header__cta { color: #605a55; }
@@ -32,10 +35,17 @@ body :is(h4, .h4, .calc-q__title, .stage__title, .why-card__title, .post__title,
   font-weight: 500 !important;
   line-height: 1.2 !important;
 }
-body :is(p, li, input, textarea, select, .stage__tag, .field__label) {
-  font-size: var(--fs-body);
-  font-weight: 500;
-  line-height: 1.2;
+body :is(p:not(.calc__result-sum), li, input, textarea, select,
+  .btn, .nav a, .mobile-menu__nav a, .mobile-menu__cta,
+  .service-card > a, .tag, .gallery__badge, .stage__tag, .stage__num,
+  .radio, .radio > span, .calc__add, .calc__next, .calc__prev, .calc__again,
+  .field__label, .check > span, .footer__policy, .post__btn-mobile,
+  .review__toggle, .link-more) {
+  font-size: var(--fs-body) !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  letter-spacing: normal;
+  word-spacing: normal;
 }
 body .archive-hero h1 { font-size: clamp(20px, 7.15cqi, 46px) !important; }
 body #intro-text-title { font-size: var(--fs-h2) !important; }
@@ -91,12 +101,16 @@ body .voice--video .voice__author { bottom: calc(var(--pad-card) - 8px); }
 .voice--photos .voice__author { left: var(--pad-card); }
 .dot-list li { gap: calc(var(--s-32) / 1.5); }
 .dot-list li::before { width: calc(16px / 1.5); height: calc(16px / 1.5); background: var(--red); }
+@media (max-width: 1599px) {
+  :root, body.index-2 { --fs-body: 17px; }
+}
 @media (max-width: 1199px) {
-  :root, body.index-2 { --fs-h2: 27px; --fs-h3: 24px; }
+  :root, body.index-2 { --fs-body: 16px; --fs-h2: 27px; --fs-h3: 24px; }
   body #intro-text-title { font-size: var(--fs-h3) !important; }
 }
 @media (max-width: 767px) {
   :root, body.index-2 {
+    --fs-body: 15px;
     --fs-h2: clamp(19px, 5.8vw, 27px);
     --fs-h3: clamp(18px, 5.2vw, 24px);
     --fs-h4: clamp(17px, 4.6vw, 19px);
