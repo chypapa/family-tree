@@ -85,7 +85,9 @@ body.index-2 .service-card__badges li {
 body .promo { background-image: linear-gradient(rgb(0 0 0 / 55%), rgb(0 0 0 / 55%)), url("../img/targeted-tree-hero.webp"); }
 .is-intro:not(.is-intro-done) .header--sticky .header__bar { box-shadow: none; }
 .voice__author { padding-top: 0; line-height: 1.2; }
-.voice--photos .voice__author { left: var(--pad-card); bottom: var(--pad-card); }
+body .voice:not(.voice--video) { padding-bottom: calc(var(--pad-card) - 8px); }
+body .voice--video .voice__author { bottom: calc(var(--pad-card) - 8px); }
+.voice--photos .voice__author { left: var(--pad-card); }
 .dot-list li { gap: calc(var(--s-32) / 1.5); }
 .dot-list li::before { width: calc(16px / 1.5); height: calc(16px / 1.5); background: var(--red); }
 @media (max-width: 1199px) {
