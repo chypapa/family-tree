@@ -269,7 +269,7 @@
   --service-card-gradient: linear-gradient(135deg, #a53625 0%, #b45241 100%);
 }
 .index-2 .service-card--search {
-  background: var(--service-card-gradient);
+  background: #933627;
 }
 .index-2 .service-card--tree { background: var(--red); }
 @media (min-width: 768px) {
@@ -319,3 +319,7 @@
     left: 54%;
   }
 }
+
+/* Compact spacing between price, duration and consultation badges. */
+body.index-2 :is(.service-card--book, .service-card--archive) .service-card__badges,
+body.index-2 .lead__chips { gap: 8px; }
