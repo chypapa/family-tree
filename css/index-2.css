@@ -330,14 +330,20 @@ body.index-2 .service-card > a { color: #605a55; }
 body.index-2 .reviews__list { align-items: stretch; }
 body.index-2 .reviews__list .review { align-self: stretch; height: auto; }
 body.index-2 .reviews__list .review__author { margin-top: auto; }
-/* Show the complete header only when the introduction reveals page content. */
-.is-intro:not(.is-ready) body .page > .header.header--sticky {
+/* Keep the animated logo visible; hide only header chrome during the intro. */
+.is-intro:not(.is-ready) body.index-2 .page > .header.header--sticky,
+.is-intro:not(.is-ready) body.index-2 .header--sticky .header__bar,
+.is-intro:not(.is-ready) body.index-2 .header--sticky .header__mobile {
+  background: transparent;
+  box-shadow: none;
+}
+.is-intro:not(.is-ready) body.index-2 .header--sticky .header__burger {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  animation: header-intro-failsafe 0s 7s forwards;
+  animation: header-control-failsafe 0s 7s forwards;
 }
-@keyframes header-intro-failsafe {
+@keyframes header-control-failsafe {
   to { opacity: 1; visibility: visible; pointer-events: auto; }
 }
 @media (max-width: 767px) {
