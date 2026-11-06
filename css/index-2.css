@@ -11,9 +11,11 @@
   font-weight: var(--fw-body);
   background: #F1EEE9;
 }
-.index-2 .page > .header--sticky { inset: 0 0 auto; width: 100%; margin: 0; background: var(--red); }
-.index-2 .header--sticky .header__bar { height: var(--index-header); background: var(--red); }
-.index-2 .header--sticky :is(.nav a, .logo-mark, .header__burger) { color: white; }
+.index-2 .page > .header--sticky { inset: 0 0 auto; width: 100%; margin: 0; background: var(--bg); }
+.index-2 .header--sticky .header__bar { height: var(--index-header); background: var(--bg); }
+.index-2 .header--sticky .nav a { color: #605a55; }
+.index-2 .header--sticky .logo-mark { color: var(--red); }
+.index-2 .header--sticky .header__burger { color: white; }
 .index-2 .header--sticky :is(.header__pill, .header__burger) { background: transparent; }
 .index-2 .header__pill-text { display: none; }
 .index-2 .header__mobile { justify-content: space-between; min-height: var(--index-header); padding-inline: var(--gut); }
@@ -133,6 +135,24 @@
 
 @media (768px <= width <= 1100px), (768px <= width <= 1199px) and (orientation: portrait) {
   .service-index .service-card { grid-column: span 6; }
+}
+
+/* Give the book its own image area on tablets so it cannot fall below the crop. */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .service-card--book p { max-width: 100%; }
+  .service-card--book .service-art {
+    position: relative;
+    inset: auto;
+    align-self: stretch;
+    height: clamp(180px, 24vw, 260px);
+    margin-block: 8px 16px;
+  }
+  .service-card--book .service-art img {
+    position: static;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 }
 
 @media (max-width: 1023px) {

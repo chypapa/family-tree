@@ -229,7 +229,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   justify-content: space-between;
   height: var(--hdr-h);
   padding: 0 var(--edge);                           /* содержимое — по краям контентной части, как у всех блоков */
-  background: var(--red);
+  background: var(--bg);
   border-radius: 0;                                  /* без скругления и без тени */
 }
 .header__left, .header__right { display: flex; align-items: center; }
@@ -237,7 +237,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
 .header__logo img { width: 33px; height: 37px; }
 .nav { display: flex; gap: var(--s-32); }
 .nav a {
-  color: var(--white);
+  color: #605a55;
   line-height: var(--lh-heading);
   text-decoration: none;
   white-space: nowrap;
@@ -250,7 +250,8 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   .nav { gap: var(--s-24); }
 }
 /* справа — белая кнопка «Получить консультацию»: на главной ведёт к форме внизу, на остальных страницах открывает окно с формой */
-.header__cta { padding: var(--s-8) var(--s-24); }
+.header__cta { padding: var(--s-8) var(--s-24); background: var(--red); color: var(--white); }
+.header__cta:hover { background: var(--red-hover); }
 
 /* мобильная шапка */
 .header__mobile { display: none; }
@@ -280,14 +281,13 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
 }
 
 /* над первым экраном (пока страница не прокручена) заливки у шапки нет — она появляется при прокрутке (класс is-top ставит main.js) */
-.header--sticky.is-top .header__bar,
 .header--sticky.is-top .header__pill,
 .header--sticky.is-top .icon-btn { background-color: rgba(155, 160, 137, 0); }
-.header--sticky:not(.is-top) .header__bar { box-shadow: var(--shadow-card); }
+.header--sticky:not(.is-top) .header__bar { box-shadow: none; }
 
 /* знак в шапке — векторный (тот же, что рисуется при загрузке) */
 .header__logo { display: block; }
-.logo-mark { display: block; width: 35px; height: 37px; color: var(--white); }
+.logo-mark { display: block; width: 35px; height: 37px; color: var(--red); }
 .header__pill .logo-mark { width: 26px; height: 28px; }
 .mark { display: block; width: 100%; height: 100%; overflow: visible; }
 
@@ -320,6 +320,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   inset: 0;
   z-index: 0;
   display: none;
+  pointer-events: auto;
   background: rgba(0, 0, 0, .2);
   -webkit-backdrop-filter: blur(4px);
           backdrop-filter: blur(4px);
@@ -338,6 +339,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   bottom: 0;
   z-index: 1;
   display: none;
+  pointer-events: auto;
   flex-direction: column;
   width: max(50vw, min(100vw, 320px));
   height: 100vh;
@@ -1704,17 +1706,19 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   .input { padding: var(--s-16) var(--s-24); }
 }
 
-/* шапка: полноценная от 1024px, ниже — компактная */
-@media (max-width: 1023px) {
+/* The burger, drawer and backdrop share the same tablet breakpoint. */
+@media (max-width: 1199px) {
   :root { --hdr-h: 50px; --hdr-gap: 12px; }
-  .contact__inner { flex-direction: column; gap: var(--s-32); }
-  .form { flex: none; width: 100%; }
-  .input--area { height: clamp(120px, calc(100svh - 700px), 200px); }
   .header { width: auto; margin-inline: var(--gut); }
   .header__bar { display: none; }
   .header__mobile { display: flex; align-items: center; justify-content: flex-end; }
   .mobile-menu { display: flex; }
   .mobile-menu__backdrop { display: block; }
+}
+@media (max-width: 1023px) {
+  .contact__inner { flex-direction: column; gap: var(--s-32); }
+  .form { flex: none; width: 100%; }
+  .input--area { height: clamp(120px, calc(100svh - 700px), 200px); }
 }
 
 @media (max-width: 899px) {
@@ -2464,7 +2468,6 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
     pointer-events: none;
   }
 }
-}
 
 /* главная: «Как проходит исследование» — четыре шага в ряд */
 .process__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--col-gap); margin: 0; padding: 0; list-style: none; counter-reset: step; }
@@ -2477,13 +2480,18 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   .calc--center .calc__stage { display: block; }
   .process__list { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--s-48); }
 }
+/* Tablet: stack both parts within the middle six of eight columns. */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .about-svc__cols { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+  .about-svc__col, .about-svc__col + .about-svc__col { grid-column: 2 / span 6; }
+  .about-svc .dot-list li > span { min-width: 0; text-wrap: balance; }
+}
 @media (max-width: 1023px) {
-  .about-svc__cols { grid-template-columns: 1fr; }
-  .about-svc__col, .about-svc__col + .about-svc__col { grid-column: 1 / -1; }
   .promo { flex-direction: column; align-items: flex-start; min-height: 0; }
 }
 @media (max-width: 767px) {
-  .about-svc__cols { gap: 40px; }                     /* телефон: последний абзац → H3 — 40px */
+  .about-svc__cols { grid-template-columns: 1fr; gap: 40px; }
+  .about-svc__col, .about-svc__col + .about-svc__col { grid-column: 1 / -1; }                     /* телефон: последний абзац → H3 — 40px */
   .dot-list li { gap: var(--s-16); }
   .dot-list li::before { width: 12px; height: 12px; }
   .gallery__grid { grid-template-columns: 1fr; }
@@ -2597,8 +2605,8 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
   text-align: center;
   letter-spacing: normal;
 }
-.header--sticky.is-top :is(.nav a, .header__pill, .header__pill-text, .logo-mark, .header__burger) { color: var(--text); }
-.header--sticky.is-top .btn--white { color: var(--text); }
+.header--sticky.is-top :is(.header__pill, .header__pill-text, .header__burger) { color: var(--text); }
+.header--sticky.is-top .btn--white:not(.header__cta) { color: var(--text); }
 .is-menu-open .header--sticky.is-top .header__burger { color: var(--white); }
 .header__pill span, .mobile-menu__logo-text { width: auto; }
 .header__pill .logo-mark { flex: none; }
@@ -2869,7 +2877,7 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 .header__left, .header__right { flex-shrink: 0; }
 .header__right .btn { --button-padding: 10px 16px; --button-min-height: 44px; white-space: nowrap !important; }
 .header__right .btn.is-overflow { display: none; }
-@media (max-width: 1023px) {
+@media (max-width: 1199px) {
   .home-page .header--sticky { top: var(--hdr-gap); left: var(--gut); right: var(--gut); width: auto; margin: 0; }
 }
 
