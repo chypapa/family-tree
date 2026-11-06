@@ -56,7 +56,7 @@ body .intro-text--background :is(.intro-text__sub, .why-card__text) {
   left: 0;
   width: calc(var(--edge) + (100% - 2 * var(--edge) - 11 * var(--col-gap)) / 3 + 3 * var(--col-gap));
   background: url("../img/about-tree.png") right center / auto 100% no-repeat;
-  filter: brightness(.85);
+  filter: brightness(.72) contrast(1.12);
   opacity: 1;
   pointer-events: none;
 }
@@ -113,4 +113,11 @@ body .intro-text--split .why-card__title {
   .intro-text--split .why-cards__list { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .intro-text--split .why-card { grid-column: 1; min-height: 200px; padding: 24px; }
   body .intro-text--split .intro-text__lead { font-size: var(--fs-h4) !important; font-weight: 600 !important; }
+}
+
+/* Benefit-card headings follow the responsive H3 scale in every variant. */
+body.index-2 .intro-text .why-card__title {
+  font-size: var(--fs-h3) !important;
+  font-weight: 500 !important;
+  line-height: var(--lh-heading) !important;
 }

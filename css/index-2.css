@@ -269,7 +269,7 @@
   --service-card-gradient: linear-gradient(135deg, #a53625 0%, #b45241 100%);
 }
 .index-2 .service-card--search {
-  background: #933627;
+  background: #69251A;
 }
 .index-2 .service-card--tree { background: var(--red); }
 @media (min-width: 768px) {

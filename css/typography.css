@@ -146,7 +146,7 @@ body.index-2 .service-card__badges li {
   body.index-2 .service-card--archive img:nth-child(2) { width: 69%; left: 18%; top: 45%; bottom: auto; }
   body.index-2 .service-card--archive img:nth-child(3) { width: 43%; left: -3%; top: 27%; }
 }
-body .promo { background-image: linear-gradient(rgb(0 0 0 / 55%), rgb(0 0 0 / 55%)), url("../img/targeted-tree-hero-updated.webp"); }
+body .promo { background-image: linear-gradient(90deg, rgb(0 0 0 / 72%), rgb(0 0 0 / 40%) 55%, rgb(0 0 0 / 8%)), url("../img/targeted-tree-hero-updated.webp"); }
 .is-intro:not(.is-intro-done) .header--sticky .header__bar { box-shadow: none; }
 .voice__author { padding-top: 0; line-height: 1.2; }
 body .voice:not(.voice--video) { padding-bottom: calc(var(--pad-card) - 8px); }
@@ -204,10 +204,10 @@ body .voice__text { margin-top: 0; }
 body .voice:not(.voice--video) { gap: var(--s-32); }
 body .voice:not(.voice--video) .voice__author { padding-top: var(--s-4, 4px); }
 body .promo {
-  background-image: linear-gradient(rgb(0 0 0 / 27.5%), rgb(0 0 0 / 27.5%)), url("../img/targeted-tree-hero-updated.webp");
+  background-image: linear-gradient(90deg, rgb(0 0 0 / 72%), rgb(0 0 0 / 40%) 55%, rgb(0 0 0 / 8%)), url("../img/targeted-tree-hero-updated.webp");
 }
 body .promo::before {
-  background: linear-gradient(90deg, rgb(0 0 0 / 39%), rgb(0 0 0 / 27.5%) 50%, rgb(0 0 0 / 12.5%));
+  background: none;
 }
 @media (min-width: 1024px) {
   body .tree-design__media { min-height: 0; aspect-ratio: 1.65; }
