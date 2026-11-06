@@ -56,6 +56,7 @@ body .intro-text--background :is(.intro-text__sub, .why-card__text) {
   left: 0;
   width: calc(var(--edge) + (100% - 2 * var(--edge) - 11 * var(--col-gap)) / 3 + 3 * var(--col-gap));
   background: url("../img/about-tree.png") right center / auto 100% no-repeat;
+  filter: brightness(.85);
   opacity: 1;
   pointer-events: none;
 }

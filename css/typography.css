@@ -146,7 +146,7 @@ body.index-2 .service-card__badges li {
   body.index-2 .service-card--archive img:nth-child(2) { width: 69%; left: 18%; top: 45%; bottom: auto; }
   body.index-2 .service-card--archive img:nth-child(3) { width: 43%; left: -3%; top: 27%; }
 }
-body .promo { background-image: linear-gradient(rgb(0 0 0 / 55%), rgb(0 0 0 / 55%)), url("../img/targeted-tree-hero.webp"); }
+body .promo { background-image: linear-gradient(rgb(0 0 0 / 55%), rgb(0 0 0 / 55%)), url("../img/targeted-tree-hero-updated.webp"); }
 .is-intro:not(.is-intro-done) .header--sticky .header__bar { box-shadow: none; }
 .voice__author { padding-top: 0; line-height: 1.2; }
 body .voice:not(.voice--video) { padding-bottom: calc(var(--pad-card) - 8px); }
@@ -184,8 +184,8 @@ body :is(h4, .h4, .calc-q__title, .stage__title, .why-card__title, .post__title)
 }
 body .stage {
   padding: var(--s-24) var(--s-24) var(--s-32);
-  gap: var(--s-24);
-  min-height: 360px;
+  gap: var(--s-48);
+  min-height: 0;
 }
 body .stage::after {
   top: var(--s-16);
@@ -204,7 +204,7 @@ body .voice__text { margin-top: 0; }
 body .voice:not(.voice--video) { gap: var(--s-32); }
 body .voice:not(.voice--video) .voice__author { padding-top: var(--s-4, 4px); }
 body .promo {
-  background-image: linear-gradient(rgb(0 0 0 / 27.5%), rgb(0 0 0 / 27.5%)), url("../img/targeted-tree-hero.webp");
+  background-image: linear-gradient(rgb(0 0 0 / 27.5%), rgb(0 0 0 / 27.5%)), url("../img/targeted-tree-hero-updated.webp");
 }
 body .promo::before {
   background: linear-gradient(90deg, rgb(0 0 0 / 39%), rgb(0 0 0 / 27.5%) 50%, rgb(0 0 0 / 12.5%));
@@ -266,4 +266,16 @@ body.index-2 #blog .post__btn-icon path { stroke: currentColor; }
 @media (max-width: 1023px) {
   body #tree-design .tree-design__media { aspect-ratio: 1; min-height: 338px; }
   body #tree-design .tree-design__media img { object-fit: cover; }
+}
+
+/* Stage headings use H3; content defines card height instead of a fixed blank area. */
+body .stages .stage__title {
+  font-size: var(--fs-h3) !important;
+  font-weight: 500 !important;
+  line-height: var(--lh-heading) !important;
+}
+body .stages .stage { justify-content: flex-start; }
+body .stages .stage__bottom { margin-top: auto; }
+@media (max-width: 767px) {
+  body .stages .stage { gap: 12px; }
 }
