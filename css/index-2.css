@@ -263,3 +263,31 @@
     pointer-events: auto;
   }
 }
+
+/* Matching service surfaces and lower-right branch composition. */
+.index-2 {
+  --service-card-gradient: linear-gradient(135deg, #a53625 0%, #b45241 100%);
+}
+.index-2 .service-card--search,
+.index-2 .service-card--tree {
+  background: var(--service-card-gradient);
+}
+@media (min-width: 768px) {
+  body.index-2 .service-card--tree .service-art {
+    inset: 0;
+    translate: 0;
+    transform: none;
+  }
+  body.index-2 .service-card--tree .service-art img {
+    width: 110%;
+    height: 110%;
+    left: auto;
+    right: -26%;
+    top: auto;
+    bottom: -22%;
+    object-fit: contain;
+    object-position: right bottom;
+    transform: rotate(-22deg);
+    transform-origin: center;
+  }
+}

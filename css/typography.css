@@ -68,7 +68,7 @@ body .blog .post__btn-mobile {
   line-height: var(--lh-body) !important;
 }
 body .lead__chips li { color: #fff !important; }
-body.index-2 :is(#svc-title, .blog .section-head h2, .reviews__heading, .blog .post__title, .blog .post__link, .blog .post__btn-mobile) { color: #5d5752; }
+body.index-2 :is(#svc-title, .blog .section-head h2, .reviews__heading, .blog .post__title) { color: #5d5752; }
 body.index-2 .blog :is(.post__btn-mobile, .post__link) { color: var(--red); }
 body .blog .post__btn-mobile { font-size: var(--fs-body) !important; margin-top: auto; }
 body :is(.service-index > h2, .voices__heading, .stages .section-head, #blog > .section-head, #reviews > .section-head) {
@@ -247,3 +247,11 @@ body .promo::before {
 @media (min-width: 768px) and (max-width: 1399px) and (orientation: landscape) {
   body .calc--center .calc__stage { display: grid; }
 }
+
+/* Brand colour for the complete reading links, including their arrows. */
+body.index-2 #blog :is(.post__link, .post__btn-mobile, .link-more),
+body.index-2 #reviews .link-more {
+  color: var(--red);
+}
+body.index-2 #blog .post__btn-icon { color: inherit; }
+body.index-2 #blog .post__btn-icon path { stroke: currentColor; }
