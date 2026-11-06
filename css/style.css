@@ -249,7 +249,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   .header__left { gap: var(--s-32); }
   .nav { gap: var(--s-24); }
 }
-/* справа — белая кнопка «Получить консультацию»: на главной ведёт к форме внизу, на остальных страницах открывает окно с формой */
+/* Красная кнопка консультации на светлом фоне шапки. */
 .header__cta { padding: var(--s-8) var(--s-24); background: var(--red); color: var(--white); }
 .header__cta:hover { background: var(--red-hover); }
 
@@ -280,7 +280,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   cursor: pointer;
 }
 
-/* над первым экраном (пока страница не прокручена) заливки у шапки нет — она появляется при прокрутке (класс is-top ставит main.js) */
+/* Компактные кнопки над первым экраном сохраняют прозрачный фон. */
 .header--sticky.is-top .header__pill,
 .header--sticky.is-top .icon-btn { background-color: rgba(155, 160, 137, 0); }
 .header--sticky:not(.is-top) .header__bar { box-shadow: none; }
