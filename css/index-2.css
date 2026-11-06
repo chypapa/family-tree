@@ -308,21 +308,10 @@
 }
 #intro-text-title-3 { text-wrap: wrap; }
 
-/* Enlarge the consultation map and bring it toward the form. */
-@media (min-width: 1024px) {
-  #contact .lead__map {
-    height: 120%;
-    width: auto;
-    max-width: none;
-    top: -10%;
-    bottom: auto;
-    left: 54%;
-  }
-}
+
 
 /* Compact spacing between price, duration and consultation badges. */
-body.index-2 :is(.service-card--book, .service-card--archive) .service-card__badges,
-body.index-2 .lead__chips { gap: 8px; }
+body.index-2 :is(.service-card--book, .service-card--archive) .service-card__badges { gap: 8px; }
 
 /* Service-button copy matches paragraph copy on light surfaces. */
 body.index-2 .service-card > a { color: #605a55; }

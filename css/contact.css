@@ -1,0 +1,14 @@
+/* The same homepage consultation form is used on both pages. */
+#contact.lead { --text: #0e0908; }
+#contact.lead .lead__chips { gap: 8px; }
+/* Enlarge the consultation map and bring it toward the form. */
+@media (min-width: 1024px) {
+  #contact .lead__map {
+    height: 120%;
+    width: auto;
+    max-width: none;
+    top: -10%;
+    bottom: auto;
+    left: 54%;
+  }
+}
