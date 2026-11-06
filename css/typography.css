@@ -279,3 +279,20 @@ body .stages .stage__bottom { margin-top: auto; }
 @media (max-width: 767px) {
   body .stages .stage { gap: 12px; }
 }
+
+/* Service-review insets match the work-stage cards. */
+body .voices { --voice-inset-x: 24px; --voice-inset-bottom: 32px; }
+body .voices .voice:not(.voice--video) { padding: 24px 24px 32px; }
+body .voices :is(.voice--video, .voice--photos) .voice__author {
+  left: var(--voice-inset-x);
+  right: var(--voice-inset-x);
+  bottom: var(--voice-inset-bottom);
+}
+body .voices .voice--photos .review-photos__thumbs {
+  right: var(--voice-inset-x);
+  bottom: var(--voice-inset-bottom);
+}
+@media (max-width: 767px) {
+  body .voices { --voice-inset-x: 16px; --voice-inset-bottom: 24px; }
+  body .voices .voice:not(.voice--video) { padding: 16px 16px 24px; }
+}

@@ -269,7 +269,7 @@
   --service-card-gradient: linear-gradient(135deg, #a53625 0%, #b45241 100%);
 }
 .index-2 .service-card--search {
-  background: #69251A;
+  background: linear-gradient(to bottom, #A64131 0%, #7F2B1E 100%);
 }
 .index-2 .service-card--tree { background: var(--red); }
 @media (min-width: 768px) {
@@ -323,3 +323,24 @@
 /* Compact spacing between price, duration and consultation badges. */
 body.index-2 :is(.service-card--book, .service-card--archive) .service-card__badges,
 body.index-2 .lead__chips { gap: 8px; }
+
+/* Service-button copy matches paragraph copy on light surfaces. */
+body.index-2 .service-card > a { color: #605a55; }
+/* A flex row stretches every review to the current tallest card, including on expansion. */
+body.index-2 .reviews__list { align-items: stretch; }
+body.index-2 .reviews__list .review { align-self: stretch; height: auto; }
+body.index-2 .reviews__list .review__author { margin-top: auto; }
+/* Show the complete header only when the introduction reveals page content. */
+.is-intro:not(.is-ready) body .page > .header.header--sticky {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: header-intro-failsafe 0s 7s forwards;
+}
+@keyframes header-intro-failsafe {
+  to { opacity: 1; visibility: visible; pointer-events: auto; }
+}
+@media (max-width: 767px) {
+  body.index-2 #blog .post__btn-icon,
+  body.index-2 #blog .post__link-arrow { display: none; }
+}

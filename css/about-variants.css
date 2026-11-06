@@ -121,3 +121,18 @@ body.index-2 .intro-text .why-card__title {
   font-weight: 500 !important;
   line-height: var(--lh-heading) !important;
 }
+
+/* Lead: H2 on larger screens, H4 on phones. */
+body.index-2 #intro-text-title-3 {
+  font-size: var(--fs-h2) !important;
+  font-weight: 600 !important;
+}
+@media (max-width: 767px) {
+  body.index-2 #intro-text-title-3 { font-size: var(--fs-h4) !important; }
+  body.index-2 .intro-text .why-card__title { font-size: var(--fs-h4) !important; }
+  body.index-2 .intro-text .why-card {
+    min-height: 0;
+    justify-content: flex-start;
+    gap: 12px;
+  }
+}
