@@ -7,18 +7,19 @@
   <meta name="description" content="Точечный архивный поиск и дизайн семейного дерева: найдём сведения о предках, проверим родственные связи или оформим готовую историю семьи в векторное древо для печати. Дизайн от 5 000 ₽.">
   <link rel="icon" href="img/favicon.webp" sizes="any">
   <link rel="stylesheet" href="css/style.css?v=faa26451ddb0">
-  <script>if (!('onpagereveal' in window)) document.documentElement.classList.add('fade-nav');</script>
-  <link rel="stylesheet" href="css/typography.css?v=12">
+  <script>document.documentElement.classList.add('is-intro'); if (!('onpagereveal' in window)) document.documentElement.classList.add('fade-nav');</script>
+  <link rel="stylesheet" href="css/typography.css?v=16">
 </head>
 <body>
 <div class="page">
+  <div class="preloader" aria-hidden="true"><span class="preloader__name">Древо<br>предков</span></div>
 
   <!-- ============ HEADER ============ -->
   <header class="header header--sticky header--dark is-top">
     <div class="header__bar">
       <div class="header__left">
         <a class="header__logo" href="index.html" aria-label="Древо предков — на главную">
-          <!-- знак рисуется при загрузке страницы по центру экрана и переезжает сюда (js/main.js?v=f283a91960e0) -->
+          <!-- знак рисуется при загрузке страницы по центру экрана и переезжает сюда (js/main.js?v=intro-overlay-2) -->
           <span class="logo-mark">
             <svg class="mark" viewBox="0 0 370 395" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
               <defs>
@@ -254,6 +255,6 @@
 </div>
 
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="js/main.js?v=f283a91960e0"></script>
+<script src="js/main.js?v=intro-overlay-2"></script>
 </body>
 </html>

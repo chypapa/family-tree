@@ -296,3 +296,36 @@ body .voices .voice--photos .review-photos__thumbs {
   body .voices { --voice-inset-x: 16px; --voice-inset-bottom: 20px; }
   body .voices .voice:not(.voice--video) { padding: 20px 16px 20px; }
 }
+
+/* The loader owns the animated mark; header remains present without a fill or shadow. */
+.is-intro:not(.is-intro-done) body .page > .header.header--sticky,
+.is-intro:not(.is-intro-done) body .header--sticky .header__bar,
+.is-intro:not(.is-intro-done) body .header--sticky .header__mobile {
+  background: transparent;
+  box-shadow: none;
+}
+.is-intro:not(.is-ready) body .header--sticky .logo-mark,
+.is-intro:not(.is-ready) body .header--sticky .header__burger {
+  visibility: hidden;
+  animation: intro-header-controls-failsafe 0s 7s forwards;
+}
+@keyframes intro-header-controls-failsafe { to { visibility: visible; } }
+
+/* Tablet consultation form: halve left and vertical insets, retain the right inset. */
+@media (min-width: 768px) and (max-width: 1399px) and (orientation: landscape) {
+  body #contact.lead .lead__card {
+    padding-left: 36px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) and (orientation: landscape) {
+  body #contact.lead .lead__card { padding-left: 20px; }
+}
+@media (min-width: 768px) and (max-width: 1199px) and (orientation: portrait) {
+  body #contact.lead .lead__card {
+    padding-left: 12px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}

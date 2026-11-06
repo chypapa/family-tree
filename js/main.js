@@ -61,10 +61,19 @@
       setTimeout(function () { if (pre) pre.remove(); }, 980);
     };
     var finish = function () { root.classList.add('is-intro-done'); };   // знак на месте: заливка шапки
-    var logo = marks.filter(function (m) { return m.offsetParent !== null; })[0];   // видимый знак: в шапке или в мобильной плашке
-    if (!logo && pre && marks.length && !reduce) {
+    var targetLogo = marks.filter(function (m) { return m.offsetParent !== null; })[0];
+    var logo = targetLogo;   // видимый знак: в шапке или в мобильной плашке
+    if (pre && marks.length && !reduce) {
       logo = marks[0].cloneNode(true);
       logo.classList.add('preloader__mark');
+      var introMask = logo.querySelector('mask[id]');
+      if (introMask) {
+        var originalMaskId = introMask.id;
+        introMask.id = originalMaskId + '-intro';
+        logo.querySelectorAll('[mask]').forEach(function (path) {
+          path.setAttribute('mask', path.getAttribute('mask').replace('#' + originalMaskId, '#' + introMask.id));
+        });
+      }
       pre.appendChild(logo);
       marks.push(logo);
     }
@@ -123,9 +132,19 @@
         var header = document.querySelector('.header--sticky');
         var filled = !header || !header.classList.contains('is-top');
         logo.style.transition = 'transform .58s cubic-bezier(.75, 0, .2, 1), color ' + (filled ? '.3s ease .58s' : '.45s ease .09s');
-        logo.style.transform = '';
-        logo.style.color = '';
-        ready();                                              // экран с названием растворяется, появляются меню и первый экран
+        if (targetLogo && logo !== targetLogo) {
+          var targetRect = targetLogo.getBoundingClientRect();
+          logo.style.transform = 'translate(' +
+            (targetRect.left + targetRect.width / 2 - cx) + 'px,' +
+            (targetRect.top + targetRect.height / 2 - cy) + 'px) scale(' +
+            (targetRect.height / r.height) + ')';
+          if (word) word.classList.remove('is-in');
+          setTimeout(function () { ready(); finish(); }, 600);
+        } else {
+          logo.style.transform = '';
+          logo.style.color = '';
+          ready();
+        }                                              // экран с названием растворяется, появляются меню и первый экран
         setTimeout(finish, 600);                              // 4. знак на месте
         setTimeout(function () { logo.style.transition = ''; }, 900);
       });
