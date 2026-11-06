@@ -255,3 +255,15 @@ body.index-2 #reviews .link-more {
 }
 body.index-2 #blog .post__btn-icon { color: inherit; }
 body.index-2 #blog .post__btn-icon path { stroke: currentColor; }
+
+/* Taller family-tree illustration, with copy using five of the six right columns. */
+@media (min-width: 1024px) {
+  body #tree-design .tree-design__media { aspect-ratio: 1.2692307692; }
+  body #tree-design .tree-design__media img { object-fit: cover; }
+  body #tree-design .tree-design__copy { grid-column: 7 / span 5; }
+}
+
+@media (max-width: 1023px) {
+  body #tree-design .tree-design__media { aspect-ratio: 1; min-height: 338px; }
+  body #tree-design .tree-design__media img { object-fit: cover; }
+}
