@@ -2508,10 +2508,10 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   .calc--center .calc__stage { display: block; }
   .process__list { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--s-48); }
 }
-/* Tablet: stack both parts within the middle six of eight columns. */
+/* Tablet: stack both parts in six columns starting at the left edge. */
 @media (min-width: 768px) and (max-width: 1199px) {
   .about-svc__cols { grid-template-columns: repeat(8, minmax(0, 1fr)); }
-  .about-svc__col, .about-svc__col + .about-svc__col { grid-column: 2 / span 6; }
+  .about-svc__col, .about-svc__col + .about-svc__col { grid-column: 1 / span 6; }
   .about-svc .dot-list span { text-wrap: balance; }
 }
 @media (max-width: 1023px) {
