@@ -2852,8 +2852,21 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 
 /* Family tree design: illustration and copy share the site's two-column grid. */
 .tree-design { display: grid; grid-template-columns: minmax(0, calc((100% - 2 * var(--s-16)) * 920 / 1625 + var(--s-16) - var(--s-56))) minmax(0, 1fr) minmax(0, calc((100% - 11 * var(--col-gap)) / 12 * 5 + 4 * var(--col-gap))) minmax(0, 1fr); gap: 0; align-items: stretch; }
-.tree-design__media { grid-column: 1; align-self: stretch; position: relative; min-width: 0; overflow: hidden; border-radius: var(--radius); background: #dfd0b8; }
-.tree-design__media img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; }
+.tree-design__media {
+  grid-column: 1;
+  align-self: stretch;
+  display: grid;
+  align-items: center;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: linear-gradient(#ded0b9, #daccb5);
+}
+.tree-design__media img { display: block; width: 100%; height: auto; }
+@media (min-width: 1024px) {
+  /* Blend only the paper margins into the extra space above and below the image. */
+  .tree-design__media img { mask-image: linear-gradient(transparent, #000 3%, #000 96%, transparent); }
+}
 .tree-design__price { color: var(--text); background: var(--white); border: 0; }
 .tree-design__heading { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s-16); }
 .tree-design__copy { grid-column: 3; margin-left: 0; display: flex; flex-direction: column; justify-content: flex-start; gap: var(--s-24); min-width: 0; }
@@ -2861,7 +2874,6 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 @media (max-width: 1023px) {
   .tree-design { grid-template-columns: 1fr; row-gap: var(--s-32); }
   .tree-design__media, .tree-design__copy { grid-column: 1 / -1; }
-  .tree-design__media { aspect-ratio: 1.3; }
   .tree-design__copy { margin-left: 0; gap: var(--gap-text); }
 }
 
@@ -2939,7 +2951,5 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
   .svc-card, .svc-card:hover, .svc-card:focus-visible { background: var(--red); color: var(--white); }
   .svc-card__title, .svc-card__sub, .svc-card__desc { color: var(--white); }
   .svc-card__btn-mobile { background: var(--white); color: var(--text); }
-  .tree-design__media { display: block; height: auto; min-height: 260px; aspect-ratio: 1.3; }
-  .tree-design__media img { opacity: 1; visibility: visible; }
   .calc-q__custom.input { height: 35px; padding-block: 0; }
 }

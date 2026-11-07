@@ -198,7 +198,6 @@ body .promo::before {
   background: none;
 }
 @media (min-width: 1024px) {
-  body .tree-design__media { min-height: 0; aspect-ratio: 1.65; }
   body .tree-design__copy { justify-content: center; gap: var(--s-36, 36px); }
 }
 @media (min-width: 768px) and (max-width: 1199px) and (orientation: portrait) {
@@ -244,16 +243,9 @@ body.index-2 #reviews .link-more {
 body.index-2 #blog .post__btn-icon { color: inherit; }
 body.index-2 #blog .post__btn-icon path { stroke: currentColor; }
 
-/* Taller family-tree illustration, with copy using five of the six right columns. */
+/* Keep the copy within five of the six right columns. */
 @media (min-width: 1024px) {
-  body #tree-design .tree-design__media { aspect-ratio: 1.2692307692; }
-  body #tree-design .tree-design__media img { object-fit: cover; }
   body #tree-design .tree-design__copy { grid-column: 7 / span 5; }
-}
-
-@media (max-width: 1023px) {
-  body #tree-design .tree-design__media { aspect-ratio: 1; min-height: 338px; }
-  body #tree-design .tree-design__media img { object-fit: cover; }
 }
 
 /* Stage headings use H3; content defines card height instead of a fixed blank area. */
@@ -323,7 +315,6 @@ body #tree-design .tree-design__media {
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  align-self: start;
 }
 body #tree-design .tree-design__copy {
   min-width: 0;
