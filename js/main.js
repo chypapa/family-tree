@@ -256,6 +256,7 @@
   var drawer = burger && document.getElementById(burger.getAttribute('aria-controls'));
   if (burger && drawer) {
     var setMenu = function (open) {
+      if (!open && drawer.contains(document.activeElement)) burger.focus({ preventScroll: true });
       document.documentElement.classList.toggle('is-menu-open', open);
       drawer.classList.toggle('is-open', open);
       drawer.setAttribute('aria-hidden', String(!open));
@@ -275,10 +276,13 @@
       if (drawer.classList.contains('is-open') && !drawer.contains(e.target)) setMenu(false);
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') setMenu(false);
+      if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+        setMenu(false);
+        burger.focus({ preventScroll: true });
+      }
     });
     window.addEventListener('resize', function () {
-      if (window.innerWidth >= 1200) setMenu(false);
+      if (drawer.classList.contains('is-open') && !burger.getClientRects().length) setMenu(false);
     });
   }
 

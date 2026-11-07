@@ -345,6 +345,8 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   height: 100vh;
   height: 100dvh;
   box-sizing: border-box;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: calc(var(--hdr-gap) + 7px) var(--s-24) var(--s-32);   /* знак — на одной высоте с бургером */
   background: var(--red);
   color: var(--white);
@@ -420,11 +422,6 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   .opening--mosaic .opening__content { padding: var(--s-32) 0 var(--s-48); }
   .opening--mosaic .opening__cta .btn { width: 100%; }
 }
-/* The homepage header stays visible above the mosaic. */
-.home-page .header--sticky { position: fixed; top: 0; left: 0; right: 0; margin: 0; }
-
-.home-page.is-menu-open .header--sticky { visibility: visible; }
-
 /* ---------- Вступление: светлый экран, на нём рисуется знак (контур снизу вверх → заливка),
    потом знак переезжает в шапку, экран растворяется и появляется первый экран.
    Классы is-intro (ставится в <head>) и is-ready (main.js) ---------- */
@@ -1611,6 +1608,8 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
    на планшете и телефоне — колонка ~75 знаков, заголовок переносится сам.
    Слева вверху кнопка «← Назад» на главную; дата публикации — в самом конце
    ========================================================= */
+.page--policy { padding-top: 64px; }
+@media (max-width: 1199px) { .page--policy { padding-top: 78px; } }
 .policy__back { margin: var(--s-24) 0 0 var(--edge); padding: var(--s-8) var(--s-24); }
 .policy__back:hover { background: var(--red); color: var(--white); }   /* на светлом фоне белая кнопка при наведении краснеет */
 .policy { margin-top: var(--s-72); }
@@ -1711,7 +1710,14 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
   :root { --hdr-h: 50px; --hdr-gap: 12px; }
   .header { width: auto; margin-inline: var(--gut); }
   .header__bar { display: none; }
-  .header__mobile { display: flex; align-items: center; justify-content: flex-end; }
+  .header__mobile {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    pointer-events: none;
+  }
   .mobile-menu { display: flex; }
   .mobile-menu__backdrop { display: block; }
 }
@@ -1964,7 +1970,10 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
    СТРАНИЦА «РОДОСЛОВНАЯ КНИГА» (rodoslovnaya-kniga.html, макет Figma plat-fam, узел 181:732).
    Сетка, отступы и стили текста — те же, что на главной: .container, .section, .h2 / .h3, --col-gap, --pad-card
    ========================================================= */
-.opening--kniga .opening__img { object-position: 50% 50%; }
+.opening--kniga .opening__img {
+  object-position: 50% 50%;
+  filter: saturate(.48) brightness(.92) contrast(.93);
+}
 .opening__video { object-position: 50% 50%; }
 
 /* ---------- Зачем книга: слева текст и список, справа фото ---------- */
@@ -2334,7 +2343,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
    Страница под окном затемнена на 20% и размыта, как под мобильным меню. Прокрутку страницы на это время
    выключаем; если у браузера видимая полоса прокрутки, место под неё остаётся — страница не дёргается
    ========================================================= */
-.is-overlay-open { overflow: hidden; }
+.is-overlay-open, .is-menu-open { overflow: hidden; }
 .is-overlay-open.has-scrollbar { scrollbar-gutter: stable; }
 .overlay {
   position: fixed;
@@ -2409,9 +2418,28 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
 .about-svc__col p + p { margin-top: var(--s-16); }   /* абзац → абзац — 16px */
 
 /* список с золотыми точками */
-.dot-list { display: flex; flex-direction: column; gap: var(--s-16); margin: 0; padding: 0; list-style: none; }
-.dot-list li { display: flex; align-items: center; gap: var(--s-32); }
-.dot-list li::before { content: ""; flex: none; width: 16px; height: 16px; border-radius: 50%; background: var(--gold); }
+.dot-list {
+  --dot-list-size: calc(16px / 1.5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-16);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.dot-list li {
+  display: grid;
+  grid-template-columns: var(--dot-list-size) minmax(0, 1fr);
+  align-items: center;
+  gap: calc(var(--s-32) / 1.5);
+}
+.dot-list li::before {
+  content: "";
+  inline-size: var(--dot-list-size);
+  block-size: var(--dot-list-size);
+  border-radius: 50%;
+  background: var(--red);
+}
 
 /* примеры работ: два фото рядом, под ними подпись */
 .about-svc + .gallery { margin-top: var(--s-96); }   /* фото иллюстрируют «Об услуге»: 96px — ближе, чем обычный отступ между блоками (160px) */
@@ -2484,7 +2512,7 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
 @media (min-width: 768px) and (max-width: 1199px) {
   .about-svc__cols { grid-template-columns: repeat(8, minmax(0, 1fr)); }
   .about-svc__col, .about-svc__col + .about-svc__col { grid-column: 2 / span 6; }
-  .about-svc .dot-list li > span { min-width: 0; text-wrap: balance; }
+  .about-svc .dot-list span { text-wrap: balance; }
 }
 @media (max-width: 1023px) {
   .promo { flex-direction: column; align-items: flex-start; min-height: 0; }
@@ -2492,8 +2520,8 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
 @media (max-width: 767px) {
   .about-svc__cols { grid-template-columns: 1fr; gap: 40px; }
   .about-svc__col, .about-svc__col + .about-svc__col { grid-column: 1 / -1; }                     /* телефон: последний абзац → H3 — 40px */
-  .dot-list li { gap: var(--s-16); }
-  .dot-list li::before { width: 12px; height: 12px; }
+  .dot-list { --dot-list-size: 8px; }
+  .dot-list li { gap: calc(var(--s-16) / 1.5); }
   .gallery__grid { grid-template-columns: 1fr; }
   .about-svc + .gallery { margin-top: var(--s-64); }
   .promo { padding: var(--s-24); }
@@ -2877,9 +2905,6 @@ p, li, label, input, textarea { line-height: var(--lh-body); }
 .header__left, .header__right { flex-shrink: 0; }
 .header__right .btn { --button-padding: 10px 16px; --button-min-height: 44px; white-space: nowrap !important; }
 .header__right .btn.is-overflow { display: none; }
-@media (max-width: 1199px) {
-  .home-page .header--sticky { top: var(--hdr-gap); left: var(--gut); right: var(--gut); width: auto; margin: 0; }
-}
 
 /* Compact adaptive H1 and the phone collage supplied by the client. */
 @media (min-width: 768px) and (max-width: 1199px) { :root { --fs-h1: 40px; } }
