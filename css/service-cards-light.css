@@ -1,14 +1,16 @@
 /* The two homepage sections share one accent for the service and benefit cards. */
 .service-index--light, #about-3 { --home-card-accent: #a43222; }
-.service-index--light { --home-card-padding: clamp(20px, 2vw, 38px); }
+.service-index--light {
+  --home-card-padding: clamp(20px, 2vw, 38px);
+  color: #605a55;
+}
 #about-3 .why-card { background: var(--home-card-accent); }
 
-.service-index--light > h2 { color: #5d5752; }
 .service-index--light .service-index__grid { gap: clamp(8px, .95vw, 18px); }
 
 .service-index--light .service-card {
   padding: var(--home-card-padding);
-  color: #3d3936;
+  color: inherit;
   background: #fff;
 }
 
@@ -21,7 +23,6 @@ body.index-2 .service-index--light .service-card__badges li {
 }
 
 .index-2 .service-index--light .service-card .service-card__subtitle {
-  color: #706a65;
   opacity: 1;
 }
 
