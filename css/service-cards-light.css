@@ -8,40 +8,47 @@
 
 .service-index--light .service-card {
   padding: var(--home-card-padding);
-  border-radius: clamp(12px, 1.4vw, 24px);
   color: #3d3936;
   background: #fff;
 }
 
 .service-index--light .service-card h3 { color: var(--home-card-accent); }
 
-body.index-2 .service-index--light .service-card__badges {
-  gap: 8px;
-  margin: 0 0 clamp(14px, 1.6vw, 26px);
-}
-
 body.index-2 .service-index--light .service-card__badges li {
-  padding: .35em .8em;
   border-radius: 999px;
   background: var(--home-card-accent);
   color: #fff;
 }
 
 .index-2 .service-index--light .service-card .service-card__subtitle {
-  margin: .55em 0 0;
   color: #706a65;
   opacity: 1;
 }
 
 body.index-2 .service-index--light .service-card > a {
-  min-height: 44px;
-  border-radius: 4px;
   background: var(--home-card-accent);
   color: #fff;
-  box-shadow: none;
 }
 
-.service-index--light .service-card > a:focus-visible { outline-offset: 2px; }
+@media (min-width: 768px) {
+  .service-index--light .service-card { border-radius: clamp(12px, 1.4vw, 24px); }
+
+  body.index-2 .service-index--light .service-card__badges {
+    gap: 8px;
+    margin: 0 0 clamp(14px, 1.6vw, 26px);
+  }
+
+  body.index-2 .service-index--light .service-card__badges li { padding: .35em .8em; }
+  .index-2 .service-index--light .service-card .service-card__subtitle { margin: .55em 0 0; }
+
+  body.index-2 .service-index--light .service-card > a {
+    min-height: 44px;
+    border-radius: 4px;
+    box-shadow: none;
+  }
+
+  .service-index--light .service-card > a:focus-visible { outline-offset: 2px; }
+}
 
 @media (min-width: 1024px) {
   .service-index--light {
@@ -131,7 +138,9 @@ body.index-2 .service-index--light .service-card > a {
   .service-index--light :is(.service-card--book, .service-card--archive) .service-art img {
     filter: none;
   }
+}
 
+@media (min-width: 768px) and (max-width: 1023px) {
   body.index-2 .service-index--light :is(.service-card--book, .service-card--archive) .service-art {
     position: relative;
     inset: auto;
@@ -178,12 +187,4 @@ body.index-2 .service-index--light .service-card > a {
 @media (max-width: 767px) {
   .service-index--light, #about-3 { --home-card-padding: clamp(14px, 5.1vw, 25px); }
   #about-3 .why-card { padding: var(--home-card-padding); }
-
-  .service-index--light {
-    --fs-h3: clamp(24px, 7.2vw, 36px);
-    --fs-body: clamp(15px, 4vw, 18px);
-  }
-
-  .service-index--light .service-index__grid { grid-auto-rows: auto; }
-  body.index-2 .service-index--light .service-card > a { min-height: 48px; }
 }
