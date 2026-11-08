@@ -1,20 +1,19 @@
-/* The light service cards reuse the original content and the mobile artwork. */
-.service-index--light {
-  --light-accent: #a43222;
-  --light-pad: clamp(20px, 2vw, 38px);
-}
+/* The two homepage sections share one accent for the service and benefit cards. */
+.service-index--light, #about-3 { --home-card-accent: #a43222; }
+.service-index--light { --home-card-padding: clamp(20px, 2vw, 38px); }
+#about-3 .why-card { background: var(--home-card-accent); }
 
 .service-index--light > h2 { color: #5d5752; }
 .service-index--light .service-index__grid { gap: clamp(8px, .95vw, 18px); }
 
 .service-index--light .service-card {
-  padding: var(--light-pad);
+  padding: var(--home-card-padding);
   border-radius: clamp(12px, 1.4vw, 24px);
   color: #3d3936;
   background: #fff;
 }
 
-.service-index--light .service-card h3 { color: var(--light-accent); }
+.service-index--light .service-card h3 { color: var(--home-card-accent); }
 
 body.index-2 .service-index--light .service-card__badges {
   gap: 8px;
@@ -24,7 +23,7 @@ body.index-2 .service-index--light .service-card__badges {
 body.index-2 .service-index--light .service-card__badges li {
   padding: .35em .8em;
   border-radius: 999px;
-  background: var(--red);
+  background: var(--home-card-accent);
   color: #fff;
 }
 
@@ -37,12 +36,11 @@ body.index-2 .service-index--light .service-card__badges li {
 body.index-2 .service-index--light .service-card > a {
   min-height: 44px;
   border-radius: 4px;
-  background: var(--light-accent);
+  background: var(--home-card-accent);
   color: #fff;
   box-shadow: none;
 }
 
-.service-index--light .service-card > a:hover { background: #8b291c; }
 .service-index--light .service-card > a:focus-visible { outline-offset: 2px; }
 
 @media (min-width: 1024px) {
@@ -84,7 +82,7 @@ body.index-2 .service-index--light .service-card > a {
     position: absolute;
     inset: 0 -45% 0 0;
     border-radius: clamp(12px, 1.4vw, 24px);
-    background: var(--light-accent);
+    background: var(--home-card-accent);
     transform: skewX(-13deg);
     transform-origin: bottom left;
   }
@@ -127,7 +125,7 @@ body.index-2 .service-index--light .service-card > a {
 }
 
 @media (max-width: 1023px) {
-  .service-index--light { --light-pad: 14px; }
+  .service-index--light { --home-card-padding: 14px; }
   .service-index--light .service-index__grid { gap: clamp(24px, 2.85vw, 30px); }
 
   .service-index--light :is(.service-card--book, .service-card--archive) .service-art img {
@@ -140,7 +138,7 @@ body.index-2 .service-index--light .service-card > a {
     align-self: stretch;
     flex: 0 0 clamp(136px, 30vw, 210px);
     height: auto;
-    margin: 0 calc(-1 * var(--light-pad)) -58px;
+    margin: 0 calc(-1 * var(--home-card-padding)) -58px;
   }
 
   .service-index--light .service-card--book .service-art { transform: none; }
@@ -178,8 +176,10 @@ body.index-2 .service-index--light .service-card > a {
 }
 
 @media (max-width: 767px) {
+  .service-index--light, #about-3 { --home-card-padding: clamp(14px, 5.1vw, 25px); }
+  #about-3 .why-card { padding: var(--home-card-padding); }
+
   .service-index--light {
-    --light-pad: clamp(14px, 5.1vw, 25px);
     --fs-h3: clamp(24px, 7.2vw, 36px);
     --fs-body: clamp(15px, 4vw, 18px);
   }
