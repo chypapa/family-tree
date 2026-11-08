@@ -23,9 +23,9 @@ body.index-2 .service-index--light .service-card__badges {
 
 body.index-2 .service-index--light .service-card__badges li {
   padding: .35em .8em;
-  border-radius: .75em;
-  background: #e1dfdd;
-  color: #4b4642;
+  border-radius: 999px;
+  background: var(--red);
+  color: #fff;
 }
 
 .index-2 .service-index--light .service-card .service-card__subtitle {
@@ -71,8 +71,6 @@ body.index-2 .service-index--light .service-card > a {
     width: auto;
     min-width: clamp(128px, 12.5vw, 220px);
   }
-
-  .service-index--light .service-card--tree .service-art { display: none; }
 
   body.index-2 .service-index--light :is(.service-card--book, .service-card--archive) .service-art {
     position: absolute;
@@ -129,7 +127,12 @@ body.index-2 .service-index--light .service-card > a {
 }
 
 @media (max-width: 1023px) {
-  .service-index--light .service-card--tree .service-art { opacity: .12; }
+  .service-index--light { --light-pad: 14px; }
+  .service-index--light .service-index__grid { gap: clamp(24px, 2.85vw, 30px); }
+
+  .service-index--light :is(.service-card--book, .service-card--archive) .service-art img {
+    filter: none;
+  }
 
   body.index-2 .service-index--light :is(.service-card--book, .service-card--archive) .service-art {
     position: relative;
@@ -176,7 +179,7 @@ body.index-2 .service-index--light .service-card > a {
 
 @media (max-width: 767px) {
   .service-index--light {
-    --light-pad: clamp(20px, 7.6vw, 38px);
+    --light-pad: clamp(14px, 5.1vw, 25px);
     --fs-h3: clamp(24px, 7.2vw, 36px);
     --fs-body: clamp(15px, 4vw, 18px);
   }
