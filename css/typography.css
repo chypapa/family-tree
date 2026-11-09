@@ -56,7 +56,6 @@ body :is(p:not(.calc__result-sum), li, input, textarea, select,
   word-spacing: normal;
 }
 body .archive-hero h1 { font-size: clamp(20px, 7.15cqi, 46px) !important; }
-body #intro-text-title { font-size: var(--fs-h2) !important; }
 body .opening:not(.opening--mosaic),
 body .opening .opening__media,
 body .opening .opening__img { border-radius: 0; }
@@ -149,7 +148,6 @@ body .voice--video .voice__author { bottom: calc(var(--pad-card) - 8px); }
 }
 @media (max-width: 1199px) {
   :root, body.index-2 { --fs-body: 16px; --fs-h2: 27px; --fs-h3: 24px; }
-  body #intro-text-title { font-size: var(--fs-h3) !important; }
 }
 @media (max-width: 767px) {
   :root, body.index-2 {
@@ -158,7 +156,6 @@ body .voice--video .voice__author { bottom: calc(var(--pad-card) - 8px); }
     --fs-h3: clamp(18px, 5.2vw, 24px);
     --fs-h4: clamp(17px, 4.6vw, 19px);
   }
-  body #intro-text-title { font-size: var(--fs-h4) !important; }
   body.index-2 .archive-hero { padding-top: 0; }
   body .lead__card { gap: 16px; }
   body .lead__head p { margin-top: 16px; }
@@ -224,7 +221,6 @@ body .promo::before {
   }
 }
 @media (max-width: 767px) {
-  body #intro-text-title { font-weight: 600 !important; }
   body .stage { padding: var(--s-16) var(--s-16) var(--s-24); }
   body .calc--center .calc__intro { align-items: flex-start; text-align: left; }
 }

@@ -203,54 +203,6 @@
     fitHeaderCta();
   }
 
-  /* Replay the 1000ms mosaic reveal whenever the hero re-enters the viewport. */
-  var mosaic = document.querySelector('.opening--mosaic');
-  if (mosaic) {
-    if ('IntersectionObserver' in window) {
-      var mosaicObserver = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          mosaic.classList.toggle('is-revealing', entry.isIntersecting && entry.intersectionRatio >= 0.08 && document.documentElement.classList.contains('is-ready'));
-        });
-      }, { threshold: [0, 0.08] });
-      mosaicObserver.observe(mosaic);
-      var introReadyObserver = new MutationObserver(function () {
-        if (!document.documentElement.classList.contains('is-ready')) return;
-        var bounds = mosaic.getBoundingClientRect();
-        mosaic.classList.toggle('is-revealing', bounds.bottom > 0 && bounds.top < innerHeight);
-        introReadyObserver.disconnect();
-      });
-      introReadyObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    } else {
-      mosaic.classList.add('is-revealing');
-    }
-  }
-
-  /* Scroll fades the visual layer, independently of the entrance animation. */
-  if (mosaic) {
-    var mosaicMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    var mosaicTiles = Array.prototype.map.call(mosaic.querySelectorAll('.opening__tile'), function (tile, i) {
-      return { visual: tile.querySelector('.opening__tile-visual'), keep: i % 4 === 0,
-        start: 0.03 + parseFloat(getComputedStyle(tile).getPropertyValue('--reveal-delay')) / 600 * 0.62 };
-    });
-    var mosaicScrollPending = false;
-    var updateMosaicScroll = function () {
-      mosaicScrollPending = false;
-      var bounds = mosaic.getBoundingClientRect();
-      var progress = mosaicMotion.matches ? 0 : Math.max(0, Math.min(1, -bounds.top / bounds.height));
-      mosaicTiles.forEach(function (tile) {
-        var fade = tile.keep ? 0 : Math.max(0, Math.min(1, (progress - tile.start) / 0.22));
-        tile.visual.style.opacity = String(1 - fade);
-      });
-    };
-    var queueMosaicScroll = function () {
-      if (!mosaicScrollPending) { mosaicScrollPending = true; requestAnimationFrame(updateMosaicScroll); }
-    };
-    window.addEventListener('scroll', queueMosaicScroll, { passive: true });
-    window.addEventListener('resize', queueMosaicScroll);
-    if (mosaicMotion.addEventListener) mosaicMotion.addEventListener('change', queueMosaicScroll);
-    updateMosaicScroll();
-  }
-
   /* ---------- Мобильное меню: бургер превращается в крестик, панель выезжает справа ---------- */
   var burger = document.querySelector('.header__burger');
   var drawer = burger && document.getElementById(burger.getAttribute('aria-controls'));
@@ -286,196 +238,6 @@
     });
   }
 
-  /* ---------- Бегущая лента: едет сама, можно тянуть мышкой / пальцем ---------- */
-  var marquee = document.querySelector('.marquee');
-  if (marquee) {
-    var track = marquee.querySelector('.marquee__track');
-    var cards = track.children;
-    var half = cards.length / 2;                 // вторая половина — копия набора
-    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    var period = 0, autoV = 0, x = 0, v = 0;
-    var dragging = false, lastX = 0, lastT = 0, dragV = 0, prevT = performance.now();
-
-    var measure = function () {
-      period = cards[half].offsetLeft - cards[0].offsetLeft;
-      var duration = parseFloat(getComputedStyle(marquee).getPropertyValue('--duration')) || 102;
-      autoV = reduceMotion.matches ? 0 : -period / duration;   // px/с, минус — влево
-    };
-
-    var frame = function (t) {
-      var dt = Math.min((t - prevT) / 1000, 0.05);
-      prevT = t;
-      if (!dragging) {
-        v += (autoV - v) * Math.min(1, dt * 1.5);  // после броска плавно возвращаемся к обычной скорости
-        x += v * dt;
-      }
-      if (period > 0) x = ((x % period) - period) % period;  // держим x в (-period, 0] — бесшовный круг
-      track.style.transform = 'translate3d(' + x + 'px, 0, 0)';
-      requestAnimationFrame(frame);
-    };
-
-    marquee.addEventListener('pointerdown', function (e) {
-      if (e.button !== 0) return;
-      dragging = true;
-      lastX = e.clientX;
-      lastT = e.timeStamp;
-      dragV = 0;
-      marquee.setPointerCapture(e.pointerId);
-      marquee.classList.add('is-dragging');
-    });
-    marquee.addEventListener('pointermove', function (e) {
-      if (!dragging) return;
-      var dx = e.clientX - lastX;
-      var dt = (e.timeStamp - lastT) / 1000;
-      x += dx;
-      if (dt > 0) dragV = dragV * 0.5 + (dx / dt) * 0.5;
-      lastX = e.clientX;
-      lastT = e.timeStamp;
-    });
-    var release = function (e) {
-      if (!dragging) return;
-      dragging = false;
-      marquee.classList.remove('is-dragging');
-      if (e.timeStamp - lastT > 100) dragV = 0;  // палец остановился перед отпусканием — без броска
-      v = Math.max(-4000, Math.min(4000, dragV));
-    };
-    marquee.addEventListener('pointerup', release);
-    marquee.addEventListener('pointercancel', release);
-
-    measure();
-    v = autoV;
-    window.addEventListener('resize', measure);
-    marquee.classList.add('marquee--js');
-    requestAnimationFrame(frame);
-  }
-
-  /* ---------- Фото с ореолом фокуса («Найдём историю»): фото чёткое;
-     курсор над фото — оно размывается, а вокруг курсора остаётся в фокусе ---------- */
-  var smoothFocus = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  document.querySelectorAll('.focus__card').forEach(function (focusCard) {
-    var fx = 0, fy = 0, tx = 0, ty = 0, lastX = 0, lastY = 0, fRaf = 0, hideTimer = 0;
-    var place = function () {
-      focusCard.style.setProperty('--mx', fx.toFixed(1) + 'px');
-      focusCard.style.setProperty('--my', fy.toFixed(1) + 'px');
-    };
-    // ореол догоняет курсор с лёгкой задержкой — движение мягче
-    var follow = function () {
-      fx += (tx - fx) * 0.2;
-      fy += (ty - fy) * 0.2;
-      place();
-      fRaf = (Math.abs(tx - fx) > 0.5 || Math.abs(ty - fy) > 0.5) ? requestAnimationFrame(follow) : 0;
-    };
-    var aim = function () {
-      var r = focusCard.getBoundingClientRect();
-      tx = lastX - r.left;
-      ty = lastY - r.top;
-      if (!focusCard.classList.contains('is-focus') || !smoothFocus) {   // ореол появляется сразу под курсором
-        fx = tx; fy = ty; place();
-        focusCard.classList.add('is-focus');
-        return;
-      }
-      if (!fRaf) fRaf = requestAnimationFrame(follow);
-    };
-    var onMove = function (e) {
-      clearTimeout(hideTimer);
-      lastX = e.clientX;
-      lastY = e.clientY;
-      aim();
-    };
-    focusCard.addEventListener('pointerenter', onMove);
-    focusCard.addEventListener('pointermove', onMove);
-    focusCard.addEventListener('pointerdown', onMove);
-    focusCard.addEventListener('pointerleave', function (e) {
-      // на телефоне палец «уходит» сразу после касания — даём ореолу побыть секунду
-      var delay = e.pointerType === 'touch' ? 1200 : 0;
-      hideTimer = setTimeout(function () { focusCard.classList.remove('is-focus'); }, delay);
-    });
-    // страницу прокрутили, а курсор стоит на месте — ореол остаётся под курсором
-    window.addEventListener('scroll', function () {
-      if (focusCard.classList.contains('is-focus')) aim();
-    }, { passive: true });
-  });
-
-  /* ---------- Древо: при прокрутке листва «заливает» голые ветви сверху вниз, край неровный, как чернила ---------- */
-  var ink = document.querySelector('.inkswap__frame');
-  if (ink) {
-    var inkSvg = ink.querySelector('.inkswap__svg');
-    var inkImage = inkSvg.querySelector('image');
-    var inkFill = inkSvg.querySelector('.inkswap__fill');
-    var inkEdge = inkSvg.querySelector('.inkswap__edge');
-    var inkFilter = inkSvg.querySelector('filter');
-    var inkMask = inkSvg.querySelector('mask');
-    var INK_EXT = 200;                                 // маска шире рисунка — по бокам края не видно
-
-    var inkW = 3881, inkP = 0, inkTarget = 0, inkRaf = 0;
-
-    // p: 0 — видны только голые ветви, 1 — рисунок полностью в листве
-    var drawInk = function (p) {
-      var y = -150 + p * 1280;                         // край по бокам: от −150 (за верхом) до 1130 (ниже низа)
-      var c = y * 1.25;                                // посередине край выгнут вниз, как в образце
-      // шум сдвигает край максимум на 110 единиц, поэтому фильтр считаем только в полосе у края,
-      // а всё, что выше, заливаем сплошным прямоугольником без фильтра — так эффект не тормозит
-      var top = y - 240;
-      var L = -INK_EXT, R = inkW + INK_EXT;
-      inkFill.setAttribute('height', Math.max(0, y - 120 + 400).toFixed(1));
-      inkEdge.setAttribute('d', 'M ' + L + ' ' + y.toFixed(1) + ' Q ' + (inkW / 2) + ' ' + c.toFixed(1) + ' ' + R + ' ' + y.toFixed(1) +
-        ' L ' + R + ' ' + top.toFixed(1) + ' L ' + L + ' ' + top.toFixed(1) + ' Z');
-      inkFilter.setAttribute('y', (top - 120).toFixed(0));
-      inkFilter.setAttribute('height', ((y + c) / 2 - top + 250).toFixed(0));
-    };
-
-    // система координат маски повторяет пропорции блока: высота всегда 1000, ширина — по размеру блока
-    var layoutInk = function () {
-      var r = ink.getBoundingClientRect();
-      if (!r.width || !r.height) return;
-      inkW = Math.round(1000 * r.width / r.height);
-      inkSvg.setAttribute('viewBox', '0 0 ' + inkW + ' 1000');
-      inkImage.setAttribute('width', inkW);
-      [inkMask, inkFill].forEach(function (el) {
-        el.setAttribute('x', -INK_EXT);
-        el.setAttribute('width', inkW + 2 * INK_EXT);
-      });
-      inkFilter.setAttribute('x', -130);               // по бокам фильтру хватает запаса на сдвиг шумом
-      inkFilter.setAttribute('width', inkW + 260);
-      drawInk(inkP);
-    };
-
-    // заливка начинается, когда рисунок наполовину показался снизу, и заканчивается,
-    // когда он поднялся до четверти высоты окна (или страница докручена до конца)
-    var inkProgress = function () {
-      var r = ink.getBoundingClientRect();
-      var vh = window.innerHeight;
-      var maxScroll = document.documentElement.scrollHeight - vh;
-      var topAtEnd = r.top + window.scrollY - maxScroll;      // где будет верх рисунка в самом низу страницы
-      var startTop = vh - r.height * 0.5;
-      var endTop = Math.max(topAtEnd + 20, vh * 0.25);
-      if (startTop - endTop < 80) endTop = startTop - 80;
-      return Math.max(0, Math.min(1, (startTop - r.top) / (startTop - endTop)));
-    };
-
-    var inkFrame = function () {
-      inkP += (inkTarget - inkP) * 0.25;                       // лёгкое сглаживание — край «течёт», а не прыгает
-      if (Math.abs(inkTarget - inkP) < 0.001) inkP = inkTarget;
-      drawInk(inkP);
-      inkRaf = inkP !== inkTarget ? requestAnimationFrame(inkFrame) : 0;
-    };
-    var inkUpdate = function () {
-      inkTarget = inkProgress();
-      if (!inkRaf) inkRaf = requestAnimationFrame(inkFrame);
-    };
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      inkP = inkTarget = 1;                                   // без анимации — сразу рисунок в листве
-      layoutInk();
-      window.addEventListener('resize', layoutInk);
-    } else {
-      inkP = inkTarget = inkProgress();
-      layoutInk();
-      window.addEventListener('scroll', inkUpdate, { passive: true });
-      window.addEventListener('resize', function () { layoutInk(); inkUpdate(); });
-    }
-  }
-
   /* ---------- Заголовки H2: каждая строка выезжает снизу из-под своей нижней границы, когда заголовок
      появляется на экране (один раз). Строки размечаются по тому, как браузер реально перенёс слова,
      и заново — при смене ширины окна. На прокрутку не влияет; при «уменьшить движение» всё видно сразу ---------- */
@@ -484,7 +246,7 @@
     // у заголовка блока «О нас» два варианта текста (для широкого экрана и для телефона) — размечаем каждый
     var targets = [];
     document.querySelectorAll('h2').forEach(function (h) {
-      if (h.closest('[hidden], .opening, .overlay') || h.id === 'intro-text-title' || h.classList.contains('about-svc__chip')) return;
+      if (h.closest('[hidden], .opening, .overlay')) return;
       var parts = h.querySelectorAll(':scope > span');
       if (parts.length) parts.forEach(function (p) { targets.push({ el: p, root: h }); });
       else targets.push({ el: h, root: h });
@@ -627,17 +389,6 @@
     }, { passive: true });
   });
 
-  /* ---------- Видео на первом экране: при «уменьшить движение» не крутим, показываем первый кадр ---------- */
-  document.querySelectorAll('.opening__video').forEach(function (v) {
-    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    var apply = function () {
-      if (mq.matches) { v.pause(); v.removeAttribute('autoplay'); }
-      else { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
-    };
-    apply();
-    if (mq.addEventListener) mq.addEventListener('change', apply);
-  });
-
   /* ---------- Окна поверх страницы (видеоотзыв, «Получить консультацию»): страница под окном затемнена и размыта,
      прокрутка страницы выключена. Закрываются крестиком, кликом мимо окна и клавишей Esc ---------- */
   var pageWrap = document.querySelector('.page');
@@ -766,12 +517,12 @@
     });
   }
 
-  /* ---------- Формы заявки (блок «Заявка» и окно «Получить консультацию»; прежний вариант .form — тоже) ---------- */
-  document.querySelectorAll('.lead__card, .form').forEach(function (form) {
+  /* ---------- Формы заявки ---------- */
+  document.querySelectorAll('.lead__card').forEach(function (form) {
     var name = form.querySelector('[name="name"]');
     var contact = form.querySelector('[name="contact"]');
-    var agree = form.querySelector('[name="agree"]');               // галочка была в прежней форме; в новой — текст согласия
-    var note = form.querySelector('.lead__note, .form__note');
+    var agree = form.querySelector('[name="agree"]');
+    var note = form.querySelector('.lead__note');
     if (!contact || !note) return;
 
     [name, contact, agree].forEach(function (el) {

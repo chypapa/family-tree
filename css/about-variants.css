@@ -1,45 +1,5 @@
-/* Alternative about layouts. The original #about keeps its existing styles. */
-.intro-text--background.section {
-  display: block;
-  --radius: 12px;
-}
-.intro-text--background::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  right: -6%;
-  width: 68%;
-  height: 100%;
-  background: url("../img/about-tree.png") right top / contain no-repeat;
-  pointer-events: none;
-}
-.intro-text--background .intro-text__body {
-  width: 100%;
-  margin: 0;
-  gap: 32px;
-}
-.intro-text--background .intro-text__lead { width: 74%; }
-.intro-text--background .intro-text__sub { width: calc((100% - 16px) / 2); }
-.intro-text--background .why-cards { margin-top: 64px; }
-.intro-text--background .why-card {
-  padding-top: 64px;
-  padding-bottom: 32px;
-  background: linear-gradient(35deg, #a63928 10%, #bc6253 145%);
-}
-.intro-text--background .why-card::after,
+
 .intro-text--split .why-card::after { display: none; }
-body .intro-text--background .intro-text__lead {
-  font-size: 36px !important;
-  font-weight: 600 !important;
-}
-body .intro-text--background .why-card__title {
-  font-size: 23px !important;
-  font-weight: 500 !important;
-}
-body .intro-text--background :is(.intro-text__sub, .why-card__text) {
-  font-size: 18px !important;
-}
 
 /* A true 12-column layout: copy occupies columns 5–12; each card spans 4. */
 .intro-text--split.section {
@@ -88,27 +48,14 @@ body .intro-text--split .why-card__title {
   font-weight: 500 !important;
 }
 .intro-text--split .why-card__text { max-width: 37ch; }
-#about-2, #about-3 { scroll-margin-top: 96px; }
+#about-3 { scroll-margin-top: 96px; }
 #about-3 .why-card { background: #a43222; }
-
-@media (max-width: 1199px) {
-  .intro-text--background .intro-text__sub { width: 100%; }
-  body .intro-text--background .intro-text__lead { font-size: 27px !important; font-weight: 500 !important; }
-  body .intro-text--background .why-card__title { font-size: 21px !important; }
-  body .intro-text--background :is(.intro-text__sub, .why-card__text) { font-size: 17px !important; }
-}
 @media (max-width: 1023px), (max-width: 1199px) and (orientation: portrait) {
-  .intro-text--background::before, .intro-text--split::before { display: none; }
+  .intro-text--split::before { display: none; }
   .intro-text--split .intro-text__body { grid-column: 1 / -1; }
   .intro-text--split .why-cards { grid-column: 1 / -1; }
 }
 @media (max-width: 767px) {
-  .intro-text--background .intro-text__lead { width: 100%; }
-  .intro-text--background .why-cards { margin-top: 32px; }
-  .intro-text--background .why-card { padding-top: 48px; padding-bottom: 24px; }
-  body .intro-text--background .intro-text__lead,
-  body .intro-text--background .why-card__title { font-size: 19px !important; }
-  body .intro-text--background :is(.intro-text__sub, .why-card__text) { font-size: 16px !important; }
   .intro-text--split.section { padding-block: 0; row-gap: 32px; }
   .intro-text--split .intro-text__body { gap: 24px; }
   .intro-text--split .why-cards__list { grid-template-columns: minmax(0, 1fr); gap: 12px; }
