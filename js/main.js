@@ -518,6 +518,7 @@
   }
 
   /* ---------- Формы заявки ---------- */
+  var contactPattern = /^(?:\+?[0-9]{7,15}|@?[A-Za-z][A-Za-z0-9_]{2,31})$/;
   document.querySelectorAll('.lead__card').forEach(function (form) {
     var name = form.querySelector('[name="name"]');
     var contact = form.querySelector('[name="contact"]');
@@ -537,7 +538,10 @@
       if (submit.disabled) return;
       var msg = '';
       if (agree && !agree.checked) { agree.classList.add('is-invalid'); msg = 'Подтвердите согласие с политикой конфиденциальности.'; }
-      if (!contact.value.trim()) { contact.classList.add('is-invalid'); msg = 'Укажите телефон, почту или ник в мессенджере.'; }
+      if (!contactPattern.test(contact.value)) {
+        contact.classList.add('is-invalid');
+        msg = 'Укажите телефон (7–15 цифр, можно начать с +) или ник (3–32 символа, с латинской буквы, без пробелов).';
+      }
       if (name && name.required && !name.value.trim()) { name.classList.add('is-invalid'); msg = 'Напишите, как к вам обращаться.'; }
       if (msg) { note.textContent = msg; return; }
 

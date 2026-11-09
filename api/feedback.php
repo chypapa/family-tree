@@ -23,7 +23,8 @@ foreach (['name' => 500, 'contact' => 500, 'ancestors' => 20000] as $key => $lim
     $fields[$key] = trim($value);
 }
 
-if ($fields['contact'] === '' || ($_POST['agree'] ?? '') !== 'on') {
+$contactPattern = '/\A(?:\+?[0-9]{7,15}|@?[A-Za-z][A-Za-z0-9_]{2,31})\z/';
+if (preg_match($contactPattern, $_POST['contact'] ?? '') !== 1 || ($_POST['agree'] ?? '') !== 'on') {
     http_response_code(422);
     echo '{"sent":false}';
     exit;
@@ -36,7 +37,7 @@ $headers = "MIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8\r\n"
     . "Content-Transfer-Encoding: base64";
 
 $sent = function_exists('mail') && mail(
-    'rastorguyeva.t@bk.ru',
+    'drevopredkov.ru@yandex.ru',
     $subject,
     chunk_split(base64_encode($body)),
     $headers
