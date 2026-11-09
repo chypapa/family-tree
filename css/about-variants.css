@@ -89,6 +89,7 @@ body .intro-text--split .why-card__title {
 }
 .intro-text--split .why-card__text { max-width: 37ch; }
 #about-2, #about-3 { scroll-margin-top: 96px; }
+#about-3 .why-card { background: #a43222; }
 
 @media (max-width: 1199px) {
   .intro-text--background .intro-text__sub { width: 100%; }
@@ -112,6 +113,7 @@ body .intro-text--split .why-card__title {
   .intro-text--split .intro-text__body { gap: 24px; }
   .intro-text--split .why-cards__list { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .intro-text--split .why-card { grid-column: 1; min-height: 200px; padding: 24px; }
+  #about-3 .why-card { padding: clamp(14px, 5.1vw, 25px); }
   body .intro-text--split .intro-text__lead { font-size: var(--fs-h4) !important; font-weight: 600 !important; }
 }
 

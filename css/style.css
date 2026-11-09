@@ -1972,7 +1972,6 @@ h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-heading); line-height: 
    ========================================================= */
 .opening--kniga .opening__img {
   object-position: 50% 50%;
-  filter: saturate(.48) brightness(.92) contrast(.93);
 }
 .opening__video { object-position: 50% 50%; }
 

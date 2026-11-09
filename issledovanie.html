@@ -214,7 +214,7 @@
 <div class="overlay consult-modal" id="consult-modal" role="dialog" aria-modal="true" aria-labelledby="consult-title" hidden>
   <div class="consult-modal__box lead lead--modal" data-lenis-prevent>
     <div class="lead__inner">
-      <form class="lead__card" action="#" method="post" novalidate>
+      <form class="lead__card" action="api/feedback.php" method="post" novalidate>
         <div class="lead__head">
           <h2 class="lead__title" id="consult-title">Начните с&nbsp;бесплатной консультации</h2>
           <p>Расскажите, что&nbsp;уже известно о&nbsp;вашей семье,&nbsp;— подскажем, с&nbsp;чего начать поиск и&nbsp;какой формат подойдёт.</p>
@@ -260,7 +260,7 @@
         </div>
       </div>
 
-      <form class="form" action="#" method="post" novalidate>
+      <form class="form" action="api/feedback.php" method="post" novalidate>
         <div class="form__fields">
           <label class="visually-hidden" for="consult-contact">Телефон, почта или мессенджер</label>
           <input class="input" id="consult-contact" name="contact" type="text" placeholder="Телефон, почта, мессенджер" autocomplete="tel" required>
