@@ -148,16 +148,30 @@
     flex: 0 0 calc(var(--service-art-space) + var(--service-art-overlap));
     margin: auto calc(-1 * var(--service-card-padding)) calc(-1 * var(--service-art-overlap));
   }
+  .service-card:is(.service-card--book, .service-card--archive) .service-art {
+    flex-grow: 1;
+    margin-top: 0;
+  }
   .service-card .service-art + a { margin-top: 0; }
-  .service-card--book img { width: 118%; left: 10%; top: 0; bottom: auto; transform: rotate(-10deg); transform-origin: top right; }
+  .service-card--book img {
+    width: 110%;
+    left: 4%;
+    top: 0;
+    bottom: auto;
+    transform: translateY(-8%) rotate(-4deg);
+    transform-origin: top right;
+  }
   .service-card--tree img { width: 125%; right: -25%; top: 0; transform: rotate(-22deg); transform-origin: top right; }
-  .service-card--archive img:nth-child(1) { width: 64%; right: -10%; top: 12%; bottom: auto; transform-origin: top left; }
+  .service-card--archive img:nth-child(1) { width: 64%; right: -10%; top: 6px; bottom: auto; transform-origin: top left; }
   .service-card--archive img:nth-child(2) { width: 69%; left: 18%; top: 35%; bottom: auto; transform-origin: top left; }
   .service-card--archive img:nth-child(3) { width: 43%; left: -3%; top: 25%; transform-origin: top right; }
 }
 @media (768px <= width <= 1199px) {
   /* Halve the previous 12px paragraph margin plus the artwork space. */
   .service-card { --service-art-space: clamp(59px, calc(10vw - 6px), 99px); }
+}
+@media (1100px < width <= 1199px) and (orientation: landscape) {
+  .service-card:is(.service-card--book, .service-card--archive) p:not(.service-card__subtitle) { min-height: 3lh; }
 }
 
 @media (pointer: coarse) {
