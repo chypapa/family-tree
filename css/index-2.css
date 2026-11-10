@@ -116,10 +116,10 @@
   margin-top: auto;
   padding: 8px 24px;
   border-radius: 6px;
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: .2em;
-  text-shadow: 0 0 2px #24100a, 0 1px 4px #24100a;
+  background: white;
+  color: #605a55;
+  text-decoration: none;
+  box-shadow: 0 3px 9px rgb(0 0 0 / 18%);
 }
 .service-art { position: absolute; inset: 0 0 0 55%; z-index: -1; pointer-events: none; }
 .service-art img { position: absolute; max-width: none; filter: drop-shadow(0 6px 12px #0005); }
