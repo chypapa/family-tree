@@ -15,7 +15,7 @@
 .archive-hero {
   display: flex;
   align-items: end;
-  min-height: min(62rem, calc(100svh - 0.5rem));
+  min-height: calc(100svh - 0.5rem);
   padding-top: var(--index-header);
   background: #bbb url("../img/index-2-hero.webp") right bottom / cover no-repeat;
 }
@@ -147,6 +147,9 @@
   }
 }
 
+@media (pointer: coarse) {
+  .archive-hero { min-height: min(62rem, calc(100svh - 0.5rem)); }
+}
 @media (max-width: 1023px), (max-width: 1199px) and (orientation: portrait) {
   .archive-hero { min-height: min(54rem, calc(100svh - var(--hdr-h) - var(--hdr-gap) - 4rem)); }
 }
