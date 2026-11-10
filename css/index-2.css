@@ -221,6 +221,8 @@
   .service-index__grid { grid-template-columns: minmax(0, 1fr); }
   .service-card { grid-column: 1; }
   .service-card a { border-radius: 12px; }
+  .service-card--tree .service-art { flex-grow: 1; margin-top: 0; }
+  .service-card--tree img { width: 80%; right: 0; transform: rotate(90deg) translateX(88%); }
 }
 
 .index-2 .service-card__badges { margin: 0 0 18px; }
