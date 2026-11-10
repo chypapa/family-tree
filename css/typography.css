@@ -89,10 +89,6 @@ body.index-2 .service-card__badges li {
   body .tree-design__media { grid-column: 1 / 7; }
   body .tree-design__copy { grid-column: 7 / -1; padding-left: var(--s-32); }
 }
-@media (min-width: 768px) {
-  body.index-2 .service-card--tree .service-art { translate: 48px 0; }
-  body.index-2 .service-card--tree img { top: -1px; }
-}
 @media (max-width: 1199px) {
   body .page > .header.header--sticky { pointer-events: none; }
   body .page > .header.header--sticky .header__bar { display: none; }
@@ -119,24 +115,6 @@ body.index-2 .service-card__badges li {
   body .blog .post .post__body { display: flex; flex-direction: column; flex: 1; }
   body .blog .post .post__btn-mobile { margin-top: auto; }
 }
-@media (min-width: 768px) and (max-width: 1199px) and (orientation: portrait) {
-  body.index-2 .service-index__grid { grid-auto-rows: 1fr; }
-  body.index-2 .service-card { min-height: 440px; }
-  body.index-2 .service-card p { max-width: none; }
-  body.index-2 .service-card--book p,
-  body.index-2 .service-card--archive p { margin-bottom: 8px; }
-  body.index-2 .service-card--archive .service-art {
-    position: relative;
-    inset: auto;
-    align-self: stretch;
-    height: 210px;
-    margin: 0 -24px -72px;
-  }
-  body.index-2 .service-card > a { width: 100%; }
-  body.index-2 .service-card--archive img:nth-child(1) { width: 64%; right: -10%; top: 32%; bottom: auto; }
-  body.index-2 .service-card--archive img:nth-child(2) { width: 69%; left: 18%; top: 45%; bottom: auto; }
-  body.index-2 .service-card--archive img:nth-child(3) { width: 43%; left: -3%; top: 27%; }
-}
 body .promo { background-image: linear-gradient(90deg, rgb(0 0 0 / 72%), rgb(0 0 0 / 40%) 55%, rgb(0 0 0 / 8%)), url("../img/targeted-tree-hero-updated.webp"); }
 .is-intro:not(.is-intro-done) .header--sticky .header__bar { box-shadow: none; }
 .voice__author { padding-top: 0; line-height: 1.2; }
@@ -160,7 +138,6 @@ body .voice--video .voice__author { bottom: calc(var(--pad-card) - 8px); }
   body .lead__card { gap: 16px; }
   body .lead__head p { margin-top: 16px; }
   body .lead__fields { margin-top: 8px; }
-  body.index-2 .service-card--tree img { right: -1px; }
 }
 
 /* Shared refinements for service pages and tablet layouts. */

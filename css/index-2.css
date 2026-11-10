@@ -67,8 +67,14 @@
   line-height: 1.2;
 }
 .index-2 .review { background: #fff; }
-.service-index__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--col-gap); }
+.service-index__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: var(--col-gap);
+}
 .service-card {
+  --service-card-padding: clamp(24px, 2.45vw, 50px);
   position: relative;
   isolation: isolate;
   display: flex;
@@ -76,7 +82,7 @@
   align-items: flex-start;
   grid-column: span 4;
   min-height: clamp(310px, 22vw, 440px);
-  padding: clamp(24px, 2.45vw, 50px);
+  padding: var(--service-card-padding);
   overflow: hidden;
   border-radius: 12px;
   color: white;
@@ -128,23 +134,25 @@
   .service-index .service-card { grid-column: span 6; }
 }
 
-/* Give the book its own image area on tablets so it cannot fall below the crop. */
-@media (min-width: 768px) and (max-width: 1199px) {
-  .service-card--book p { max-width: 100%; }
-  .service-card--book .service-art {
+/* Stack and crop the artwork together on tablets and phones. */
+@media (max-width: 1199px) {
+  .service-card { min-height: 380px; }
+  .service-card p { max-width: none; margin-bottom: 12px; }
+  .service-card > a { width: 100%; }
+  .service-card .service-art {
     position: relative;
     inset: auto;
     align-self: stretch;
-    flex: 0 0 clamp(180px, 24vw, 260px);
-    margin-block: 8px 16px;
+    flex: 0 0 clamp(130px, 20vw, 210px);
+    margin: auto calc(-1 * var(--service-card-padding)) 0;
+    overflow: hidden;
   }
-  .service-card--book .service-art img {
-    position: static;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-  }
+  .service-card .service-art + a { margin-top: 0; }
+  .service-card--book img { width: 118%; left: 10%; top: 0; bottom: auto; transform: rotate(-10deg); }
+  .service-card--tree img { width: 125%; right: -25%; top: 0; transform: rotate(-22deg); }
+  .service-card--archive img:nth-child(1) { width: 64%; right: -10%; top: 12%; bottom: auto; }
+  .service-card--archive img:nth-child(2) { width: 69%; left: 18%; top: 35%; bottom: auto; }
+  .service-card--archive img:nth-child(3) { width: 43%; left: -3%; top: 25%; }
 }
 
 @media (pointer: coarse) {
@@ -191,43 +199,9 @@
   }
   .archive-hero p { margin-block: 20px 32px; }
   .archive-hero .btn { width: 100%; }
-  .service-index__grid { grid-template-columns: minmax(0, 1fr); grid-auto-rows: 1fr; }
-  .service-card { grid-column: 1; min-height: 380px; }
-  .service-card--archive, .service-card--book { min-height: 0; }
-  .service-card__badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 10px 0 0;
-  padding: 0;
-  list-style: none;
-}
-.service-card__badges li {
-  padding: 5px 14px;
-  border-radius: 999px;
-  background: rgb(255 255 255 / 27%);
-}
-.service-card p { max-width: none; }
-  .service-card a { width: 100%; border-radius: 12px; }
-  .service-card--archive p, .service-card--book p { margin-bottom: 8px; }
-  .service-card--archive .service-art, .service-card--book .service-art {
-    position: relative;
-    inset: auto;
-    align-self: stretch;
-    height: clamp(130px, 30vw, 210px);
-    margin: 0 -24px -72px;
-  }
-  .service-card--archive img:nth-child(1) { width: 64%; right: -10%; top: 32%; bottom: auto; }
-  .service-card--archive img:nth-child(2) { width: 69%; left: 18%; top: 45%; bottom: auto; }
-  .service-card--archive img:nth-child(3) { width: 43%; left: -3%; top: 27%; }
-  .service-card--book .service-art { transform: scaleX(-1); }
-  .service-card--book img { width: 125%; left: 8%; top: -10%; bottom: auto; transform: rotate(22deg) translateX(60%) scaleX(-1); transform-origin: 20% 15%; }
-  .service-card--tree .service-art {
-    container-type: size;
-    transform: scaleX(-1);
-    mask-image: linear-gradient(to bottom, transparent, #000 65%);
-  }
-  .service-card--tree img { width: 100cqh; top: 36px; transform: rotate(90deg) translateX(100%); transform-origin: top right; }
+  .service-index__grid { grid-template-columns: minmax(0, 1fr); }
+  .service-card { grid-column: 1; }
+  .service-card a { border-radius: 12px; }
 }
 
 .index-2 .service-card__badges { margin: 0 0 18px; }
@@ -235,7 +209,6 @@
 .index-2 .service-card .service-card__subtitle { margin: 10px 0 0; opacity: .5; max-width: 100%; }
 .index-2 .intro-text__lead { font-size: var(--fs-h2); }
 .index-2 :is(.intro-text__sub, .review__text, .post__desc, .post__excerpt, .post__text, .section-head__text) { color: #605a55; }
-.index-2 .service-card--tree .service-art { translate: 24px 0; }
 @media (max-width: 1199px) {
   .index-2 .intro-text__lead { font-size: var(--fs-h3); }
 }
@@ -273,7 +246,7 @@
   background: linear-gradient(to bottom, #A64131 0%, #7F2B1E 100%);
 }
 .index-2 .service-card--tree { background: var(--red); }
-@media (min-width: 768px) {
+@media (min-width: 1200px) {
   body.index-2 .service-card--tree .service-art {
     inset: 0;
     translate: 0;
