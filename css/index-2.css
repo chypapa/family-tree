@@ -75,6 +75,7 @@
 }
 .service-card {
   --service-card-padding: clamp(24px, 2.45vw, 50px);
+  --service-button-height: 48px;
   position: relative;
   isolation: isolate;
   display: flex;
@@ -110,17 +111,16 @@
 .service-card a {
   display: grid;
   place-items: center;
-  min-height: 48px;
+  min-height: var(--service-button-height);
   min-width: min(100%, 220px);
   margin-top: auto;
   padding: 8px 24px;
   border-radius: 6px;
-  background: white;
-  color: #0e0908;
-  text-decoration: none;
-  box-shadow: 0 3px 9px rgb(0 0 0 / 18%);
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+  text-shadow: 0 0 2px #24100a, 0 1px 4px #24100a;
 }
-.service-card a:hover { text-decoration: underline; }
 .service-art { position: absolute; inset: 0 0 0 55%; z-index: -1; pointer-events: none; }
 .service-art img { position: absolute; max-width: none; filter: drop-shadow(0 6px 12px #0005); }
 .service-card--archive img:nth-child(1) { z-index: 1; width: 94%; right: -26%; bottom: 49%; transform: rotate(18deg); }
@@ -136,23 +136,28 @@
 
 /* Stack and crop the artwork together on tablets and phones. */
 @media (max-width: 1199px) {
-  .service-card { min-height: 380px; }
+  .service-card { --service-art-space: clamp(130px, 20vw, 210px); min-height: 380px; }
   .service-card p { max-width: none; margin-bottom: 12px; }
   .service-card > a { width: 100%; }
   .service-card .service-art {
     position: relative;
     inset: auto;
     align-self: stretch;
-    flex: 0 0 clamp(130px, 20vw, 210px);
-    margin: auto calc(-1 * var(--service-card-padding)) 0;
-    overflow: hidden;
+    /* Reserve space below the copy and extend the artwork through the button to the card edge. */
+    --service-art-overlap: calc(var(--service-button-height) + var(--service-card-padding));
+    flex: 0 0 calc(var(--service-art-space) + var(--service-art-overlap));
+    margin: auto calc(-1 * var(--service-card-padding)) calc(-1 * var(--service-art-overlap));
   }
   .service-card .service-art + a { margin-top: 0; }
-  .service-card--book img { width: 118%; left: 10%; top: 0; bottom: auto; transform: rotate(-10deg); }
-  .service-card--tree img { width: 125%; right: -25%; top: 0; transform: rotate(-22deg); }
-  .service-card--archive img:nth-child(1) { width: 64%; right: -10%; top: 12%; bottom: auto; }
-  .service-card--archive img:nth-child(2) { width: 69%; left: 18%; top: 35%; bottom: auto; }
-  .service-card--archive img:nth-child(3) { width: 43%; left: -3%; top: 25%; }
+  .service-card--book img { width: 118%; left: 10%; top: 0; bottom: auto; transform: rotate(-10deg); transform-origin: top right; }
+  .service-card--tree img { width: 125%; right: -25%; top: 0; transform: rotate(-22deg); transform-origin: top right; }
+  .service-card--archive img:nth-child(1) { width: 64%; right: -10%; top: 12%; bottom: auto; transform-origin: top left; }
+  .service-card--archive img:nth-child(2) { width: 69%; left: 18%; top: 35%; bottom: auto; transform-origin: top left; }
+  .service-card--archive img:nth-child(3) { width: 43%; left: -3%; top: 25%; transform-origin: top right; }
+}
+@media (768px <= width <= 1199px) {
+  /* Halve the previous 12px paragraph margin plus the artwork space. */
+  .service-card { --service-art-space: clamp(59px, calc(10vw - 6px), 99px); }
 }
 
 @media (pointer: coarse) {
@@ -287,8 +292,6 @@
 /* Compact spacing between price, duration and consultation badges. */
 body.index-2 :is(.service-card--book, .service-card--archive) .service-card__badges { gap: 8px; }
 
-/* Service-button copy matches paragraph copy on light surfaces. */
-body.index-2 .service-card > a { color: #605a55; }
 /* A flex row stretches every review to the current tallest card, including on expansion. */
 body.index-2 .reviews__list { align-items: stretch; }
 body.index-2 .reviews__list .review { align-self: stretch; height: auto; }
