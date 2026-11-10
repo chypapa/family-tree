@@ -202,7 +202,6 @@ body .promo::before {
   body .lead .lead__card { padding: var(--s-24) var(--s-24); }
 }
 @media (min-width: 768px) and (max-width: 1399px) and (orientation: landscape) {
-  body.index-2 .archive-hero,
   body .opening:not(.opening--mosaic) { height: 70svh; min-height: 70svh; }
   body.index-2 .archive-hero__panel { padding-block: 40px; }
   body .calc--center .calc__panel { grid-column: 2 / span 10; }
